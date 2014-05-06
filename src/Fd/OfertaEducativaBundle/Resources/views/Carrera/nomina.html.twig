@@ -1,0 +1,59 @@
+{# parametros: carreras #}
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Nómina de carreras</div>
+<div class="limpiar_float"></div>
+
+<div><a class="float_derecha boton_verde" href="{{ path('carrera_nuevo') }}">Nueva carrera</a></div>
+<div class="limpiar_float"></div>
+
+{{ simple_paginator_render('carrera_nomina', null, {
+    'container_class':'simple_paginator',
+    'previousPageText':'Anterior',
+    'nextPageText':'Siguiente',
+    'currentClass':'actual',
+    'firstPageText':'Primero',
+    'lastPageText':'Último'
+}) }} 
+
+
+<table class="grilla">
+    <tr>
+        <th>Nombre</th>
+        <th>Norma</th>
+        <th></th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+
+    {% for carrera in carreras %}
+    <tr>
+        {% set la_carrera = carrera.nombre %}
+        <td><a href="{{path('carrera_ficha', {'carrera_id': carrera.id})}}">{{ la_carrera|slice(0,100) }} </a></td>
+        {% if carrera.oferta.normas[0] is defined %}
+            <td>{{ carrera.oferta.normas[0] }}</a></td>
+        {% else %}
+            <td></td>
+        {% endif %}
+        <td><a href="{{path('carrera_nomina_donde_se_dicta', {'carrera_id': carrera.id})}}">Dónde se dicta</a></td>
+        <td>{{ carrera.estado }}</td>
+        <td><a href="{{path('carrera_editar', {'id': carrera.id})}}">Editar</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{{ simple_paginator_render('carrera_nomina', null, {
+    'container_class':'simple_paginator',
+    'previousPageText':'Anterior',
+    'nextPageText':'Siguiente',
+    'currentClass':'actual',
+    'firstPageText':'Primero',
+    'lastPageText':'Último'
+}) }} 
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

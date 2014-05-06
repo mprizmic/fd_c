@@ -1,0 +1,20 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<h1>Perfil</h1>
+
+    <form action="{{ path('usuario_perfil') }}" method="post" {{ form_enctype(formulario) }}>
+        {{ form_errors(formulario) }}
+        {{ form_widget(formulario) }}
+
+        {{ form_rest(formulario) }}
+
+        <br />
+        <br />
+        <input class="boton" type="submit" value="Guardar cambios" />
+
+    </form>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block main_content %}
+{{ parent() }}
+
+<h1>Editar EstablecimientoRecurso</h1>
+
+<form action="{{ path('establecimiento_recurso_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    <div class="ancho_10">
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit">Guardar</button>
+    </p>
+    </div>
+</form>
+<form action="{{ path('establecimiento_recurso_delete', { 'id': entity.id }) }}" method="post">
+    {{ form_widget(delete_form) }}
+    <button type="submit">Eliminar</button>
+</form>
+<br />
+<a href="{{ path('establecimiento_recurso') }}">
+    Volver a la lista
+</a>
+
+<br />
+<br />
+{% endblock %}

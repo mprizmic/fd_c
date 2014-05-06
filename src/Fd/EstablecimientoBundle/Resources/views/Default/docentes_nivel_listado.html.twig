@@ -1,0 +1,59 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo">Cantidad de docentes por nivel de cada establecimiento</div>
+
+<br />
+
+
+<table class="grilla">
+    <tr>
+        <th>Establecimiento</th>
+        <th>{{ 'Inicial' }}</th>
+        <th>{{ 'Primario' }}</th>
+        <th>{{ 'Medio' }}</th>
+        <th>{{ 'Terciario' }}</th>
+    </tr>
+
+    {% for establecimiento in establecimientos %}
+        <tr>
+            <td>
+                <a href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento.id }) }}">{{ establecimiento.apodo }}</a>
+            </td>
+
+            {% set niveles = establecimiento.unidadesEducativas %}
+            {% set inicial, primario, medio, terciario = '--','--','--','--' %}
+
+
+            {% for unidad_educativa in niveles %}
+                {# se asigna el dato a la columna que corresponde #}
+                {% set nivel = unidad_educativa.nivel.nombre|lower %}
+                {% set cantidad = unidad_educativa.cantidadDocentes %}
+
+                {% if nivel == 'inicial' %}{% set inicial = cantidad %}{% endif %}
+                {% if nivel == 'primario' %}{% set primario = cantidad %}{% endif %}
+                {% if nivel == 'medio' %}{% set medio = cantidad  %}{% endif %}
+                {% if nivel == 'terciario' %}{% set terciario = cantidad %}{% endif %}
+            {% endfor %}
+            <td>
+                {{ inicial }}
+            </td>
+            <td>
+                {{ primario }}
+            </td>
+            <td>
+                {{ medio }}
+            </td>
+            <td>
+                {{ terciario }}
+            </td>
+        </tr>
+    {% endfor %}
+
+</table>
+
+{% include '::includes/volver.html.twig' %}
+    
+{% endblock %}

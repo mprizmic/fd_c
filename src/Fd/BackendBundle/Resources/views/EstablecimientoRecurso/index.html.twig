@@ -1,0 +1,51 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Lista de Autoridad
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>Lista de EstablecimientoRecurso</h1>
+
+<ul>
+    <li>
+        <a href="{{ path('establecimiento_recurso_new') }}">
+            Crear nuevo registro
+        </a>
+    </li>
+</ul>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Establecimiento</th>
+            <th>Recurso</th>
+            <th>Cantidad</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('establecimiento_recurso_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.establecimiento }}</td>
+            <td>{{ entity.recurso.descripcion }}</td>
+            <td>{{ entity.cantidad }}</td>
+            <td>
+                        <a href="{{ path('establecimiento_recurso_edit', { 'id': entity.id }) }}">editar</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a class="float_derecha" href="{{ path('fd_backend_default_portada') }}">
+    Volver a la portada
+</a>
+
+<br />
+<br />
+
+{% endblock %}

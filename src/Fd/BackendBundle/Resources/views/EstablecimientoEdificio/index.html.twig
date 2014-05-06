@@ -1,0 +1,78 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Lista de sedes/anexos
+{% endblock %}
+ 
+{% block main_content %}
+
+<div class="titulo">Lista de sedes/anexos</div>
+
+{# se genera el combo de establecimientos #}
+<br />
+<span class="float_izquierda">Seleccione un establecimiento para filtrar la lista de sedes/anexos</span>
+
+<select id="cmb_establecimientos">
+{% for key, valor in establecimientos %}
+        <option value="{{ valor.id }}"
+                data-url="{{ url('backend_establecimiento_edificio_listar', { 'id': valor.id }) }}"
+                >{{ valor }}</option>
+{% endfor %}
+</select>
+
+<span class="limpiar_float"></span>
+
+<span class="float_derecha">
+
+    <a href="{{ path('backend_establecimiento_edificio_new') }}">Crear nueva sede/anexo</a>
+</span>
+<span class="limpiar_float"></span>
+
+<br />
+<br />
+<br />
+<div id="lista_establecimiento_edificio"></div>
+<br />
+<br />
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+
+<script type="text/javascript">
+           
+$(document).ready( function() {
+    cargar_lista_establecimientos();
+    $('#cmb_establecimientos').change( function() { cargar_lista_establecimientos();});
+    
+});
+
+function cargar_lista_establecimientos() {
+
+    $("#divCargando").show();
+    var clave = $("#cmb_establecimientos").val();
+    
+    //esta forma es usando javascript puro
+    //var lista = document.getElementById("cmb_establecimientos");
+    //var clave = lista.options[lista.selectedIndex].value;
+    
+    //esta forma es sacando la url del combo como en el libro de cupon
+    //var destino = lista.options[lista.selectedIndex].getAttribute('data-url');
+
+    //usando FOSJsRouingBundle
+    $.ajax({
+        url: Routing.generate('backend_establecimiento_edificio_listar', { id: clave } ),
+        type: 'GET',
+        success: function (data){
+            $("#lista_establecimiento_edificio").html(data); },
+        });
+
+    $('#divCargando').hide();
+
+};
+</script>
+
+{% endblock %}

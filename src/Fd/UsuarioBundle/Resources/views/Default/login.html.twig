@@ -1,0 +1,13 @@
+{% extends '::layout.html.twig' %}
+
+{% block title %}Formulario de acceso{% endblock %}
+
+{% block menu_superior %}{% endblock %} {# anula la aparición del menu #}
+
+{% block main_content %}
+
+{{ parent() }}
+
+{% include 'UsuarioBundle:Default:login_sub1.html.twig' %}
+
+{% endblock %}

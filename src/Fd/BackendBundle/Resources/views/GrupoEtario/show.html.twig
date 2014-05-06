@@ -1,0 +1,57 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - GrupoEtario
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>GrupoEtario</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id: </th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Codigo: </th>
+            <td>{{ entity.codigo }}</td>
+        </tr>
+        <tr>
+            <th>Descripcion: </th>
+            <td>{{ entity.descripcion }}</td>
+        </tr>
+        <tr>
+            <th>Orden: </th>
+            <td>{{ entity.orden }}</td>
+        </tr>
+        <tr>
+            <th>Oferta: </th>
+            <td>{{ entity.oferta }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_grupo_etario') }}">
+            Volver a la lista
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('backend_grupo_etario_edit', { 'id': entity.id }) }}">
+            Editar
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('backend_grupo_etario_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="boton_rojo">Eliminar</button>
+        </form>
+    </li>
+</ul>
+
+{% include '::includes/volver.html.twig' %}
+
+{% endblock %}

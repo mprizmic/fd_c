@@ -1,0 +1,50 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Lista de Especializacion
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>Lista de Especializacion</h1>
+
+<ul>
+    <li>
+        <a href="{{ path('backend_especializacion_new') }}">
+            Crear nuevo registro
+        </a>
+    </li>
+</ul>
+
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Carrera</th>
+            <th>Titulo</th>
+            <th>Nombre</th>
+            <th>Duracion</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('backend_especializacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.carrera }}</td>
+            <td>{{ entity.titulo }}</td>
+            <td>{{ entity.nombre }}</td>
+            <td>{{ entity.duracion }}</td>
+            <td>                        <a href="{{ path('backend_especializacion_show', { 'id': entity.id }) }}">
+                                                    Mostrar
+                                                </a>                        <a href="{{ path('backend_especializacion_edit', { 'id': entity.id }) }}">
+                                                    || Editar
+                                                </a>            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

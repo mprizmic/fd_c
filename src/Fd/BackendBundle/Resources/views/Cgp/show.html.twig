@@ -1,0 +1,43 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Cgp
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>Cgp</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Numero</th>
+            <td>{{ entity.numero }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_cgp') }}">
+            Volver a la lista
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('backend_cgp_edit', { 'id': entity.id }) }}">
+            Editar
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('backend_cgp_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="boton_rojo">Eliminar</button>
+        </form>
+    </li>
+</ul>
+
+{% endblock %}

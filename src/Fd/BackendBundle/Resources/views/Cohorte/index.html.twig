@@ -1,0 +1,118 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Lista de Matrículas por año
+{% endblock %}
+ 
+{% block main_content %}
+
+    <div class="titulo">Matrícula por Año</div>
+    <br />
+    
+    <div class="instrucciones">
+        Para cargar matrícula seleccione el establecimiento y la carrera.<br />
+        Aparecerá la lista de los años ya ingresados.<br />
+        Edite el año que corresponda o cree uno nuevo.
+    </div>
+    <br />
+    
+    <select id="cmb_establecimientos">
+    {% for key, valor in establecimientos %}
+        <option value="{{ valor.id }}">{{ valor }}</option>
+    {% endfor %}
+    </select>
+    
+    <select id="cmb_carreras">
+        
+    </select>
+
+    <span class="limpiar_float"></span>
+
+    <span class="float_derecha">
+        <a href="{{ path('backend_cohorte_new') }}">Crear nuevo año para datos de matrícula</a>
+    </span>
+    <span class="limpiar_float"></span>
+
+    <br />
+    <br />
+    <div id="lista_anios"></div>
+    
+    <br />
+    <br />
+{% endblock %}
+
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}
+        
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+    $(document).ready( function() {
+
+        //cargo los datos iniciales para completar la pagina
+        cargar_combo_carreras();
+        cargar_lista_matricula();        
+        
+        //asigno los eventos
+        $('#cmb_establecimientos').change( function() 
+        { 
+            cargar_combo_carreras();
+            cargar_lista_matricula();
+        });
+                
+        $('#cmb_carreras').change( function()
+        { 
+            cargar_lista_matricula();
+        });
+        
+        
+    });
+
+    function cargar_combo_carreras() {
+        
+        var clave = $("#cmb_establecimientos").val();
+        $('#cmb_carreras option').remove();
+
+        //usando FOSJsRouingBundle
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            url: Routing.generate('carrera_combo', {establecimiento_id: clave} ),
+            success: function(data){
+                $.each(data, function(i){
+                    $('#cmb_carreras').append($("<option></option>").attr("value",this.value).text(this.text));
+                });
+            },
+        });
+
+    };
+
+    function cargar_lista_matricula() {
+
+        $("#divCargando").show();
+
+        var id_establecimiento = $("#cmb_establecimientos").val();
+        var id_carrera = $('#cmb_carreras').val();
+        
+        //usando FOSJsRouingBundle
+        $.ajax({
+            url: Routing.generate('backend_cohorte_listar', { establecimiento_id: id_establecimiento, carrera_id : id_carrera } ),
+            type: 'GET',
+            async: false,
+            success: function (data){
+                $("#lista_anios").html(data);
+            },
+        });
+        $('#divCargando').hide();
+    };    
+
+
+
+</script>
+
+{% endblock %}        

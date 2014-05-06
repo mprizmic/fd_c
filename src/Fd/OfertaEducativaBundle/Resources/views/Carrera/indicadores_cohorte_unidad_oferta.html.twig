@@ -1,0 +1,40 @@
+{# parametros: unidad_oferta
+
+escribe la tabla de cohortes de una carrera informada relacionada a un establecimiento
+
+ #}
+    {% set carrera = unidad_oferta.ofertas.carrera %}
+    <div class="identado_1">
+        
+        {# una unidad_oferta #}
+        <div>
+            <a href="{{path('carrera_ficha', {'carrera_id': carrera.id})}}">{{ carrera }}</a>
+        </div>
+            
+        {# las matriculas por año de la carrera #}
+        <table class="tabla_modo_1">
+            <thead>
+                <tr>
+                    <th>Año</th>
+                    <th>Ingresantes</th>
+                    <th>Matrícula</th>
+                    <th>Egreso</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% set cohortes = unidad_oferta.cohortes %}
+
+            {% set ordenados = cohortes | ksort_cohortes  %}
+
+            {% for uno in ordenados %}
+                <tr class="{{ cycle(['even','odd'],loop.index) }}">
+                    <td>{{ uno[0] }}</td> <!-- año cohorte -->
+                    <td>{{ uno[1] }}</td> <!-- matricula ingresantes -->
+                    <td>{{ uno[2] }}</td> <!-- matricula -->
+                    <td>{{ uno[3] }}</td> <!-- egreso -->
+                </tr>
+            {% endfor %} 
+            </tbody>
+        </table>
+        <br />
+    </div>

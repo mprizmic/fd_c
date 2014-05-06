@@ -1,0 +1,15 @@
+{# parametros: entities 
+colllection de establecimientos
+#}
+
+{% for key, valor in establecimientos %}
+    {% if loop.first %}
+        <option value="{{ valor.id }}" selected="selected" >
+            {{ valor }}
+        </option>
+    {% else %}
+        <option value="{{ valor.id }}">
+            {{ valor }}
+        </option>
+    {% endif %}
+{% endfor %}

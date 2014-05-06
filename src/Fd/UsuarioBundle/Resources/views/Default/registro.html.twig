@@ -1,0 +1,26 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo">Pantalla de registro de usuario</div>
+<br />
+
+<form action="{{ path('usuario_registro') }}" method="post" {{form_enctype(formulario) }}>
+    {{ form_errors(formulario) }}
+    {{ form_widget(formulario) }}
+    {{ form_rest(formulario) }}
+
+    <input class="boton" type="submit" value="Registro" />
+</form>
+
+
+<span class="float_derecha">
+    <a href="{{ path('portada') }}">
+        Volver
+    </a>
+</span>
+
+<br />
+<br />
+{% endblock %}

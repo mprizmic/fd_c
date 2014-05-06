@@ -1,0 +1,27 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Crear TituloEstadoValidez
+{% endblock %}
+ 
+{% block main_content %}
+{{ parent() }}
+
+<h1>Crear registro de TituloEstadoValidez </h1>
+
+<form action="{{ path('backend_tituloestadovalidez_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Crear</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_tituloestadovalidez') }}">
+            Volver a la lista
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

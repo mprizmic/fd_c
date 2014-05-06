@@ -1,0 +1,53 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - TituloEstadoValidez
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>TituloEstadoValidez</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id: </th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Fecha_estado_validez: </th>
+            <td>{{ entity.fechaestadovalidez|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Validez_desde: </th>
+            <td>{{ entity.validezdesde|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Validez_hasta: </th>
+            <td>{{ entity.validezhasta|date('Y-m-d H:i:s') }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_tituloestadovalidez') }}">
+            Volver a la lista
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('backend_tituloestadovalidez_edit', { 'id': entity.id }) }}">
+            Editar
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('backend_tituloestadovalidez_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="boton_rojo">Eliminar</button>
+        </form>
+    </li>
+</ul>
+
+{% include '::includes/volver.html.twig' %}
+
+{% endblock %}

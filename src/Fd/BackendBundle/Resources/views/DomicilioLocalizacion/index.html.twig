@@ -1,0 +1,56 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Lista de DomicilioLocalizacion
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>Lista de DomicilioLocalizacion</h1>
+
+<ul>
+    <li>
+        <a href="{{ path('backend_domicilio_localizacion_new') }}">
+            Crear nuevo registro
+        </a>
+    </li>
+</ul>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Domicilio</th>
+            <th>Localización</th>
+            <th>Principal</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('backend_domicilio_localizacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.domicilio }}</td>
+            <td>{{ entity.localizacion }}</td>
+            <td>{{ entity.principal }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('backend_domicilio_localizacion_show', { 'id': entity.id }) }}">
+                                                    Mostrar
+                                                </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('backend_domicilio_localizacion_edit', { 'id': entity.id }) }}">
+                                                    Editar
+                                                </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

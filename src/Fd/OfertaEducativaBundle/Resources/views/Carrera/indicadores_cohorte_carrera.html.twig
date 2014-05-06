@@ -1,0 +1,40 @@
+{# parametros: unidad_ofertas #}
+
+{% for unidad_oferta in unidad_ofertas %} 
+
+    {% set carrera = unidad_oferta.ofertas.carrera %}
+
+    <div class="identado_1">
+        
+        {# una carrera #}
+        <div>
+            <a href="{{path('carrera_ficha', {'carrera_id': carrera.id})}}">{{ carrera }}</a>
+        </div>
+            
+        {# las matriculas por año de la carrera #}
+        <br />
+        <table class="tabla_modo_1">
+            <thead>
+                <tr>
+                    <th>Cohorte</th>
+                    <th>Matrícula</th>
+                    <th>Desgranamiento</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% set cohortes = unidad_oferta.cohortes %}
+
+            {% set ordenados = cohortes | ksort_cohortes  %}
+
+            {% for uno in ordenados %}
+                <tr class="{{ cycle(['even','odd'],loop.index) }}">
+                    <td>{{ uno[0] }}</td>
+                    <td>{{ uno[1] }}</td>
+                    <td>{{ uno[2] }}</td>
+                </tr>
+            {% endfor %} 
+            </tbody>
+        </table>
+        <br />
+    </div>
+{% endfor %} 

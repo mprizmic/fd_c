@@ -1,0 +1,71 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block title %}
+{{ parent() }} - Búsqueda de autoridades
+{% endblock %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Búsqueda de autoridades</div>
+<div class="limpiar_float"></div>
+
+<div><a class="float_derecha boton_verde" href="{{ path('backend_autoridad_new') }}">Nueva autoridad</a></div>
+<div class="limpiar_float"></div>
+
+<fieldset>
+<legend class="resaltado">Filtros</legend>
+<form method="post" action="{{ path('backend_autoridad_buscar') }}">
+    <div class="ancho_10">
+    {{ form_rest(form) }}
+    </div>
+    <br />
+    <div style="display: block">
+         
+        <input type="submit" name="submit-filter" value="Buscar" />
+        <span class="separador"></span>
+        <a href="{{ path( "backend_autoridad_buscar" ) }}">Limpiar</a>
+
+    </div>
+</form>
+</fieldset>
+
+{% if autoridades %}
+    <br />
+
+    <table class="grilla">
+        <tr>
+            <th>Nombre</th>
+            <th>Establecimiento</th>
+            <th>Celular</th>
+            <th>Acciones</th>
+        </tr>
+
+        {% for autoridad in autoridades %}
+        <tr>
+            {% set una_autoridad = autoridad %}
+            <td><a href="{{path('backend_autoridad_edit', {'id': autoridad.id})}}">{{ autoridad }}</a></td>
+            <td><a href="{{path('establecimiento_ficha', {'establecimiento_id': autoridad.establecimiento.id })}}">{{ autoridad.establecimiento }}</a></td>
+            <td>{{ autoridad.celular }}</td>
+            <td><a href="{{path('backend_autoridad_edit', {'id': autoridad.id})}}">Editar</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {{ simple_paginator_render('backend_autoridad_buscar', null, {
+        'container_class':'simple_paginator',
+        'previousPageText':'Anterior',
+        'nextPageText':'Siguiente',
+        'currentClass':'Actual',
+        'firstPageText':'Primero',
+        'lastPageText':'Último'
+    }) }}  
+
+{% endif %}
+
+<br />
+<br />
+
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{# parametros: especializaciones #}
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Nómina de especializaciones</div>
+
+<div class="limpiar_float"></div>
+
+<div><a class="float_derecha boton_verde" href="{{ path('especializacion_nuevo') }}">Nueva especialización</a></div>
+<div class="limpiar_float"></div>
+
+<br />
+
+{{ simple_paginator_render('especializacion_nomina', null, {
+    'container_class':'simple_paginator',
+    'previousPageText':'Anterior',
+    'nextPageText':'Siguiente',
+    'currentClass':'actual',
+    'firstPageText':'Primero',
+    'lastPageText':'Último'
+}) }} 
+
+<table class="grilla">
+    <tr>
+        <th>Nombre</th>
+        <th>Norma</th>
+        <th>Estado</th>
+    </tr>
+
+    {% for especializacion in especializaciones %}
+    <tr>
+        <td><a href="{{path('especializacion_ficha', {'especializacion_id': especializacion.id})}}">{{ especializacion.nombre }}</a></td>
+        {% if espcializacion.oferta.normas[0] is defined %}
+            <td>{{ especializacion.oferta.normas[0] }}</a></td>
+        {% else %}
+            <td></td>
+        {% endif %}
+        <td>{{ especializacion.estado }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{{ simple_paginator_render('especializacion_nomina', null, {
+    'container_class':'simple_paginator',
+    'previousPageText':'Anterior',
+    'nextPageText':'Siguiente',
+    'currentClass':'actual',
+    'firstPageText':'Primero',
+    'lastPageText':'Último'
+}) }} 
+
+
+<div class="float_derecha boton_azul">
+<a href="{{path('especializacion_nomina_excel') }}">Salida a planilla de cálculo</a>
+</div>
+<div class="limpiar_float"></div>
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

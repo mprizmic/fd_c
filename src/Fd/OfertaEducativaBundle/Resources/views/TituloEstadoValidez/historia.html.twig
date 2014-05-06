@@ -1,0 +1,58 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo">Historial del trámite de validez</div>
+<br />
+<span class="mediana">
+{% render "OfertaEducativaBundle:Carrera:tarjeta_carrera" with {'carrera_id': carrera.id} %}
+</span>
+<br />
+
+
+<!-- estado actual -->
+<fieldset>
+    <legend>
+        Estado actual del trámite:
+    </legend>
+                    <p class="mediana">{{ carrera.estadoValidez }}</p>
+                    <p>Fecha del estado: {{ carrera.fechaEstadoValidez | date('d-m-yy') }}</p>
+                    
+                    <p>Validez Desde:   {% if carrera.validezDesde %}
+                                            {{ carrera.validezDesde | date('d-m-yy') }}
+                                        {% endif %}
+                    </p>
+                    <p>Validez Hasta:   {% if carrera.validezHasta %}
+                                            {{ carrera.validezHasta | date('d-m-yy')}}
+                                        {% endif %}
+                    </p>
+</fieldset>
+<br />
+<br />
+
+<!-- estados anteriores -->
+<fieldset>
+    <legend>
+        Estados anteriores del trámite
+    </legend>
+        <br />
+
+        {% for estado in estados %}
+            {{ estado.estadoValidez }} 
+            <span class="separador"></span>
+            ({{ estado.fechaEstadoValidez | date('d-m-yy') }})
+            <br />
+        {% else %}
+            <p colspan="4" class="centrado">No hay estados previos al actual</p>
+        {% endfor %}
+        <br />
+
+</fieldset>
+        
+<br />
+<br />
+
+{% include '::includes/volver.html.twig' %}
+
+{% endblock %}

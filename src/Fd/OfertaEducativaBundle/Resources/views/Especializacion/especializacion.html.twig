@@ -1,0 +1,147 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo">
+{{titulo}} {{ entity.etiqueta|lower}}
+</div>
+<br />
+
+    <form action="{{ path( 'especializacion_' ~ accion  , { 'id': entity.id }) }}" method="post" {{ form_enctype(formulario) }}>
+        <fieldset>
+            <legend class="resaltado">Datos generales</legend>
+        <table>
+            <tr>
+                <td>
+                    {{'*'}}{{ form_label(formulario.nombre) }}
+                </td>
+                <td>
+                    {{ form_errors(formulario.nombre) }}
+                    {{ form_widget(formulario.nombre, {'attr':{'size':50} } ) }}
+                </td>    
+            </tr>
+            <tr>
+                <td>
+                    {{ form_label(formulario.titulo) }}
+                </td>
+                <td>
+                    {{ form_errors(formulario.titulo) }}
+                    {{ form_widget(formulario.titulo, {'attr':{'size':50} } ) }}
+                </td>    
+            </tr>
+            <tr>
+                <td>
+                    {{'*'}}{{ form_label(formulario.tipo_especializacion) }}
+                </td>
+                <td>
+                    {{ form_errors(formulario.tipo_especializacion) }}
+                    {{ form_widget(formulario.tipo_especializacion) }}
+                </td>    
+            </tr>
+            <tr>
+                <td>
+                    {{ form_label(formulario.duracion) }}
+                </td>
+                <td>
+                    {{ form_errors(formulario.duracion) }}
+                    {{ form_widget(formulario.duracion, {'attr':{'size':3} } ) }}
+                </td>    
+            </tr>
+            <tr>
+                <td>           
+                    {{'*'}}{{ form_label(formulario.estado) }}
+                </td>
+                <td>
+                    {{ form_errors(formulario.estado) }}
+                    {{ form_widget(formulario.estado ) }}
+                </td>    
+            </tr>
+            <tr>
+                <td>           
+                    {{ form_label(formulario.ultima_cohorte_valida) }}
+                </td>
+                <td>
+                    {{ form_errors(formulario.ultima_cohorte_valida) }}
+                    {{ form_widget(formulario.ultima_cohorte_valida ) }}
+                </td>    
+            </tr>
+        </table>        
+        </fieldset>
+        {{ form_rest(formulario) }}
+<!-- botones de acciones -->
+        <br />
+        <div class="float_izquierda separador">
+            <input type="submit" value="{{ accion | capitalize }}" />
+        </div>
+
+    </form>
+
+<!--     <div style="display : block"> -->
+        {% if accion == 'actualizar' %}
+            <form action="{{ path('especializacion_eliminar', { 'id': entity.id }) }}" method="post">
+                {{ form_widget(delete_form) }}
+                <span class="float_izquierda separador">
+                    <input type="submit" class="boton_rojo" value="Eliminar" onsubmit="return confirm('Está seguro?')" />
+                </span>
+            </form>
+
+            <a href="{{ path('especializacion_ficha', {'especializacion_id': entity.id }) }}">Cancelar</a>
+        {% endif %}
+
+        {% if accion == 'crear' %}
+            <a  href="{{ path('especializacion_nomina' ) }}">Cancelar</a>
+        {% endif %}
+
+    <!--</div>-->
+    <br />
+    <span class="limpiar_float"></span>
+
+<br />
+
+<!-- grilla de normas -->
+<fieldset>
+    <table class="grilla_fit">
+        <tr>
+            <th>Normas relativas a la especialización</th>
+            <th></th>
+        </tr>
+
+        {% set oferta = entity.oferta %}
+        {% if oferta is null %}
+        {% else %}
+            {% set normas = oferta.normas %}
+            {% if normas is null %}
+            {% else %}
+
+                {% for norma in normas %}
+                <tr>
+                    <td>{{ norma }}</td>
+                    <td>
+                        <a href="{{ path('carrera_desvincular_norma', {'carrera_id': entity.id, 'norma_id': norma.id } ) }}">Desvincular norma de la carrera</a> - 
+                        <a href="{{ path('norma_ver', {'id':norma.id} )}}">Ver norma</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </table>
+    <br />
+
+    {% if accion == 'actualizar' %}
+        <a href="{{ path('backend_norma_new') }}">Agregar nueva norma</a>
+        <span class="separador"></span>
+        <a href="{{ path('norma_buscar_asignar_carrera', {'carrera_id':entity.id} ) }}">Asignar norma existente a la carrera</a>
+    {% endif %}
+
+</fieldset>
+        
+<br />
+<br />
+
+{% if accion == 'actualizar' %}
+    <div class="float_derecha limpiar_float volver"><a href="{{ path('especializacion_ficha', { 'especializacion_id':entity.id } ) }}">Volver a la ficha</a></div>
+    <div class="limpiar_float"></div>
+{% endif %}
+
+{% endblock %}

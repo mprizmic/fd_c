@@ -1,0 +1,11 @@
+<div class="tarjeta1">
+    <span class="float_izquierda">
+    <a href="{{ path( 'carrera_ficha', {'carrera_id': carrera.id } ) }}">{{carrera.nombre}}</a>
+    </span>
+    
+    <span>
+    <a class="muychica" href="{{ path( 'carrera_ficha', {'carrera_id': carrera.id } ) }}">{{ '(' ~ carrera.oferta.normas[0] ~ ')' }}</a>
+    </span>
+    <span class="limpiar_float"></span>
+        
+</div>

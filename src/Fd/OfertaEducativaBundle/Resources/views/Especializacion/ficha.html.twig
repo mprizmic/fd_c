@@ -1,0 +1,42 @@
+{# parametros :  especializacion #}
+
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Ficha de especialización</div>
+
+<div class="limpiar_float"></div>
+<br />
+
+{# datos generales 
+#}
+<fieldset>
+    <div>Especialización: <span class="resaltado grande">{{ especializacion.nombre }}</span></div>
+    <div>Título: {{ especializacion.titulo }}</div>
+    <div>Duración: {{ especializacion.duracion }}</div>
+    <div>Año de la última cohorte habilitada: {{ especializacion.ultimaCohorteValida|default('Sin datos') }}</div>
+</fieldset>
+<div class="float_derecha"><a href="{{ path( 'especializacion_editar', { 'id': especializacion.id }) }}">Editar</a></div>
+<br />
+
+{# normas #}
+<fieldset>
+    <legend class="resaltado">Normas relativa a la especialización</legend>
+    {% for norma in especializacion.oferta.normas %}
+        <div class="separador">{{ norma }}</div>
+    {% endfor %}  
+</fieldset>
+<div class="float_derecha"><a href="{{ path( 'especializacion_editar', { 'id': especializacion.id }) }}">Editar</a></div>
+
+<br />
+
+{# donde se dicta la especializacion #}
+{% render "OfertaEducativaBundle:Especializacion:donde_se_dicta" with {'especializacion_id': especializacion.id } %}
+<div class="float_derecha"><a href="{{ path( 'especializacion_asignar_establecimiento', { 'id': especializacion.id } ) }}">Asignar establecimiento</a></div>
+<span class="limpiar_float"></span>
+<br />
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

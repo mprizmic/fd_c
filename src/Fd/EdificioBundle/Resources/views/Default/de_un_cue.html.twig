@@ -1,0 +1,58 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Edificios de un establecimiento</div>
+
+<div class="limpiar_float"></div>
+<br />
+<div class="chica italico">Establecimiento</div>
+<span class="mediana">
+{% render "EstablecimientoBundle:Establecimiento:tarjeta_establecimiento" with {'establecimiento_id': establecimiento_id} %}
+</span>
+<br />
+
+{% for edificio in edificios %}
+    <span class="mediana"><a href="{{ path('edificio_ficha', {'id': edificio.id })}}">{{ edificio }}</a></span>
+    
+    {% include "EdificioBundle:Default:includes/ver_mapa.html.twig" with 
+        {'calle': edificio.domicilioPrincipal.calle,
+         'altura': edificio.domicilioPrincipal.altura } %}
+    <br />
+    {% set establecimientos = edificio.establecimiento %}
+    {% for establecimiento_edificio in establecimientos %}
+        {% if establecimiento_edificio.establecimientos.id == establecimiento_id %}
+            {{ establecimiento_edificio.cueAnexo ? 'Anexo: ' ~ establecimiento_edificio.cueAnexo : '' }}<br/>
+        {% endif %}
+    {% endfor %}
+    Distrito escolar: {{ edificio.distritoEscolar }}<br/>
+    Barrio: {{ edificio.barrio.nombre }}<br/>
+    Comuna: {{ edificio.comuna.numero }}<br/>
+    CGP: {{ edificio.cgp.numero }}<br/>
+    CUI: {{ edificio.cui }}<br />
+
+    <span class="resaltado">Todos los domicilios del edificio:</span><br/>
+    {% for domicilio in edificio.domicilios %}
+    <span class="separador"></span>{{domicilio.completo}}<br/>
+    {% endfor %}
+    <br />
+
+    <span class="resaltado">Establecimientos con los que comparte el edificio:</span><br/>
+    {% for vecino in edificio.vecinos %}
+    <span class="separador"></span>{{ vecino.nombre }}<br/>
+
+    {% else %}
+    
+    <span class="separador"></span>No comparte<br/>
+    {% endfor %}
+    <br />
+    <br />
+
+
+
+{% endfor %}
+
+{% include '::includes/volver.html.twig' %}
+    
+{% endblock %}

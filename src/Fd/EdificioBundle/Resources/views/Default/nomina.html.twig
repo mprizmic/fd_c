@@ -1,0 +1,61 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Nómina de edificios</div>
+
+<div class="limpiar_float"></div>
+
+<br />
+
+{{ simple_paginator_render('edificio_nomina', null, {
+    'container_class':'simple_paginator',
+    'previousPageText':'Anterior',
+    'nextPageText':'Siguiente',
+    'currentClass':'actual',
+    'firstPageText':'Primero',
+    'lastPageText':'Último'
+}) }}  
+
+<table class="grilla">
+    <tr>
+        <th>Domicilio principal</th>
+        <th>CUI</th>
+        <th>DE</th>
+        <th>Comuna</th>
+        <th>CGP</th>
+        <th>Barrio</th>
+    </tr>
+
+    {% for edificio in edificios %}
+    <tr>
+        <td><a href="{{ path('edificio_ficha', {'id':edificio.id } ) }}">{{ edificio }}</a></td>
+        <td>{{ edificio.cui }}</td>
+        <td>{{ edificio.distritoEscolar }}</td>
+        <td>{{ edificio.comuna.numero }}</td>
+        <td>{{ edificio.cgp.numero }}</td>
+        <td>{{ edificio.barrio.nombre }}</td>
+        {% set cuales = '' %}
+        {% for edificio_establecimiento in edificio.establecimiento %}
+            {% set cuales = cuales ~ edificio_establecimiento.establecimientos.apodo ~ ' - ' %}
+        {% endfor  %}
+        {% set cuales = cuales ~ '...' %}
+        
+        <td><a href="{{ path('establecimiento_de_un_cui', {'edificio_id': edificio.id } ) }}">{{ cuales }}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{{ simple_paginator_render('edificio_nomina', null, {
+    'container_class':'simple_paginator',
+    'previousPageText':'Anterior',
+    'nextPageText':'Siguiente',
+    'currentClass':'actual',
+    'firstPageText':'Primero',
+    'lastPageText':'Último'
+}) }}  
+
+{% include '::includes/volver.html.twig' %}
+
+{% endblock %}

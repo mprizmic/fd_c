@@ -1,0 +1,44 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Editar OfertaEducativa
+{% endblock %}
+ 
+{% block main_content %}
+{{ parent() }}
+
+<h1>Editar OfertaEducativa</h1>
+
+<form action="{{ path('backend_ofertaeducativa_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    <p>
+        {{ form_errors(edit_form.carrera) }}
+        {{ form_label(edit_form.carrera) }}
+        {{ form_widget(edit_form.carrera) }}
+    </p> 
+    <p>
+        {{ form_errors(edit_form.normas) }}
+        {{ form_label(edit_form.normas) }}
+        {{ form_widget(edit_form.normas ) }}
+    </p> 
+
+    {{ form_rest(edit_form) }}    
+    <p>
+        <button type="submit">Guardar</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_ofertaeducativa') }}">
+            Volver a la lista
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('backend_ofertaeducativa_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="boton_rojo">Eliminar</button>
+        </form>
+    </li>
+</ul>
+
+{% endblock %}

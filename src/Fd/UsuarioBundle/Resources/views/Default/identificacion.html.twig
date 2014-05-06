@@ -1,0 +1,12 @@
+{# empty Twig template #}
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+
+<h1>{{ usuario.nombre ~ ' ' ~ usuario.apellido }}</h1>
+<h2>Usuario: {{ usuario.nombreUsuario }}</h2>
+<p>Email: {{ usuario.email }}</p>
+
+{% include '::includes/volver.html.twig' %}
+
+{% endblock %}

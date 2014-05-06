@@ -1,0 +1,36 @@
+{% block main_content %}
+
+{% if error %}
+<div>{{ error.message }}</div>
+{% endif %}
+
+<br />
+<div class="resaltado mediana centrado">Accedé con tu usuario</div>
+<br />
+
+<div class="login">
+    <fieldset>
+        <form action="{{ path('usuario_login_check') }}" method="post">
+            <div >
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" />
+            </div>
+            <div class="limpiar_float"></div>
+            <div>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="_password" />
+            </div>
+            <div class="limpiar_float"></div>
+            <div>
+                <label for="no_cerrar">No cerrar sesión</label>
+                <input type="checkbox" id="no_cerrar" name="_remember_me" />
+            </div>
+            <br />
+
+            <input type="submit" name="login" value="Remitir" />
+        </form>
+    </fieldset>
+</div>
+<br />
+<br />
+{% endblock %}

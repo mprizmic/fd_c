@@ -1,0 +1,12 @@
+{% extends '::frontend.html.twig' %}
+
+{% block main_content %}
+<!-- tiene un flash y luego el contenido -->
+    {% if app.session.hasFlash('notice') %}
+        <div id="flash">
+            {{ app.session.flashbag.get('notice')  }}
+            <script>$("#flash").fadeIn('slow').delay(800).fadeOut('slow');</script>
+        </div>
+    {% endif %}
+    me cago
+{% endblock %}                          

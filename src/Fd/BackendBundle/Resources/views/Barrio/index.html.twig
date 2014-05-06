@@ -1,0 +1,47 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Lista de Barrio
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>Lista de Barrio</h1>
+
+<ul>
+    <li>
+        <a href="{{ path('backend_barrio_new') }}">
+            Crear nuevo registro
+        </a>
+    </li>
+</ul>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Abreviatura</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('backend_barrio_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.nombre }}</td>
+            <td>{{ entity.abreviatura }}</td>
+            <td>
+                        <a href="{{ path('backend_barrio_show', { 'id': entity.id }) }}">
+                                                    Mostrar
+                                                </a>||
+                        <a href="{{ path('backend_barrio_edit', { 'id': entity.id }) }}">
+                                                    Editar
+                                                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

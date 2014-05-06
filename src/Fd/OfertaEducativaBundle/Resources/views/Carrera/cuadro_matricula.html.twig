@@ -1,0 +1,90 @@
+{# parametros:             
+            'unidades_ofertas' => $unidades_ofertas,
+            'carrera' => $carrera,
+            'salida' => $salida,
+            'anio_desde' => $anio_desde,
+            'anio_hasta' => $hoy,
+ #}
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="limpiar_float"></div>
+<span class="mediana">
+{% render "OfertaEducativaBundle:Carrera:tarjeta_carrera" with {'carrera_id': carrera.id} %}
+</span>
+
+<br />
+<div class="titulo">Cuadro de matrícula de la carrera por establecimientos</div>
+<br />
+<br />
+
+<table class="grilla">
+    <thead>
+        <tr class="centrado">
+            <td></td>
+            {% for i in anio_desde..anio_hasta %}
+                <td colspan="3">Año {{ i }}</td>
+            {% endfor %}
+        </tr>
+        <tr class="centrado">
+            <td></td>
+            {% for i in anio_desde..anio_hasta %}
+                <td colspan="3">Matrícula</td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td class="resaltado">Establecimiento</td>
+            {% for i in anio_desde..anio_hasta %}
+                <td class="chica">Ingresantes</td>
+                <td class="chica">Matrícula</td>
+                <td class="chica">Graduados</td>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for un_establecimiento in salida %}
+            <tr>
+                <td><a href="{{ path('establecimiento_ficha', {'establecimiento_id':un_establecimiento['id'] } ) }}">{{ un_establecimiento['nombre'] }}</a></td>
+                {% for i in anio_desde..anio_hasta %}
+                    {% if un_establecimiento['cohortes'][i] is defined %}
+                        <td>{{ un_establecimiento['cohortes'][i]['ingresantes'] }}</td>
+                        <td>{{ un_establecimiento['cohortes'][i]['matricula'] }}</td>
+                        <td>{{ un_establecimiento['cohortes'][i]['graduados'] }}</td>
+                    {% else %}
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+         {% endfor %}
+
+<!--- fila de totales --->
+            <tr>
+                <td>TOTALES</td>
+                
+                {% for i in anio_desde..anio_hasta %}
+
+                    {# blanqueo los contadores #}
+                    {% set total_ingresantes, total_matricula, total_egreso = 0, 0, 0 %}
+
+                    {% for un_establecimiento in salida %}
+                        {% if un_establecimiento['cohortes'][i] is defined %}
+                            {% set total_ingresantes = total_ingresantes + un_establecimiento['cohortes'][i]['ingresantes'] %}
+                            {% set total_matricula = total_matricula + un_establecimiento['cohortes'][i]['matricula'] %}
+                            {% set total_egreso = total_egreso + un_establecimiento['cohortes'][i]['graduados'] %}
+                        {% endif %}
+                    {% endfor %}
+                    <td>{{ total_ingresantes }}</td>
+                    <td>{{ total_matricula }}</td>
+                    <td>{{ total_egreso }}</td>
+                {% endfor %}
+            </tr>
+    </tbody>
+</table>
+{% include 'EstablecimientoBundle:Default:includes/fuente.html.twig' %}
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

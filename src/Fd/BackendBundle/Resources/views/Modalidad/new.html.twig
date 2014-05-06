@@ -1,0 +1,26 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Crear Modalidad
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>Crear registro de Modalidad </h1>
+
+<form action="{{ path('backend_modalidad_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Crear</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_modalidad') }}">
+            Volver a la lista
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

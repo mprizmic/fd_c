@@ -1,0 +1,23 @@
+{# parametros:
+entities que es una collection de localizaciones
+#}
+
+<table class="grilla">
+    <thead>
+        <tr>
+            <th>Unidad educativa</th>
+            <th>Sede/anexo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ entity.unidadEducativa }}</td>
+            <td>{{ entity.establecimientoEdificio }}</td>
+            <td><a href="{{ path('backend_localizacion_edit', { 'id': entity.id }) }}">Editar</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

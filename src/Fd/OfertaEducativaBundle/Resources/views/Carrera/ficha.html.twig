@@ -1,0 +1,93 @@
+{# parametros :  carrera #}
+
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">{{ carrera.nombre }}</div>
+
+<div class="limpiar_float"></div>
+<br />
+
+{# titulos #}
+<fieldset>
+    <legend class="resaltado">Título/s que otorga</legend>
+    {% for titulo in carrera.titulos %}
+        <div>
+            <a href="{{ path('backend_titulo_editar', {'id':titulo.id } ) }}">{{ titulo.nombre }}</a>
+        </div>
+        
+    {% else %}
+        <div>Sin datos</div>
+    {% endfor %}
+</fieldset>
+<div class="float_derecha"><a href="{{ path( 'carrera_editar', { 'id': carrera.id }) }}">Editar</a></div>
+
+<br />
+
+{# datos generales #}
+<fieldset>
+    <div>Tipo de formación: {{ carrera.formacion }}</div>
+    <div>Estado: {{ carrera.estado }}</div>
+    <div>Duración: {{ carrera.duracion }}</div>
+</fieldset>
+<div class="float_derecha"><a href="{{ path( 'carrera_editar', { 'id': carrera.id }) }}">Editar</a></div>
+
+<br />
+
+{# normas #}
+<fieldset>
+    <legend class="resaltado">Normas relativas a la carrera</legend>
+    {% set oferta  = carrera.oferta %}
+    {% if oferta is null %}
+    {% else %}  
+        {% set normas = oferta.normas %}
+        {% if normas is null %}
+        {% else %}  
+            {% for norma in oferta.normas %}
+                <div class="separador">{{ norma }}</div>
+            {% endfor %}  
+        {% endif %}  
+    {% endif %}  
+</fieldset>
+<div class="float_derecha"><a href="{{ path( 'carrera_editar', { 'id': carrera.id }) }}">Editar</a></div>
+
+<br />
+
+{# donde se dicta la carrera #}
+{% render "OfertaEducativaBundle:Carrera:donde_se_dicta" with {'carrera_id': carrera.id } %}
+<div class="float_derecha"><a href="{{ path( 'carrera_asignar_establecimiento', { 'id': carrera.id }) }}">Asignar establecimiento</a></div>
+<span class="limpiar_float"></span>
+
+<br />
+
+{# orientaciones #}
+{% if carrera.orientaciones | length > 0 %}
+<fieldset>
+    <legend class="resaltado">Orientaciones</legend>
+    {% for orientacion in carrera.orientaciones %}
+        <div class="separador">{{ orientacion }}</div>
+    {% endfor %}  
+</fieldset>
+<div class="float_derecha"><a href="{{ path( 'carrera_editar', { 'id': carrera.id }) }}">Editar</a></div>        
+<br />
+{% endif %}
+
+{# cuadro de matricula de la carrera por establecimiento donde se dicta #}
+<br />
+<br />
+<fieldset>
+    <a class="resaltado" target="_blank" href="{{ path('carrera_cuadro_matricula', {'carrera_id': carrera.id } ) }}">Clickee aquí para ver el cuadro de matrícula por establecimiento</a><br/>
+</fieldset>
+<br />
+
+{# alguna documentacion del plan o los planes de estudio #}
+<br />
+<fieldset>
+    <a class="resaltado" href="{{ path('en_desarrollo') }}">Clickee aquí para ver el plan de estudios</a><br/>
+</fieldset>
+<br />
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

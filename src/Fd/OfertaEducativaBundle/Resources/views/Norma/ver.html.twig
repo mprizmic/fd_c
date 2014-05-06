@@ -1,0 +1,45 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<h1>{{titulo}} {{ entity.etiqueta|lower}}</h1>
+    
+    <table>
+        <tr>
+            <td>
+                {{'Número de norma:'}}
+            </td>
+            <td>
+                {{ entity.numero }}
+            </td>    
+        </tr>
+        <tr>
+            <td>
+                {{'Tipo:'}}
+            </td>
+            <td>
+                {{ entity.tipoNorma.descripcion }}
+            </td>    
+        </tr>
+        <tr>
+            <td>
+                {{'Año:'}}
+            </td>
+            <td>
+                {{ entity.anio }}
+            </td>    
+        </tr>
+        <tr>
+            <td>
+                {{ 'Descripción:'}}
+            </td>
+            <td>
+                {{ entity.descripcion }}
+            </td>    
+        </tr>
+    </table>        
+  
+{% include '::includes/volver.html.twig' %}    
+
+{% endblock %}

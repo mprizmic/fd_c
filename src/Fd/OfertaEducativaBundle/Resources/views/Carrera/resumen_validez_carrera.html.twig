@@ -1,0 +1,45 @@
+{# parametros: carrera. clase-css
+
+escribe la tabla de cohortes de una carrera informada relacionada a un establecimiento  #}
+
+<tr class="{{clase_css}}">        
+        <td>
+            <a class="mediana" href="{{path('carrera_ficha', {'carrera_id': carrera.id})}}">{{ carrera }}</a>
+            <br />
+            {% set norma = carrera.oferta.normas[0] %}
+
+            <div name ="mostrable">
+                <span class="chica" data="{{carrera.id}}">({{ norma }}) [+info]</span>
+                {# este legend se muestra y se esconde #}
+                <fieldset class="invisible">
+                    <legend class="resaltado">Normas relativas a la carrera</legend>
+                    {% for norma in carrera.oferta.normas %}
+                        <div class="separador">{{ norma }}</div>
+                    {% endfor %}  
+                </fieldset>
+            </div>
+        
+        </td>
+        <td>
+            {{ carrera.estadoValidez }}<br />
+            <a href="{{ path( 'carrera_historia_estado_validez', {'id': carrera.id} ) }}" class="chica" target="_blank">[+info]</a>
+        </td>
+        <td>
+            {% if carrera.fechaEstadoValidez is null %}
+            {% else%}
+                {{ carrera.fechaEstadoValidez | date('d-m-Y')}}
+            {% endif%}
+        </td>
+        <td>
+            {% if carrera.validezDesde is null %}
+            {% else%}
+                {{ carrera.fechaEstadoValidez | date('d-m-Y')}}
+            {% endif%}
+        </td>
+        <td>
+            {% if carrera.validezHasta is null %}
+            {% else%}
+                {{ carrera.validezHasta | date('d-m-Y')}}
+            {% endif%}
+        </td>
+</tr>

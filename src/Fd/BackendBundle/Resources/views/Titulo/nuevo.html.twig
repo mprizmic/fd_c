@@ -1,0 +1,24 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block main_content %}
+
+<h1>Crear registro de Título</h1>
+
+<form action="{{ path('backend_titulo_create') }}" method="post" {{ form_enctype(form) }}>
+    <div class="ancho_15">
+        {{ form_widget(form) }}
+    </div>
+    <p>
+        <button type="submit">Crear</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_titulo_buscar') }}">
+            Volver
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

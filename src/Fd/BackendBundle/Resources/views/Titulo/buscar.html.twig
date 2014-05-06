@@ -1,0 +1,70 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Búsqueda de títulos</div>
+<div class="limpiar_float"></div>
+
+<div><a class="float_derecha boton_verde" href="{{ path('backend_titulo_nuevo') }}">Nuevo titulo</a></div>
+<div class="limpiar_float"></div>
+
+<fieldset>
+<legend class="resaltado">Filtros</legend>
+<form method="post" action="{{ path('backend_titulo_buscar') }}">
+    <div class="ancho_5">
+    {{ form_rest(form) }}
+    </div>
+    <br />
+    <div style="display: block">
+         
+        <input type="submit" name="submit-filter" value="Buscar" />
+        <span class="separador"></span>
+        <a href="{{ path( "backend_titulo_buscar" ) }}">Limpiar</a>
+
+    </div>
+</form>
+</fieldset>
+
+{% if titulos is not null %}
+    {% if titulos | length > 0 %}
+        <br />
+
+        <table class="grilla">
+            <tr>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Estado validez</th>
+                <th>Acciones</th>
+            </tr>
+
+            {% for titulo in titulos %}
+            <tr>
+                {% set el_titulo = titulo.nombre %}
+                <td><a href="{{path('backend_titulo_editar', {'id': titulo.id})}}">{{ el_titulo }} </a></td>
+                <td>{{ titulo.estado }}</td>
+                <td>{{ titulo.estadoValidez }}</td>
+                <td><a href="{{path('backend_titulo_editar', {'id': titulo.id})}}">Editar</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        {{ simple_paginator_render('backend_titulo_buscar', null, {
+            'container_class':'simple_paginator',
+            'previousPageText':'Anterior',
+            'nextPageText':'Siguiente',
+            'currentClass':'Actual',
+            'firstPageText':'Primero',
+            'lastPageText':'Último'
+        }) }}  
+    {% else %}
+        <br />
+        <div class="descriptivo">No hay datos para los filtros especificados</div>
+
+    {% endif %}
+{% endif %}
+
+<br />
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

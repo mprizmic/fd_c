@@ -1,0 +1,29 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+
+<h1>Editar vecino de edificio</h1>
+
+<form action="{{ path('vecino_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit">Guadar</button>
+    </p>
+</form>
+
+<form action="{{ path('vecino_delete', { 'id': entity.id }) }}" method="post">
+    {{ form_widget(delete_form) }}
+
+
+    <span class="float_izquierda separador">
+        <button type="submit" class="boton_rojo">Eliminar</button>
+    </span>
+</form>
+
+<a class="separador" href="{{ path('vecino') }}">Volver a la lista</a>
+
+<div class="limpiar_float"></div>
+<br />
+<br />
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Niveles de un establecimiento</div>
+
+<div class="limpiar_float"></div>
+<br />
+
+{% render "EstablecimientoBundle:Establecimiento:tarjeta_establecimiento" with {'establecimiento_id': establecimiento.id} %}
+
+<br />
+
+{% for unidad in unidades_educativas %}
+    <div class="resaltado">{{ unidad.nivel.nombre }}</div>
+    Autoridad: 
+    {% if unidad.cargoAutoridad %}
+        <span class="italico">{{unidad.cargoAutoridad.nombre}}</span>
+    {% endif %}
+    {% if unidad.nombreAutoridad %}
+        {{ unidad.nombreAutoridad}}
+    {% endif %}
+<br />
+{% endfor %}
+
+<br />
+
+{% include 'EstablecimientoBundle:Default:includes/turnos_niveles.html.twig' with { 'establecimiento': establecimiento } %}
+
+<br />
+
+{% include '::includes/volver.html.twig' %}
+    
+<br />
+
+{% endblock %}

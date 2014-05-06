@@ -1,0 +1,85 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo">Búsqueda de norma para asignar a carrera</div>
+
+<div><a class="float_derecha boton_verde" href="{{ path('backend_norma_new') }}">Nueva norma</a></div>
+<div class="limpiar_float"></div>
+
+<form action="{{ path('norma_buscar_asignar_carrera', {'carrera_id': carrera_id} ) }}" method="POST">
+    <table>
+        <tr>
+            <td>          
+                {{ form_label( formulario.numero ) }}
+            </td>
+            <td>
+                {{ form_widget( formulario.numero ) }}
+            </td>
+        </tr>
+        <tr>
+            <td>          
+                {{ form_label( formulario.anio ) }}
+            </td>
+            <td>
+                {{ form_widget( formulario.anio ) }}
+            </td>
+        </tr>
+                    
+        {{ form_rest( formulario ) }}
+    </table>
+
+    <br />
+    <div style="display: block">
+         
+        <input type ="submit" value="Buscar">
+        <span class="separador"></span>
+        <a href="{{ path( "norma_buscar_asignar_carrera", {'carrera_id': carrera_id } ) }}">Limpiar</a>
+
+    </div>
+</form>
+
+
+{% if normas %}
+    <br />
+    <table class="grilla_fit">
+            <tr>
+                <th>Número</th>
+                <th>Año</th>
+                <th>Tipo</th>
+                <th>Descripción</th>
+                <th></th>
+            </tr>
+            {% for norma in normas %}
+            <tr>
+                <td>{{ norma.numero }}</td>
+                <td>{{ norma.anio }}</td>
+                <td>{{ norma.tipo }}</td>
+                <td>{{ norma.descripcion }}</td>
+
+                <td><a href="{{ path( 'norma_vincular_carrera', { 'carrera_id':carrera_id, 'norma_id': norma.id } ) }}">Asignar a carrera</a>
+                    <span class="separador"></span>
+                    <a href="{{ path('norma_ver', {'id':norma.id} )}}">Ver norma</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+    {{ simple_paginator_render('norma_buscar_asignar_carrera', null, {
+        'routeParams' : {'carrera_id': carrera_id},
+        'container_class':'simple_paginator',
+        'previousPageText':'Anterior',
+        'nextPageText':'Siguiente',
+        'currentClass':'Actual',
+        'firstPageText':'Primero',
+        'lastPageText':'Último'
+    }) }}  
+
+{% endif %}
+
+<br />
+<br />
+
+{% endblock %}

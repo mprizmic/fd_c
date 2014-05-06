@@ -1,0 +1,39 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo">Establecimientos con los que se comparten edificios</div>
+
+<br />
+
+<table CELLSPACING="5" border="0">
+{% for establecimiento in establecimientos %}
+    <tr spancol="2">
+        <td>
+            <br />
+            <span><a href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento.id })}}">{{ establecimiento.apodo }}</a></span>
+        </td>
+    </tr>
+    {% for sede in establecimiento.edificio %}
+        <tr VALIGN="top">
+            <td>
+                {% set edificio = sede.edificios %}
+                {{ edificio }}
+            </td>
+            <td>
+                {% for vecino in edificio.vecinos %}
+                    <span>{{ vecino }}</span><br />
+                {% else %}
+                    No comparte
+                {% endfor %}
+            </td>
+        </tr>
+    {% endfor %}
+{% endfor %}
+
+</table>
+
+{% include '::includes/volver.html.twig' %}
+    
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<br />
+<div class="titulo float_izquierda">Establecimentos</div>
+
+<div class="limpiar_float"></div>
+<br />
+
+<table class="grilla" >
+        {% for i in 0..4 %}
+    <tr>
+        {% for j in 0..4 %}
+            {% set indice = i*5 + j %}
+            {% if indice < (establecimientos|length) %}
+                <td style="text-align: center; padding-top: 1em;padding-bottom: 1em;">
+                    {% set establecimiento = establecimientos[indice] %}
+                    <a class="mediana" href="{{path('establecimiento_ficha', {'establecimiento_id':establecimiento.id})}}">{{ establecimiento.apodo }}</a>
+                </td>
+                
+            {% else %}
+                <td></td>
+            {% endif %}
+        {% endfor %}
+    </tr>
+        {% endfor %}
+</table>
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

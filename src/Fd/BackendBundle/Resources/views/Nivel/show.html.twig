@@ -1,0 +1,51 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Nivel
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>Nivel</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <td>{{ entity.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Abreviatura</th>
+            <td>{{ entity.abreviatura }}</td>
+        </tr>
+        <tr>
+            <th>Orden</th>
+            <td>{{ entity.orden }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_nivel') }}">
+            Volver a la lista
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('backend_nivel_edit', { 'id': entity.id }) }}">
+            Editar
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('backend_nivel_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="boton_rojo">Eliminar</button>
+        </form>
+    </li>
+</ul>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+#menu_superior {
+    background:#08C;
+    width: 100%;
+    height: 35px;
+    color: #08C;
+    border-top: 1px solid #424242;
+    border-bottom: 1px solid #424242;
+    padding: 0px auto 0;
+    /*font-weight: bold;*/
+    /*margin: 15px auto 0;*/
+    margin:0;
+    /*font-family:'Trebuchet MS',Arial,Verdana,Sans-Serif;*/
+}
+#menu_superior li {
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}
+#menu_superior {
+    margin: 0;
+    padding: 0;
+}
+#menu_superior ul {
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#menu_superior li a {
+    color: #FFFFFF;
+    display: block;
+    /*font-weight: normal;*/
+    padding: 9px 15px 8px;
+    text-transform: none;
+    text-decoration: none;
+/*    margin: 4px;*/
+}
+#menu_superior li span, #menu_superior li a:link, #menu_superior li a:visited {
+    color: #FFFFFF;
+    display: block;
+    /*font-weight: normal;*/
+    padding: 9px 15px 8px;
+    text-transform: none;
+    margin: 0;
+}
+#menu_superior li a:active, #menu_superior li a:hover {
+    color:  #FFF;
+    background: darkred;
+    text-decoration: none;
+/*    margin: 3px 3px -3px 3px;*/
+/*    padding: 9px 15px 8px;*/
+}
+#menu_superior li li a:link, #menu_superior li li a, #menu_superior li li a:visited {
+    color: #FFF;
+    font-weight: normal;
+    text-transform: none;
+    background:  #08C;
+    width: 150px;
+    float: none;
+    margin: 0;
+    padding: 7px 10px;
+    border-bottom: 1px solid #FFF;
+    border-left: 1px solid #FFF;
+    border-right: 1px solid #FFF;
+}
+#menu_superior li li a:hover, #menu_superior li li a:active {
+/*    background: #e3e3e3;*/
+/*    color: #000000;*/
+    padding: 7px 10px;
+    text-decoration: underline;
+}
+#menu_superior li {
+    float: left;
+    padding: 0;
+}
+#menu_superior li ul a {
+    width: 140px;
+    text-decoration: none;
+}
+#menu_superior li ul {
+    position: absolute;
+    margin: 0 0 0 0;
+    z-index: 9999;
+    left: -999em;
+    /*height: auto;*/
+    width: 170px;
+    padding: 0;
+}
+#menu_superior li:hover, #menu_superior li.sfhover {
+    position: static;
+}
+#menu_superior li ul ul {
+    margin: -33px 0px 0px 170px;
+}
+#menu_superior li:hover ul ul, #menu_superior li:hover ul ul ul, #menu_superior li.sfhover ul ul, #menu_superior li.sfhover ul ul ul {
+    left: -999em;
+}
+#menu_superior li:hover ul, #menu_superior li li:hover ul, #menu_superior li li.sfhover ul,#menu_superior li li li:hover ul, #menu_superior li.sfhover ul, #menu_superior li li li.sfhover ul {
+    left: auto;
+}

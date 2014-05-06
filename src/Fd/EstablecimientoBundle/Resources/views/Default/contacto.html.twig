@@ -1,0 +1,16 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<br />
+
+<p class="titulo">{{ fd.dependencia }}</p>
+<p class="mediana">Email: <a href="{{ 'mailto:' ~ fd.email }}">{{ fd.email }}</a></p>
+<p class="mediana">Sitio web: <a href="{{ fd.sitio_web }}">{{ fd.sitio_web }}</a></p>
+<p class="mediana">{{ fd.telefonos[0].oficina ~ ': ' ~ fd.telefonos[0].te }}</p>
+<p class="mediana">{{ fd.telefonos[1].oficina ~ ': ' ~ fd.telefonos[1].te }}</p>
+
+{% include '::includes/volver.html.twig' %}
+    
+{% endblock %}

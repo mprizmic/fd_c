@@ -1,0 +1,43 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Lista de OfertaEducativa
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>Lista de OfertaEducativa</h1>
+
+<ul>
+    <li>
+        <a href="{{ path('backend_ofertaeducativa_new') }}">
+            Crear nuevo registro
+        </a>
+    </li>
+</ul>
+
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Oferta</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('backend_ofertaeducativa_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity }}</td>
+            <td><a href="{{ path('backend_ofertaeducativa_show', { 'id': entity.id }) }}">Mostrar</a>
+                ||
+                <a href="{{ path('backend_ofertaeducativa_edit', { 'id': entity.id }) }}">Editar</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

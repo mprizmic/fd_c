@@ -1,0 +1,73 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Lista de Localizacion
+{% endblock %}
+ 
+{% block main_content %}
+
+<div class="titulo">Lista de localizaciones</div>
+
+{# se genera el combo de establecimientos #}
+<div class="instrucciones">
+        La <i>"localización"</i> determina en que edificio (sede o anexo) del establecimiento funciona cada uno de sus niveles (o unidades educativas).
+</div>
+<br />
+
+
+<span class="float_izquierda">Seleccione un establecimiento para filtrar la lista de localizaciones</span>
+
+<select id="cmb_establecimientos">
+{% for key, valor in establecimientos %}
+        <option value="{{ valor.id }}">{{ valor }}</option>
+{% endfor %}
+</select>
+
+<span class="limpiar_float"></span>
+
+<span class="float_derecha">
+    <a href="{{ path('backend_localizacion_new') }}">Crear nuevo registro</a>
+</span>
+
+<span class="limpiar_float"></span>
+
+<br />
+<br />
+
+<div id="lista_localizaciones"></div>
+
+<br />
+<br />
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+<script type="text/javascript">
+           
+$(document).ready( function() {
+    cargar_lista_establecimientos();
+    $('#cmb_establecimientos').change( function() { cargar_lista_establecimientos();});
+    
+});
+
+function cargar_lista_establecimientos() {
+
+    $("#divCargando").show();
+    var clave = $("#cmb_establecimientos").val();
+
+    //usando FOSJsRouingBundle
+    $.ajax({
+        url: Routing.generate('backend_localizacion_listar', { establecimiento_id: clave } ),
+        type: 'GET',
+        success: function (data){
+            $("#lista_localizaciones").html(data); },
+        });
+
+    $('#divCargando').hide();
+
+};
+</script>
+
+{% endblock %}

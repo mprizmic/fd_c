@@ -1,0 +1,60 @@
+{# parametros: especializaciones #}
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo">Vencimientos de especializaciones</div>
+
+<br />
+
+<div class="instrucciones">
+    Se visualizan sólo especializaciones activas
+</div>
+
+<br />
+
+<table>
+    <tr>
+        <th>Nombre de la especialización</th>
+        <th>Año de vencimiento</th>
+    </tr>
+
+    {% for especializacion in especializaciones %}
+    <tr>
+        <td><a href="{{path('especializacion_ficha', {'especializacion_id': especializacion.id})}}">{{ especializacion.nombre }}</a></td>
+        <td>{{ especializacion.ultima_cohorte_valida }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+<div class="float_derecha boton_azul">
+<a href="{{path('especializacion_vencimiento_excel') }}">Salida a planilla de cálculo</a>
+</div>
+<div class="limpiar_float"></div>
+
+<br />
+
+<!---                                                           -->
+<!--- listado de especializaciones sin fecha de vencimiento     -->
+<!---                                                           -->
+
+<div class="instrucciones">
+    Se visualizan las especializaciones que no tienen cargado el datos de la última cohorte valida
+</div>
+
+<table>
+    <tr>
+        <th>Nombre de la especialización</th>
+    </tr>
+
+    {% for especializacion in especializaciones_sin_vencimiento %}
+    <tr>
+        <td><a href="{{path('especializacion_editar', {'id': especializacion.id})}}">{{ especializacion.nombre }}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

@@ -1,0 +1,25 @@
+unidadeducativacontroller
+	unidadeducativahandler -> crear( entity )
+
+unidadeducativahandler (servicio)
+	despacha evento 
+		"unidad educativa nueva" 
+		0
+		"unidad educativa baja"
+	el evento llama a la clase corespondiente
+		UnidadOfertaUENuevaListener
+		UnidadOfertaUEBajaListener
+
+UnidadOfertaUENuevaListener
+	llama al handler de unidad_oferta UnidadOfertaHandler
+
+UnidadOfertaHandler
+	toma de la tabla de NIVEL la clase que necesita para lo que tiene que crear según el nivel
+	carga la clase
+		UnidadOfertaInicialHandler
+		o
+		UnidadOfertaTerciarioHandler
+	llama a la clase cargada
+
+UnidadOfertaInicialHandler
+	llama a InicialXHandler y crea lo que corresponde

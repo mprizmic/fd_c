@@ -1,0 +1,83 @@
+
+
+
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Avances del sistema</div>
+<div class="limpiar_float"></div>
+
+<br />
+<div class="mediana">Pendiente</div>
+    <ul>
+        <li>Cargar datos de matrícula (en proceso)</li>
+        <li>Cargar autoridades de los establecimientos (rectores ya están cargados)</li>
+        <li>Hacer el seguimiento de las resoluciones de validez de las especializaciones (en proceso)</li>
+        <li>Chequear codigo postal de los establecimientos</li>
+        <li>Chequear sitio web de los establecimientos</li>
+        <li>Chequear si los establecimientos tienen cooperadora</li>
+        <li>Cargar fecha elecciones y fin mandato de los establecimientos</li>
+        <li>Agregar datos de pedidos de infraestructura de los establecimientos</li>
+        <li>Chequear si los establecimientos tienen campo de deportes</li>
+        <li>Agregar agenda de autoridades de establecimientos (en proceso)</li>
+        <li>Rever la validez nacional de las carreras y los títulos</li>
+        <li>Agregar la cantidad de secciones de primaria y media</li>
+        <li>Pasar todo a la versión 2.3 del framework</li>
+        <li>Agregar listados a planilla de cálculo</li>
+    </ul>
+<div class="mediana">Terminado</div>
+    <ul>
+        <li>La portada del backend se ordena alfabèticamente 29-4-2014</li>
+        <li>Se agrega archivo de configuración local para cada instalación 28-4-2014</li>
+        <li>Agregar si los establecimientos centros de recursos y/o bibliotecas 28-4-2014</li>
+        <li>Agregar si los establecimientos tienen cooperador en la ficha principal 21-4-2014</li>
+        <li>Agregar que una carrera pueda tener más de un título 21-4-2014</li>
+        <li>Se agrega carga de cantidades de docentes de cada nivel 21-4-2014</li>
+        <li>Se agrega el resumen de los actos públicos de media 11-4-2014</li>
+        <li>Se agrega la agenda de establecimientos de las secretarias para bajar el archivo 9-4-2014</li>
+        <li>Prueba de resumen del acto público de media 25-3-2014</li>
+        <li>Se agrega manejo de cantidad docentes de un establecimiento por nivel 25-3-2014</li>
+        <li>Se agrega el listado de los establecimientos que comparten edificio 12-3-2014</li>
+        <li>Se agrega el datos si el establecimientos tiene cooperadora 10-3-2014</li>
+        <li>Agregar TE principal al establecimiento 7-3-2014</li>
+        <li>Revisar comuna y distrito 7-3-2014</li>
+        <li>Eliminar el requerido del codigo postal en la edición y el alta de domicilio 7-3-2014</li>
+        <li>El listado de domicilios tiene que salir alfabetico 7-3-2014</li>
+        <li>Sacar del abm de unidad educativa la accion de mostrar 7-3-2014</li>
+        <li>Cargar los turnos de cada nivel de los establecimientos 7-3-2014</li>
+        <li>Cargar los rectores de los establecimientos 7-3-2014</li>
+        <li>Sacar la inscripción 'Turnos' de la ficha de establecimientos 7-3-2014</li>
+        <li>El número de establecimiento no debe ser requerido 7-3-2014</li>
+        <li>Cargar turnos de cada nivel de los establecimientos 7-3-2014</li>
+        <li>Mejorar cuadros de matrícula 6-3-2014</li>
+        <li>Cargadas autoridades de los establecimientos del terciario de la ens 1</li>
+        <li>Actualizar la base de producción 28-2-2014</li>
+        <li>Chequear email de los establecimientos 27-2-2014</li>
+        <li>Chequear los nivel de los establecimientos 27-2-2014</li>
+        <li>Chequear las comunas de los anexos< 27-2-2014/li>
+        <li>Chequear el CUE del IES 2 27-2-2014</li>
+        <li>Chequear los CUE de los establecimientos 27-2-2014</li>
+        <li>Chequear los DE de los establecimientos 27-2-2014</li>
+        <li>Chequear las comunas de los establecimientos 27-2-2014</li>
+        <li>Agregar los establecimientos con los que se comparte edificio 27-2-2014</li>
+        <li>Agregar listado de cumpleaños de usuairos 26-2-2014</li>
+        <li>En la edición del establecimieinto hacer un link al edificio principal</li>
+        <li>Mejorar la página de asignación de establecimientos a carreras</li>
+        <li>Agregar cada usuario se pueda cambiar la password</li>
+        <li>Agregar el celular al lado del nombre de la autoridad en la ficha del establecimiento</li>
+        <li>Agregar la comuna en el encabezado de la ficha del establecimiento</li>
+        <li>Generación de nuevos usuarios</li>
+        <li>Agregra si el establecimiento comparte edificio</li>
+        <li>Agregar datos del trámite del RAM</li>
+        <li>Agregar datos del trámite del ROI de cada establecimiento</li>
+        <li>Agregar datos del trámite del R. de Prácticas de cada establecimiento</li>
+        <li>Agregar búsqueda de autoridades</li>
+        <li>Agregar lista resumida de carreras</li>
+        <li>Agregar salida de lista resumida de carreras a planilla de cálculo</li>
+    </ul>
+
+{% include '::includes/volver.html.twig' %}
+
+{% endblock %}

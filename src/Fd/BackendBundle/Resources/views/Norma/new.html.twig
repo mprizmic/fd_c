@@ -1,0 +1,26 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Crear Norma
+{% endblock %}
+ 
+{% block main_content %}
+
+<div class="titulo">Crear registro de Norma</div>
+
+<form action="{{ path('backend_norma_crear') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Crear</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_norma_buscar') }}">
+            Volver a la lista
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

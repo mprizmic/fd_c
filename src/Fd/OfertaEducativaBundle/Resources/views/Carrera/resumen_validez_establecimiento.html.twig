@@ -1,0 +1,6 @@
+{# parametros: carreras #}
+
+{% for carrera in carreras %} 
+        {% set clase_css = cycle(['even','odd'],loop.index) %}
+        {% render "OfertaEducativaBundle:Carrera:resumen_validez_carrera" with {'carrera': carrera, 'clase_css': clase_css } %} 
+{% endfor %} 

@@ -1,0 +1,18 @@
+services:
+    fd.backend.nueva_ue.unidad_oferta:
+        class: Fd\BackendBundle\EventListener\UnidadOfertaUENuevaListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: unidad_educativa.nueva, method: onUnidadEducativaNueva }
+
+    fd.backend.baja_ue.unidad_oferta:
+        class: Fd\BackendBundle\EventListener\UnidadOfertaUEBajaListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: unidad_educativa.baja, method: onUnidadEducativaBaja }
+
+    fd.backend.baja_ue.turno:
+        class: Fd\BackendBundle\EventListener\TurnoUEBajaListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: unidad_educativa.baja, method: onUnidadEducativaBaja }
