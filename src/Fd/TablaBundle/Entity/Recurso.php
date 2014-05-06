@@ -31,6 +31,11 @@ class Recurso
      * @ORM\Column(type="integer")
      */
     protected $orden;
+    /**
+     * bidireccional lado inverso
+     * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso", mappedBy="recurso")
+     */
+    private $establecimiento;    
 
     public function __toString(){
         if ($this->descripcion){
@@ -107,5 +112,45 @@ class Recurso
     public function getOrden()
     {
         return $this->orden;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->establecimiento = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add establecimiento
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $establecimiento
+     * @return Recurso
+     */
+    public function addEstablecimiento(\Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $establecimiento)
+    {
+        $this->establecimiento[] = $establecimiento;
+    
+        return $this;
+    }
+
+    /**
+     * Remove establecimiento
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $establecimiento
+     */
+    public function removeEstablecimiento(\Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $establecimiento)
+    {
+        $this->establecimiento->removeElement($establecimiento);
+    }
+
+    /**
+     * Get establecimiento
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEstablecimiento()
+    {
+        return $this->establecimiento;
     }
 }
