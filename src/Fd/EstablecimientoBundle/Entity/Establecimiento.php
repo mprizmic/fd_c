@@ -329,7 +329,10 @@ class Establecimiento {
     }
 
     public function __toString() {
-        return $this->getApodo();
+        if ($this->apodo){
+            return $this->apodo;
+        };
+        return '';
     }
 
     /**

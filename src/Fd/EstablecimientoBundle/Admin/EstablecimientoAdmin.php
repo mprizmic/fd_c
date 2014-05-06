@@ -14,8 +14,67 @@ class EstablecimientoAdmin extends Admin {
 
     protected function configureListFields(ListMapper $mapper) {
         $mapper
-                ->add('nombre')
+                ->addIdentifier('nombre')
+                ->addIdentifier('apodo')
+                ->add('distrito_escolar')
+                ->add('te')
+                ->add('cue')
+                ->add('url')
+        ;
+    }
+
+    protected function configureDatagridFilters(DatagridMapper $mapper) {
+        $mapper
                 ->add('apodo')
+                ->add('nombre')
+        ;
+    }
+
+    protected function configureFormFields(FormMapper $mapper) {
+        $mapper
+                ->with('Datos básicos')
+                ->add('nombre', null, array(
+                    'attr' => array(
+                        'size' => 200,
+                    )
+                ))
+                ->add('apodo')
+                ->add('cue')
+                ->add('unidades_educativas')
+                ->end()
+                ->with('Contacto')
+                ->add('url')
+                ->add('email')
+                ->end()
+                ->with('Autoridad')
+                ->add('cargo_autoridad')
+                ->add('nombre_autoridad')
+                ->add('autoridades_rectorado')
+                ->end()
+                ->with('Otros')
+                ->add('edificio')
+                ->add('tipo_establecimiento')
+                ->add('codigo_previo_transferencia')
+                ->add('numero')
+                ->add('orden')
+                ->add('descripcion')
+                ->add('fecha_creacion')
+                ->add('tiene_cooperadora')
+                ->add('campo_deportes')
+                ->add('sector')
+                ->add('fecha_elecciones')
+                ->add('fin_mandato')
+                ->add('anio_inicio_nes')
+                ->add('recursos')
+                ->end()
+                ->with('Documentación')
+                ->add('fecha_presentacion_roi', null, array('label'=>'Fec.presentación ROI'))
+                ->add('fecha_aprobacion_roi', null, array('label'=>'Fec.aprobación ROI'))
+                ->add('fecha_presentacion_ram')
+                ->add('fecha_aprobacion_ram')
+                ->add('fecha_presentacion_rp')
+                ->add('fecha_aprobacion_rp')
+                ->end()
         ;
     }
 
@@ -42,9 +101,4 @@ class EstablecimientoAdmin extends Admin {
 //        $collection->remove('create');
 //    }
 //
-//    protected function configurateDatagridFilters(DatagridMapper $datagridMapper) {
-//        $datagridMapper->add('nombre')
-//                ->add('cue')
-//                ->add('apodo');
-//    }
 }

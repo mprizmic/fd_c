@@ -5,13 +5,14 @@ namespace Fd\EstablecimientoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Table(name="establecimiento_recurso")
  * @ORM\Entity
  */
-class EstablecimientoRecurso
-{
+class EstablecimientoRecurso {
+
     /**
      * @var integer $id
      *
@@ -20,12 +21,14 @@ class EstablecimientoRecurso
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * bidireccional lado propietario
      * @ORM\ManyToOne(targetEntity="Fd\EstablecimientoBundle\Entity\Establecimiento", inversedBy="recursos")
      * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
     private $establecimiento;
+
     /**
      * bidireccional lado propietario
      * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\Recurso")
@@ -35,15 +38,21 @@ class EstablecimientoRecurso
      * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
     private $recurso;
+
     /**
      * @ORM\Column(type="integer", nullable=false)
      * @Assert\Range(min=0, minMessage="El número ingresado no corresponde.")
      */
     private $cantidad;
 
-    public function __construct()
-    {
-        $this->recurso = new \Doctrine\Common\Collections\ArrayCollection();
+    public function __toString() {
+        //problemas con sonta admin bundle por que pedía un string que no pude producir
+        return 'establecimiento-recurso ';
+    }
+
+    public function __construct() {
+        $this->recurso = new ArrayCollection();
+        $this->establecimiento = new ArrayCollection();
     }
 
     /**
@@ -51,8 +60,7 @@ class EstablecimientoRecurso
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -62,10 +70,9 @@ class EstablecimientoRecurso
      * @param integer $cantidad
      * @return EstablecimientoRecurso
      */
-    public function setCantidad($cantidad)
-    {
+    public function setCantidad($cantidad) {
         $this->cantidad = $cantidad;
-    
+
         return $this;
     }
 
@@ -74,8 +81,7 @@ class EstablecimientoRecurso
      *
      * @return integer 
      */
-    public function getCantidad()
-    {
+    public function getCantidad() {
         return $this->cantidad;
     }
 
@@ -85,10 +91,9 @@ class EstablecimientoRecurso
      * @param \Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento
      * @return EstablecimientoRecurso
      */
-    public function setEstablecimiento(\Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento = null)
-    {
+    public function setEstablecimiento(\Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento = null) {
         $this->establecimiento = $establecimiento;
-    
+
         return $this;
     }
 
@@ -97,8 +102,7 @@ class EstablecimientoRecurso
      *
      * @return \Fd\EstablecimientoBundle\Entity\Establecimiento 
      */
-    public function getEstablecimiento()
-    {
+    public function getEstablecimiento() {
         return $this->establecimiento;
     }
 
@@ -108,10 +112,9 @@ class EstablecimientoRecurso
      * @param \Fd\TablaBundle\Entity\Recurso $recurso
      * @return EstablecimientoRecurso
      */
-    public function setRecurso(\Fd\TablaBundle\Entity\Recurso $recurso = null)
-    {
+    public function setRecurso(\Fd\TablaBundle\Entity\Recurso $recurso = null) {
         $this->recurso = $recurso;
-    
+
         return $this;
     }
 
@@ -120,8 +123,8 @@ class EstablecimientoRecurso
      *
      * @return \Fd\TablaBundle\Entity\Recurso 
      */
-    public function getRecurso()
-    {
+    public function getRecurso() {
         return $this->recurso;
     }
+
 }

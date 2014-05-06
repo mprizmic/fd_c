@@ -33,7 +33,10 @@ class Recurso
     protected $orden;
 
     public function __toString(){
-        return $this->getDescriopcion();
+        if ($this->descripcion){
+            return $this->descripcion;
+        };
+        return '';
     }
 
     /**
