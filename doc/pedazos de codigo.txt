@@ -1,0 +1,174 @@
+====== pedazos de codigo ======
+
+
+agregar una pregunta de confirmación en javascript. por ejemplo para borrar registros
+<form
+    action="{{ path('xx') }}"
+    onsubmit="return confirm('Are you sure?')"
+    method="POST"
+>
+=========
+TWIG
+si el campo es booleano y está en true muestra 1. Es esta en false no muestra nada
+
+{{  form.booleano.booleano }}  // muestra '1' si es true.
+					                        //muestra '' si es false. En los datos del objeto dice '0'
+
+si el campo es booleano para que se vea hay que poner
+form.campo_booleano.get('checked')
+=========================================================
+se muestra un campo booleano en la plantilla
+
+en el request, si estaba en false, no se pasa el campo como parámetro, es como si el formulario no 
+hubiese tenido el campo.
+
+=========================================================
+	* @ORM\PrePersist  //en el persist cuando se da de alta uno nuevo
+	* @ORM\PreUpdate //en el flush cuando se modifica uno existente
+===========================================================
+implementacion de preupdate en un listener
+
+<?php
+class NeverAliceOnlyBobListener
+{
+    public function preUpdate(PreUpdateEventArgs $eventArgs)
+    {
+        if ($eventArgs->getEntity() instanceof User) {
+            if ($eventArgs->hasChangedField('name') && $eventArgs->getNewValue('name') == 'Alice') {
+                $eventArgs->setNewValue('name', 'Bob');
+            }
+        }
+    }
+}
+
+
+OJO: al PRE_UPDATE de Doctrine llega un eventArgs que tiene por un lado la entity original 
+y por otro lado un array con los campos del formulario que fueron cambiados
+
+Si se pregunta por un campo que no cambió da error pues no está en el array de campos modificados
+
+
+otras funciones 
+
+    getEntity() to get access to the actual entity.
+    getEntityChangeSet() to get a copy of the changeset array. Changes to this returned array do not affect updating.
+    hasChangedField($fieldName) to check if the given field name of the current entity changed.
+    getOldValue($fieldName) and getNewValue($fieldName) to access the values of a field.
+    setNewValue($fieldName, $value) to change the value of a field to be updated.
+
+=========================================================
+timestampable
+
+use Gedmo\Mapping\Annotation as Gedmo;
+//    /**
+//     * @Gedmo\Timestampable(on="create")
+    /**
+	* @ORM\Column(type="datetime", nullable=true)
+     */
+    private $created;
+//    /**
+//     * @Gedmo\Timestampable(on="update")
+    /**
+	* @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updated;
+
+
+==========================================================
+viene un string 'datos' con el html del combo
+
+<div>
+{{ datos|raw }}
+</div>
+=============================================================0
+
+<div>Seleccione una norma: {{ normas | a_combo |raw }}</div>
+
+vienen un array de normas y el filtro 'a_combo' lo pasa a un string html con una estructura predeterminada
+
+a_combo está en utilitidadesExtension
+
+================================================================0
+
+
+{% if app.request.isXmlHttpRequest %}
+{% endif  %}
+
+================================================================0
+
+carga el url indicado en el div indicado.
+al url se le pasa parametro pero para que ande entity.id tiene que existir en el fuente twig
+
+{% block javascripts %}
+{{ parent() }}
+
+<script type="text/javascript">
+
+$(document).ready( function(){
+    $("#combo_norma").css("cursor", "pointer");
+    
+    $("#combo_norma").change( function(){
+        
+        $("#todo").load('{{ url('backend_norma_edit', {'id': entity.id} ) }}');
+    });
+} );
+
+</script>
+
+{% endblock %}
+================================================================0
+
+{% block javascripts %}
+<script type="text/javascript">
+           
+$(document).ready( function() {
+    //pone el puntero en el mouse del menu
+    $('#tocar').css("cursor", "pointer");
+
+    $('#tocar').click( function() {cargar_combo();});
+    
+    $("#alumno").click( function() {
+
+        $("#divCargando").show();
+
+        $.ajax(
+            {
+                type:"GET", 
+                url: "{{ path('backend_norma_edit', {'id': una_norma.id} ) }}", 
+                cache: true,
+                success : function( data ) {
+                    $("#aca").html( data);
+                    return true;
+                }
+            }
+        ); 
+        $("#divCargando").hide();
+    } );
+});
+
+function cargar_combo() {
+
+    $("#divCargando").show();
+
+    $.ajax(
+        {
+            type:"GET", 
+            url: "{{ path('prueba_json') }}", 
+            cache: true,
+            success : function( respuesta ) {
+                if(respuesta.responseCode==200 ){           
+                    var salida="";
+                    $.each( respuesta.respuesta , function(i, item){
+                        salida = salida + "<option value='" + i + "'>" + item.numero + " año: " + item.año + "</option>";
+                        $('#mostrar').html( salida );
+                    });
+                    $('#divCargando').hide();
+                }else{
+                    $('#divCargando').html("Problemas con los datos. Avise a su referente");
+                }
+            }
+        }
+    );
+}
+</script>
+{% endblock %}

@@ -1,0 +1,7 @@
+{# parametros: unidad_ofertas #}
+
+{% for unidad_oferta in unidad_ofertas %} 
+
+    {% render "OfertaEducativaBundle:Carrera:indicadores_cohorte_unidad_oferta" with {'unidad_oferta_id': unidad_oferta.id} %} 
+
+{% endfor %} 

@@ -1,0 +1,14 @@
+{# parametros :  carrera #}
+
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo">{{ carrera.nombre }}</div>
+<br />
+
+{% render "OfertaEducativaBundle:Carrera:donde_se_dicta" with {'carrera_id': carrera.id } %}
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

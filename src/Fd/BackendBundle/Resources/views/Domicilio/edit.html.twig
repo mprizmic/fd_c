@@ -1,0 +1,67 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block title %}
+{{ parent() }} - Editar Domicilio
+{% endblock %}
+
+{% block main_content %}
+
+<h1>Editar Domicilio</h1>
+
+<form action="{{ path('backend_domicilio_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    <p>
+        {{ form_errors(edit_form.calle) }}
+        <label class="los_label">
+            {{ form_label(edit_form.calle) }}
+        </label>
+        {{ form_widget(edit_form.calle, {'attr':{'size':20} } ) }}
+    </p>
+    <div>
+        {{ form_errors(edit_form.altura) }}
+        <label class="los_label">
+            {{ form_label(edit_form.altura) }}
+        </label>
+        {{ form_widget(edit_form.altura , {'attr':{'size':6} } ) }}
+    </div>
+    <p>
+        {{ form_errors(edit_form.c_postal) }}
+        <label class="los_label">
+            {{ form_label(edit_form.c_postal) }}
+        </label>
+        {{ form_widget(edit_form.c_postal, {'attr':{'size':5} } ) }}
+    </p>
+    <p>
+        {{ form_errors(edit_form.principal) }}
+        <label class="los_label">
+            {{ form_label(edit_form.principal) }}
+        </label>
+        {{ form_widget(edit_form.principal) }}
+    </p>
+    <p>
+        {{ form_errors(edit_form.edificio) }}
+        <label class="los_label">
+            {{ form_label(edit_form.edificio) }}
+        </label>
+        {{ form_widget(edit_form.edificio) }}
+    </p>
+    {{ form_rest(edit_form) }}
+    <p>
+        <button type="submit">Guardar</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_domicilio') }}">
+            Volver a la lista
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('backend_domicilio_delete', { 'id': entity.id }) }}" onsubmit="return confirm('Está seguro?')" method="post" >
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="boton_rojo">Eliminar</button>
+        </form>
+    </li>
+</ul>
+
+{% endblock %}

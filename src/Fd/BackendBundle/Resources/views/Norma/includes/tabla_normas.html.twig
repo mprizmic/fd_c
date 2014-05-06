@@ -1,0 +1,20 @@
+<table class="grilla_fit">
+    <tr>
+        <th>Número</th>
+        <th>Año</th>
+        <th>Tipo</th>
+        <th>Descripción</th>
+        <th></th>
+    </tr>
+    {% for norma in normas %}
+        <tr>
+            <td>{{ norma.numero }}</td>
+            <td>{{ norma.anio }}</td>
+            <td>{{ norma.tipo }}</td>
+            <td>{{ norma.descripcion }}</td>
+
+            <td><a href="{{ path('backend_norma_referenciar', { 'entity_id' : entity.id, 'seleccion_id': norma.id , 'accion': posicion} ) }}">Seleccionar</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>

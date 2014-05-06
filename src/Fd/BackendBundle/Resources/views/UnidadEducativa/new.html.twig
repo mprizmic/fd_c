@@ -1,0 +1,27 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Crear UnidadEducativa
+{% endblock %}
+ 
+{% block main_content %}
+{{ parent() }}
+
+<h1>Crear registro de UnidadEducativa </h1>
+
+<form action="{{ path('backend_unidad_educativa_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Crear</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_unidad_educativa') }}">
+            Volver a la lista
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

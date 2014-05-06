@@ -1,0 +1,4 @@
+services:
+    fd.backend.handler.unidad_educativa:
+        class: "Fd\BackendBundle\Form\Handler\UnidadEducativaHandler"
+        arguments: ["@doctrine.orm.entity_manager", "@fd.backend.nueva_ue.unidad_oferta", "@fd.backend.baja_ue.unidad_oferta"]

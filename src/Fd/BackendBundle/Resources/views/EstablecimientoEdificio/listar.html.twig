@@ -1,0 +1,23 @@
+<table class="grilla">
+    <thead>
+        <tr>
+            <th>Cue del anexo</th>
+            <th>Nombre</th>
+            <th>Te1</th>
+            <th>Email1</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ entity.cueanexo }}</td>
+            <td>{{ entity.nombre }}</td>
+            <td>{{ entity.te1 }}</td>
+            <td>{{ entity.email1 }}</td>
+            <td><a href="{{ path('backend_establecimiento_edificio_edit', { 'id': entity.id }) }}">Editar</a>
+            </td>
+          </tr>
+    {% endfor %}
+    </tbody>
+</table>

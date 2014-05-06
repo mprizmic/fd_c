@@ -1,0 +1,52 @@
+Lexiformfilter no anda para SF2.4. Tira carteles
+
+instalé 
+
+        "beberlei/DoctrineExtensions": "dev-master",
+        "ideup/simple-paginator-bundle": "dev-master",
+	"lexik/form-filter-bundle": "v2.0.0",
+	"friendsofsymfony/jsrouting-bundle": "@stable",
+        "liuggio/excelbundle": "~2.0",
+	"lexik/maintenance-bundle": "*"
+        "doctrine/migrations": "dev-master",
+        "doctrine/doctrine-migrations-bundle": "dev-master"
+	"raulfraile/ladybug-bundle": "dev-master"
+
+
+
+Despues de bajar los bundles:
+
+leer los archivos de upgrade
+crear repo git
+crear el gitignore
+crear el proyecto netbeans
+subir BD
+verificar si las migraciones están al día
+revisar la clave de la BD
+hay que tocar el config.yml
+hay que tocar el routing.yml
+copiar src
+copiar app
+cambiar (request) por handleRequest(request)
+En esta versión hay un cambio de nombre en los eventos del formulario, PRE_BIND ahora es PRE_SUBMIT, BIND es SUBMIT y POST_BIND ahora se llama POST_SUBMIT
+Assert\Max y Min por Range
+cambiar betEntityManager por getManager
+
+llegue hasta aca 
+
+
+Antes estas constraints estaban bajo el namespace Symfony\Component\Validator\Constraints\Collection y ahora se han movido donde están todas las contraints, en Symfony\Component\Validator\Constraints.
+
+
+
+
+
+
+
+
+probar
+
+instalar las extensiones de doctrine
+
+OPCIONAL
+instalar JMSSecurityExtraBundle

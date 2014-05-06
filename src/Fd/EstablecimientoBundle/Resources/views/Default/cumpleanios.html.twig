@@ -1,0 +1,31 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Cumpleaños</div>
+<div class="limpiar_float"></div>
+
+<br />
+
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Mes - día</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for usuario in usuarios %}
+        <tr>
+            <td>{{ usuario.apellido }}</td>
+            <td><span class="separador">{{ usuario.fecha == null ? 's/d' : usuario.fecha  }}</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% include '::includes/volver.html.twig' %}
+
+{% endblock %}

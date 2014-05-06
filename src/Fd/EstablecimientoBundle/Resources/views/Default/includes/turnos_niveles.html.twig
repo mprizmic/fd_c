@@ -1,0 +1,22 @@
+{#
+muestra los turnos en los que se imparte cada unidad educativa del establecimiento
+
+recibe objeto 'establecimiento'
+#}
+    <fieldset class="float_izquierda">
+    <span class="resaltado">Turnos en que funciona el establecimiento:</span><br/>
+        {% for unidad in establecimiento.unidadesEducativas %}
+            <span class="separador"></span>
+            {{ 'Nivel ' ~ unidad.nivel.nombre ~ ': ' }}
+            {% for turno in unidad.turnos %}
+                <span class="reforzado">    {{ turno.turno.descripcion }}</span>
+                {% if not loop.last %}{{ ' - ' }}{% endif %}
+            {% else %}
+                {{ ' s/d' }}
+            {% endfor %}   
+            <br />
+        {% else %}
+        <br />
+        {% endfor %}  
+        <br />
+    </fieldset>

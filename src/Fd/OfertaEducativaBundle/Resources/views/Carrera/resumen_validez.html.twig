@@ -1,0 +1,87 @@
+{# parametros: establecimientos 
+
+muestra establecimientos por establecimiento, carrera por carrera, el estado del tramite
+
+#}
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo">Resumen de validez de las carreras</div>
+<br />
+
+{# se muestra un combo y una vez elegiso el establecimiento, con ajax, se despliega la información de dicho establecimiento #}
+<div class="instrucciones">Seleccione un establecimiento para visualizar los datos de las carreras que en él se imparten: 
+<select id="cmb_establecimientos">
+{% for key, valor in establecimientos %}
+    <option value="{{ valor.id }}">{{ valor }}</option>
+{% endfor %}
+</select>
+<a id="ficha" class="chica" href="#">(ficha del establecimiento)</a>    
+    </div>
+
+<div>
+    <hr>
+    <br />
+    <br />
+        {# se imprimen todas las carreras de un establecimiento #}
+    <div>
+        <table class="tabla_modo_2">
+            <thead>
+                <tr>
+                    <th>Carrera</th>
+                    <th>Estado</th>
+                    <th>Fecha del trámite</th>
+                    <th>Validez Desde</th>
+                    <th>Validez Hasta</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+<script type="text/javascript">
+    
+    $(document).ready( function (){
+
+        function mostrar_un_establecimiento( clave ){
+
+            //usando FOSJsRouingBundle
+            $.ajax({
+                url: Routing.generate('carrera_resumen_validez_establecimiento', { establecimiento_id: clave } ),
+                type: 'GET',
+                success: function (data){
+                    $("tbody").html(data);
+                    $("div[name='mostrable']").css("cursor", "pointer"); 
+                    $("div[name='mostrable']").click( function () { ocultar_y_mostrar(this); });  
+                    
+                    ruta = Routing.generate('establecimiento_ficha', { establecimiento_id: clave } );
+                    
+                    $('#ficha').attr('href', ruta );
+
+                    return true;
+                },
+            });
+        };
+        mostrar_un_establecimiento( $('#cmb_establecimientos').val() );
+        
+        function ocultar_y_mostrar(elemento) {
+            var $kids = $(elemento).children();
+            $($kids[1]).toggle();
+        };
+        
+        /* fijo la accion para cuando cambio el combo de establecimientos */
+        $('#cmb_establecimientos').change( function(){ mostrar_un_establecimiento( $(this).val() ) } );
+        
+    });
+</script>
+{% endblock %}

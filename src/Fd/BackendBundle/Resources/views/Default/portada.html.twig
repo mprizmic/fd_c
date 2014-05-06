@@ -1,0 +1,38 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+
+{% block main_content %}
+<br />
+<div class="sub_titulo">Seleccione la tabla sobre la que quiere actualizar datos</div>
+<br />
+
+<table border="0" width="90%" align="center">
+<tbody>
+
+{% for tabla in tablas%}
+
+    <tr>
+        <td><a href="{{ path(tabla.url) }}">{{ tabla.tabla }}</a></td>
+        <td> : </td>
+        <td>{{ tabla.descripcion }}</td>
+    </tr>
+
+{% endfor %}
+
+{# este es el acceso sólo para el super_admin #}
+
+    <tr >
+        <td style="background-color: #DDD;"><a href="{{ path('usuario_index') }}">Usuarios</a></td>
+        <td> : </td>
+        <td>Sólo para administradores del sistema.</td>
+    </tr>
+    <tr >
+        <td style="background-color: #DDD;"><a href="{{ path('backend_portada') }}">Tablas</a></td>
+        <td> : </td>
+        <td>Sólo para administradores del sistema.</td>
+    </tr>
+
+</tbody>
+</table>
+
+{% endblock %}

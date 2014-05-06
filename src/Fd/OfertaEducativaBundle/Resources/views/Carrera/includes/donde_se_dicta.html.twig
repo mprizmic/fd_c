@@ -1,0 +1,6 @@
+<fieldset>
+    <legend class="resaltado">Establecimientos en los que se dicta</legend>
+    {% for establecimiento in establecimientos %}
+    <div class="separador"><a href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento.id}) }}">{{ establecimiento.nombre }}</a></div>
+    {% endfor %}  
+</fieldset>

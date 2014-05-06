@@ -1,0 +1,32 @@
+d:q:dq "select e.id, car.titulo, for.descripcion from EstablecimientoBundle:Establecimiento e join e.unidades_educativas ue join ue.ofertas o left join o.carrera car join car.formacion for"
+
+d:q:dq "select e.id, car.titulo from EstablecimientoBundle:Establecimiento e join e.unidades_educativas ue join ue.ofertas o left join o.carrera car"    
+
+d:q:dq "select e.id, car.titulo from EstablecimientoBundle:Establecimiento e join e.unidades_educativas ue left join ue.ofertas o left Join o.carrera car"
+
+d:q:dq "select e.apodo, b.nombre as bat , car.nombre as carre from EstablecimientoBundle:Establecimiento e join e.unidades_educativas ue join ue.ofertas o left join o.bachillerato b left join o.carrera car"
+
+ d:q:dq "select for.descripcion, e.apodo, b.nombre as bat , car.nombre as carre from EstablecimientoBundle:Establecimiento e join e.unidades_educativas ue join ue.ofertas o left join o.bachillerato b left join o.carrera car left join car.formacion for where e.apodo='Spangenberg'"
+
+--- carreras de un establecimiento
+select c.titulo, e.apodo from OfertaEducativaBundle:Carrera c join c.oferta o join o.unidades u join u.establecimiento e where e.id=26
+
+--- cohortes
+d:q:dql "select co.matricula from OfertaEducativaBundle:Cohorte co join co.unidad_oferta uo join uo.unidades u join u.establecimiento e join uo.ofertas o left join o.especializacion esp order by e.apodo"
+
+
+--- localizaciones de las unidades educativas de un par de establecimientos
+select e.nombre, ee.cue_anexo, ee.nombre, n.abreviatura, ue.establecimiento_id as e_id, ue.id as ue_id, ee.id as ee_id, l.id as l_id
+from Fd.establecimiento_edificio as ee
+inner join Fd.establecimiento e on e.id=ee.establecimientos_id
+inner join Fd.localizacion l on l.establecimiento_edificio_id=ee.id
+inner join Fd.unidad_educativa ue on ue.establecimiento_id=e.id and ue.id=l.unidad_educativa_id
+inner join Fd.nivel n on ue.nivel_id=n.id
+where e.id=21 or e.id=30
+
+
+------ turnos de una unidad educativa
+select e.nombre, ue.descripcion 
+from Fd.turno_unidad_educativa as tue
+inner join Fd.unidad_educativa ue on ue.id=tue.unidad_educativa_id
+inner join Fd.establecimiento as e on e.id=ue.establecimiento_id

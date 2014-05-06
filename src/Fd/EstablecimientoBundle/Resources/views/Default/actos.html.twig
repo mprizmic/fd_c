@@ -1,0 +1,23 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo">Actos</div>
+
+<br />
+
+<p>Vamos a ver que sale</p>
+
+{{ cantidad }}
+{% for nodo in nodos %}
+    {% for elemento in nodo %}
+    {{ elemento ~ ' ' }}
+
+{% endfor %}<br />
+{% endfor %}
+{{ un_texto }}
+
+{% include '::includes/volver.html.twig' %}
+    
+{% endblock %}

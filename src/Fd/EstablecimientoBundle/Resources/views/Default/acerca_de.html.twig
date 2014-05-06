@@ -1,0 +1,21 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<br />
+
+<p class="titulo">{{ fd.nombre }}</p>
+<br />
+<br />
+<p class="sub_titulo">{{ fd.version_logica }}</p>
+<p  class="identado_1">Desarrollado con:</p>
+<p class="identado_2">{{ fd.version_symfony }}</p>
+<p class="identado_2">{{ fd.version_doctrine }}</p>
+<p class="identado_2">{{ fd.version_apache }}</p>
+<p class="identado_2">{{ fd.version_mysql }}</p>
+<p class="identado_2">{{ fd.version_firefox }}</p>
+
+{% include '::includes/volver.html.twig' %}
+    
+{% endblock %}

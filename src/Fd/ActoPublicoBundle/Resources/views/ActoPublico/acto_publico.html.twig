@@ -1,0 +1,58 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+
+<div class="titulo">RESULTADO DEL {{ acto_publico.numero }}</div>
+<div class="sub_titulo">Cargos que quedaron vacantes en el acto del día {{ acto_publico.fecha }}</div>
+<br />
+{% for llamado in llamados %}
+
+    {% if loop.first %}
+        <table class="grilla_fit">
+        <tr>
+            <th>Cargo/asignatura</th>
+            <th>Cantidad de cargos</th>
+            <th>Cantidad de horas</th>
+        </tr>
+    {% endif %}
+    <tr>
+        <td><a href="{{ path( 'captura_resumen_un_cargo', {'slug_cargo':llamado.slug_cargo} ) }}">{{ llamado.cargo }}</a></td>
+        <td>{{ llamado.cantidad }}</td>
+        <td>{{ llamado.horas }}</td>
+    </tr>    
+    {% if loop.last %}
+        </table>
+    {% endif %}
+
+{% else %}
+    No quedaron cargos vacantes
+{% endfor %}
+
+<br />
+
+<div class="sub_titulo">Llamado vacante más antiguo</div>
+<br />
+<table class="grilla_fit">
+        <tr>
+            <th>Cargo</th>
+            <th>Establecimiento</th>
+            <th>Fecha iniciación</th>
+            <th>Fecha terminación</th>
+            <th>Cantidad de horas</th>
+        </tr>
+        <tr>
+            <td>{{ el_mas_antiguo.cargo }}</td>
+            <td>{{ el_mas_antiguo.establecimiento }}</td>
+            <td>{{ el_mas_antiguo.fechaIniciacion|date('d-m-Y') }}</td>
+            <td>{{ el_mas_antiguo.fechaTerminacion | default('--') }}</td>
+            <td>{{ el_mas_antiguo.cantidadHoras }}</td>
+        </tr>    
+</table>
+
+<br />
+
+{% include '::includes/volver.html.twig' %}
+    
+{% endblock %}

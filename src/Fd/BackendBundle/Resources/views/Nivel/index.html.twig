@@ -1,0 +1,55 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Lista de Nivel
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>Lista de Nivel</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Abreviatura</th>
+            <th>Orden</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('backend_nivel_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.nombre }}</td>
+            <td>{{ entity.abreviatura }}</td>
+            <td>{{ entity.orden }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('backend_nivel_show', { 'id': entity.id }) }}">
+                                                    Mostrar
+                                                </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('backend_nivel_edit', { 'id': entity.id }) }}">
+                                                    Editar
+                                                </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('backend_nivel_new') }}">
+            Crear nuevo registro
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

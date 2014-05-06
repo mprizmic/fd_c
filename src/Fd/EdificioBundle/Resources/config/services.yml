@@ -1,0 +1,15 @@
+services:
+    fd.edificio.nuevo.listener:
+        class: Fd\EdificioBundle\EventListener\EdificioNuevoListener
+        arguments: 
+            domicilio_temporario: "@fd.edificio.domicilio.temporario"
+        tags:
+            - { name: kernel.event_listener, event: edificio.nuevo, method: onEdificioNuevo }
+
+    fd.edificio.handler.edificio:
+        class: "Fd\EdificioBundle\Form\Handler\EdificioHandler"
+        arguments: ["@doctrine.orm.entity_manager", "@fd.edificio.nuevo.listener"]
+
+    fd.edificio.domicilio.temporario:
+        class: "Fd\EdificioBundle\Model\DomicilioTemporario"
+        arguments: ["@doctrine.orm.entity_manager"]

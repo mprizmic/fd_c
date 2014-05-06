@@ -1,0 +1,20 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+
+<h1>Nuevo vecino</h1>
+
+<form action="{{ path('vecino_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Crear</button>
+    </p>
+</form>
+
+<a class="separador" href="{{ path('vecino') }}">Volver a la lista</a>
+
+<div class="limpiar_float"></div>
+<br />
+<br />
+
+{% endblock %}

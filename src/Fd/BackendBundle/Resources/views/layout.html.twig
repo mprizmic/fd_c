@@ -1,0 +1,50 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Módulo de Administración{% endblock %}
+
+{% block stylesheets %}
+    {% include '::includes/stylesheets.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}
+
+{% block header %}
+    {% set titulo = 'Administración' %}
+    {% include '::includes/header.html.twig' with {'titulo': titulo, 'camino': path('fd_backend_default_portada') } %}
+{% endblock %}
+
+{% block menu_superior %}
+    {% include 'BackendBundle::includes/menu_superior.html.twig' %}
+{% endblock %}
+
+{% block main_content %}
+    <!-- tiene un flash y luego el contenido -->
+    
+    {% for type, flashMessages in app.session.flashbag.all() %}
+        {% if loop.first %}
+            <div id="flash">
+        {% endif %}
+
+        {% for un_mensaje in flashMessages %}
+            {% if loop.first %}
+                <div class="{{ 'flash flash_' ~ type }}">
+            {% endif %}
+                {{ un_mensaje }}<br />
+            {% if loop.last %}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        {% if loop.last %}
+            </div>
+            <script>$("#flash").fadeIn('slow').delay(1200).fadeOut('slow');</script>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+{% endblock %}

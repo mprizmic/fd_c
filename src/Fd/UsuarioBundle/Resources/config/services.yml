@@ -1,0 +1,26 @@
+services:
+    login_listener:
+        class: Fd\UsuarioBundle\Listener\LoginListener
+        arguments: ['@security.context', '@doctrine']
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login }
+#<!--
+#<?xml version="1.0" ?>
+#
+#<container xmlns="http://symfony.com/schema/dic/services"
+#    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+#    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+#
+#    <parameters>
+#        <parameter key="usuario.example.class">Fd\UsuarioBundle\Example</parameter>
+#    </parameters>
+#
+#    <services>
+#        <service id="usuario.example" class="%usuario.example.class%">
+#            <argument type="service" id="service_id" />
+#            <argument>plain_value</argument>
+#            <argument>%parameter_name%</argument>
+#        </service>
+#    </services>
+#</container>
+#    -->

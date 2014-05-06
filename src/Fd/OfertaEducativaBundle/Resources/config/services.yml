@@ -1,0 +1,5 @@
+services:
+    fd.form.help_type_extension:
+        class: Fd\OfertaEducativaBundle\Form\Extension\HelpTypeExtension
+        tags: 
+            - { name: form.type_extension, alias: form }

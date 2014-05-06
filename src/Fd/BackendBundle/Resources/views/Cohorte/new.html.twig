@@ -1,0 +1,129 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Crear Registro de Matrícula
+{% endblock %}
+ 
+{% block main_content %}
+{{ parent() }} 
+
+<div class="titulo">Crear registro de matrícula</div>
+<br />
+
+{{ form_errors(edit_form) }}
+
+<form action="{{ path('backend_cohorte_create') }}" method="post" {{ form_enctype(edit_form) }}>
+    <table>
+        <tr>
+            <td>
+                {{ form_label(edit_form.anio) }}
+            </td>
+            <td>
+                {{ form_errors(edit_form.anio) }}
+                {{ form_widget(edit_form.anio, {'attr':{'class':'input_talle_05'} } ) }}
+            </td>    
+        </tr>
+        <tr>
+            <td>
+                {{ form_label(edit_form.cmb_establecimientos) }}
+            </td>
+            <td>
+                {{ form_errors(edit_form.cmb_establecimientos) }}
+                {{ form_widget(edit_form.cmb_establecimientos) }}
+            </td>    
+        </tr>
+        <tr>
+            <td>
+                {{ form_label(edit_form.unidad_oferta) }}
+            </td>
+            <td>
+                {{ form_errors(edit_form.unidad_oferta) }}
+                {{ form_widget(edit_form.unidad_oferta) }}
+            </td>    
+        </tr>
+        <tr>
+            <td>
+                {{ form_label(edit_form.matricula) }}
+            </td>
+            <td>
+                {{ form_errors(edit_form.matricula) }}
+                {{ form_widget(edit_form.matricula, {'attr':{'class':'input_talle_05'} } ) }}
+            </td>    
+        </tr>
+        <tr>
+            <td>
+                {{ form_label(edit_form.matricula_ingresantes) }}
+            </td>
+            <td>
+                {{ form_errors(edit_form.matricula_ingresantes) }}
+                {{ form_widget(edit_form.matricula_ingresantes, {'attr':{'class':'input_talle_05'} } ) }}
+            </td>    
+        </tr>
+        <tr>
+            <td>
+                {{ form_label(edit_form.egreso) }}
+            </td>
+            <td>
+                {{ form_errors(edit_form.egreso) }}
+                {{ form_widget(edit_form.egreso, {'attr':{'class':'input_talle_05'} } ) }}
+            </td>    
+        </tr>
+    </table>
+
+    {{ form_rest(edit_form) }}        
+        
+    <p>
+        <input type="submit" value="Crear" />
+    </p>
+</form>
+
+
+<span class="float_derecha">
+    <a href="{{ path('backend_cohorte') }}">Volver a la lista</a>
+</span>
+
+<br />
+<br />
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+    $(document).ready( function() {
+        
+        //refresca el combo de carreras de un establecimiento
+        function cargar_combo_carrera( elemento ){
+            
+            var clave = $(elemento).val();
+            
+            $('#fd_cohorte_type_unidad_oferta option:gt(0)').remove();
+        
+                //usando FOSJsRouingBundle
+                //recupera sólo los option
+                $.ajax({
+                    url: Routing.generate('backend_unidad_oferta_combo', { unidad_educativa_id: clave } ),
+                    type: 'GET',
+                    success: function (data){
+                        $('#fd_cohorte_type_unidad_oferta').html(data);
+                        return true;
+                    },
+                });
+        };
+        //se carga por primera vez al mostrar la página
+        cargar_combo_carrera( $('#fd_cohorte_type_cmb_establecimientos') );
+        
+        //asigno los eventos
+        $('#fd_cohorte_type_cmb_establecimientos').change( function() { 
+            cargar_combo_carrera( this );
+        });
+
+    
+     });
+    
+</script>
+
+{% endblock %}     

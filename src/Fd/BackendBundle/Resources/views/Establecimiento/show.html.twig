@@ -1,0 +1,87 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Establecimiento
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>Establecimiento</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Cue</th>
+            <td>{{ entity.cue }}</td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <td>{{ entity.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Nombre familiar</th>
+            <td>{{ entity.apodo }}</td>
+        </tr>
+        <tr>
+            <th>Tipo de establecimiento</th>
+            <td>{{ entity.tipoEstablecimiento.descripcion }}</td>
+        </tr>
+        <tr>
+            <th>Codigo_previo_transferencia</th>
+            <td>{{ entity.codigopreviotransferencia }}</td>
+        </tr>
+        <tr>
+            <th>Numero</th>
+            <td>{{ entity.numero }}</td>
+        </tr>
+        <tr>
+            <th>Descripcion</th>
+            <td>{{ entity.descripcion }}</td>
+        </tr>
+        <tr>
+            <th>Fecha_creacion</th>
+            <td>{{ entity.fechacreacion|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Tiene_cooperadora</th>
+            <td>{{ entity.tienecooperadora }}</td>
+        </tr>
+        <tr>
+            <th>Url</th>
+            <td>{{ entity.url }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ entity.email }}</td>
+        </tr>
+        <tr>
+            <th>Última actualización de los datos</th>
+            <td>{{ entity.lastUpdated|date('Y-m-d H:i:s') }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_establecimiento') }}">
+            Volver a la lista
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('backend_establecimiento_edit', { 'id': entity.id }) }}">
+            Editar
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('backend_establecimiento_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="boton_rojo">Eliminar</button>
+        </form>
+    </li>
+</ul>
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Lista de TituloEstadoValidez
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>Lista de TituloEstadoValidez</h1>
+
+<ul>
+    <li>
+        <a href="{{ path('backend_tituloestadovalidez_new') }}">
+            Crear nuevo registro
+        </a>
+    </li>
+</ul>
+
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Fecha_estado_validez</th>
+            <th>Validez_desde</th>
+            <th>Validez_hasta</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('backend_tituloestadovalidez_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{% if entity.fechaestadovalidez %}{{ entity.fechaestadovalidez|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if entity.validezdesde %}{{ entity.validezdesde|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if entity.validezhasta %}{{ entity.validezhasta|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td><a href="{{ path('backend_tituloestadovalidez_edit', { 'id': entity.id }) }}">Editar</a>            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

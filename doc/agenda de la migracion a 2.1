@@ -1,0 +1,36 @@
+en cupon llegue al punto capitulo 8.7 creacion de registro de usuario
+
+
+21/02/13 19:55:58 
+
+config.yml hay que seguir viendolo
+====================
+en ORM\Column(length=X x tiene que ser integer y no string
+===========================
+en ORM\Colummn(nullable=" va sin las comillas
+============================== 
+se modifican el appkernel y el vendor\composer\autoload_namespaces.php
+================================
+cambia un poco la sintaxis de los providers de security.yml
+============================
+parameters.ini pasa a ser parameters.yml
+==========================
+parameters.yml no tiene la definicion del character utf8
+====================
+hay que seguir comparando app/config/*
+==============================
+en los type cambiar FormBuilder por FormBuilderinterface
+===============================
+en los type agregar
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+        $resolver->setDefaults(array(
+            'data_class' => 'Fd\OfertaEducativaBundle\Entity\Carrera'
+        ));
+    }
+
+y 
+
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+======================================
+en la plantilla flash se cambia por flashbag.get('info') ...

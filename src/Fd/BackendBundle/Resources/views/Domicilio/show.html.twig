@@ -1,0 +1,55 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Domicilio
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>Domicilio</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Calle</th>
+            <td>{{ entity.calle }}</td>
+        </tr>
+        <tr>
+            <th>Altura</th>
+            <td>{{ entity.altura }}</td>
+        </tr>
+        <tr>
+            <th>C. Postal</th>
+            <td>{{ entity.cPostal }}</td>
+        </tr>
+        <tr>
+            <th>Principal</th>
+            <td>{{ entity.principal }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_domicilio') }}">
+            Volver a la lista
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('backend_domicilio_edit', { 'id': entity.id }) }}">
+            Editar
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('backend_domicilio_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit" class="boton_rojo">Eliminar</button>
+        </form>
+    </li>
+</ul>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo">Determinar domicilio principal</div>
+
+<div class="instrucciones">
+    <p>Uno de los domicilios que una unidad educativa utiliza debe ser identificado como el predeterminado.<br />
+    Clickee sobre el que desea hacer predeterminado.</p>
+</div>
+
+<!-- cada domicilio mostrado es un formulario distinto -->
+<table>
+{% for formulario in formularios %}
+
+    {% set valor_id = formulario.vars.value.id %}
+    <tr>
+        {% if formulario.vars.value.principal == 'SI' %}
+            <td>
+                <span class="resaltado">
+                    {{ formulario.vars.value.domicilio }} 
+                </span>
+            </td>
+            <td>
+                <span class="chica">( domicilio predeterminado )</span>
+            </td>
+        {% else %}
+            <form action="{{ path('backend_establecer_predeterminado' , {'domicilio_localizacion_id': valor_id } ) }}" method="post" {{ form_enctype(formulario) }}>
+            <td>
+                {% set cartel = 'Hacer predeterminado' %}
+                    <span class="resaltado float_izquierda">
+                        {{ formulario.vars.value.domicilio }}
+                        {{ form_widget(formulario) }}
+                    </span>
+            </td>
+            <td>
+                    <input class ="chica" type="submit" value="{{ cartel }}" />
+            </td>
+            </form>
+        {% endif %}
+    </tr>
+    <br />
+
+
+{% endfor %}
+</table>
+
+<span class="limpiar_float"></span>
+<span class="float_derecha">
+    <a href="{{ path('backend_localizacion_edit', {'id': entity.id} ) }}">Volver</a>
+</span>
+
+<br />
+<br />
+
+{% endblock %}

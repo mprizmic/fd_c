@@ -1,0 +1,32 @@
+{# parametros:
+lista de matricula por anios
+#}
+
+    {% for entity in entities %}
+        {% if loop.first %}
+            <table class="grilla_fit">
+                <thead>
+                    <tr>
+                        <th>Año</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+        {% endif %}
+        <tr>
+            <td>{{ entity.anio }}</td>
+            <td><a href="{{ path('backend_cohorte_edit', { 'id': entity.id }) }}">Editar</a>
+            </td>
+        </tr>
+        {% if loop.last %}
+            </tbody>
+        {% endif %}
+        
+    {% else %}
+        <span class="resaltado mediana">
+            No hay datos
+        </span>
+    {% endfor %}
+
+</table>

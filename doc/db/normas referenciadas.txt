@@ -1,0 +1,17 @@
+ejemplo de como se referencian las normas entre si
+
+norma 180:
+
+referencia a la 4186 y a la 72
+es referenciada por la 140 y la 1000
+
+las tablas tienen la sig forma:
+
+norma | norma_referencias
+======|=========================
+id    | norma_id | referencia_id
+================================
+180   | 180      | 4186
+180   | 180      | 72
+180   | 140      | 180
+180   | 1000     | 180

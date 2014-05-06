@@ -1,0 +1,53 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Lista de DistritoEscolar
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>Lista de DistritoEscolar</h1>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Numero</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('backend_distrito_escolar_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.numero }}</td>
+            <td>{{ entity.nombre }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('backend_distrito_escolar_show', { 'id': entity.id }) }}">
+                                                    Mostrar
+                                                </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('backend_distrito_escolar_edit', { 'id': entity.id }) }}">
+                                                    Editar
+                                                </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('backend_distrito_escolar_new') }}">
+            Crear nuevo registro
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

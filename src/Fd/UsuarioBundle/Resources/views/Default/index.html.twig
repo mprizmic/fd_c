@@ -1,0 +1,35 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block main_content %}
+{{ parent() }}
+
+<h1>Lista de Usuarios</h1>
+
+<ul>
+    <li>
+        <a href="{{ path('usuario_nuevo') }}">
+            Crear nuevo usuario
+        </a>
+    </li>
+</ul>
+
+<table class="records_list">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Usuario</th>
+            <th>Nombre y apellido</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in usuarios %}
+        <tr>
+            <td>{{ entity.id }}</td>
+            <td><a href="{{ path( 'usuario_editar' , { 'id':entity.id} ) }}">{{ entity.nombreUsuario }}</a></td>
+            <td>{{ entity }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

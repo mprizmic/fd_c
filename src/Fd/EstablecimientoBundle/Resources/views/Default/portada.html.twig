@@ -1,0 +1,10 @@
+{% extends '::layout.html.twig' %}
+
+
+{% block main_content %}
+
+{{ parent() }}
+
+{% include 'UsuarioBundle:Default:login_sub1.html.twig' with {'last_username': null, 'error': null } %}
+
+{% endblock %}

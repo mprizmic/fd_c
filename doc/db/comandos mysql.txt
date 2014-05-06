@@ -1,0 +1,6 @@
+mysqldump -u <usuario> -p <database> > archivo.salida
+
+mysql -u <usuario> -p <database> < archivo.salida
+
+
+

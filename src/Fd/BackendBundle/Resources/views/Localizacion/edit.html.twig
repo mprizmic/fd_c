@@ -1,0 +1,79 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Editar Localizacion
+{% endblock %}
+ 
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo">Editar una localización</div>
+
+<div class="instrucciones">
+    <p>Se debe determinar que nivel o unidad educativa de un establecimiento se imparte en que edificio (sede o anexo).</p>
+</div>
+<br />
+
+<form action="{{ path('backend_localizacion_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+
+    <br />
+    <span class="float_izquierda">
+        <input  type="submit" value="Guardar" />
+    </span>
+    
+        
+    <form action="{{ path('backend_localizacion_delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <span class="float_izquierda separador">
+        <input type="submit" class="boton_rojo" value="Eliminar" />
+        </span>
+    </form>
+        
+    <a href="{{ path('backend_localizacion') }}">
+        Volver a la lista
+    </a>
+</form>
+
+<span class="limpiar_float"></span>
+<br />
+<br />
+
+{# aca va el formulario de los domicilios de la localizacion #}
+<fieldset>
+    <legend>
+        <p class="resaltado">Domicilios del edificio</p>
+    </legend>
+    <div class="instrucciones">
+    Tilde aquellos domicilios del edificio que son usados por el nivel. Luego clickee en "Asignar/desasignar".<br />
+    Siempre deberá figurar al menos un domicilio, y uno de los que se figuren deberá ser el principal.
+    </div>
+    {{ form_errors(domicilios_form) }}
+    <form action="{{ path('backend_localizacion_asignar_domicilio', {'id': entity.id}) }}" method="post" {{ form_enctype(domicilios_form) }}>
+
+        <table >
+        {% for domicilio in domicilios_form.domicilios %}
+            <tr>
+                <td>{{ form_widget( domicilio.flag )}}</td>
+                <td>{{ form_widget( domicilio.nombre ) }}</td>
+                <td>{{ form_widget( domicilio.domicilio_id) }}</td>
+                <td>{{ form_widget( domicilio.domicilio_localizacion_id) }}</td>
+                <td>{{ form_widget( domicilio.principal) }}</td>
+            </tr>
+        {% endfor %}
+        </table>        
+
+        {{ form_rest(domicilios_form) }}
+
+        <br />
+
+        <input class="float_izquierda" type="submit" value="Asignar/desasignar">
+        <span class="separador"></span>
+        <a href="{{ path('backend_determinar_principal', {'localizacion_id': entity.id} ) }}">Cambiar el domicilio principal que utiliza el nivel</a>
+
+    </form>
+    <br />
+
+</fieldset>
+
+{% endblock %}

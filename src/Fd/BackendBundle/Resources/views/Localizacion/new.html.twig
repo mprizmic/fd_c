@@ -1,0 +1,32 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Crear Localizacion
+{% endblock %}
+ 
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo">Crear registro de Localizacion</div>
+
+<div class="instrucciones">
+    <p>Se establece en que edificio (sede o anexo) se imparte un nivel o unidad educativa de un establecimiento.</p>
+</div>
+<br />
+
+<form action="{{ path('backend_localizacion_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Crear</button>
+    </p>
+</form>
+
+<span class="float_derecha">
+    <a href="{{ path('backend_localizacion') }}">
+        Volver a la lista
+    </a>
+</span>
+<br />
+<br />
+
+{% endblock %}

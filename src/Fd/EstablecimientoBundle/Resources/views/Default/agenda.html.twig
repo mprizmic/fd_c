@@ -1,0 +1,20 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Agenda de la DFD</div>
+<div class="limpiar_float"></div>
+
+<br />
+<br />
+
+<span class="instrucciones">
+<a href="{{ path('agenda_excel') }}">Cliquee aquí</a> para tener acceso a la planila de cálculo con la agenda de los establecimientos y autoridades 
+</span>
+
+<br />
+
+{% include '::includes/volver.html.twig' %}
+    
+{% endblock %}

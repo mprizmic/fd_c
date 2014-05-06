@@ -1,0 +1,24 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Establecimientos de un edificio</div>
+
+<div class="limpiar_float"></div>
+
+{% render "EdificioBundle:Default:tarjeta_edificio" with {'edificio_id': edificio_id} %}
+
+<br />
+
+{% for establecimiento in establecimientos %}
+    Nombre: {{ establecimiento.nombre }}<br />
+    CUE: {{ establecimiento.cue }}<br />
+    Distrito escolar: {{ establecimiento.distritoEscolar }}<br/>
+    <br />
+    <br />
+{% endfor %}
+
+{% include '::includes/volver.html.twig' %}
+    
+{% endblock %}

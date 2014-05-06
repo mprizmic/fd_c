@@ -1,0 +1,344 @@
+// subir file
+
+// Formulario.
+     $form = $this->createFormBuilder()                    
+            ->add('attachment', 'file')
+            ->getForm()
+            ;
+
+if ($this->getRequest()->isMethod('POST'))
+    {
+        $form->bind($request);
+       
+        if ($form->isValid())
+        {
+        // Obtener datos del campo 'attachment' del formulario.
+            $file = $form['attachment']->getData();
+            // Obtener la extencion del archivo a subir.
+            $extension = substr(strrchr($file->getClientOriginalName(), '.'), 1);
+               
+                if (($extension === "xls") || ($extension === "xlsx")) {
+                   
+                    // Generar nombre del archivo a guardar.
+                    $nombreFinal = \rand(1, 99999999999).'.'.$extension;
+
+                    // Obtener ruta de almacenamiento.
+                    $targetDir = $this->get('kernel') ->getRootDir() . '/../web/uploads/excel/hijos/';
+   
+                    // Mueve la plantilla a lugar de almacenamiento.
+                    $file->move($targetDir, $nombreFinal);
+
+                    // Ruta al archivo
+                    $fileWithPath = $targetDir.$nombreFinal;
+                   
+                    // importa la planilla a la BD.
+                    self::importarFamilia($fileWithPath);
+                   
+                    $this->get('session')->setFlash('success','La planilla fue procesada.');
+                    return $this->redirect($this->generateUrl('familia_upload'));
+                   
+                }
+                else
+                {
+                    $this->get('session')->setFlash('error','El archivo no es un documento de Excel (xls/xlsx).');
+                    return $this->redirect($this->generateUrl('familia_upload'));
+                }
+        }
+
+este carga la plantilla
+
+
+ private function importarFamilia($fileWithPath)
+    {
+   
+   
+   
+    $objPHPExcel = $this->get('xls.load_xls2007')->load($fileWithPath); // Cargar plantilla   
+    $objWorksheet = $objPHPExcel->setActiveSheetIndex(0); // Selecciona la primera hoja de la plantilla
+    $highestRow = $objWorksheet->getHighestRow();     // Numero de filas
+   
+    // Recorre planilla a partir de la segunda fila
+    for ($row = 2; $row <= $highestRow; ++$row)
+    {
+        // RUT PADRE Y HIJO
+        $rutPadre = self::limpia_espacios($objWorksheet->getCell('A'.$row)->getCalculatedValue());
+        $rutHijo = self::limpia_espacios($objWorksheet->getCell('B'.$row)->getCalculatedValue());
+       
+        // NOMBRES HIJO
+        $nombres = $objWorksheet->getCell('C'.$row)->getCalculatedValue();
+       
+        // APELLIDO HIJO
+        $apellidoPaterno = $objWorksheet->getCell('D'.$row)->getCalculatedValue();
+        $apellidoMaterno = $objWorksheet->getCell('E'.$row)->getCalculatedValue();
+       
+        $sexo = self::limpia_espacios($objWorksheet->getCell('F'.$row)->getCalculatedValue());
+       
+        // FECHA DE NACIMIENTO
+        $objWorksheet->getStyle('G'.$row)->getNumberFormat()->setFormatCode('dd-mm-yyyy');
+        $fechaNacimiento = $objWorksheet->getCell('G'.$row)->getFormattedValue();
+       
+        $em = $this->getDoctrine()->getManager();
+       
+       
+        if($this->validateRut($rutPadre))
+        {
+        $this->get('session')->getFlashBag()
+            ->add(
+                'error',
+                'Rut del padre es invalido en la fila '.$row.'.'
+                );
+        continue;
+        }
+       
+        if($this->validateRut($rutHijo))
+        {
+        $this->get('session')->getFlashBag()
+            ->add(
+                'error',
+                'Rut del hijo es invalido en la fila '.$row.'.'
+                );
+        continue;
+        }
+       
+        if(is_null($rutPadre) || is_null($nombres) || is_null($apellidoPaterno) || is_null($sexo) || is_null($fechaNacimiento))
+        {
+        $this->get('session')->getFlashBag()
+            ->add(
+                'error',
+                'Falta registro(s) en la fila '.$row.'.'
+                );
+        continue;
+        }
+       
+        $empleado = $em->getRepository('PersonalBundle:Personal')->findOneByRut($rutPadre);
+
+        if(!$empleado)
+        {
+        $this->get('session')->getFlashBag()
+            ->add(
+                'error',
+                'El empleado de la fila '.$row.', no existe en el sistema.'
+                );
+        continue;
+        }
+       
+       
+        $hijo = $em->getRepository('PersonalBundle:Familia')->findOneByRut($rutHijo);
+       
+        if($hijo)
+        {
+        $this->get('session')->getFlashBag()
+            ->add(
+                'warning',
+                'El empleado de la fila '.$row.', ya registro ese familiar.'
+                );
+        continue;
+        }
+       
+        $fecha = new \DateTime($fechaNacimiento);
+       
+        $nuevo = new Familia();
+        $nuevo->setRut(($rutHijo == NULL) ? "Pendiente" : $rutHijo );
+        $nuevo->setNombres($nombres);
+        $nuevo->setApellidoPaterno($apellidoPaterno);
+        $nuevo->setApellidoMaterno($apellidoMaterno);
+        $nuevo->setSexo($sexo);
+        $nuevo->setPadre($empleado);
+        $nuevo->setFechaNacimiento($fecha);
+     
+        $em->persist($nuevo);
+        $em->flush();
+       
+       
+       
+    }
+    }
+
+==============================================================0
+
+
+para exportarlo
+
+
+ public function exportarAction()
+    {
+    //$em = $this->getDoctrine()->getManager();     
+    
+    $filtro = $this->filter();
+    $familiares =$filtro[1]->getQuery()->getResult();
+    
+    //$familiares = $em->getRepository('PersonalBundle:Familia')->findAll();
+    
+    // Pedir el servicio para Excel2007
+        $excelService = $this->get('xls.service_xls2007');
+    
+    
+    // Datos documento
+        $excelService->excelObj->getProperties()
+        ->setCreator("")
+        ->setLastModifiedBy("")
+        ->setTitle("Listado de hijos")
+        ->setSubject("Vigentes")
+        ->setDescription("")
+        ->setKeywords("")
+        ->setCategory("")
+        ;
+    
+    $hoy = date('Y-m-d');
+    
+    $excelService->excelObj->getActiveSheet()->setTitle('FICHA CONDUCTUAL - '.$hoy);
+        $excel = $excelService->excelObj->setActiveSheetIndex(0);
+    
+    // CABECERA (INICIO) ----------------------------------------
+        $excel
+        ->setCellValue('A1', 'RUT PADRE')
+        ->setCellValue('B1', 'NOMBRE PADRE')                    
+        ->setCellValue('C1', 'RUT HIJO')
+        ->setCellValue('D1', 'NOMBRE HIJO')
+        ->setCellValue('E1', 'APELLIDOS HIJO')
+        ->setCellValue('F1', 'SEXO')
+        ->setCellValue('G1', 'EDAD (Años)')
+        ->setCellValue('H1', 'FECHA NACIMIENTO')
+        ;
+                     
+        // CABECERA (FIN) ----------------------------------------
+    
+    $fila = 2;
+    foreach ($familiares as $hijo)
+    {        
+        $edad = $hijo->getEdad();
+        
+        $sexo = ($hijo->getSexo() == 'h') ? "Hombre" : "Mujer";
+            
+        
+        $excelService->excelObj->getActiveSheet()
+            ->getStyle('H'.$fila)
+            ->getNumberFormat()
+            ->setFormatCode('dd-mm-yyyy')
+            ;
+        
+        $excel->setCellValue('A'.$fila, $hijo->getPadre()->getRut())
+          ->setCellValue('B'.$fila, $hijo->getPadre()->getNombre())  
+          ->setCellValue('C'.$fila, $hijo->getRut())    
+          ->setCellValue('D'.$fila, $hijo->getNombres())  
+          ->setCellValue('E'.$fila, $hijo->getApellidoPaterno().' '.$hijo->getApellidoMaterno())  
+          ->setCellValue('F'.$fila, $sexo)
+          ->setCellValue('G'.$fila, $edad['anios'])    
+          ->setCellValue('H'.$fila, $hijo->getFechaNacimiento()->format('d-m-Y'))  
+        ;        
+        
+        $fila++;
+    }
+    
+    $excelService->excelObj->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $excelService->excelObj->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $excelService->excelObj->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+    $excelService->excelObj->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+    $excelService->excelObj->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+    $excelService->excelObj->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+    $excelService->excelObj->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+    $excelService->excelObj->getActiveSheet()->getColumnDimension('H')->setAutoSize(true);
+    
+    //justify            
+        $styleArrayHead = array(
+        'borders' => array(
+        'allborders' => array(
+            'style' => 'double',
+            ),
+        ),
+        );
+         
+            
+        $styleArray = array(
+        'borders' => array(
+        'allborders' => array(
+            'style' => 'dotted',            
+            ),
+        ),
+        );
+    
+    $excelService->excelObj->getActiveSheet()->getStyle('A1:H1')->applyFromArray($styleArrayHead);
+        $excelService->excelObj->getActiveSheet()->getStyle('A2:H'.($fila-1))->applyFromArray($styleArray);
+    
+    // Generar plantilla
+        $response = $excelService->getResponse();
+        $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment;filename=EMPLEADO_HIJOS.xlsx');
+         
+        return $response;
+    }
+
+
+debes definir
+
+use Symfony\Component\HttpFoundation\Request;
+
+
+===============================================
+
+1.
+en la función importarFamilia, despues que obtienes los datos de la platilla y lo validas, puedes instancia un nuevo objeto
+
+$nuevo = new Familia();
+        $nuevo->setRut(($rutHijo == NULL) ? "Pendiente" : $rutHijo );
+        $nuevo->setNombres($nombres);
+        $nuevo->setApellidoPaterno($
+apellidoPaterno);
+        $nuevo->setApellidoMaterno($apellidoMaterno);
+        $nuevo->setSexo($sexo);
+        $nuevo->setPadre($empleado);
+        $nuevo->setFechaNacimiento($fecha);
+     
+        $em->persist($nuevo);
+        $em->flush();
+
+o haces una consulta a la bd y extaer la tupla que quieres actualizar.
+
+
+2.
+
+limpiar espacio su funcion es quitar los espacios en blanco que puede tener la celda de la planilla excel.
+
+la utilizo en este caso para limpiar el rut (registro único tributario) que es alfanumérica y no puede quedar espacios.
+
+public function limpia_espacios($cadena)
+    {
+        $cadena = str_replace(' ', '', $cadena);
+        return $cadena;
+    } 
+
+==================================================
+
+Para cargar una plantilla debes hacer esto
+
+
+
+//Ruta hasta la capeta web
+$targetDir = $this->get('kernel') ->getRootDir() . '/../web/';
+
+//  $archivo = archivo.xlsx
+ $fileWithPath = $targetDir.$archivo;
+
+
+$objPHPExcel = $this->get('xls.load_xls2007')->load($fileWithPath);
+
+// Activa la primera hoja
+$objWorksheet = $objPHPExcel->setActiveSheetIndex(0);
+
+// numero de filas
+$highestRow = $objWorksheet->getHighestRow();
+
+// recorre las filas
+
+for ($row = 2; $row <= $highestRow; ++$row)
+{
+    // Captura el elemeto si de la columa y fila señalada
+    // Estatico
+    $dato1    = $objWorksheet->getCell('A'.$row)->getCalculatedValue();
+    $dato2    =  $objWorksheet->getCell('B'.$row)->getCalculatedValue();
+
+   // Des puedes crear un objeto o realizar una consulta para almacenar los  datos o lo que sea.
+}
+
+El primer ejemplo es para crear un archivo excel.
+

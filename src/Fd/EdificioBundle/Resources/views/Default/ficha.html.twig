@@ -1,0 +1,19 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">{{ edificio }}</div>
+
+<div class="limpiar_float"></div>
+
+<div>CUI: {{ edificio.cui}}</div>
+<br />
+<div>##Barrio##</div>
+<div>##código Postal##</div>
+
+
+<a href="{{ path('establecimiento_de_un_cui', {'edificio_id': edificio.id } ) }}">Establecimientos</a></td>
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}
