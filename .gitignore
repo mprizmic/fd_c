@@ -1,0 +1,39 @@
+/src/Fd/OfertaEducativaBundle/Resources/views/Carrera/indicadores_cohorte_establecimiento.html.twig
+# Archivos de bootstrap (compilan las clases más usadas en Symfony2)
+app/bootstrap*
+
+
+# Directorios de Symfony
+# vendor/*
+*/logs/*
+*/cache/*
+# web/uploads/*
+# web/bundles/*
+# web/css/*
+# web/js/*
+web/app_dev.php
+web/config.php
+web/.htaccess
+
+# Archivos de configuración
+app/config/parameters.ini
+# app/config/parameters.yml
+app/config/local.yml #tiene parametros para cada instalación
+
+# Archivos de entornos de desarrollo y editores de texto
+# (SublimeText, Eclipse, Zend Studio, Netbeans, PHPStorm, TextMate2)
+.buildpath
+.idea
+nbproject
+.project
+.settings
+.sublime-project
+.tm_properties
+netbeans
+
+# Archivos de la aplicacion
+doc/Tracking/trac2.html
+doc/Tracking/Keynotes_del_proyecto2.html
+doc/Tracking/Milestones2.html
+doc/Tracking/reglas_de_negocio.html
+src/Fd/EstablecimientoBundle/Resources/views/Default/avances_del_sistema.html.twig
