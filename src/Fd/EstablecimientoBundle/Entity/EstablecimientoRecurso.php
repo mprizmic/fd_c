@@ -31,10 +31,7 @@ class EstablecimientoRecurso {
 
     /**
      * bidireccional lado propietario
-     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\Recurso")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="recurso_id", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\Recurso", inversedBy="establecimiento")
      * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
     private $recurso;
@@ -46,13 +43,12 @@ class EstablecimientoRecurso {
     private $cantidad;
 
     public function __toString() {
-        //problemas con sonta admin bundle por que pedía un string que no pude producir
-        return 'establecimiento-recurso ';
+        return $this->getEstablecimiento()->getApodo().' '. $this->getRecurso()->getDescripcion();
     }
 
     public function __construct() {
-        $this->recurso = new ArrayCollection();
-        $this->establecimiento = new ArrayCollection();
+        $this->recurso = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->establecimiento = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
