@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}
+        {% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+        <script type="text/javascript" src="{{ asset('bundles/establecimiento/js/jquery-1.8.0.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/establecimiento/js/jquery-ui-1.8.23.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}" charset="utf-8"></script>
+        <script type="text/javascript" src="/js/fos_js_routes.js" charset="utf-8"></script>
+        {% block javascripts %}
+        {% endblock %}
+    </head>
+    <body>
+        <div id="container">
+            {% block container %}
+
+                <!-- empieza el header -->
+                <div id="header">
+                    {% block header %}
+                    {% endblock %}
+                </div>
+
+                <div id="divCargando" style="display: none">Por favor espere...</div>
+
+                <div id="menu_superior"> 
+                    {% block menu_superior %}
+                    {% endblock %}
+                </div>
+
+                <!-- empieza la region principal -->
+                <div id="mainContent">
+                    <!-- contenido -->
+                    {% block main_content %}
+                    {% endblock %}
+                </div>	
+                
+                <!-- aca empieza el footer -->
+                <div id="footer" class="chica">
+                {% block footer %}
+                    <p>&copy; {{fd.version_logica}}
+                        <a class="separador" style="color: white;" href="{{ path('contacto') }}" >Contacto</a>
+                        <a class="separador" style="color: white;" href="{{ path('acerca_de') }}" >Acerca de ...</a>
+                    </p>
+                {% endblock %}
+                <!-- aca termina el footer -->
+                </div>
+            {% endblock %}
+
+        </div>
+    </body>
+</html>

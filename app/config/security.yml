@@ -1,0 +1,85 @@
+security:
+    role_hierarchy:
+#        ROLE_ADMIN: [ROLE_USUARIO]
+        ROLE_ADMIN: [ROLE_USUARIO, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_USUARIO, ROLE_ALLOWED_TO_SWITCH]
+
+    encoders:
+        Fd\UsuarioBundle\Entity\Usuario: { algorithm: sha512, iterations: 10 }
+
+    providers:
+        usuarios:
+            entity: { class: Fd\UsuarioBundle\Entity\Usuario, property: nombre_usuario }
+        in_memory:
+            memory:
+                users:
+                    usuario1:  { password: soy_usuario, roles: [ 'ROLE_USUARIO' ] }
+                    admin: { password: soy_administrador, roles: [ 'ROLE_ADMIN' ] }
+                    super_admin: { password: soy_super_administrador, roles: [ 'ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_USUARIO' ] }
+
+    firewalls:
+        frontend:               
+            pattern: ^/*
+            provider: usuarios
+            anonymous: ~
+            form_login:
+                login_path: usuario_login
+#                use_forward: false
+                check_path: usuario_login_check
+#                use_referer:  manda a la pagina pedida luego de hacer login 
+                default_target_path: 'establecimiento_damero'
+                always_use_default_target_path: true
+            remember_me:
+                key: Fd_for_ever
+                lifetime: 75000
+            logout: 
+                path: usuario_logout
+                target: 'portada'
+            switch_user: true
+            
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+            switch_user: true
+
+        backend:
+            pattern: ^/backend
+            anonymous: ~
+            form_login:
+                login_path: usuario_login
+                check_path: usuario_login_check
+                default_target_path: 'portada'
+                always_use_default_target_path: true
+            logout: 
+                path: usuario_logout
+                target: 'portada'
+            switch_user: true
+
+    access_control:
+        - { path: ^/portada, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/usuario/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/usuario/registro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/establecimiento/*, roles: ROLE_USUARIO }
+        - { path: ^/carrera/*, roles: ROLE_USUARIO }
+        - { path: ^/oferta/*, roles: ROLE_USUARIO }
+        - { path: ^/unidad_educativa/*, roles: ROLE_USUARIO }
+        - { path: ^/tabla/*, roles: ROLE_USUARIO }
+        - { path: ^/edificio/*, roles: ROLE_USUARIO }
+        - { path: ^/inicial/*, roles: ROLE_USUARIO }
+        - { path: ^/primario/*, roles: ROLE_USUARIO }
+        - { path: ^/medio/*, roles: ROLE_USUARIO }
+        - { path: ^/usuario/*, roles: ROLE_SUPER_ADMIN }
+        - { path: ^/backend/tabla_portada/*, roles: [ROLE_SUPER_ADMIN] }
+        - { path: ^/backend/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
+        - { path: ^/_wdt/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/_profiler/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/en_desarrollo, role: [ROLE_ADMIN, ROLE_USUARIO] }
+        - { path: ^/acerca_de, role: [ROLE_ADMIN, ROLE_USUARIO] }
+        - { path: ^/agenda, role: [ROLE_ADMIN, ROLE_USUARIO] }
+        - { path: ^/glosario, role: [ROLE_ADMIN, ROLE_USUARIO] }
+        - { path: ^/contacto, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/titulo/*, role: ROLE_USUARIO }
+        - { path: ^/admin/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
+
+jms_security_extra:
+    secure_all_services: false

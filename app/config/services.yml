@@ -1,0 +1,44 @@
+services:
+    twig.extension.debug:
+        class: Twig_Extensions_Extension_Debug
+        tags:
+            - { name: twig.extension }
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+    twig.extension.ksort_cohortes:
+        class: Fd\EstablecimientoBundle\Twig\Extension\UtilidadesExtension
+        tags:
+            - { name: twig.extension }
+
+    # listener de doctrine para actualizar en un preupdate el campo principal del domicilio
+    fd.carrera.estadovalidez.listener:
+        class: Fd\OfertaEducativaBundle\Listener\CarreraListener
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postFlush }
+
+    #Esto esta en el EstablecimientoBundle
+    #Es para el custom type si_no_sd
+    fd_establecimiento.form.type.si_no_sd:
+        class: Fd\EstablecimientoBundle\Form\Type\SiNoSdType
+        arguments:
+            - "%fd.si_no_sd%"
+        tags:
+            - { name: form.type, alias: si_no_sd }
+    #Esto esta en el EstablecimientoBundle
+    #Es para el custom validation constraint
+    validator.unique.si_no_sd:
+        class: Fd\EstablecimientoBundle\Validator\Constraints\SinosdValidator
+        arguments:
+            - "%fd.si_no_sd%"        
+        tags:
+            - { name: validator.constraint_validator, alias: si_no_sd_validator }            
+# lo que sigue nunca anduvo
+#    fd.todos.timestampable.prepersist:
+#        class: Fd\EstablecimientoBundle\EventListener\TimestampableListener
+#        arguments: ["@doctrine.orm.entity_manager"]
+#        tags:
+#            - { name: doctrine.event_listener, event: prePersist}
+#            - { name: doctrine.event_listener, event: preUpdate}            

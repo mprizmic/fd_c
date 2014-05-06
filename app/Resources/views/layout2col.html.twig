@@ -1,0 +1,57 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Bienvenido al Sistema de Formación Docente!{% endblock %}
+
+
+{% block stylesheets %}
+    {% include '::includes/stylesheets.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+
+
+{% block header %}
+    {% set titulo = 'DFD' %}
+    {% include '::includes/header.html.twig' with {'titulo': titulo, 'camino': path('establecimiento_damero') } %}
+{% endblock %}
+
+{% block menu_superior %}
+    {% include '::includes/menu_superior.html.twig' %}
+{% endblock %}
+
+{% block main_content %}
+
+    <div>
+    {% block menu_derecha %}
+    {% endblock %}
+    </div>
+
+    <div>
+    <!-- tiene un flash y luego el contenido -->
+    {% for tipo in ['notice','error', 'aviso'] %}
+        {% for flash_message in app.session.flashbag.get( tipo ) %}
+            {% if loop.first %}
+                <div id="flash" class="{{ 'flash_' ~ tipo }}">
+            {% endif %}
+                {{ flash_message }}<br />
+                <script>$("#flash").fadeIn('slow').delay(1200).fadeOut('slow');</script>
+            {% if loop.last %}
+                </div>
+            {% endif %}
+            
+        {% endfor %}
+    {% endfor %}
+    </div>
+    <div>
+        {% block contenido %}
+        {% endblock %}
+    </div>
+
+
+{% endblock %}
+    
+  
+{% block footer %}
+    {{ parent() }}
+{% endblock %}

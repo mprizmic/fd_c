@@ -1,0 +1,50 @@
+<span class="float_izquierda">
+    <ul>
+        <li><a href="{{ path('establecimiento_damero') }}">Inicio</a></li>
+        <li><a href="{{ path('establecimiento_damero') }}">Establecimientos</a>
+            <ul>
+                <li><a href="{{ path('establecimiento_nomina') }}">Nómina completa</a></li>
+                <li><a href="{{ path('establecimiento_damero') }}">Damero</a></li>
+                <li><a href="{{ path('establecimiento_docentes_nivel_listado') }}">Listado de docentes por nivel</a></li>
+            </ul>
+        </li>
+        <li><a href="{{ path('carrera_nomina') }}">Carreras</a>
+            <ul>
+                <li><a href="{{ path('carrera_buscar') }}">Búsqueda de carrera</a></li>
+                <li><a href="{{ path('carrera_nomina') }}">Nómina completa</a></li>
+                <li><a href="{{ path('carrera_nomina_resumida') }}">Nómina resumida</a></li>
+                <li><a href="{{ path('carrera_resumen_validez') }}">Resumen de validez nacional</a></li>
+                <li><a href="{{ path('carrera_indicadores_cohorte') }}">Matrícula por año</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Especializaciones</a>
+            <ul>
+                <li><a href="{{ path('especializacion_nomina') }}">Nómina</a></li>
+                <li><a href="{{ path('especializacion_vencimiento') }}">Listado de vencimientos</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Niveles</a>
+            <ul>
+                <li><a href="{{ path('inicial_nomina') }}">Inicial</a></li>
+                <li><a href="{{ path('primario_nomina') }}">Primario</a></li>
+                <li><a href="{{ path('medio_nomina') }}">Medio</a></li>
+            </ul>
+        </li>
+        <li><a href="#">Edificios</a>
+            <ul>
+                <li><a href="{{ path('edificio_nomina') }}">Nómina completa</a></li>
+                <li><a href="{{ path('edificio_compartido') }}">Edificios que se comparten</a></li>
+            </ul>
+        </li>
+
+        {% include '::includes/menu_ayuda.html.twig' %}
+    </ul>
+
+</span>
+<span class="limpiar_float"></span>
+<span class="float_derecha">
+    <ul>
+        <li><a href="{{ path('fd_backend_default_portada') }}">Administración</a></li>
+    </ul>
+</span>
+<span class="limpiar_float"></span>

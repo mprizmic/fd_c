@@ -1,0 +1,26 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<br />
+<br />
+<br />
+<br />
+
+<div class="titulo centrado">Página en desarrollo</div>
+
+<br />
+<br />
+<div class="titulo centrado"><a href="{{ app.request.headers.get('referer') }}">Volver</a></div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+    
+{% endblock %}

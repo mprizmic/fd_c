@@ -1,0 +1,247 @@
+<html>
+    <body>
+
+        ====== Keynotes del proyecto ======
+        Created miércoles 10 abril 2013
+
+
+        ====================================================
+        mejorè los collection 
+        se agrega un js, un css, una macro de twig y además se corrigen los xxType y el renderizado en los html.twig
+        El ejemplo andando son las salas de inicial de una unidad educativa (oferta_educativa/inicial_x/1/43/edit)
+        =============================================
+        hice un download de archivo Excel en la agenda telefonica
+        ===================================================
+        se crea servidor@marcelo$ ~/proyectos/repo_remoto
+        se crea servidor@marcelo$ ~/proyectos/fd2 desde cero clonando a repo_remoto y queda andando
+        probe los ajax y andan. 
+        probé la captura y anda
+        hay nuevo instructivo para subir archivos
+        ===================================
+        Se crea un bundle para actos publicos.
+        Se hace la captura de la planilla de actos de media. Se usa PHPEXcel
+        Para tener disponible el nombre del archivo se agrega un parameter de symfony2 que va a estar disponible leyendo un archivo yml 
+        con el nombre de la planilla Excel.
+        Cada semana se copia el Excel correspondiente y se copia el yml que contiene el nombre del Excel de esa semana.
+        Primero lo proceso local. Luego calculo a mano las horas con para_cargar_horas.sql. luego las cargo en la planilla Excel en la columna I.
+        Luego cargo todo en el servidor.
+        ========================================================
+        Se agrega una rutina goutte.phar para hacer webscraping -- DEPRECATED por la captura del excel
+        Se agrega la pagina actos en el actopublicocontroller que funciona como prueba de la función
+        ================================================================
+        La cantidad de docentes del nivel se guarda en el registro de unidad_educativa. Cada cantidad está en un registro distinto.
+        Para cargar la cantidad de docentes de cada nivel se hace un objeto de dominio y un abm sobre el objeto de dominio que no es una entity
+        Se hace un manejador y un handler del form para tranformar lo que se carga en objetos de 4 entities distintos
+        
+        ================================================================
+        form theme: para hacer que los label se encolumnen sin usar tablas se puede usar
+            <div class="ancho_10">
+                {{ form_row( edit_form.campo1 ) }}
+                {{ form_row( edit_form.campo2 ) }}
+            </div>
+        donde
+            .ancho_10 label{
+                    display: inline-block;
+                    width: 10em;}
+        Todas las label tienen el mismo ancho.
+        Para poder cambiar a gusto el ancho de algùn campo de input se le puede dar el attr 'size:99'  en el type. No hace falta hacerlo en el widget del campo.
+        Si se saca el form_table_layout.html.twig del config, hay que remcolumnar las paginas que en estàn hechas con table explícitos
+        
+        Cambié el form_table_layout por el form-div_layout y arreglé los theme del form_row para que el help y los mensajes de error de los campos salgan juntos.
+        =============================================================
+        En el carreracontroller uso un custom sort. Es un sort de array con una función personalizada
+        ===========================================================
+        En el defaultcontroller de establecimiento uso un custom sort. Es un sort de array con una función personalizada
+        ===========================================================
+        agregue un custom type SdNoSdType para usarlo en los Type como combo para reemplazar a los booleanos. 
+        El type es si_no_sd.
+        El campo en la entity tiene que ser string de 2.
+        Además cree un custon validation constraint que es @FdAssert\Sinosd
+        El constraint y el type funcionan con los mismos datos que los toman de un array del config.yml
+        Usado en el ab mde establecimientos para el campo ed las coopaeradoras
+        ============================================================
+        ahora la url va sin el app 10-2-2014 y andan los javascript comunes y los ajax
+        ========================================================
+        Domicilio tiene un test completo del abm 
+        en el testing LocalizacionController se usa login de usuario y anda
+        hay testing de repository de establecimiento
+        ================================================
+        se muestra fecha y hora del último login para lo cual use un listerner del 
+        security.interactive_login.
+        La entity usuario genera timestamp
+        =======================================================
+        se reorganizan los branch para usar master, dev, rel, hf
+        la idea es que se trabaja sobre rel o sobre una rama de rel
+        carrera_handler_model es un branch de rel
+        
+        queda por subir el nuevo master y tagear cada cosa
+        
+        el desarrollo es así:
+        los parches o cambios peuqeños seran sobre rel y luego pasados a dev, mientras en cada branch de rel voy desarrollando.
+        cuando armo una version la paso a master y la subo.
+        si hay un hotfix en master lo armo en una branch de master y al resolverlo lo mergeo a master y a dev
+        =====================================================
+        se agrega una layout2col.html.twig para el frontend que tiene un menu a la derecha para rellenar con lo que sea
+        el clock main_content ahora tiene 2 blocks: menu_derecha y contenido, mas los flash
+        para agrergar el menu hay que definir estos 2 blocks fuera del block main_content y luego hacer que este 
+        herede de su padre
+        ====================================================
+	puse afuera del git del proyecto a trac2.html, keynotes_de_proyecto2.html y milestones2.html
+	======================================================
+        se agrega el lexikformfilterbundle para generar formularios para generar filtros en pantallas de busqueda
+        toqué para que sea like '%...%' en el fuente del vendor:
+        Filter/Doctrine/Expression/ExpressionBuilder.php->literal('%'.$value.'%'));
+
+        Se agrega el crudgeneratobundle que usa el lexik y el pagerfanta pero tira error y queda deshabilitado
+        ================================================
+        se agrega una extensión de form (o form extension) que permite agregar una propiedad 
+        a cada campo que se agrega a un FormType. 
+        En este caso se puede agregar la propiedad 'help' y se muestra debajo del campo a cargar.
+        Entra como un servicio definido en OfertaEducativaBundle pero sirve para todos los bundles
+        ==================================================
+        agregado bundle de mantenimiento para detener el sistema LexikMaintenanceBundle y queda andando
+        como instalé desde un zip y no del composer tuve que tocar el autoload_namespaces.php
+        ==========================================
+        agregado versiones de Doctrine: DoctrineMigrations y queda andando
+        ========================================
+        ahora la url va sin el app 10-2-2014 y andan los javascript comunes y los ajax
+        
+        <b>configuracion de apache y de ajax</b>
+        hay que habilitar el modo rewrite con sudo a2enmod rewrite
+        hay que generar el archivo de fosjsroutingbundle y escribirlo en base.html.twig
+        hay que poer un .htaccess con mod-rewrite en /web/
+        php app/console fos:js-routing:dump
+        php app/console assets:install --symlink web --env=dev
+        hay que poner dataType en las llamadas AJAX
+        hay que poner async:false en las llamadas AJAX
+        hay que poner 127.0.0.1	www.localhost.com en /etc/hosts
+        hay que poner
+            <VirtualHost *:80>
+                    DocumentRoot /home/marcelo/proyectos/fd2/web
+                    DirectoryIndex app.php
+                    ServerName dfd
+                    RewriteEngine On
+        hay que poner 
+            <Directory /home/marcelo/proyectos/fd2/web>
+        
+                AllowOverride All
+                    ....
+                    RewriteCond %{REQUEST_FILENAME} !-f
+                    RewriteRule ^(.*)$ app.php [QSA,L]
+            </Directory>
+        luego http://www.localhost.com/usuario/login en vez de dfd/app.php/usuario/login
+        dar de alta en el servidor de dominio al servidor virtual (dfd)
+        configurar el dns local con el del servidor del dominio
+        
+        ===================================================
+        en cohorteType uso un trait junto con evento para usar select anidados
+        
+        En la muestra de cohortes del backend hay un combo de carreras y uno de cohotes con javascript. 
+        El primero es un ajax que devuelve json. El segundo es un ajax que devuelve un html.
+        =======================================
+        en el abm de matricula uso distintas estrategias de validaciones
+        también uso 2 select anidados. Uno es un campo del registro y el otro no.
+        Uso un trait de php
+        uso registro de eventos de formulario con AJAX para que la pantalla actualice controles encadenados automáticamente
+        ==================================
+        En el aBM de establecimientoedificio se utiliza un pre_set_data y un pre_bind en el type. 
+        En el edit no se muestra el establecimiento pero en el new se muestra el establecimiento.
+        En este abm hay un AJAX para llenar un campo a partir de un combo de la misma pàgina.
+        Además se usa el ParamConverter
+        ===========================
+        en el ABM de carrera use formularios embebidos (collection) para dar de alta las orientaciones.
+        El textarea renderiza a otra altura que el text comun.
+        Toque el field.html.twig que llamaba al form_table y no al form_div
+        
+        No anda por que hago un clone para salvaguardar los datos del objeto anterior y esto no sucede. Los collection que andan
+        (turnos de la unidad educativa, secciones del nivel inicial) para que funcione guardan en un array los datos que interesan. No 
+        guardan el objeto entero. Luego usan el array para controlar lo nuevo con lo anterior.
+        Es el más complejo de todos los ABM
+        el ABM de especializaciones es similar pero no esta tan trabajado
+        utilizo un listener para capturar los eventos de doctrine y que cada vez que cambia el datos
+        CARRERA.ESTADO_VALIDEZ se genere un registro en CARRERA_ESTADO_VALIDEZ
+        
+        use un formhandler y un carreramanager. Pasé todo al frontend
+        
+        En la pantalla de busqueda de carrera implemente el lexikformfilter con el paginador. 
+        
+        El formulario de busqueda no esta asociado a ninguna entidad porque daba error. 
+        El formulario se guarda en la sesion. Para esto los combos se cargan como array y no como tabla/entidad.
+        Los array del form para popular los combo los arma el controlador accediendo a la bd y 
+        se los pasa al form via __construct.
+        Intente guardar la consulta en la sesion pero no guardaba el objeto query que usa el paginador. 
+        Anda todo ok. El secreto es que el form no tenga entidades para poder guardarlo en la sesion.
+        ======================================================================
+        En el ABM de unidad educativa use formularios embebidos para dar de alta los turnos.
+        En la creación de una unidad educativa:
+    /*
+     * Se crea una unidad educativa y se despacha un evento. 
+     * El evento llama al listener UnidadOfertaUENuevaListener que invvoca al UnidadOfertaHandler.
+     * Este es el encargado de crear el registro de UNIDAD_OFERTA.
+     * Para ello carga una strategy desde NIVEL que le dice cual es la clase que 'sabe' como crear el 
+     * registro de UNIDAD_OFERTA de acuerdo al nivel de la unidad educativa.
+     * El UnidadEducativaHandler invoca al método crear() y el strategy crea lo que corresponde.
+     */
+     
+        le agregué el alta de salas (inicial_x) enla misma pantalla, también con collection, 
+        pero la pantalla se hace un poco complicada.Anda pero tiene mal la apariencia.
+        ================================
+        en el abm de localizacion hago una asignacion de domicilio_localizacion
+        para esto hago un formulario con una colección de formularios embebidos;
+        y valido cada formulario embebido de la colección con un evento suscripto directamente en el Type.(domiciliostype)
+        en el post_bind se validan todos los formularios embebidos.
+        Este error global se muestra en la plantilla
+        en el abm de localizacion hay una validación hecha con un callback en la clase.
+        Hubiese sido lo mismo poner un Assert\True sobre un método isXX
+        =================================
+        el proyecto mas nuevo es fd2
+        ======================
+        el abm de norma lo hice entero.
+        La pàgina de búsqueda de norma del backend está hecha sin el lexikformfilter
+        use una tabla autoreferenciada para referencias entre normas
+        le agregue un formhandler y un norma manager
+        =======================
+        me interesa esto por que es un formulario de un filtro de una pantalla de busqueda
+        en el type de la busqueda de norma se valida que los 3 campos no estén en blanco 
+        mediante un evento POST_BIND en el mismo formulario (type)
+        ============================
+        agregue un validador del domicilio del edificio que usa el entitymanager 
+        ===========================
+        Para validar el domicilio principal pasó lo siguiente
+        un campo readonly no produce el efecto deseado
+        un campo DISABLED no viene nunca en el request
+        un campo choice-booleano si está en TRUE actúa según lo esperado. Si en el request del POST pasa en false,
+        es como si no exitiera. Luego graba FALSE pero no se lo puede detectar porque no existe.
+        La solución fue usar un evento preupdate de doctrine, donde si se puede comparar valor anterior y valor nuevo.
+        El problema es que en el evento no se puede actualizar ningún otro registro pues el EntityManager, 
+        cuando finalmente se persiste, ignora dicha actualización.
+
+        ========================
+        agregue la salida de un listado a excel. por ahora esta hecho el listao de especializaciones
+        ===========================
+        El amb de edificio tiene un handler para el backend.
+        Se usa el services.yml en el mismo bundle con los fuentes modificados del directorio DependencyInjection para que cargue YMl y no XML
+        La creación de un edificio tiene un custom event que genera un domicilio nuevo, implementado con un listener.
+        Es un servicio que se define localmente en el bundle con un service.yml
+        Este servicio a su vez hace uso de otros servicios. 
+        La creación del domicilio no está en el handler del domicilio sino en una clase suelto afuera (por lo menos por el momento hasta
+        que haga el handler del domicilio). Esta clase, a su vez, es un servicio.
+        Todo el handler y el controller hace uso de ParamConverter.
+        ===========================
+        en la carga de autoridad (autoridad.php) hay puesto un prepersist/preupdate que pasa el apellido a mayuscula
+        ==========================
+        impersonacion
+        ?_switch_user=cacho
+        ?_switch_user=_exit
+        ====================================
+        en la asignacion de establecimiento a carrera puse una lista de establecimientos que tiene un form de asignar/desasignar cada
+        uno. Antes era un procesamiento batch de todos los establecimientos con un sòlo form. Así está hecha la 
+        asignacion de establecimientos a especialidades.
+        ===========================
+        agreguè un listener que graba createAt y updatedAt a algunas entities. Es el timestampablelistener.php. No anda
+        ===========================
+        agregue en unidad_educativa una actualizacion automatica de la ultima actualizacion. Es con lifecyclecallbacks y anda joya.
+
+
+    </body>
+</html>

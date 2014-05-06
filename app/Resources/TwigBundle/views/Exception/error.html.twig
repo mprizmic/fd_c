@@ -1,0 +1,11 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<h2>El servidor reporta un problema:</h2>
+<h2>"{{ status_code }} {{ status_text }}".</h2>
+<h2>Infórmelo a sistemas. Gracias.</h2>
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

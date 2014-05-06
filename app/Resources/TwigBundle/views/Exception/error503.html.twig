@@ -1,0 +1,12 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<h2>Sistema en mantenimiento</h2>
+
+<div class="grande centrado">Estamos trabajando para mejorar el sitio.<br />
+    Tómese un descanso y vuelva más tarde.</div>
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

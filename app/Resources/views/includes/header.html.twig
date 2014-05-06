@@ -1,0 +1,19 @@
+<div class="float_izquierda grande">
+    <a style="text-decoration: none;" href="{{ camino }}">{{ titulo }}</a>
+</div>
+<div class="float_derecha login">
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY')  %}
+        <div class="chica">    
+            <span>Conectado como {{ app.user }}</span>
+            <br />
+            <span>Última conexión: {{ app.user.conexionAnterior | date('d-m-Y') }}</span> 
+            <br /> 
+            <a href="{{ path('usuario_cambio_password', {'id': app.user.id }) }}">Cambiar password</a>
+            <span class="separador"></span>
+            <a href="{{ path('usuario_logout') }}">Cerrar sesión</a>
+
+        </div>
+        {% endif %}                             
+    </div>
+    <div class="limpiar_float"></div>
