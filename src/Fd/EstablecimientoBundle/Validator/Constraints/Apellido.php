@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class Apellido extends Constraint {
 
-    public $message = "El apellido sólo puede contener caracteres alfabéticos sin acentos";
+    public $message = "El nombre/apellido sólo puede contener caracteres alfabéticos";
 
     public function validatedBy() {
         return 'apellido_alfabetico';

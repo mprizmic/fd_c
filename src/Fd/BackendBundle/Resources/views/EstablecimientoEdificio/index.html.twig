@@ -64,6 +64,8 @@ function cargar_lista_establecimientos() {
 
     //usando FOSJsRouingBundle
     $.ajax({
+        async: false,
+        dataType: 'html',       
         url: Routing.generate('backend_establecimiento_edificio_listar', { id: clave } ),
         type: 'GET',
         success: function (data){

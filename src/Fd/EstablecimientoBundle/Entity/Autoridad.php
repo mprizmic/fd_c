@@ -26,6 +26,7 @@ class Autoridad
      * @var string $nombre
      *
      * @ORM\Column(length=50, nullable=true)
+     * @ApellidoAssert\Apellido
      */
     private $nombre;
     /**

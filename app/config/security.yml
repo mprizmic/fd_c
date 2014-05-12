@@ -71,6 +71,7 @@ security:
         - { path: ^/usuario/*, roles: ROLE_SUPER_ADMIN }
         - { path: ^/backend/tabla_portada/*, roles: [ROLE_SUPER_ADMIN] }
         - { path: ^/backend/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
+        - { path: ^/admin/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
         - { path: ^/_wdt/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/_profiler/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/en_desarrollo, role: [ROLE_ADMIN, ROLE_USUARIO] }
@@ -79,7 +80,6 @@ security:
         - { path: ^/glosario, role: [ROLE_ADMIN, ROLE_USUARIO] }
         - { path: ^/contacto, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/titulo/*, role: ROLE_USUARIO }
-        - { path: ^/admin/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
 
 jms_security_extra:
     secure_all_services: false

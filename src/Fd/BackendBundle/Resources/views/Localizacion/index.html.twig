@@ -59,6 +59,8 @@ function cargar_lista_establecimientos() {
 
     //usando FOSJsRouingBundle
     $.ajax({
+        async: false,
+        dataType: 'html',
         url: Routing.generate('backend_localizacion_listar', { establecimiento_id: clave } ),
         type: 'GET',
         success: function (data){

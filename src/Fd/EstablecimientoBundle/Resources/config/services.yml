@@ -1,4 +1,8 @@
 services:
+    validator.apellido.alfabetico:
+        class: Fd\EstablecimientoBundle\Validator\Constraints\ApellidoValidator
+        tags:
+            - { name: validator.constraint_validator, alias: apellido_alfabetico }
     sonata.fd.establecimiento.admin.establecimiento:
         class: Fd\EstablecimientoBundle\Admin\EstablecimientoAdmin
         tags:
