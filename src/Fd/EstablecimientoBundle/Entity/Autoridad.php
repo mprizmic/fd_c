@@ -5,6 +5,7 @@ namespace Fd\EstablecimientoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Fd\TablaBundle\Entity\CargoAutoridad;
+use Fd\EstablecimientoBundle\Validator\Constraints as ApellidoAssert;
 /**
  * @ORM\Table(name="autoridad")
  * @ORM\Entity
@@ -31,6 +32,7 @@ class Autoridad
      * @var string $nombre
      *
      * @ORM\Column(length=50, nullable=false)
+     * @ApellidoAssert\Apellido
      */
     private $apellido;
     /**
