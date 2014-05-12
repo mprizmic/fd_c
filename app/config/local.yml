@@ -1,0 +1,5 @@
+parameters:
+    l_version_logica: 'Versión 4 - 28.4.2014'
+    l_database_user:      root  
+    l_database_password:  marcelo
+    l_secret: sarasa
