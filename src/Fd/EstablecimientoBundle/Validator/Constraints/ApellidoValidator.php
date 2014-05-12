@@ -8,7 +8,7 @@ class ApellidoValidator extends ConstraintValidator
 {
     public function validate( $value, Constraint $constraint)
     {
-        if (0 === preg_match('/^[a-zA-Z \-\'üÜñÑ]+$/',$value)){
+        if (0 === preg_match('/^[a-zA-Z \-\'üÜñÑáéíóúÁÉÍÓÚ]+$/',$value)){
             $this->context->addViolation($constraint->message);
         }
     }

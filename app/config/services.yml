@@ -34,8 +34,7 @@ services:
         arguments:
             - "%fd.si_no_sd%"        
         tags:
-            - { name: validator.constraint_validator, alias: si_no_sd_validator } 
-         
+            - { name: validator.constraint_validator, alias: si_no_sd_validator }            
 # lo que sigue nunca anduvo
 #    fd.todos.timestampable.prepersist:
 #        class: Fd\EstablecimientoBundle\EventListener\TimestampableListener

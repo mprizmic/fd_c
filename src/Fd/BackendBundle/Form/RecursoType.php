@@ -13,7 +13,7 @@ class RecursoType extends AbstractType
         $builder
             ->add('codigo')
             ->add('descripcion')
-//            ->add('orden')
+            ->add('orden')
         ;
     }
 
