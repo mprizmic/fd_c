@@ -101,7 +101,9 @@ class ActoPublicoController extends Controller {
         };
 
         //cargo la planilla
-        $objPHPExcel = $this->get('xls.load_xls5')->load($fileWithPath);
+        $objPHPExcel = $this->get('phpexcel')->createPHPExcelObject($fileWithPath);
+        //esto era en la version anterior del bundle
+//        $objPHPExcel = $this->get('xls.load_xls5')->load($fileWithPath);
 
         // Activa la primera hoja
         $objWorksheet = $objPHPExcel->setActiveSheetIndex(0);
