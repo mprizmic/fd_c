@@ -30,6 +30,7 @@
             <div>Email: <a href="{{establecimiento.email}}">{{establecimiento.email | default('sin datos') }}</a></div>
             <div>Sitio web: <a href="{{establecimiento.url}}">http://{{establecimiento.url}}</a></div>
             <div><a href="{{ path('edificio_de_un_cue', {'establecimiento_id': establecimiento.id } ) }}">Edificio(s) (con quien se comparte)</a></div>
+            <br />
             <fieldset>
                 <div>Autoridades del rectorado:</div>
                 {% for autoridad in establecimiento.autoridadesRectorado %}
