@@ -23,7 +23,7 @@
         "kriswallsmith/assetic": "1.1.*@dev",
         "doctrine/data-fixtures": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
-	"liuggio/excelbundle": "dev-master",
+	"liuggio/excelbundle": "~2.0",
 	"beberlei/DoctrineExtensions": "dev-master",
 	"ideup/simple-paginator-bundle": "dev-master",
 	"lexik/form-filter-bundle": "v2.0.0",
