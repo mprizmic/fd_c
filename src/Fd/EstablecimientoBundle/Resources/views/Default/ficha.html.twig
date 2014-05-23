@@ -145,6 +145,7 @@
                 {% for recurso in establecimiento.recursos %}
                     <div class="identado_1">
                         {{ '-- ' ~ recurso.recurso.descripcion ~ ': ' ~ recurso.cantidad }}
+                        {{ recurso.origenHora ? ' (' ~ recurso.origenHora.descripcion ~ ')' }}
                     </div>
                 {% else %}
                     <div class="identado_1">Sin datos</div>

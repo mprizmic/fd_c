@@ -41,6 +41,11 @@ class EstablecimientoRecurso {
      * @Assert\Range(min=0, minMessage="El número ingresado no corresponde.")
      */
     private $cantidad;
+    /**
+     * bidireccional lado propietario
+     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\OrigenHora", inversedBy="establecimiento_recursos")
+     */
+    private $origen_hora;
 
     public function __toString() {
         return $this->getEstablecimiento()->getApodo().' '. $this->getRecurso()->getDescripcion();
@@ -49,6 +54,7 @@ class EstablecimientoRecurso {
     public function __construct() {
         $this->recurso = new \Doctrine\Common\Collections\ArrayCollection();
         $this->establecimiento = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->origen_hora = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -123,4 +129,27 @@ class EstablecimientoRecurso {
         return $this->recurso;
     }
 
+
+    /**
+     * Set origen_hora
+     *
+     * @param \Fd\TableBundle\Entity\OrigenHora $origenHora
+     * @return EstablecimientoRecurso
+     */
+    public function setOrigenHora(\Fd\TablaBundle\Entity\OrigenHora $origenHora = null)
+    {
+        $this->origen_hora = $origenHora;
+    
+        return $this;
+    }
+
+    /**
+     * Get origen_hora
+     *
+     * @return \Fd\TableBundle\Entity\OrigenHora 
+     */
+    public function getOrigenHora()
+    {
+        return $this->origen_hora;
+    }
 }

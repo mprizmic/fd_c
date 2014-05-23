@@ -24,6 +24,7 @@ class EstablecimientoRecursoType extends AbstractType {
                     'property' => 'descripcion',
                 ))
                 ->add('cantidad')
+                ->add('origen_hora')
         ;
     }
 
