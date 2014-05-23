@@ -25,6 +25,12 @@ class EstablecimientoRecursoType extends AbstractType {
                 ))
                 ->add('cantidad')
                 ->add('origen_hora')
+                ->add('comentario', null, array(
+                    'required'=>false,
+                    'attr'=>array(
+                        'class'=> 'input_talle_5',
+                    ),
+                ))
         ;
     }
 
