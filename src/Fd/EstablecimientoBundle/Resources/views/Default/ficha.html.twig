@@ -143,13 +143,13 @@
             <div>Tiene cooperadora: {{ establecimiento.tieneCooperadora |default('Sin datos') }}</div>
             <div>Laboratorios/Centros:</div>
                 {% for recurso in establecimiento.recursos %}
-                    <div class="identado_1">
+                    <div class="identar_1">
                         {{ '-- ' ~ recurso.recurso.descripcion ~ ': ' ~ recurso.cantidad }}
                         {{ recurso.origenHora ? ' (' ~ recurso.origenHora.descripcion ~ ')' }}
                         {{ recurso.comentario ? ' (' ~ recurso.comentario ~ ')' }}
                     </div>
                 {% else %}
-                    <div class="identado_1">Sin datos</div>
+                    <div class="identar_1">Sin datos</div>
                 {% endfor %}
             <div>Campo de deportes: {{ establecimiento.campoDeportes |default('Sin datos') }}</div>
             <div>Año de inicio de la Nueva Escuela Secundaria: {{ establecimiento.anioInicioNes | default( 'Sin datos' ) }}</div>
