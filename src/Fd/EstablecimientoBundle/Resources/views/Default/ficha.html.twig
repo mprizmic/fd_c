@@ -146,6 +146,7 @@
                     <div class="identado_1">
                         {{ '-- ' ~ recurso.recurso.descripcion ~ ': ' ~ recurso.cantidad }}
                         {{ recurso.origenHora ? ' (' ~ recurso.origenHora.descripcion ~ ')' }}
+                        {{ recurso.comentario ? ' (' ~ recurso.comentario ~ ')' }}
                     </div>
                 {% else %}
                     <div class="identado_1">Sin datos</div>

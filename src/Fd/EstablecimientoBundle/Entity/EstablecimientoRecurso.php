@@ -46,6 +46,11 @@ class EstablecimientoRecurso {
      * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\OrigenHora", inversedBy="establecimiento_recursos")
      */
     private $origen_hora;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var type 
+     */
+    private $comentario;
 
     public function __toString() {
         return $this->getEstablecimiento()->getApodo().' '. $this->getRecurso()->getDescripcion();
@@ -151,5 +156,28 @@ class EstablecimientoRecurso {
     public function getOrigenHora()
     {
         return $this->origen_hora;
+    }
+
+    /**
+     * Set comentario
+     *
+     * @param string $comentario
+     * @return EstablecimientoRecurso
+     */
+    public function setComentario($comentario)
+    {
+        $this->comentario = $comentario;
+    
+        return $this;
+    }
+
+    /**
+     * Get comentario
+     *
+     * @return string 
+     */
+    public function getComentario()
+    {
+        return $this->comentario;
     }
 }
