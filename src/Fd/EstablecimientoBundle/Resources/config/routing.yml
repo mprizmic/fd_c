@@ -1,0 +1,5 @@
+EstablecimientoBundleControllers:
+    resource: "@EstablecimientoBundle/Controller/"
+    type:     annotation
+    options:
+        expose: true

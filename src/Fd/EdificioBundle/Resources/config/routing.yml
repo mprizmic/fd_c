@@ -1,0 +1,3 @@
+EdificioBundleControllers:
+    resource: "@EdificioBundle/Controller/"
+    type:     annotation
