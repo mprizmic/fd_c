@@ -23,16 +23,18 @@
         "kriswallsmith/assetic": "1.1.*@dev",
         "doctrine/data-fixtures": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
-	"liuggio/excelbundle": "~2.0",
-	"beberlei/DoctrineExtensions": "dev-master",
-	"ideup/simple-paginator-bundle": "dev-master",
-	"lexik/form-filter-bundle": "v2.0.0",
+        "liuggio/excelbundle": "~2.0",
+        "beberlei/DoctrineExtensions": "dev-master",
+        "ideup/simple-paginator-bundle": "dev-master",
         "raulfraile/ladybug-bundle": "dev-master",
-	"friendsofsymfony/jsrouting-bundle": "@stable",
+        "friendsofsymfony/jsrouting-bundle": "@stable",
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "sonata-project/admin-bundle": "2.1.x-dev",
-        "sonata-project/doctrine-orm-admin-bundle": "2.1.x-dev"
+        "sonata-project/doctrine-orm-admin-bundle": "2.1.x-dev",
+        "lexik/form-filter-bundle": "2.x.x-dev",
+        "pagerfanta/pagerfanta": "1.0.x-dev",
+        "jordillonch/crud-generator": "2.1.*-dev"
     },
     "scripts": {
         "post-install-cmd": [
