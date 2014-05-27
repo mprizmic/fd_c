@@ -653,60 +653,6 @@
         ]
     },
     {
-        "name": "lexik/form-filter-bundle",
-        "version": "v2.0.0",
-        "version_normalized": "2.0.0.0",
-        "target-dir": "Lexik/Bundle/FormFilterBundle",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/lexik/LexikFormFilterBundle.git",
-            "reference": "3dd57a9a98affb398183e9610dda48ab01c9abc2"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/lexik/LexikFormFilterBundle/zipball/3dd57a9a98affb398183e9610dda48ab01c9abc2",
-            "reference": "3dd57a9a98affb398183e9610dda48ab01c9abc2",
-            "shasum": ""
-        },
-        "require": {
-            "doctrine/orm": "*",
-            "php": ">=5.3.2",
-            "symfony/form": ">=2.1,<2.4-dev",
-            "symfony/framework-bundle": ">=2.1,<2.4-dev"
-        },
-        "time": "2013-10-24 16:06:49",
-        "type": "symfony-bundle",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Lexik\\Bundle\\FormFilterBundle": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Dev Lexik",
-                "email": "dev@lexik.fr"
-            },
-            {
-                "name": "Cedric Girard",
-                "email": "c.girard@lexik.fr"
-            }
-        ],
-        "description": "This bundle aim to provide classes to build some form filters and then build a doctrine query from this form filter.",
-        "homepage": "https://github.com/lexik/LexikFormFilterBundle",
-        "keywords": [
-            "Symfony2",
-            "bundle",
-            "doctrine",
-            "filter",
-            "form"
-        ]
-    },
-    {
         "name": "raulfraile/ladybug-installer",
         "version": "v1.0.1",
         "version_normalized": "1.0.1.0",
@@ -3051,6 +2997,188 @@
             "bootstrap",
             "generator",
             "sonata"
+        ]
+    },
+    {
+        "name": "lexik/form-filter-bundle",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "target-dir": "Lexik/Bundle/FormFilterBundle",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/lexik/LexikFormFilterBundle.git",
+            "reference": "cdaf5a9b33b5bf787d3075aad5b15f5004979771"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/lexik/LexikFormFilterBundle/zipball/cdaf5a9b33b5bf787d3075aad5b15f5004979771",
+            "reference": "cdaf5a9b33b5bf787d3075aad5b15f5004979771",
+            "shasum": ""
+        },
+        "require": {
+            "doctrine/orm": "~2.2",
+            "php": ">=5.3.2",
+            "symfony/form": "~2.1",
+            "symfony/framework-bundle": "~2.1"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~3.7"
+        },
+        "time": "2014-04-25 07:17:11",
+        "type": "symfony-bundle",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.x.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Lexik\\Bundle\\FormFilterBundle": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Dev Lexik",
+                "email": "dev@lexik.fr"
+            },
+            {
+                "name": "Cedric Girard",
+                "email": "c.girard@lexik.fr"
+            }
+        ],
+        "description": "This bundle aim to provide classes to build some form filters and then build a doctrine query from this form filter.",
+        "homepage": "https://github.com/lexik/LexikFormFilterBundle",
+        "keywords": [
+            "Symfony2",
+            "bundle",
+            "doctrine",
+            "filter",
+            "form"
+        ]
+    },
+    {
+        "name": "pagerfanta/pagerfanta",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/whiteoctober/Pagerfanta.git",
+            "reference": "3ac597b089fed30f3904c3b145ac36d5df0845c0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/whiteoctober/Pagerfanta/zipball/3ac597b089fed30f3904c3b145ac36d5df0845c0",
+            "reference": "3ac597b089fed30f3904c3b145ac36d5df0845c0",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "doctrine/mongodb-odm": "1.0.*@dev",
+            "doctrine/orm": "2.3.*",
+            "doctrine/phpcr-odm": "1.0.*",
+            "jmikola/geojson": "1.0.*",
+            "mandango/mandango": "1.0.*@dev",
+            "phpunit/phpunit": "3.7.*",
+            "propel/propel1": "~1.6",
+            "solarium/solarium": "3.1.*"
+        },
+        "suggest": {
+            "doctrine/mongodb-odm": "To use the DoctrineODMMongoDBAdapter.",
+            "doctrine/orm": "To use the DoctrineORMAdapter.",
+            "doctrine/phpcr-odm": "To use the DoctrineODMPhpcrAdapter. >= 1.1.0",
+            "mandango/mandango": "To use the MandangoAdapter.",
+            "propel/propel1": "To use the PropelAdapter",
+            "solarium/solarium": "To use the SolariumAdapter."
+        },
+        "time": "2014-05-06 16:27:14",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Pagerfanta\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Pablo Díez",
+                "email": "pablodip@gmail.com",
+                "homepage": "http://github.com/pablodip"
+            }
+        ],
+        "description": "Pagination for PHP 5.3",
+        "keywords": [
+            "page",
+            "pagination",
+            "paginator",
+            "paging"
+        ]
+    },
+    {
+        "name": "jordillonch/crud-generator",
+        "version": "2.1.x-dev",
+        "version_normalized": "2.1.9999999.9999999-dev",
+        "target-dir": "JordiLlonch/Bundle/CrudGeneratorBundle",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jordillonch/CrudGeneratorBundle.git",
+            "reference": "a73ecf777dd9be9c3a62fcb5f0012486d7e0f4d4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jordillonch/CrudGeneratorBundle/zipball/a73ecf777dd9be9c3a62fcb5f0012486d7e0f4d4",
+            "reference": "a73ecf777dd9be9c3a62fcb5f0012486d7e0f4d4",
+            "shasum": ""
+        },
+        "require": {
+            "lexik/form-filter-bundle": "dev-master",
+            "pagerfanta/pagerfanta": "dev-master",
+            "sensio/generator-bundle": "2.1.*",
+            "symfony/symfony": "2.1.*"
+        },
+        "time": "2013-01-18 21:58:12",
+        "type": "symfony-bundle",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.1.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "JordiLlonch\\Bundle\\CrudGeneratorBundle": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jordi Llonch",
+                "email": "llonch.jordi@gmail.com"
+            }
+        ],
+        "description": "This bundle generates a nice CRUD",
+        "homepage": "https://github.com/jordillonch/CrudGeneratorBundle",
+        "keywords": [
+            "crud",
+            "generator"
         ]
     }
 ]
