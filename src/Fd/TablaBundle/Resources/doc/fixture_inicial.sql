@@ -19,6 +19,6 @@ INSERT INTO `Fd`.`origen_hora`
 VALUES
 (		
 2,
-'Horas por proyecto',
+'Hs institucionales',
 '2014-05-22 16:39:50.582',
 '2014-05-22 16:39:50.582');
