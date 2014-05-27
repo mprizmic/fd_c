@@ -1,0 +1,6 @@
+OfertaEducativaBundleControllers:
+    resource: "@OfertaEducativaBundle/Controller/"
+    type:     annotation
+    prefix:   /oferta
+    options:
+        expose: true

@@ -1,0 +1,4 @@
+ActoPublicoBundleControllers:
+    resource: "@ActoPublicoBundle/Controller/"
+    type:     annotation
+    prefix:   /acto_publico
