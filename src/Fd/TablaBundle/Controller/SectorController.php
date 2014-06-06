@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\View\TwitterBootstrapView;
+use Pagerfanta\View\TwitterBootstrap3View;
 
 use Fd\TablaBundle\Entity\Sector;
 use Fd\TablaBundle\Form\SectorType;
@@ -104,11 +104,11 @@ class SectorController extends Controller
     
         // Paginator - view
         $translator = $this->get('translator');
-        $view = new TwitterBootstrapView();
+        $view = new TwitterBootstrap3View();
         $pagerHtml = $view->render($pagerfanta, $routeGenerator, array(
             'proximity' => 3,
-            'prev_message' => $translator->trans('views.index.pagprev', array(), 'JordiLlonchCrudGeneratorBundle'),
-            'next_message' => $translator->trans('views.index.pagnext', array(), 'JordiLlonchCrudGeneratorBundle'),
+            'prev_message' => 'Anterior',
+            'next_message' => 'Siguiente',
         ));
     
         return array($entities, $pagerHtml);
