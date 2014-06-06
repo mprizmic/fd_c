@@ -36,12 +36,12 @@ class AppKernel extends Kernel
             new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
             // Add your dependencies
 //            new Sonata\CacheBundle\SonataCacheBundle(),
-            new Sonata\BlockBundle\SonataBlockBundle(),
-            new Sonata\jQueryBundle\SonatajQueryBundle(),
+//            new Sonata\BlockBundle\SonataBlockBundle(),
+//            new Sonata\jQueryBundle\SonatajQueryBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new JordiLlonch\Bundle\CrudGeneratorBundle\JordiLlonchCrudGeneratorBundle(),
-            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
-            new Sonata\AdminBundle\SonataAdminBundle(),
+//            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+//            new Sonata\AdminBundle\SonataAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
