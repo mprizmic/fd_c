@@ -1,0 +1,460 @@
+/* partes del layout */
+body {
+    font-family:Ubuntu,'DejaVu Sans',Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #000;
+}
+#container{
+    width: 1000px;
+    /*width: 60em;*/
+    background-color: #f2fcff;
+    margin: 0 auto;
+    border: 1px solid #000000;
+    text-align: left;
+    border-left: 1px solid blue;
+    border-right: 1px solid blue;
+}
+#header {
+    background-color: #DDD;
+    padding: 0 10px;
+    color: rgb(53,153,153);
+    margin: 0;
+}
+#mainContent {
+    width: 99%;
+    padding: 5px;
+    font-size: 14px;
+}
+#menu_derecha{
+    width: 18%;
+    float:right;
+    padding: 5px;
+    font-size: 14px;
+}
+
+#contenido {
+    width:80%;
+}
+#footer {
+    padding: 0 10px;
+    background: #666;
+    clear:both;
+    background-color: #666666;
+}
+#footer p {
+    margin: 0;
+    padding: 10px 0;
+}
+/* login */
+.login{
+}
+.login label{
+    display: block;
+    width: 40%;
+    float: left;
+    margin: .5em 0 0 0;
+}
+.login fieldset{
+    margin-left: 15em;
+    margin-right: 15em;
+    background-color: #DDD;
+}
+/*
+formularios
+*/
+.los_label label{
+    display: block;
+    width: 20%;
+    float: left;
+    margin: .5em 0 0 0;
+}
+input:focus, select:focus{
+    background-color: #ffc;
+    border-color:  #FECA40;
+    color: #000;
+}
+input.input_talle_05{
+    width: 5em;
+}
+input.input_talle_1{
+    width: 10em;
+}
+input.input_talle_3{
+    width: 20em;
+}
+input.input_talle_4{
+    width: 30em;
+}
+input.input_talle_5{
+    width: 40em;
+}
+
+/*
+mensajes en general
+*/
+.instrucciones{
+    border: solid;
+    border-color: black;
+    background-color: #DDD;
+    padding: 0.6em;
+    border-width: 1px;
+}
+div.descriptivo{
+    border-color: black;
+    background-color: #DDD;
+    padding-left: 0.6em;
+    padding-right: 0.6em;
+}
+.mensaje_error_campo {
+    color: #f2fcff;
+    background: firebrick;
+    border: 1px solid #FFF;
+    display: inline;
+}
+#divCargando {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+}
+.flash{
+    padding: 5px;
+    padding-left: 2em;
+/*    border: 1px solid #000;*/
+    text-align: left;
+}
+.flash_error{
+    background-color: firebrick;
+    color: #f2fcff;
+}
+.flash_aviso{
+    background-color: #fcefa1;
+/*    color: #f2fcff;*/
+    color: #666666;
+}
+.flash_exito{
+    background-color: #080;
+    color: #f2fcff;
+}
+.help-block{
+    color: #080;
+/*    color: #fa0;*/
+}
+/*
+*/
+/* 
+posicionamiento 
+*/
+.float_derecha {
+    float: right;
+    margin-left: 8px;
+}
+.float_izquierda {
+    float: left;
+    margin-right: 8px;
+}	
+.limpiar_float {
+    clear:both;
+}
+/* 
+tamaños y tipos de escritura 
+*/
+.grande{
+    font-size: 2em;
+}
+.chica{
+    font-size: .75em;
+}
+.muychica{
+    font-size: .5em;
+}
+.mediana{
+    font-size: 1.5em;
+}
+.recuadrado{
+    border: solid 2px;
+}
+.con_color{
+    background-color: blue;
+}
+.resaltado{
+    font-style: italic;
+    color:darkseagreen;
+    font-weight: bolder;
+}
+.reforzado{
+    font-weight: bolder;
+}
+.italico{
+    font-style: italic;
+}
+.subrayado{
+    text-decoration: underline;
+}
+.centrado{
+    text-align: center;
+}
+.alineado_derecha{
+    text-align: right;
+}
+.alineado_izquierda{
+    text-align: left;
+}
+#larga textarea{
+    width: 700px;
+    background-color: #d6eef5;
+    font-weight: bolder;
+}
+.a_la_derecha{
+    text-align: right;
+    width: 100%;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    margin-top: 1px;
+    margin-left: 1px;
+}
+.identado_1{
+    text-indent: 3em;
+}
+.identado_2{
+    text-indent: 6em;
+}
+.identar_1{
+    margin-left: 6em;
+}
+.even{
+    background-color: #ececd0;
+}
+.odd{
+    background-color: #ffc;
+}
+.invisible{
+    display:none;
+}
+.visible{
+    display: block;
+}
+/*
+botones
+*/
+.boton_azul{
+    border: 1px solid #000;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    padding-left: 1em;
+    padding-right: 1em;
+    background-color: steelblue;
+    color: white;
+    text-decoration: none;
+}
+.boton_azul > a:hover, .boton_azul > a{
+    font-style: italic;
+    color: white;
+}
+.boton_verde{
+    border: 1px solid #000;
+    margin-top: .5em;
+    margin-bottom: .5em;
+    padding-left: 1em;
+    padding-right: 1em;
+    background-color: darkseagreen;
+    color: whitesmoke;
+    text-decoration: none;
+}
+.boton_rojo{
+    border: 1px solid #000;
+    padding-left: 1em;
+    padding-right: 1em;
+    background-color: red;
+    color: whitesmoke;
+    text-decoration: none;
+}
+/*
+*/
+/*
+grillas
+*/
+.como_grilla{
+    background-color: #ececd0;
+    font-weight: normal;
+    width: 700px;
+    border-width: 0px;
+}
+.grilla {
+    background-color: #ffc;
+    border: 1px solid #000;
+    margin: 3px;
+    width: 100%;
+}
+.grilla_fit {
+    background-color: #ffc;
+    border: 1px solid #000;
+    margin: 3px;
+}
+.grilla th{
+    font-style: italic;
+    /*font-weight: bold;*/
+    color: blue;
+    padding-left: 8px;
+    padding-right: 8px;
+    /*empty-cells: show;*/
+}
+.grilla td{
+    background-color: #ececd0;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-weight: normal;
+    /*empty-cells: show;*/
+}
+.grilla_fit th{
+    font-style: italic;
+    /*font-weight: bold;*/
+    color: blue;
+    padding-left: 8px;
+    padding-right: 8px;
+    /*empty-cells: show;*/
+}
+.grilla_fit td{
+    background-color: #ececd0;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-weight: normal;
+    /*empty-cells: show;*/
+}
+.tabla_modo_1 , .tabla_modo_2{
+    /*margin-left: 6em;*/
+    border: black 1px solid;
+    background-color: #ffc;
+}
+.tabla_modo_1 th{
+    padding-left: 2em; 
+    padding-right: 2em;
+    font-weight:  bold;
+    background-color: whitesmoke;
+}
+.tabla_modo_2 th{
+    font-weight:  bold;
+    background-color: whitesmoke;
+}
+.tabla_modo_1 tr{
+    text-align: center;
+}
+.tabla_modo_2 td{
+    padding-left: .5em; 
+    padding-right: .5em;
+    background-color: #ececd0;
+}
+/*
+*/
+/*
+paginador
+*/
+.simple_paginator ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;    
+}
+.simple_paginator li{
+    margin: 0;
+    padding: 2px 2px 2px 2px;
+    display:inline;    
+}
+#first {
+    font-weight: bold;
+    font-size: 25px;
+}
+/*
+esto es para que las label salgan alineadas sin usar table
+*/
+.ancho_20 label{
+    display: inline-block;
+    width: 20em;
+    
+}
+.ancho_15 label{
+    display: inline-block;
+    width: 15em;
+    
+}
+.ancho_10 label{
+    display: inline-block;
+    width: 10em;
+    
+}
+.ancho_5 label{
+    display: inline-block;
+    width: 5em;
+}
+.campo {
+    width: 60%;
+    background-color: red;
+    float: right;
+}
+/*
+elementos funcionales
+*/
+.separador{
+    margin-left: 2em;
+}
+div.tarjeta1{
+    border: solid;
+    border-color: black;
+    background-color: darkseagreen;
+    /*font-weight: bold;*/
+    padding: 0.3em;
+    border-width: 1px;
+}
+.volver{
+    display:  inline;
+}
+.titulo{
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    background: none;
+    color: rgb(4,137, 183);
+    font-size: 1.6em;
+}
+.sub_titulo{
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    background: none;
+    font-size: 1.3em;    
+}
+.titulo_arriba{
+    caption-side: top;
+    text-align: left;
+}
+.los_titulos > tr > th{
+    padding-left: 2em; 
+    padding-right: 2em;
+    font-weight:  bold;
+}
+/*
+*/
+/*
+links
+*/
+a:hover, a:active{
+    color: #0064cd;
+    text-decoration: underline;
+}
+a, a:visited{
+    color: #0064cd;
+    text-decoration: none;
+    /*text-trasform:none;*/
+}
+/* espedifico para las oreintaciones en el edit de carrera */
+.orientaciones li > div {
+    display: inline;
+}
+.orientaciones li {
+    list-style:none;
+}

@@ -1,0 +1,52 @@
+{# esta es una plantilla que involucra a los que estoy diseñando con bootstrap #}
+{% block form_row %}
+    {% spaceless %}
+        <div class="form-group">
+            {{ form_label(form) }}
+            {{ form_widget(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock form_row %}
+{#----------------------------------------------------#}
+{% block form_widget %}
+    {% spaceless %}
+        {% if compound %}
+            {{ block('form_widget_compound') }}
+        {% else %}
+            {{ block('form_widget_simple') }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_widget %}
+{#----------------------------------------------------#}
+{% block form_widget_simple %}
+    {% spaceless %}
+        <span style="display:inline-block;">
+            {{ block('form_errors') }}
+            {% if help %}
+                <span class="help-block">{{ help }}</span>
+                <br />
+            {% endif %}
+            {% set type = type|default('text') %}
+            <input class="form-control" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        </span>
+    {% endspaceless %}
+{% endblock form_widget_simple %}
+{#----------------------------------------------------#}
+{% block form_label %}
+    {% spaceless %}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {% endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label class="col-md-2 control-label" {% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{% if required %}*{% endif %}{{ label|trans({}, translation_domain) }}</label>
+    {% endspaceless %}
+{% endblock form_label %}
+{#----------------------------------------------------#}
+{#----------------------------------------------------#}
+{#----------------------------------------------------#}
+{#----------------------------------------------------#}
