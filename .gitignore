@@ -2,13 +2,12 @@
 # Archivos de bootstrap (compilan las clases más usadas en Symfony2)
 app/bootstrap*
 
-
 # Directorios de Symfony
 # vendor/*
 */logs/*
 */cache/*
 # web/uploads/*
-# web/bundles/*
+web/bundles/*
 # web/css/*
 # web/js/*
 web/app_dev.php
