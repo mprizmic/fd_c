@@ -107,23 +107,24 @@ doctrine:
 #jms_security_extra:
 #    secure_controllers:  true
 #    secure_all_services: false
-sonata_block:
-    default_contexts: [cms]
-    blocks:
-        sonata.admin.block.admin_list:
-            contexts:   [admin]
-        sonata.block.service.text:   ~
-        sonata.block.service.action: ~
-        sonata.block.service.rss:    ~
 
-sonata_admin:
-    title: 'Administración de DFD'
-    templates:
-        layout: SonataAdminBundle::standard_layout.html.twig
-        ajax: SonataAdminBundle::ajax_layout.html.twig
-        list: SonataAdminBundle:CRUD:list.html.twig
-        show: SonataAdminBundle:CRUD:show.html.twig
-        edit: SonataAdminBundle:CRUD:edit.html.twig
+#sonata_block:
+#    default_contexts: [cms]
+#    blocks:
+#        sonata.admin.block.admin_list:
+#            contexts:   [admin]
+#        sonata.block.service.text:   ~
+#        sonata.block.service.action: ~
+#        sonata.block.service.rss:    ~
+#
+#sonata_admin:
+#    title: 'Administración de DFD'
+#    templates:
+#        layout: SonataAdminBundle::standard_layout.html.twig
+#        ajax: SonataAdminBundle::ajax_layout.html.twig
+#        list: SonataAdminBundle:CRUD:list.html.twig
+#        show: SonataAdminBundle:CRUD:show.html.twig
+#        edit: SonataAdminBundle:CRUD:edit.html.twig
 #    dashboard:
 #        blocks:
 #          - { type: sonata.admin.block.admin_list}
