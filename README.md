@@ -1,10 +1,6 @@
-Este sistema está traído de la oficina el 30-4-2014
-sumandole el composer update de casa
+Generado a partir de la coipa de la oficina 9-6-2014
+
 ====================================================
-
-
-
-
 
 
 Symfony Standard Edition
