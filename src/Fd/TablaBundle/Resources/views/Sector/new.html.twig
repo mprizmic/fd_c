@@ -1,30 +1,26 @@
-{% extends '::base_backend.html.twig' %}
+{% extends '::base_admin.html.twig' %}
 
 {% form_theme form ':Form:fields_bootstrap.html.twig' %}
 
 {% block page_header %}
-    <div class="row">
-        <div class="col-md-9">
-            <h1>Sector: crear nuevo</h1>
-        </div>
+    <div class="col-md-9">
+        <h1>Sector: crear nuevo</h1>
     </div>
 {% endblock page_header %}
 
 {% block content %}
     <div class="row">
-
-
-        <form class="well" action="{{ path('sector_create') }}" method="post" {{ form_enctype(form) }}>
+        <form class="form-horizontal well" action="{{ path('sector_create') }}" method="post" {{ form_enctype(form) }}>
             {{ form_widget(form) }}
             <p>
-                <button type="submit" class="btn btn-success">{{ 'views.new.create'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+                <button type="submit" class="btn btn-success">Crear</button>
             </p>
         </form>
 
         <div>
             <div class="float-left">
                 <a class="btn" href="{{ path('sector') }}">
-                    {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+                    Volver a la lista
                 </a>
             </div>
         </div>

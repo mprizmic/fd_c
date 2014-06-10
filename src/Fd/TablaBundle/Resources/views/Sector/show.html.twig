@@ -1,68 +1,65 @@
-{% extends '::base_backend.html.twig' %}
+{% extends '::base_admin.html.twig' %}
+
+{% form_theme delete_form ':Form:fields_bootstrap.html.twig' %}
 
 {% block page_header %}
-    <div class="row">
-        <div class="col-md-9">
-            <h1>Sector</h1>
-        </div>
+    <div class="col-md-9">
+        <h1>Sector: ver</h1>
     </div>
 {% endblock page_header %}
 
 {% block content %}
+    <!--- muestra de campos del registro -->
     <div class="row">
+        <form class="form-horizontal well">
+            <div class="form-group">
+                <label for="clave" class="col-md-2 control-label">Id:</label>
+                <div class="col-md-10">
+                    <p class="form-control-static" id="clave">{{ entity.id }}</p>
+                </div>
+            </div>
 
-        <form class="form-horizontal">
-            {#            <div class="well well-sm">        #}
+
             <div class="form-group">
-                <label class="col-md-2 control-label">Id</label>
-                <div class="col-sm-10">
-                    <p class="form-control-static well well-sm">{{ entity.id }}</p>
+                <label for="descripcion" class="col-md-2 control-label">Descripción:</label>
+                <div class="col-md-10">
+                    <p class="form-control-static" id="descripcion">{{ entity.descripcion }}</p>
                 </div>
             </div>
+
             <div class="form-group">
-                <label class="col-md-2 control-label ">Descripción</label>
-                <div class="col-sm-10">
-                    <p class="form-control-static well well-sm">{{ entity.descripcion }}</p>
+                <label for="abreviatura" class="col-md-2 control-label">Abreviatura:</label>
+                <div class="col-md-10">
+                    <p class="form-control-static" id="abreviatura">{{ entity.abreviatura }}</p>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Abreviatura</label>
-                <div class="col-sm-10">
-                    <p class="form-control-static well well-sm">{{ entity.abreviatura }}</p>
-                </div>
+            <div>
+                <a class="btn btn-success" href="{{ path('sector_edit', { 'id': entity.id }) }}">
+                    Editar
+                </a>
             </div>
-            {#            </div>#}
         </form>
 
-    </div>
-    <div class="row">
-        <form>
-            <ul class="nav nav-pills">
-                <li>
-                    {#                <ul class="nav nav-pills">#}
-                    {#                    <li>#}
-                    <a class="btn btn-link" href="{{ path('sector') }}">
-                        Volver a la lista
-                    </a>
-                </li>
-                <li>
-                    <a class="btn btn-primary" href="{{ path('sector_edit', { 'id': entity.id }) }}">
-                        Editar
-                    </a>
-                </li>
-                {#                </ul>#}
-                {#                </div>#}
-                </li>
-                <li>
-                    <span>
+
+        <!--- barra de navegacion de abajo -->
+        <div>
+
+            <form class="navbar-form" action="{{ path('sector_delete', { 'id': entity.id }) }}" method="post">
+                <ul class="nav nav-pills">
+                    <li class="pull-left">
+                        <a class="btn btn-link" href="{{ path('sector') }}">
+                            Volver a la lista
+                        </a>
+                    </li>
+                    <li>
                         <div class="form-group">
                             {{ form_widget(delete_form) }}
                         </div>
-                        <button class="btn btn-danger" type="submit" onclick="return confirm('{{ 'views.recordactions.confirm'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}');">Eliminar</button>
-                    </span>
-                </li>
-            </ul>
-        </form>
+                        <button class="btn btn-danger" type="submit" onclick="return confirm('{{ 'views.mensajes.confirmar'|trans({}, 'EstablecimientoBundle') }}');">Eliminar</button>
+                    </li>
+                </ul>
+            </form>
 
+        </div>
     </div>
 {% endblock content %}

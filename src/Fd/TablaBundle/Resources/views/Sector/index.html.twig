@@ -1,4 +1,4 @@
-{% extends '::base_backend.html.twig' %}
+{% extends '::base_admin.html.twig' %}
 
 {% form_theme filterForm ':Form:fields_bootstrap.html.twig' %}
 
@@ -16,12 +16,10 @@
         </div>
         <div class="col-md-1">
             <h1></h1>
-            {#            <div class="filters-right">#}
             <button type="button" class="btn btn-default dropdown-toggle pull-right" data-toggle="collapse" data-target="#filters">
                 Filtros
                 <span class="caret"></span>
             </button>
-            {#            </div>#}
         </div>
     </div>
 {% endblock page_header %}
