@@ -1,4 +1,4 @@
-Generado a partir de la coipa de la oficina 9-6-2014
+Generado a partir de la copia de la oficina 9-6-2014
 
 ====================================================
 

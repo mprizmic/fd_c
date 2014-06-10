@@ -34,8 +34,7 @@ class SectorFilterType extends AbstractType
                     if(!empty($data)) return;
                 }
             }
-
-            $event->getForm()->addError(new FormError('Filter empty'));
+            $event->getForm()->addError(new FormError('Filtros vacíos. Debe ingresar al menos un dato.'));
         };
         $builder->addEventListener(FormEvents::POST_BIND, $listener);
     }

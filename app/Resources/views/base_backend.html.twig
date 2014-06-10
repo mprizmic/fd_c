@@ -20,57 +20,62 @@
         <div class="container">
             {% block container %}
 
-                {% block navbar %}
-                    {% include '::includes/menu_backend.html.twig' %}
-                {% endblock navbar %}
+                <div class="row">
+                    {% block navbar %}
 
-                <div class="page-header">
-                    {% block page_header %}
-                    {% endblock page_header %}
-                </div>
+                        {% include '::includes/menu_backend.html.twig' %}
+                    {% endblock navbar %}
 
-                {% block flashes %}
-                    {% for type, flashMessages in app.session.flashbag.all() %}
-                        {% if loop.first %}
-                            <div id="flash">
-                            {% endif %}
+                    <div class="page-header">
+                        {% block page_header %}
+                        {% endblock page_header %}
+                    </div>
 
-                            {% for un_mensaje in flashMessages %}
-                                {% if loop.first %}
-                                    <div class="{{ 'flash flash_' ~ type }}">
-                                    {% endif %}
-                                    {{ un_mensaje }}<br />
-                                    {% if loop.last %}
-                                    </div>
+                    {% block flashes %}
+                        {% for type, flashMessages in app.session.flashbag.all() %}
+                            {% if loop.first %}
+                                <div id="flash">
                                 {% endif %}
-                            {% endfor %}
 
-                            {% if loop.last %}
-                            </div>
-                            <script>$("#flash").fadeIn('slow').delay(1200).fadeOut('slow');</script>
-                        {% endif %}
-                    {% endfor %}
-                {% endblock flashes %}
+                                {% for un_mensaje in flashMessages %}
+                                    {% if loop.first %}
+                                        <div class="{{ 'flash flash_' ~ type }}">
+                                        {% endif %}
+                                        {{ un_mensaje }}<br />
+                                        {% if loop.last %}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if loop.last %}
+                                </div>
+                                <script>$("#flash").fadeIn('slow').delay(1200).fadeOut('slow');</script>
+                            {% endif %}
+                        {% endfor %}
+                    {% endblock flashes %}
+                </div>
 
                 {% block content %}
                 {% endblock content %}
 
-                {% block footer %}  
-                    <br>
-                    <br>
-                    <nav class="navbar navbar-default">
-                        <div class="container">
-                            <!-- Collect the nav links, forms, and other content for toggling -->
-                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                                <p class="navbar-text">&copy; {{fd.version_logica}}</p>
-                                <ul class="nav navbar-nav navbar-right">
-                                    <li><a  href="{{ path('contacto') }}" >Contacto</a></li>
-                                    <li><a  href="{{ path('acerca_de') }}" >Acerca de ...</a></li>
-                                </ul>
-                            </div><!-- /.navbar-collapse -->
-                        </div><!-- /.container-fluid -->
-                    </nav>
-                {% endblock footer %}
+                <div class="row">
+                    {% block footer %}  
+                        <br>
+                        <br>
+                        <div class="well well-sm">
+                                <div class="container">
+                                    <!-- Collect the nav links, forms, and other content for toggling -->
+                                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                        <p class="navbar-text">&copy; {{fd.version_logica}}</p>
+                                        <ul class="nav navbar-nav navbar-right">
+                                            <li><a  href="{{ path('contacto') }}" >Contacto</a></li>
+                                            <li><a  href="{{ path('acerca_de') }}" >Acerca de ...</a></li>
+                                        </ul>
+                                    </div><!-- /.navbar-collapse -->
+                                </div><!-- /.container-fluid -->
+                        </div>
+                    {% endblock footer %}
+                </div>
 
             {% endblock container %}
         </div>
