@@ -1,42 +1,68 @@
-{% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
+{% extends '::base_backend.html.twig' %}
 
-{% block title %}
-{{ parent() }} - Sector {{ 'views.show.show'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-{% endblock %}
-
-{% block page %}
-
-<h1>Sector</h1>
-
-<form class="form-horizontal">
-    <fieldset>        <div class="control-group">
-            <label class="control-label">Id</label>
-            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.id }}</span>            </div>
-        </div>        <div class="control-group">
-            <label class="control-label">Descripcion</label>
-            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.descripcion }}</span>            </div>
-        </div>        <div class="control-group">
-            <label class="control-label">Abreviatura</label>
-            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.abreviatura }}</span>            </div>
-        </div>    </fieldset>
-</form>
-
-<div>
-    <div class="float-left">
-        <a class="btn" href="{{ path('sector') }}">
-            {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-        </a>
+{% block page_header %}
+    <div class="row">
+        <div class="col-md-9">
+            <h1>Sector</h1>
+        </div>
     </div>
-    <div class="float-left">
-        <a class="btn btn-primary" href="{{ path('sector_edit', { 'id': entity.id }) }}">
-            {{ 'views.recordactions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-        </a>
-    </div>
-    <div class="float-left">
-        <form action="{{ path('sector_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button class="btn btn-danger" type="submit" onclick="return confirm('{{ 'views.recordactions.confirm'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}');">{{ 'views.recordactions.delete'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+{% endblock page_header %}
+
+{% block content %}
+    <div class="row">
+
+        <form class="form-horizontal">
+            {#            <div class="well well-sm">        #}
+            <div class="form-group">
+                <label class="col-md-2 control-label">Id</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static well well-sm">{{ entity.id }}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label ">Descripción</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static well well-sm">{{ entity.descripcion }}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Abreviatura</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static well well-sm">{{ entity.abreviatura }}</p>
+                </div>
+            </div>
+            {#            </div>#}
         </form>
+
     </div>
-</div>
-{% endblock %}
+    <div class="row">
+        <form>
+            <ul class="nav nav-pills">
+                <li>
+                    {#                <ul class="nav nav-pills">#}
+                    {#                    <li>#}
+                    <a class="btn btn-link" href="{{ path('sector') }}">
+                        Volver a la lista
+                    </a>
+                </li>
+                <li>
+                    <a class="btn btn-primary" href="{{ path('sector_edit', { 'id': entity.id }) }}">
+                        Editar
+                    </a>
+                </li>
+                {#                </ul>#}
+                {#                </div>#}
+                </li>
+                <li>
+                    <span>
+                        <div class="form-group">
+                            {{ form_widget(delete_form) }}
+                        </div>
+                        <button class="btn btn-danger" type="submit" onclick="return confirm('{{ 'views.recordactions.confirm'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}');">Eliminar</button>
+                    </span>
+                </li>
+            </ul>
+        </form>
+
+    </div>
+{% endblock content %}

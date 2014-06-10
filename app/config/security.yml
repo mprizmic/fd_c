@@ -42,6 +42,19 @@ security:
             security: false
             switch_user: true
 
+        admin:
+            pattern: ^/admin
+            anonymous: ~
+            form_login:
+                login_path: usuario_login
+                check_path: usuario_login_check
+                default_target_path: 'portada'
+                always_use_default_target_path: true
+            logout: 
+                path: usuario_logout
+                target: 'portada'
+            switch_user: true
+
         backend:
             pattern: ^/backend
             anonymous: ~
@@ -71,6 +84,7 @@ security:
         - { path: ^/usuario/*, roles: ROLE_SUPER_ADMIN }
         - { path: ^/backend/tabla_portada/*, roles: [ROLE_SUPER_ADMIN] }
         - { path: ^/backend/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
+        - { path: ^/administracion/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
         - { path: ^/admin/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
         - { path: ^/_wdt/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/_profiler/, role: IS_AUTHENTICATED_ANONYMOUSLY }
