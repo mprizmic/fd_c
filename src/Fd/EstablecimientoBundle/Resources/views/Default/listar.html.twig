@@ -33,7 +33,7 @@
         <td>
             {% for oferta in terciario.ofertas %}
                 
-                {{ oferta.getOfertas.carrera }}<br />
+                {{oferta.getOfertas.id ~ ':'}}{{ oferta.getOfertas.carrera }}<br />
             {% endfor %}  
         </td>
     </tr>
