@@ -40,23 +40,32 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
-      fd:
-        nombre:           %fd.nombre%
-        nombre_corto:     %fd.nombre_corto%
-        version_logica:   %fd.version_logica%  
-        creditos:         'Créditos: Marcelo Prizmic'
-        version_symfony:  'Symfony 2.1.13'
-        version_doctrine: 'Doctrine >=2.2.3,<2.5-dev'
-        version_mysql:    ''
-        version_apache:   ''
-        version_firefox:  ''
-        dependencia:      'Dirección de Formación Docente'
-        telefonos:
-            - { oficina: 'Secretaría Privada', te: '4339-1892 / 1889 / 1887' }
-            - { oficina: 'Conmutador Esmeralda', te: '4339-1700' }
-        email:            'dgesup@buenosaires.gob.ar'
-        sitio_web:            'http://www.buenosaires.edu.ar/areas/educacion/docentes/superior/index.php?menu_id=20596'
-      si_no_sd: %fd.si_no_sd%
+        fd:
+            nombre:           %fd.nombre%
+            nombre_corto:     %fd.nombre_corto%
+            version_logica:   %fd.version_logica%  
+            creditos:         'Créditos: Marcelo Prizmic'
+            version_symfony:  'Symfony 2.1.13'
+            version_doctrine: 'Doctrine >=2.2.3,<2.5-dev'
+            version_mysql:    ''
+            version_apache:   ''
+            version_firefox:  ''
+            dependencia:      'Dirección de Formación Docente'
+            telefonos:
+                - { oficina: 'Secretaría Privada', te: '4339-1892 / 1889 / 1887' }
+                - { oficina: 'Conmutador Esmeralda', te: '4339-1700' }
+            email:            'dgesup@buenosaires.gob.ar'
+            sitio_web:            'http://www.buenosaires.edu.ar/areas/educacion/docentes/superior/index.php?menu_id=20596'
+        views:
+            mensajes:
+                confirmar: Eliminar el elemento?
+                filtro_vacio: No puede dejar todos los filtros vacíos.
+            index:
+                list: lista
+            actions:
+                show: ver
+                edit: editar
+        si_no_sd: %fd.si_no_sd%
     form:
         resources: 
 #esto cambió de table a div por el lexik form filter          
@@ -108,30 +117,6 @@ doctrine:
 #    secure_controllers:  true
 #    secure_all_services: false
 
-#sonata_block:
-#    default_contexts: [cms]
-#    blocks:
-#        sonata.admin.block.admin_list:
-#            contexts:   [admin]
-#        sonata.block.service.text:   ~
-#        sonata.block.service.action: ~
-#        sonata.block.service.rss:    ~
-#
-#sonata_admin:
-#    title: 'Administración de DFD'
-#    templates:
-#        layout: SonataAdminBundle::standard_layout.html.twig
-#        ajax: SonataAdminBundle::ajax_layout.html.twig
-#        list: SonataAdminBundle:CRUD:list.html.twig
-#        show: SonataAdminBundle:CRUD:show.html.twig
-#        edit: SonataAdminBundle:CRUD:edit.html.twig
-#    dashboard:
-#        blocks:
-#          - { type: sonata.admin.block.admin_list}
-#    groups:
-#      establecimiento_common:
-#        label: EFD
-
 ### este mòdulo es para inhabilitar el acceso al sistema mientras se le hace mantenimiento
 #lexik_maintenance:
 #    #authorized:
@@ -160,4 +145,3 @@ doctrine:
 #
 #        # Option 2 : for dsn, you must have a column ttl type datetime in your table.
 #        #options: {dsn: "mysql:dbname=maintenance;host:localhost", table: maintenance, user: root, password: root}  # the dsn configuration, name of table, user/password 
-
