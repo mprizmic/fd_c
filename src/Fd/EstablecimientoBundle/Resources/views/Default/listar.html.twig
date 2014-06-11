@@ -1,0 +1,45 @@
+{# parametros: entities #}
+
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Nómina de establecimientos</div>
+
+<div class="limpiar_float"></div>
+<br />
+
+<table class="grilla">
+    <tr>
+        <th>Establecimiento</th>
+        <th>Turnos</th>
+        <th>Carreras</th>
+<!--        <th>Url</th> -->
+    </tr>
+    {% set establecimientos = entities %}
+    {% for establecimiento in establecimientos %}
+    <tr>
+        <td>{{ establecimiento.apodo }}</td>
+        <td>
+           {% set terciario = establecimiento.getTerciario() %}
+            {% for turno in terciario.turnos %}
+                    {{ turno.turno.descripcion }}
+                    {% if not loop.last %}{{ ' - ' }}{% endif %}
+            {% else %}
+                {{ ' s/d' }}
+            {% endfor %} 
+        </td>
+        <td>
+            {% for oferta in terciario.ofertas %}
+                
+                {{ oferta.getOfertas.carrera }}<br />
+            {% endfor %}  
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}
