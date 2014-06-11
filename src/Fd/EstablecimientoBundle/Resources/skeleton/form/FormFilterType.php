@@ -1,6 +1,6 @@
 <?php
 
-namespace Fd\TablaBundle\Form;
+namespace {{ namespace }}\Form{{ entity_namespace ? '\\' ~ entity_namespace : '' }};
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -9,16 +9,17 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormError;
 
-class SectorFilterType extends AbstractType
+class {{ form_class }} extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('id', 'filter_number_range')
-            ->add('descripcion', 'filter_text',array(
-                'label'=>'Descripción',
-            ))
-            ->add('abreviatura', 'filter_text')
+        {%- for data in fields_data %}
+
+            ->add('{{ data.fieldName }}', '{{ data.filterWidget }}')
+
+        {%- endfor %}
+
         ;
 
         $listener = function(FormEvent $event)
@@ -34,6 +35,7 @@ class SectorFilterType extends AbstractType
                     if(!empty($data)) return;
                 }
             }
+
             $event->getForm()->addError(new FormError('Filtros vacíos. Debe ingresar al menos un dato.'));
         };
         $builder->addEventListener(FormEvents::POST_BIND, $listener);
@@ -41,6 +43,6 @@ class SectorFilterType extends AbstractType
 
     public function getName()
     {
-        return 'fd_tablabundle_sectorfiltertype';
+        return '{{ form_filter_type_name }}';
     }
 }

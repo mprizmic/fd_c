@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\View\TwitterBootstrap3View;
@@ -118,19 +119,12 @@ class SectorController extends Controller
      * Finds and displays a Sector entity.
      *
      * @Route("/{id}/show", name="sector_show")
+     * @ParamConverter("entity", class="TablaBundle:Sector")
      * @Template()
      */
-    public function showAction($id)
+    public function showAction($entity)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('TablaBundle:Sector')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Sector entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         return array(
             'entity'      => $entity,
@@ -188,20 +182,13 @@ class SectorController extends Controller
      * Displays a form to edit an existing Sector entity.
      *
      * @Route("/{id}/edit", name="sector_edit")
+     * @ParamConverter("entity", class="TablaBundle:Sector")
      * @Template()
      */
-    public function editAction($id)
+    public function editAction($entity)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('TablaBundle:Sector')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Sector entity.');
-        }
-
         $editForm = $this->createForm(new SectorType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         return array(
             'entity'      => $entity,

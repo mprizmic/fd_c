@@ -1,3 +1,4 @@
 TablaBundleControllers:
     resource: "@TablaBundle/Controller/"
     type:     annotation
+    prefix:   /admin
