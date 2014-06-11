@@ -1,7 +1,7 @@
 views:
     mensajes:
         confirmar: Eliminar el elemento?
-        filtro_vacio: 
+        filtro_vacio: No puede dejar todos los filtros vacíos.
 flash:
     create:
         success: Elemento creado satisfactoriamente.
