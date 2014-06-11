@@ -34,7 +34,7 @@
             {% for oferta in terciario.ofertas %}
 {#                Puede haber ofertas de terciario que no sean carreras sino especializaciones#}
                 {% if oferta.getOfertas.carrera is not null %}
-                    {{oferta.getOfertas.id ~ ':'}}{{ oferta.getOfertas.carrera }}<br />
+                    {{ oferta.getOfertas.carrera }}<br />
                 {% endif %}  
             {% endfor %}  
         </td>
