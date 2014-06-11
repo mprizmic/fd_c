@@ -1,10 +1,23 @@
-{% extends '::base_admin.html.twig' %}
+{{ "{% extends '::base_admin.html.twig' %}" }}
 
-{% form_theme filterForm ':Form:fields_bootstrap.html.twig' %}
+{{ "{% form_theme filterForm ':Form:fields_bootstrap.html.twig' %}" }}
 
-{% block page_header %}
+{{ "{% block page_header %}" }}
     <div class="row">
         <div class="col-md-9">
+                        
+                        
+                        
+<!-- HASTA ACA -->
+<!-- HASTA ACA -->
+<!-- HASTA ACA -->
+<!-- HASTA ACA -->
+<!-- HASTA ACA -->
+<!-- HASTA ACA -->
+<!-- HASTA ACA -->
+<!-- HASTA ACA -->
+<!-- HASTA ACA -->
+
             <h1>Lista de Sector</h1>
         </div>
         <div class="col-md-2">
@@ -22,25 +35,10 @@
             </button>
         </div>
     </div>
-{% endblock page_header %}
+{{ "{% endblock %}" }}
 
-{% block content %}
+{{ "{% block content %}" }}
 
-    <div class="row">
-        <div id="demo" class="collapse out">
-            Esto es una explicación de los datos que contiene la tabla (o lo que haya que explicar).
-            Esto es una explicación de los datos que contiene la tabla (o lo que haya que explicar).
-            Esto es una explicación de los datos que contiene la tabla (o lo que haya que explicar).
-            Esto es una explicación de los datos que contiene la tabla (o lo que haya que explicar).
-            Esto es una explicación de los datos que contiene la tabla (o lo que haya que explicar).
-            Esto es una explicación de los datos que contiene la tabla (o lo que haya que explicar).
-            Esto es una explicación de los datos que contiene la tabla (o lo que haya que explicar).
-            Esto es una explicación de los datos que contiene la tabla (o lo que haya que explicar).
-            Esto es una explicación de los datos que contiene la tabla (o lo que haya que explicar).
-        </div>
-
-    </div>
-    <br>
     <div class="row">
         <div class="col-md-12">
             <div id="filters" class="collapse">
@@ -48,8 +46,8 @@
                     {{ form_widget(filterForm) }}
                     <div class="btn-toolbar">
                         <div class="btn-group">
-                            <button class="btn btn-primary" type="submit" name="filter_action" value="filter">{{ 'views.index.filter'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
-                            <button class="btn btn-default" type="submit" name="filter_action" value="reset">{{ 'views.index.reset'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+                            <button class="btn btn-primary" type="submit" name="filter_action" value="filter">Filtrar</button>
+                            <button class="btn btn-default" type="submit" name="filter_action" value="reset">Limpiar</button>
                         </div>
                     </div>
                 </form>
@@ -111,4 +109,5 @@
             </a>
         </div>
     </div>
-{% endblock %}
+
+{{ "{% endblock %}" }}
