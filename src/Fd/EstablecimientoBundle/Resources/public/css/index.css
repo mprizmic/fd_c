@@ -310,6 +310,13 @@ grillas
     padding-left: 8px;
     padding-right: 8px;
     font-weight: normal;
+    
+    border: 1px solid #000;
+    border-spacing: 1px;
+    /*border-width: 1px;*/
+    /*border-style: #000;*/
+    
+    /*color: #00c*/
     /*empty-cells: show;*/
 }
 .grilla_fit th{
