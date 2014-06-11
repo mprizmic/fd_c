@@ -259,7 +259,7 @@ class Establecimiento {
      */
     public function getTerciario() {
         foreach ($this->getUnidadesEducativas() as $unidad) {
-            if ($unidad->getNivel()->getAbreviatura() == 'Ter') {
+            if ($unidad->isTerciario()) {
                 return $unidad;
             }
         };

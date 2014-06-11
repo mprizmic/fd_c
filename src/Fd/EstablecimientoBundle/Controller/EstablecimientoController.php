@@ -31,6 +31,18 @@ class EstablecimientoController extends Controller {
     }
 
     /**
+     * @Route("/listar", name="establecimiento_listar")
+     * @Template()
+     */
+    public function listarAction() {
+        $entities = $this->getRepositorio()->findAllOrdenado('orden');
+
+        return $this->render('EstablecimientoBundle:Default:listar.html.twig', array(
+                    'entities' => $entities,
+        ));
+    }
+
+    /**
      * Listado de docentes por nivel de cada establecimiento
      *
      * @Route("/docentes_nivel_listado", name="establecimiento_docentes_nivel_listado")
@@ -99,7 +111,7 @@ class EstablecimientoController extends Controller {
 
         return $this->render('EstablecimientoBundle:Default:damero.html.twig', array(
                     'establecimientos' => $establecimientos,
-                ));
+        ));
     }
 
     /**
@@ -111,7 +123,7 @@ class EstablecimientoController extends Controller {
         return $this->render('EstablecimientoBundle:Default:establecimiento_de_un_cui.html.twig', array(
                     'establecimientos' => $establecimientos,
                     'edificio_id' => $edificio_id,
-                ));
+        ));
     }
 
     /**
@@ -163,7 +175,7 @@ class EstablecimientoController extends Controller {
 
         return $this->render('EstablecimientoBundle:Default:nomina.html.twig', array(
                     'establecimientos' => $establecimientos,
-                ));
+        ));
     }
 
     /**
@@ -198,7 +210,7 @@ class EstablecimientoController extends Controller {
 
         return $this->render('EstablecimientoBundle:Default:tarjeta_establecimiento.html.twig', array(
                     'establecimiento' => $establecimiento,
-                ));
+        ));
     }
 
 }
