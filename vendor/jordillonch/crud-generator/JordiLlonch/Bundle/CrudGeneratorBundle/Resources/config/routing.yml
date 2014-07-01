@@ -1,3 +1,0 @@
-JordiLlonchCrudGeneratorBundle_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: JordiLlonchCrudGeneratorBundle:Default:index }
