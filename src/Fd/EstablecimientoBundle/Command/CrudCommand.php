@@ -21,7 +21,7 @@ class CrudCommand extends GenerateDoctrineCrudCommand
         parent::configure();
 
         $this->setName('establecimiento:generate:crud');
-        $this->setDescription('A CRUD generator with paginating and filters.');
+        $this->setDescription('Generador CRUD tomado del jordillonch');
     }
 
     /**
