@@ -30,11 +30,8 @@
         "friendsofsymfony/jsrouting-bundle": "@stable",
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "dev-master",
-        "sonata-project/admin-bundle": "2.1.x-dev",
-        "sonata-project/doctrine-orm-admin-bundle": "2.1.x-dev",
         "lexik/form-filter-bundle": "2.x.x-dev",
-        "pagerfanta/pagerfanta": "1.0.x-dev",
-        "jordillonch/crud-generator": "2.1.*-dev"
+        "pagerfanta/pagerfanta": "1.0.x-dev"
     },
     "scripts": {
         "post-install-cmd": [
