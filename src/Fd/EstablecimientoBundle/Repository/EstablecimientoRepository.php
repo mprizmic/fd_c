@@ -191,6 +191,8 @@ class EstablecimientoRepository extends EntityRepository {
 
     /**
      * devuelve las unidades_ofertas (las ofertas educativas asociadas a una unidad educativa
+     * Tipo es el tipo de oferta. Ej: "carrera"
+     * $tipo es una string
      */
     public function findUnidadesOfertas($establecimiento, $tipo) {
         $dql = "

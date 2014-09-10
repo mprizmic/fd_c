@@ -1,0 +1,15 @@
+{# despliega en horizontal los turnos anteponiendo la palabra "tunos:" #}
+{# la variable que espera recibir es oferta_carreras y es un objeto oferta_carrera #}
+<span class="separador"></span>
+<a href="#">
+    {% for turno in oferta_carrera.turnos %}
+        {% if loop.first %}
+            {{ 'Turnos: ' }}
+            {{ turno.turno.descripcion }}
+        {% else %}
+            {{ ' - ' ~ turno.turno.descripcion }}
+        {% endif %}
+    {% else  %}
+        (falta asignar turnos)
+    {% endfor  %}
+</a>

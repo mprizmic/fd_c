@@ -516,10 +516,16 @@ class CarreraController extends Controller {
      */
     public function donde_se_dictaAction($carrera_id) {
         $em = $this->getDoctrine()->getEntityManager();
+        
         $carrera = $em->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
+        
+        //recupera las unidades_oferta de la carrera
+        $unidad_ofertas = $em->getRepository('OfertaEducativaBundle:Carrera')->findUnidadesOfertas($carrera);
+        
         $establecimientos = $em->getRepository('EstablecimientoBundle:Establecimiento')->findEstablecimientosPorCarrera($carrera);
         return $this->render('OfertaEducativaBundle:Carrera:includes/donde_se_dicta.html.twig', array(
                     'establecimientos' => $establecimientos,
+                    'unidad_ofertas' => $unidad_ofertas,
                 ));
     }
 

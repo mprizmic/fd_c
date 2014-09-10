@@ -56,8 +56,21 @@
 <br />
 
 {# donde se dicta la carrera #}
+
+{# 
+Se refactoriza.
+Se agregan los turnos en que funciona la carrera en cada establecimento que se muestra.
+EL "includes/donde_se_dicta_html.twig" se usa en otros lugares que habrìa que revisar.
+Se lo reemplaza por otro.
+
 {% render "OfertaEducativaBundle:Carrera:donde_se_dicta" with {'carrera_id': carrera.id } %}
+#}
+
+{% set unidad_ofertas = carrera.oferta.unidades %}
+{% include "OfertaEducativaBundle:Carrera:includes/establecimientos_donde_se_dicta.html.twig" with {'unidad_ofertas': unidad_ofertas } %}
+
 <div class="float_derecha"><a href="{{ path( 'carrera_asignar_establecimiento', { 'id': carrera.id }) }}">Asignar establecimiento</a></div>
+
 <span class="limpiar_float"></span>
 
 <br />
