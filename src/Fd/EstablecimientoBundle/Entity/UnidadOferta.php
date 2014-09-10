@@ -3,6 +3,7 @@
 namespace Fd\EstablecimientoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -11,7 +12,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * 
  * Es la relación entre unidad_educativa y oferta_educativa.
  * Es una oferta en particular asociada a una unidad educativa de un establecimiento en particular
- * Cada oferta se dicta en uno o mas establecimientos
+ * Cada oferta se dicta en uno o mas establecimientos.
+ * Las ofertas pueden ser de cualquier nivel.
  *
  * @ORM\Table(name="unidad_oferta")
  * @ORM\Entity(repositoryClass="Fd\EstablecimientoBundle\Repository\UnidadOfertaRepository")
@@ -49,6 +51,12 @@ class UnidadOferta {
      */
     private $cohortes;
     private $normas;
+    /**
+     * bidireccional lado inverso
+     * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno", mappedBy="unidad_oferta", cascade={"persist", "remove"} )
+     * @Assert\Valid()
+     */
+    private $turnos;
 
     /**
      * @ORM\Column(type="datetime")
@@ -60,12 +68,35 @@ class UnidadOferta {
      */
     private $actualizado;
 
+    /**
+     * esta la escribí yo, no es automática
+     */
+    public function setTurnos(ArrayCollection $turnos) {
+        $this->turnos = $turnos;
+        foreach ($turnos as $unidadoferta_turno) {
+            $unidadoferta_turno->setUnidadOferta($this);
+        }
+    }
+    /**
+     * Add turnos
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno $turnos
+     * @return UnidadOferta
+     */
+    public function addTurno(\Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno $turnos)
+    {
+        $turno->setUnidadOferta($this);
+        $this->turnos[] = $turnos;
+
+        return $this;
+    }
     public function __toString() {
         return $this->getUnidades() . ' - ' . $this->getOfertas();
     }
 
     public function __construct() {
         $this->cohortes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->turnos = new ArrayCollection();
         $this->creado = new \DateTime();
         $this->actualizado = new \DateTime();
     }
@@ -196,4 +227,25 @@ class UnidadOferta {
         return $this->actualizado;
     }
 
+
+
+    /**
+     * Remove turnos
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno $turnos
+     */
+    public function removeTurno(\Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno $turnos)
+    {
+        $this->turnos->removeElement($turnos);
+    }
+
+    /**
+     * Get turnos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTurnos()
+    {
+        return $this->turnos;
+    }
 }

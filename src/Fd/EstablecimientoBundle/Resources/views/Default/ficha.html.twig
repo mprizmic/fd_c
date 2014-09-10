@@ -63,8 +63,19 @@
         {# carreras #}
         <fieldset>
         <span class="resaltado">Carreras terciarias:</span><br/>
-            {% for carrera in carreras %}
+{#            {% for carrera in carreras %}
                 <div class="separador"><a href="{{ path('carrera_ficha', {'carrera_id': carrera.id }) }}">{{ carrera.nombre }}</a></div>
+            {% endfor %}  #}
+
+            {# se refactoriza por que se agrega a la ficha las unidades_ofertas de nivel terciario del establecimeinto #}
+            {% for oferta_carrera in unidad_ofertas %}
+                {% set la_carrera = oferta_carrera.ofertas.carrera %}
+                <div class="separador">
+                    <a href="{{ path('carrera_ficha', {'carrera_id': la_carrera.id }) }}">{{ la_carrera.nombre }}</a>
+
+                    {#                    se muestran los turnos de una carrera#}
+                    {% include 'EstablecimientoBundle:Default:includes/turnos_carreras.html.twig' with {'ofert_carrera':oferta_carrera }  %}
+                </div>
             {% endfor %}  
         </fieldset>
         <br />

@@ -143,10 +143,14 @@ class EstablecimientoController extends Controller {
         $establecimiento = $repo->find($establecimiento_id);
         $establecimientos = $repo->qyAllOrdenado('orden')->getResult();
         $edificio_principal = $repo->findEdificioPrincipal($establecimiento);
+        //devuelve los objetos carrera
         $carreras = $repo->findCarreras($establecimiento);
         $especializaciones = $repo->findEspecializaciones($establecimiento);
         $salas_inicial = $repo->findSalasInicial($establecimiento);
         $primario = $repo->findPrimario($establecimiento);
+        //son los objetos unidad_oferta para poder mostrar los turnos de cada oferta educativa de tipo carrera
+        //representan el dicatado de una carrera en eel establecimiento en tratamiento
+        $unidad_ofertas = $repo->findUnidadesOfertas($establecimiento, "carrera");
 
         return array(
             'establecimiento' => $establecimiento,
@@ -156,6 +160,7 @@ class EstablecimientoController extends Controller {
             'salas_inicial' => $salas_inicial,
             'establecimientos' => $establecimientos,
             'primario' => $primario,
+            'unidad_ofertas' => $unidad_ofertas,
         );
     }
 

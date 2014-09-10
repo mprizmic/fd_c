@@ -1,0 +1,18 @@
+{# establecimientos en los que se dicta una carrera #}
+{# recibe como parametro las unidades_ofertas de donde se sacan los establecimientos #}
+<fieldset>
+    <legend class="resaltado">Establecimientos en los que se dicta</legend>
+    {% for unidad_oferta in unidad_ofertas %}
+        
+        {% set establecimiento = unidad_oferta.unidades.establecimiento %}
+        
+        <div class="separador">
+            
+            {# muestra el nombre de cada establecimiento #}
+            <a href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento.id}) }}">{{ establecimiento.nombre }}</a>
+            
+            {# muestra el turno de cada establecimento           #}
+            {% include 'EstablecimientoBundle:Default:includes/turnos_carreras.html.twig' with {'oferta_carrera': unidad_oferta } %}
+        </div>
+    {% endfor %}  
+</fieldset>
