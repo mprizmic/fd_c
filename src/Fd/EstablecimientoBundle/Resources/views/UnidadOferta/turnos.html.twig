@@ -1,0 +1,25 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block main_content %}
+{{ parent() }}
+
+<h1>Editar turnos de una carrera en un establecimiento</h1>
+
+<form action="{{ path('establecimiento.unidad_oferta.asignar_turno', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+    {{ form_row(form.turnos) }}
+    {{ form_widget(form._token) }}
+    
+    <p>
+        <button type="submit">Guardar</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="#">
+            Volver a ....
+        </a>
+    </li>
+</ul>
+
+{% endblock %}
