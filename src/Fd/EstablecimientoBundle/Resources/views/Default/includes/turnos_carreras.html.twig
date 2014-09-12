@@ -2,7 +2,7 @@
 {# la variable que espera recibir es oferta_carreras y es un objeto oferta_carrera #}
 <span class="separador"></span>
 <a href="#">
-    {% for turno in oferta_carrera.turnos %}
+    {% for turno in unidad_oferta_tipo_carrera.turnos %}
         {% if loop.first %}
             {{ 'Turnos: ' }}
             {{ turno.turno.descripcion }}
