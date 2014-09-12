@@ -1,25 +1,69 @@
+{# recibe entity y form #}
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
+{% import ':Form:macro_twig.html.twig' as collection_macro %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset( 'bundles/establecimiento/css/macro_twig.css') }}" rel="stylesheet" type="text/css" />      
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/establecimiento/js/macro_twig.js') }}" charset="utf-8"></script>
+{% endblock %}
+
 {% block main_content %}
-{{ parent() }}
+    {{ parent() }}
 
-<h1>Editar turnos de una carrera en un establecimiento</h1>
+    <div class="titulo">
+        Editar turnos de una carrera en un establecimiento
+    </div>
+    <br />
 
-<form action="{{ path('establecimiento.unidad_oferta.asignar_turno', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
-    {{ form_row(form.turnos) }}
-    {{ form_widget(form._token) }}
-    
-    <p>
-        <button type="submit">Guardar</button>
-    </p>
-</form>
+{# tarjeta del establecimiento   #}
+    <div class="chica italico">Establecimiento</div>
+    <span>
+        {% render "EstablecimientoBundle:Establecimiento:tarjeta_establecimiento" with {'establecimiento_id': entity.unidades.establecimiento.id } %}
+    </span>
+{#  tarjeta de la carrera  #}
+    <div class="chica italico">Carrera</div>
+    <span>
+        {% render "OfertaEducativaBundle:Carrera:tarjeta_carrera" with {'carrera_id': entity.ofertas.carrera.id } %}
+    </span>
+    <br />
 
-<ul class="record_actions">
-    <li>
-        <a href="#">
-            Volver a ....
-        </a>
-    </li>
-</ul>
+{#  formulario de turnos  #}
+    <form action="{{ path('establecimiento.unidad_oferta.actualizar_turnos', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+        {# turnos en que se imparte #}
+        <fieldset>
+            <legend class="resaltado">
+                Turnos
+            </legend>
+
+            <div id="turnos" data-prototype="{{ collection_macro.widget_prototype(form.turnos, 'Eliminar')|escape }}">
+                {% for widget in form.turnos.children %}
+                    {{ collection_macro.widget_prototype(widget, 'Eliminar') }}
+                {% endfor %}
+            </div>
+            <a class="btn-add" data-target="turnos">Agregar un turno</a>
+        </fieldset>
+        {# fin turnos #}
+
+        {{ form_widget(form._token) }}    
+
+        <p>
+            <button type="submit">Guardar</button>
+        </p>
+    </form>
+{#
+    <ul class="record_actions">
+        <li>
+            <a href="#">
+                Volver a ....
+            </a>
+        </li>
+    </ul>
+#}
 
 {% endblock %}

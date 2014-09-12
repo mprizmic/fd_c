@@ -17,22 +17,23 @@ class UnidadOfertaHandler {
     protected $strategy;
     protected $strategy_instance;
     protected $nivel;
-//    private $unidad_educativa;
-//    private $unidad_oferta;
 
     public function __construct(EntityManager $em, $nivel ) {
 
         $this->em = $em;
-//        $this->unidad_educativa = $unidad_educativa;
-//        $nivel = $unidad_educativa->getNivel();
         $strategy = $nivel->getCrearUOClass();
         $strategy_instance = new $strategy($em);
         $this->strategy_instance = $strategy_instance;
-        
         $this->nivel = $nivel;
-//        $this->unidad_oferta = $unidad_oferta;
     }
 
+    /**
+     * Por ahora es para actualizar los turnos de los terciarios
+     */
+    public function actualizar($entity, $turnos){
+        return $this->strategy_instance->actualizar( $entity, $turnos);
+    }
+    
     public function crear(UnidadEducativa $unidad_educativa = null, $oferta_educativa = null) {
 
         return $this->strategy_instance->crear( $unidad_educativa, $oferta_educativa);
