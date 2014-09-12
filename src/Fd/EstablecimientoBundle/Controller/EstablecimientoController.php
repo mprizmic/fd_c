@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 
 /**
- * @Route("/establecimiento")
+ * @Route("/")
  */
 class EstablecimientoController extends Controller {
 
