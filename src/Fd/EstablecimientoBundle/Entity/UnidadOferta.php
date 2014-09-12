@@ -83,10 +83,10 @@ class UnidadOferta {
      * @param \Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno $turnos
      * @return UnidadOferta
      */
-    public function addTurno(\Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno $turnos)
+    public function addTurno(\Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno $turno)
     {
         $turno->setUnidadOferta($this);
-        $this->turnos[] = $turnos;
+        $this->turnos[] = $turno;
 
         return $this;
     }
