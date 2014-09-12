@@ -74,7 +74,7 @@
                     <a href="{{ path('carrera_ficha', {'carrera_id': la_carrera.id }) }}">{{ la_carrera.nombre }}</a>
 
                     {#                    se muestran los turnos de una carrera#}
-                    {% include 'EstablecimientoBundle:Default:includes/turnos_carreras.html.twig' with {'ofert_carrera':oferta_carrera }  %}
+                    {% include 'EstablecimientoBundle:Default:includes/turnos_carreras.html.twig' with {'unidad_oferta_tipo_carrera':oferta_carrera }  %}
                 </div>
             {% endfor %}  
         </fieldset>
