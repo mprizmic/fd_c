@@ -12,7 +12,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Fd\EstablecimientoBundle\Form\Type\UnidadOfertaType;
+use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
 
 /**
  * @Route("/unidadoferta")
@@ -25,14 +27,46 @@ class UnidadOfertaController extends Controller {
      */
     public function asignarTurnoAction($unidad_oferta) {
 
-//        $em = $this->getDoctrine()->getEntityManager();
-
-        $form = $this->createForm(new UnidadOfertaType());
+        $form = $this->createForm(new UnidadOfertaType(), $unidad_oferta);
 
         return $this->render('EstablecimientoBundle:UnidadOferta:turnos.html.twig', array(
                     'entity' => $unidad_oferta,
                     'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * @Route("/actualizar_turnos/{id}", name="establecimiento.unidad_oferta.actualizar_turnos")
+     * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta")
+     */
+    public function actualizarTurnos(Request $request, $unidad_oferta) {
+
+        $editForm = $this->createForm(new UnidadOfertaType(), $unidad_oferta);
+        
+        //guardo los turnos originales antes de bindear el request
+        $originalTurnos = array();
+
+        foreach ($unidad_oferta->getTurnos() as $turno) {
+            $originalTurnos[] = $turno;
+        }
+
+        $editForm->bind($request);
+
+        if ($editForm->isValid()) {
+
+            $manager = new UnidadOfertaHandler($this->getDoctrine()->getEntityManager(), $unidad_oferta->getUnidades()->getNivel());
+
+            $respuesta = $manager->actualizar($unidad_oferta, $originalTurnos);
+
+            $mensaje = $respuesta->getMensaje();
+        } else {
+
+            $mensaje = 'Problemas al actualizar. Verifique y reintente';
+        };
+
+        $this->get('session')->getFlashBag()->add('error', $mensaje);
+
+        return $this->redirect($this->generateUrl('establecimiento_ficha', array('establecimiento_id' => 13)));
     }
 
     /**
