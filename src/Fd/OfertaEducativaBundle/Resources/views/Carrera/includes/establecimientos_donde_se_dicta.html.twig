@@ -12,7 +12,7 @@
             <a href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento.id}) }}">{{ establecimiento.nombre }}</a>
             
             {# muestra el turno de cada establecimento           #}
-            {% include 'EstablecimientoBundle:Default:includes/turnos_carreras.html.twig' with {'oferta_carrera': unidad_oferta } %}
+            {% include 'EstablecimientoBundle:Default:includes/turnos_carreras.html.twig' with {'unidad_oferta_tipo_carrera': unidad_oferta } %}
         </div>
     {% endfor %}  
 </fieldset>
