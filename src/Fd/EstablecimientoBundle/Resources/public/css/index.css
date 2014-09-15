@@ -240,6 +240,15 @@ tamaños y tipos de escritura
 .visible{
     display: block;
 }
+.rojo{
+    color: red;
+}
+.azul{
+    color: #08C;
+}
+.verde{
+    color:darkseagreen;
+}
 /*
 botones
 */

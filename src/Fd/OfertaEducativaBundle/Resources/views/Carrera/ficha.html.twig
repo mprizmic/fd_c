@@ -29,7 +29,7 @@
 {# datos generales #}
 <fieldset>
     <div>Tipo de formación: {{ carrera.formacion }}</div>
-    <div>Estado: {{ carrera.estado }}</div>
+    <div class="grande rojo">Estado: {{ carrera.estado }}</div>
     <div>Duración: {{ carrera.duracion }}</div>
 </fieldset>
 <div class="float_derecha"><a href="{{ path( 'carrera_editar', { 'id': carrera.id }) }}">Editar</a></div>
