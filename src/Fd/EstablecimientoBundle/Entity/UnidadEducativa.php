@@ -106,6 +106,19 @@ class UnidadEducativa {
         };
     }
 
+    public function getTurnosSinRepetir(){
+        $salida = array();
+        foreach ($this->getOfertas() as $unidadoferta) {
+            foreach ($unidadoferta->getTurnos() as $turno) {
+                $descripcion = $turno->getTurno()->getDescripcion(); 
+                if (!in_array($descripcion, $salida)){
+                    $salida[]=$descripcion;
+                }
+            }
+            
+        };
+        return $salida;
+    }
     public function __toString() {
         return $this->getNivel() . '/' . $this->getEstablecimiento();
     }

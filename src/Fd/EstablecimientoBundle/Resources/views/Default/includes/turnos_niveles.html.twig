@@ -8,11 +8,11 @@ recibe objeto 'establecimiento'
         {% for unidad in establecimiento.unidadesEducativas %}
             <span class="separador"></span>
             {{ 'Nivel ' ~ unidad.nivel.nombre ~ ': ' }}
-            {% for turno in unidad.turnos %}
-                <span class="reforzado">    {{ turno.turno.descripcion }}</span>
-                {% if not loop.last %}{{ ' - ' }}{% endif %}
+            {% for un_turno in unidad.turnosSinRepetir %}
+                    <span class="reforzado">    {{ un_turno }}</span>
+                    {% if not loop.last %}{{ ' - ' }}{% endif %}
             {% else %}
-                {{ ' s/d' }}
+                    {{ ' s/d' }}
             {% endfor %}   
             <br />
         {% else %}
