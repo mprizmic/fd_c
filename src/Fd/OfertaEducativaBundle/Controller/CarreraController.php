@@ -363,6 +363,12 @@ class CarreraController extends Controller {
      * @ParamConverter("carrera", class="OfertaEducativaBundle:Carrera", options={"id":"carrera_id"} )
      */
     public function fichaAction($carrera) {
+        $request = $this->getRequest();
+        
+        // establezco la ruta para la pagina que tenga que volver aca
+        $this->get('session')->set('ruta_completa', $request->get('_route'));
+        $this->get('session')->set('parametros', $request->get('_route_params'));
+        
         return $this->render('OfertaEducativaBundle:Carrera:ficha.html.twig', array(
                     'carrera' => $carrera,
                 ));
