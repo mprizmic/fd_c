@@ -65,8 +65,13 @@ class UnidadOfertaController extends Controller {
         };
 
         $this->get('session')->getFlashBag()->add('error', $mensaje);
-
-        return $this->redirect($this->generateUrl('establecimiento_ficha', array('establecimiento_id' => 13)));
+        
+        //recupero la ruta a la cual hay que volver
+        $ruta = $this->get('session')->get('ruta_completa');
+        $params = $this->get('session')->get('parametros');
+        
+//        return $this->redirect($this->get('session')->get('ruta_completa'));
+        return $this->redirect($this->generateUrl($ruta, $params ) );
     }
 
     /**

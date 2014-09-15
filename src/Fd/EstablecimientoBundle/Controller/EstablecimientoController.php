@@ -139,10 +139,19 @@ class EstablecimientoController extends Controller {
      * @Template("EstablecimientoBundle:Default:ficha.html.twig")
      */
     public function fichaAction($establecimiento_id) {
+        $request = $this->getRequest();
+        
+        // establezco la ruta para la pagina que tenga que volver aca
+        $this->get('session')->set('ruta_completa', $request->get('_route'));
+        $this->get('session')->set('parametros', $request->get('_route_params'));
+        
+        //repositorio de establecimiento
         $repo = $this->getDoctrine()->getRepository('EstablecimientoBundle:Establecimiento');
+        
         $establecimiento = $repo->find($establecimiento_id);
         $establecimientos = $repo->qyAllOrdenado('orden')->getResult();
         $edificio_principal = $repo->findEdificioPrincipal($establecimiento);
+        
         //devuelve los objetos carrera
         $carreras = $repo->findCarreras($establecimiento);
         $especializaciones = $repo->findEspecializaciones($establecimiento);
