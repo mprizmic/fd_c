@@ -153,6 +153,7 @@ class EstablecimientoRepository extends EntityRepository {
         return $inicial_x;
     }
     /**
+     * FALTA se modifica suponiendo que puede existir unidad_oferta de primario pero no primario_x
      * Devuelve la oferta de primario , si tiene
      * 
      * @param type $establecimiento
@@ -160,16 +161,17 @@ class EstablecimientoRepository extends EntityRepository {
     public function findPrimario($establecimiento) {
         $primario_x = new ArrCol();
         $primario = $establecimiento->getUnidadEducativa('Pri');
-        if ($primario) {
-            //deberìa devolver siempre un array de un elemento
-            $ofertas = $primario->existeOferta();
-            if ($ofertas) {
-                $repo = $this->_em
-                        ->getRepository('OfertaEducativaBundle:PrimarioX');
-                $primario_x = $repo->findPrimario( $ofertas[0] );
-            };
-        };
-        return $primario_x;
+//        if ($primario) {
+//            //deberìa devolver siempre un array de un elemento
+//            $ofertas = $primario->existeOferta();
+//            if ($ofertas) {
+//                $repo = $this->_em
+//                        ->getRepository('OfertaEducativaBundle:PrimarioX');
+//                $primario_x = $repo->findPrimario( $ofertas[0] );
+//            };
+//        };
+//        return $primario_x;
+        return $primario;
     }
 
     /**
