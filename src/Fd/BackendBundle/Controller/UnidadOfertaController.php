@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\BackendBundle\Form\UnidadOfertaType;
 
@@ -135,22 +136,16 @@ class UnidadOfertaController extends Controller {
      * Displays a form to edit an existing UnidadOferta entity.
      *
      * @Route("/{id}/edit", name="backend_unidadoferta_edit")
+     * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta")
      * @Template()
      */
-    public function editAction($id) {
-        $em = $this->getDoctrine()->getEntityManager();
+    public function editAction($unidad_oferta) {
 
-        $entity = $em->getRepository('EstablecimientoBundle:UnidadOferta')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find UnidadOferta entity.');
-        }
-
-        $editForm = $this->createForm(new UnidadOfertaType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createForm(new UnidadOfertaType(), $unidad_oferta);
+        $deleteForm = $this->createDeleteForm($unidad_oferta->getId());
 
         return array(
-            'entity' => $entity,
+            'entity' => $unidad_oferta,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
