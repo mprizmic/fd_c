@@ -45,22 +45,7 @@
         </div>
     {% endif %}
     <br />
-    
-    {# turnos en que se imparte #}
-    <fieldset>
-        <legend class="resaltado">
-            Turnos
-        </legend>
-
-        <div id="turnos" data-prototype="{{ collection_macro.widget_prototype(edit_form.turnos, 'Eliminar')|escape }}">
-            {% for widget in edit_form.turnos.children %}
-                {{ collection_macro.widget_prototype(widget, 'Eliminar') }}
-            {% endfor %}
-        </div>
-        <a class="btn-add" data-target="turnos">Agregar un turno</a>
-    </fieldset>
-    {# fin turnos #}
-  
+     
     {{ form_rest(edit_form) }}    
     
     <br />

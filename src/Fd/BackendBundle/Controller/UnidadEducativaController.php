@@ -191,17 +191,6 @@ class UnidadEducativaController extends Controller {
 
         $repo = $em->getRepository('EstablecimientoBundle:UnidadEducativa');
 
-        /**
-         * En el caso en que se hayan borrado turnos, para saber cual se borró, 
-         * entre le entity original y la que viene en el request,
-         * hace falta guardar los turnos que estaban en la base de datos.
-         */
-        $originalTurnos = array();
-
-        foreach ($entity->getTurnos() as $turno) {
-            $originalTurnos[] = $turno;
-        }
-
         $editForm = $this->getEditForm($entity);
 
         $deleteForm = $this->createDeleteForm($entity->getId());
@@ -209,8 +198,10 @@ class UnidadEducativaController extends Controller {
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            
+            $handler = $this->getHandler();
 
-            $respuesta = $repo->actualizar($entity, $originalTurnos);
+            $respuesta = $handler->actualizar($entity, true);
 
             $session = $this->get('session');
             $session->setFlash('exito', $respuesta->getMensaje());

@@ -5,6 +5,7 @@ namespace Fd\BackendBundle\EventListener;
 use Doctrine\ORM\EntityManager;
 use Fd\BackendBundle\Event\UnidadEducativaBajaEvent;
 use Fd\BackendBundle\Event\BackendEvents;
+use Fd\EstablecimientoBundle\Entity\Respuesta;
 
 class TurnoUEBajaListener {
 
@@ -21,13 +22,16 @@ class TurnoUEBajaListener {
     public function onUnidadEducativaBaja(UnidadEducativaBajaEvent $event) {
         $unidad_educativa = $event->getUnidadEducativa();
         
-        //se crea el handler
-        $turno_handler = new TurnoHandler($unidad_educativa, $this->em);
-        
-        //devuelve el resultadod de la operacion
-        $respuesta = $turno_handler->eliminar();
+//        //se crea el handler
+//        $turno_handler = new TurnoHandler($unidad_educativa, $this->em);
+//        
+//        //devuelve el resultadod de la operacion
+//        $respuesta = $turno_handler->eliminar();
         
         //el evento porta la respuesta del la operacion
+        $respuesta = new Respuesta();
+        $respuesta->setCodigo(1);
+        $respuesta->setMensaje('nada');
         $event->setRespuesta( $respuesta );        
     }
 
