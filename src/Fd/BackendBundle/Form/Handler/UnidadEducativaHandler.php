@@ -14,7 +14,7 @@ use Fd\OfertaEducativaBundle\Entity\Sala;
 
 class UnidadEducativaHandler {
 
-    protected $entity_manager;
+    private $entity_manager;
     protected $class;
     protected $repository;
     protected $respuesta;
@@ -98,6 +98,34 @@ class UnidadEducativaHandler {
         };
 
         return $this->respuesta;
+    }
+    /**
+     * Actualiza un registro de la tabla.
+     * Para el caso en que se esté eliminando directamente la unidad educativa
+     * FALTA ver que pasa con el resto de las relaciones: unidad_oferta, cohortes, etc
+     * 
+     * @param type $entity
+     * @return \Fd\EstablecimientoBundle\Entity\Respuesta
+     */
+    public function actualizar($entity, $flush = null) {
+        $respuesta = new Respuesta();
+
+        try {
+            $this->entity_manager->persist($entity);
+            
+            if ($flush){
+                $this->entity_manager->flush();
+                $respuesta->setClaveNueva($entity->getId());
+            };
+
+            $respuesta->setCodigo(1);
+            $respuesta->setMensaje('Se guardó la unidad educativa exitosamente');
+        } catch (Exception $e) {
+            $respuesta->setCodigo(2);
+            $respuesta->setMensaje('No se pudo guardar la unidad educativa. Verifique los datos y reintente');
+        }
+
+        return $respuesta;
     }
 
 }
