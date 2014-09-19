@@ -50,16 +50,6 @@ class UnidadEducativaType extends AbstractType {
                         //si el registro ya está creado no se pueden cambiar ni la unidad educativa ni el establecimeinto
                         $optionsNivel['disabled'] = true;
                         $optionsEstablecimientos['disabled'] = true;
-
-                        //si ya se creó el registro se pueden agregar turnos
-                        $form->add(
-                                $factory->createNamed('turnos', 'collection', null, array(
-                                    'type' => new TurnoUnidadEducativaType(),
-                                    'by_reference' => FALSE,
-                                    'allow_delete' => TRUE,
-                                    'allow_add' => TRUE,
-                                        )
-                                ));
                     };
 
                     $form->add(
