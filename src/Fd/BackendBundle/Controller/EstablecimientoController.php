@@ -223,7 +223,7 @@ class EstablecimientoController extends Controller {
 
         $formulario = $this->createForm(new DocentesNivelType($establecimiento, $niveles), $docentes_nivel_anterior);
 
-        $form_handler = new DocentesNivelFormHandler(new DocentesNivelManager($this->getEm()));
+        $form_handler = new DocentesNivelFormHandler(new DocentesNivelManager($this->getEm(), $this->get('fd.backend.handler.unidad_educativa')));
 
         $respuesta = $form_handler->actualizar($formulario, $request);
 
