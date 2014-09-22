@@ -27,9 +27,9 @@ class MigrarUnidadOfertaTurnoCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
-
-    $turnos[] = [79,	143,	29];
-    $turnos[] = [79,	143,	30];
+//
+//    $turnos[] = [79,	143,	29];
+//    $turnos[] = [79,	143,	30];
 
 
 
