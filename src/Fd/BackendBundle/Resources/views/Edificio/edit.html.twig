@@ -43,7 +43,7 @@
     </span>
 </form>
 
-<a href="{{ app.request.headers.get('referer') }}">Volver al establecimiento</a>
+<a href="{{ path('edificio_ficha', {'id': entity.id} ) }}">Volver al establecimiento</a>
 
 <a class="separador" href="{{ path('backend_edificio') }}">Volver a la lista de edificios</a>
 
