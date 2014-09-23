@@ -247,13 +247,20 @@ class CarreraManager {
         $respuesta = new Respuesta();
         try {
             //capturo la oferta que hay que eliminar. Estoy borrando desde el lado propietario de la relacion
-            $oferta = $carrera->getOferta();
+            $oferta_educativa = $carrera->getOferta();
+            
+            //se elimina la unidad_oferta y todas sus asociaciones (turnos y cohortes)
+            foreach ($oferta_educativa->getUnidades() as $unidad_oferta ) {
+                $this->em->remove($unidad_oferta);
+            }
+            
             //elimino la oferta
-            //el registro de oferta_norma se elimina sola
-            $this->em->remove($oferta);
+            //por ser carrera el lado propietario debería eliminar oferta_educativa sin programar nada pero eso no pasa
+            $this->em->remove($oferta_educativa);
+            
             //elimino la carrera
             $this->em->remove($carrera);
-
+            
             if ($flush) {
                 $this->em->flush();
             };

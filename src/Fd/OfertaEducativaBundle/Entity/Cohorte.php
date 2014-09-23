@@ -26,7 +26,7 @@ class Cohorte {
 
     /**
      * bidireccional lado propietario
-     * @ORM\ManyToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", inversedBy="cohortes")
+     * @ORM\ManyToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", inversedBy="cohortes", cascade={"remove", "persist"})
      */
     private $unidad_oferta;
 
