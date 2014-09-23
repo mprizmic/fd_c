@@ -60,6 +60,7 @@ class Carrera {
     private $duracion;
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Length(min=4, max=4)
      */
     private $anio_inicio;
 

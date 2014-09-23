@@ -35,10 +35,6 @@ class CarreraType extends AbstractType {
                 ->add('anio_inicio', 'integer', array(
                     'label' => 'Año de inicio del dictado',
                     'required' => false,
-//                    'widget' => 'choice',
-//                    'years'=>range(2010,2050),
-//                    'format'=>'yyyy-MM-dd',
-//                    'input' => array('year' => 2010),
                 ))
                 ->add('orientaciones', 'collection', array(
                     'type' => new UnaOrientacionType(),
