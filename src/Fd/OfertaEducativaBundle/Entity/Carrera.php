@@ -58,6 +58,10 @@ class Carrera {
      * @ORM\Column(type="string", nullable=true)
      */
     private $duracion;
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $anio_inicio;
 
     /**
      * bidireccional lado inverso
@@ -159,6 +163,7 @@ class Carrera {
         $this->orientaciones = new ArrayCollection();
         $this->creado = new \DateTime();
         $this->actualizado = new \DateTime();        
+        $this->anio_inicio = date('now');
     }
 
     public function etiqueta() {
@@ -376,5 +381,74 @@ class Carrera {
     public function getTitulos()
     {
         return $this->titulos;
+    }
+
+    /**
+     * Set anio_inicio
+     *
+     * @param \DateTime $anioInicio
+     * @return Carrera
+     */
+    public function setAnioInicio($anioInicio)
+    {
+        $this->anio_inicio = $anioInicio;
+
+        return $this;
+    }
+
+    /**
+     * Get anio_inicio
+     *
+     * @return \DateTime 
+     */
+    public function getAnioInicio()
+    {
+        return $this->anio_inicio;
+    }
+
+    /**
+     * Add titulos
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\Titulo $titulos
+     * @return Carrera
+     */
+    public function addTitulo(\Fd\OfertaEducativaBundle\Entity\Titulo $titulos)
+    {
+        $this->titulos[] = $titulos;
+
+        return $this;
+    }
+
+    /**
+     * Remove titulos
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\Titulo $titulos
+     */
+    public function removeTitulo(\Fd\OfertaEducativaBundle\Entity\Titulo $titulos)
+    {
+        $this->titulos->removeElement($titulos);
+    }
+
+    /**
+     * Add orientaciones
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones
+     * @return Carrera
+     */
+    public function addOrientacione(\Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones)
+    {
+        $this->orientaciones[] = $orientaciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove orientaciones
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones
+     */
+    public function removeOrientacione(\Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones)
+    {
+        $this->orientaciones->removeElement($orientaciones);
     }
 }

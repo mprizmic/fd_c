@@ -17,21 +17,29 @@ class CarreraType extends AbstractType {
         $builder
                 ->add('nombre', NULL, array(
                     'help' => 'Nombre de la carrera',
-                    'attr'=>array(
-                        'size'=>50,
+                    'attr' => array(
+                        'size' => 50,
                     )
                 ))
                 ->add('duracion', NULL, array(
                     'label' => 'Duración',
-                    'help'=>'Debe expresarse en cuatrimestres',
-                    'attr'=>array(
-                        'size'=>50,
-                    ),                    
+                    'help' => 'Debe expresarse en cuatrimestres',
+                    'attr' => array(
+                        'size' => 50,
+                    ),
                 ))
                 ->add('formacion', NULL, array(
                     'label' => 'Formación',
                 ))
                 ->add('estado')
+                ->add('anio_inicio', 'integer', array(
+                    'label' => 'Año de inicio del dictado',
+                    'required' => false,
+//                    'widget' => 'choice',
+//                    'years'=>range(2010,2050),
+//                    'format'=>'yyyy-MM-dd',
+//                    'input' => array('year' => 2010),
+                ))
                 ->add('orientaciones', 'collection', array(
                     'type' => new UnaOrientacionType(),
                     'label' => 'Orientaciones',
