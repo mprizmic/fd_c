@@ -4,16 +4,27 @@
 {{ parent() }}
 
 <div class="titulo float_izquierda">{{ edificio }}</div>
-
 <div class="limpiar_float"></div>
-
-<div>CUI: {{ edificio.cui}}</div>
 <br />
-<div>##Barrio##</div>
-<div>##código Postal##</div>
 
-
-<a href="{{ path('establecimiento_de_un_cui', {'edificio_id': edificio.id } ) }}">Establecimientos</a></td>
+<fieldset>
+    <legend class="resaltado">
+        Datos generales
+    </legend>
+    <div>CUI: {{ edificio.cui}}</div>
+    <br />
+    <div>Barrio: {{ edificio.barrio }}</div>
+    <div>DE: {{ edificio.distritoEscolar }}</div>
+    <div>Comuna: {{ edificio.comuna }}</div>
+    <div>CGP: {{ edificio.cgp }}</div>
+    <div>Superficie: {{ edificio.superficie}}</div>
+    <br />
+    <a href="{{ path('establecimiento_de_un_cui', {'edificio_id': edificio.id } ) }}">Establecimientos que funcionan en el edificio</a></td>
+    <span class="float_derecha">
+        <a href="{{ path('backend_edificio_edit', {'id':edificio.id} ) }}">Editar</a>
+    </span>
+</fieldset>
 
 {% include '::includes/volver.html.twig' %}
+
 {% endblock %}
