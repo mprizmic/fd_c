@@ -47,10 +47,9 @@ class UnidadOferta {
 
     /**
      * bidireccional lado inverso
-     * @ORM\OneToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\Cohorte", mappedBy="unidad_oferta")
+     * @ORM\OneToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\Cohorte", mappedBy="unidad_oferta", cascade={"remove", "persist"})
      */
     private $cohortes;
-    private $normas;
     /**
      * bidireccional lado inverso
      * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno", mappedBy="unidad_oferta", cascade={"persist", "remove"} )
