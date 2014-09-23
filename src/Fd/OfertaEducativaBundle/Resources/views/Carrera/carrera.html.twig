@@ -87,7 +87,7 @@
 
 <!--     <div style="display : block"> -->
         {% if accion == 'actualizar' %}
-            <form action="{{ path('carrera_eliminar', { 'id': entity.id }) }}" method="post" onsubmit="return confirm('Está seguro?')">
+            <form action="{{ path('carrera_eliminar', { 'id': entity.id }) }}" method="post" onsubmit="return confirm('Se eliminará toda la matrícula que estuviese cargada. Está seguro?')">
                 {{ form_widget(delete_form) }}
                 <span class="float_izquierda separador">
                     <input type="submit" class="boton_rojo" value="Eliminar" />
