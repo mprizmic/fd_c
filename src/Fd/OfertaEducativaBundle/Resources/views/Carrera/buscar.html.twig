@@ -34,6 +34,7 @@
         <table class="grilla">
             <tr>
                 <th>Nombre</th>
+                <th>Año inicio</th>
                 <th>Norma</th>
                 <th></th>
                 <th>Estado</th>
@@ -44,6 +45,7 @@
             <tr>
                 {% set la_carrera = carrera.nombre %}
                 <td><a href="{{path('carrera_ficha', {'carrera_id': carrera.id})}}">{{ la_carrera }} </a></td>
+                <td>{{ carrera.anioInicio }}</td>
                 {% if carrera.oferta.normas[0] is defined %}
                     <td>{{ carrera.oferta.normas[0] }}</a></td>
                 {% else %}
