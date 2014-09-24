@@ -3,89 +3,89 @@
 {% import ':Form:macro_twig.html.twig' as collection_macro %}
 
 {% block stylesheets %}
-{{ parent() }}
-<link href="{{ asset( 'bundles/establecimiento/css/macro_twig.css') }}" rel="stylesheet" type="text/css" />      
+    {{ parent() }}
+    <link href="{{ asset( 'bundles/establecimiento/css/macro_twig.css') }}" rel="stylesheet" type="text/css" />      
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
-<script type="text/javascript" src="{{ asset('bundles/establecimiento/js/macro_twig.js') }}" charset="utf-8"></script>
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/establecimiento/js/macro_twig.js') }}" charset="utf-8"></script>
 {% endblock %}
 
 
 {% block main_content %}
-{{ parent() }}
+    {{ parent() }}
 
-<div class="titulo float_izquierda">
-{{titulo}} {{ entity.etiqueta|lower}}
-</div>
+    <div class="titulo float_izquierda">
+        {{titulo}} {{ entity.etiqueta|lower}}
+    </div>
 
-<br />
+    <br />
 
     <a class="float_derecha boton_verde" href="{{ path('carrera_nuevo') }}">Nueva carrera</a>
     <div class="limpiar_float"></div>
 
-    <form action="{{ path( 'carrera_' ~ accion  , { 'id': entity.id }) }}" method="post" {{ form_enctype(formulario) }}>
-        <fieldset>
-            <legend class="resaltado">Datos generales</legend>
-            <div class="ancho_15">
-                {{ form_row(formulario.nombre) }}
-                {{ form_row(formulario.duracion) }}
-                {{  form_row(formulario.formacion) }}
-                {{ form_row(formulario.estado) }}
-                {{ form_row(formulario.anio_inicio) }}
+        <form action="{{ path( 'carrera_' ~ accion  , { 'id': entity.id }) }}" method="post" {{ form_enctype(formulario) }}>
+            <fieldset>
+                <legend class="resaltado">Datos generales</legend>
+                <div class="ancho_15">
+                    {{ form_row(formulario.nombre) }}
+                    {{ form_row(formulario.duracion) }}
+                    {{  form_row(formulario.formacion) }}
+                    {{ form_row(formulario.estado) }}
+                    {{ form_row(formulario.anio_inicio) }}
+                </div>
+            </fieldset>
+            <!-- recuadro con los titulos -->    
+            <fieldset>
+                <legend class="resaltado">
+                    Titulos
+                </legend> 
+
+                <div id="titulos" data-prototype="{{ collection_macro.widget_prototype(formulario.titulos, 'Eliminar')|escape }}">
+                    {% for widget in formulario.titulos.children %}
+                        {% if loop.first %}
+                            <div class="linea resaltado">
+                                {% for campo in widget.children %}
+                                    <div style="margin-right: {{ campo.vars.attr.ancho }}em;">{{ campo.vars.attr.descripcion }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {{ collection_macro.widget_prototype(widget, 'Eliminar', true) }}
+                    {% endfor %}
+                </div>
+                <a class="btn-add" data-target="titulos">Agregar</a>
+            </fieldset>
+            <!-- recuadro con las orientaciones -->    
+            <fieldset>
+                <legend class="resaltado">
+                    Orientaciones
+                </legend> 
+
+                <div id="orientaciones" data-prototype="{{ collection_macro.widget_prototype(formulario.orientaciones, 'Eliminar')|escape }}">
+                    {% for widget in formulario.orientaciones.children %}
+                        {% if loop.first %}
+                            <div class="linea resaltado">
+                                {% for campo in widget.children %}
+                                    <div style="margin-right: {{ campo.vars.attr.ancho }}em;">{{ campo.vars.attr.descripcion }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {{ collection_macro.widget_prototype(widget, 'Eliminar', true) }}
+                    {% endfor %}
+                </div>
+                <a class="btn-add" data-target="orientaciones">Agregar</a>
+            </fieldset>
+            {{ form_widget(formulario._token) }}
+            <!-- botones de acciones -->
+            <br />
+            <div class="float_izquierda separador">
+                <input type="submit" value="{{ accion | capitalize }}" />
             </div>
-        </fieldset>
-<!-- recuadro con los titulos -->    
-        <fieldset>
-            <legend class="resaltado">
-                Titulos
-            </legend> 
 
-            <div id="titulos" data-prototype="{{ collection_macro.widget_prototype(formulario.titulos, 'Eliminar')|escape }}">
-                {% for widget in formulario.titulos.children %}
-                    {% if loop.first %}
-                        <div class="linea resaltado">
-                            {% for campo in widget.children %}
-                                <div style="margin-right: {{ campo.vars.attr.ancho }}em;">{{ campo.vars.attr.descripcion }}</div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    {{ collection_macro.widget_prototype(widget, 'Eliminar', true) }}
-                {% endfor %}
-            </div>
-            <a class="btn-add" data-target="titulos">Agregar</a>
-        </fieldset>
-<!-- recuadro con las orientaciones -->    
-        <fieldset>
-            <legend class="resaltado">
-                Orientaciones
-            </legend> 
+        </form>
 
-            <div id="orientaciones" data-prototype="{{ collection_macro.widget_prototype(formulario.orientaciones, 'Eliminar')|escape }}">
-                {% for widget in formulario.orientaciones.children %}
-                    {% if loop.first %}
-                        <div class="linea resaltado">
-                            {% for campo in widget.children %}
-                                <div style="margin-right: {{ campo.vars.attr.ancho }}em;">{{ campo.vars.attr.descripcion }}</div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    {{ collection_macro.widget_prototype(widget, 'Eliminar', true) }}
-                {% endfor %}
-            </div>
-            <a class="btn-add" data-target="orientaciones">Agregar</a>
-        </fieldset>
-        {{ form_widget(formulario._token) }}
-<!-- botones de acciones -->
-        <br />
-        <div class="float_izquierda separador">
-            <input type="submit" value="{{ accion | capitalize }}" />
-        </div>
-
-    </form>
-
-<!--     <div style="display : block"> -->
+        <!--     <div style="display : block"> -->
         {% if accion == 'actualizar' %}
             <form action="{{ path('carrera_eliminar', { 'id': entity.id }) }}" method="post" onsubmit="return confirm('Se eliminará toda la matrícula que estuviese cargada. Está seguro?')">
                 {{ form_widget(delete_form) }}
@@ -101,55 +101,55 @@
             <a  href="{{ path('carrera_nomina') }}">Cancelar</a>
         {% endif %}
 
-    <!--</div>-->
-    <br />
+        <!--</div>-->
+        <br />
     <span class="limpiar_float"></span>
 
-<br />
+    <br />
 
-<!-- grilla de normas -->
-<fieldset>
-    <table class="grilla_fit">
-        <tr>
-            <th>Normas relativas a la carrera</th>
-            <th></th>
-        </tr>
+    <!-- grilla de normas -->
+    <fieldset>
+        <table class="grilla_fit">
+            <tr>
+                <th>Normas relativas a la carrera</th>
+                <th></th>
+            </tr>
 
-        {% set oferta = entity.oferta %}
-        {% if oferta is null %}
-        {% else %}
-            {% set normas = oferta.normas %}
-            {% if normas is null %}
+            {% set oferta = entity.oferta %}
+            {% if oferta is null %}
             {% else %}
+                {% set normas = oferta.normas %}
+                {% if normas is null %}
+                {% else %}
 
-                {% for norma in normas %}
-                <tr>
-                    <td>{{ norma }}</td>
-                    <td>
-                        <a href="{{ path('carrera_desvincular_norma', {'carrera_id': entity.id, 'norma_id': norma.id } ) }}">Desvincular norma de la carrera</a> - 
-                        <a href="{{ path('norma_ver', {'id':norma.id} )}}">Ver norma</a>
-                    </td>
-                </tr>
-                {% endfor %}
+                    {% for norma in normas %}
+                        <tr>
+                            <td>{{ norma }}</td>
+                            <td>
+                                <a href="{{ path('carrera_desvincular_norma', {'carrera_id': entity.id, 'norma_id': norma.id } ) }}">Desvincular norma de la carrera</a> - 
+                                <a href="{{ path('norma_ver', {'id':norma.id} )}}">Ver norma</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
             {% endif %}
+        </table>
+        <br />
+
+        {% if accion == 'actualizar' %}
+            <a href="{{ path('backend_norma_new') }}">Agregar nueva norma</a>
+            <span class="separador"></span>
+            <a href="{{ path('norma_buscar_asignar_carrera', {'carrera_id':entity.id} ) }}">Asignar norma existente a la carrera</a>
         {% endif %}
-    </table>
+
+    </fieldset>
+
+    <br />
     <br />
 
     {% if accion == 'actualizar' %}
-        <a href="{{ path('backend_norma_new') }}">Agregar nueva norma</a>
-        <span class="separador"></span>
-        <a href="{{ path('norma_buscar_asignar_carrera', {'carrera_id':entity.id} ) }}">Asignar norma existente a la carrera</a>
+        <div class="float_derecha limpiar_float volver"><a href="{{ path( 'carrera_ficha' , {'carrera_id':entity.id} ) }}">Volver a la ficha</a></div>
+        <div class="limpiar_float"></div>
     {% endif %}
-
-</fieldset>
-        
-<br />
-<br />
-
-{% if accion == 'actualizar' %}
-    <div class="float_derecha limpiar_float volver"><a href="{{ path( 'carrera_ficha' , {'carrera_id':entity.id} ) }}">Volver a la ficha</a></div>
-    <div class="limpiar_float"></div>
-{% endif %}
 
 {% endblock %}
