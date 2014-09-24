@@ -474,3 +474,6 @@ a, a:visited{
 .orientaciones li {
     list-style:none;
 }
+.en_bloque{
+    display: inline-block;
+}

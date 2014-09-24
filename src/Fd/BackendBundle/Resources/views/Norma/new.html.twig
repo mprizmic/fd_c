@@ -9,7 +9,9 @@
 <div class="titulo">Crear registro de Norma</div>
 
 <form action="{{ path('backend_norma_crear') }}" method="post" {{ form_enctype(form) }}>
+    <div class="ancho_10">
     {{ form_widget(form) }}
+    </div>
     <p>
         <button type="submit">Crear</button>
     </p>
