@@ -27,7 +27,7 @@ security:
 #                use_forward: false
                 check_path: usuario_login_check
 #                use_referer:  manda a la pagina pedida luego de hacer login 
-                default_target_path: 'establecimiento_damero'
+                default_target_path: 'avisos'
                 always_use_default_target_path: true
             remember_me:
                 key: Fd_for_ever
@@ -48,7 +48,7 @@ security:
             form_login:
                 login_path: usuario_login
                 check_path: usuario_login_check
-                default_target_path: 'portada'
+                default_target_path: 'avisos'
                 always_use_default_target_path: true
             logout: 
                 path: usuario_logout
@@ -61,7 +61,7 @@ security:
             form_login:
                 login_path: usuario_login
                 check_path: usuario_login_check
-                default_target_path: 'portada'
+                default_target_path: 'avisos'
                 always_use_default_target_path: true
             logout: 
                 path: usuario_logout
