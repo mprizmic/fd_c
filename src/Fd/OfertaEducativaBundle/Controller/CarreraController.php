@@ -213,7 +213,7 @@ class CarreraController extends Controller {
             'titulo' => 'Nueva',
             'entity' => $entity,
             'accion' => 'crear',
-                ));
+        ));
 
         return new Response($content);
     }
@@ -244,7 +244,7 @@ class CarreraController extends Controller {
                     'formulario' => $form->createView(),
                     'titulo' => 'Nueva',
                     'accion' => 'crear',
-                ));
+        ));
     }
 
     /**
@@ -289,7 +289,7 @@ class CarreraController extends Controller {
             'entity' => $entity,
             'accion' => 'actualizar',
             'delete_form' => $deleteForm->createView(),
-                ));
+        ));
 
         return new Response($content);
     }
@@ -355,7 +355,7 @@ class CarreraController extends Controller {
                     'entity' => $entity,
                     'accion' => 'actualizar',
                     'delete_form' => $delete_form->createView(),
-                ));
+        ));
     }
 
     /**
@@ -364,14 +364,14 @@ class CarreraController extends Controller {
      */
     public function fichaAction($carrera) {
         $request = $this->getRequest();
-        
+
         // establezco la ruta para la pagina que tenga que volver aca
         $this->get('session')->set('ruta_completa', $request->get('_route'));
         $this->get('session')->set('parametros', $request->get('_route_params'));
-        
+
         return $this->render('OfertaEducativaBundle:Carrera:ficha.html.twig', array(
                     'carrera' => $carrera,
-                ));
+        ));
     }
 
     /**
@@ -392,8 +392,9 @@ class CarreraController extends Controller {
             }
 
             $manager = new CarreraManager($this->getEm());
+            
             $respuesta = $manager->asignarEstablecimiento($form['carrera_id'], $form['establecimiento_id'], $form['accion_del_form']);
-//            $respuesta->setMensaje('todo bien');
+
             //se trata el response segùn el resutado
             $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
 
@@ -406,107 +407,76 @@ class CarreraController extends Controller {
      * @ParamConverter("carrera", class="OfertaEducativaBundle:Carrera")
      */
     public function asignar_establecimientoAction(Carrera $carrera, Request $request) {
-        $respuesta = new Respuesta();
-
 
         if ($request->getMethod() == 'GET') {
             //creo el formulario para seleccionar establecimientos
 
-            $establecimientos = $this->getEstablecimientos($carrera);
+            $establecimientos_forms = $this->getEstablecimientosForms($carrera);
+            
             //crear el formulario de asignacion
             return $this->render('OfertaEducativaBundle:Default:asignar_establecimiento.html.twig', array(
-                        'establecimientos' => $establecimientos,
+                        'establecimientos_forms' => $establecimientos_forms,
                         'carrera' => $carrera,
                         'accion' => 'carrera_do_asignar_establecimiento',
                         'titulo' => 'carrera',
-                    ));
+            ));
         }
     }
 
     /**
-     * FALTA revisar si esto aca tiene sentido
+     * genera el array de formularios para asignar los establecimientos
      * @param type $carrera
      * @return type
      */
-    private function getEstablecimientos($carrera) {
+    private function getEstablecimientosForms($carrera) {
+        // FALTA Los establecimientos que tienen la carrera asignada y tiene cohortes deberían aparecer disable
+        //para que no se pueda eliminar nada
+        $resultado = array();
+        
         //obtengo la lista de establecimientos ordenados
-        $establecimientos_bd = $this->getEm()
+        $establecimientos = $this->getEm()
                 ->getRepository('EstablecimientoBundle:Establecimiento')
                 ->findAllOrdenado('orden');
 
-        //genero un array con los datos tal como se va a mostrar
-        $establecimientos = $this->formatearDatosParaAsignar($establecimientos_bd, $carrera);
-
-        return $establecimientos;
-    }
-
-    private function formatearDatosParaAsignar($establecimientos, $carrera) {
-        // FALTA Los establecimientos que tienen la carrera asignada y tiene cohortes deberían aparecer disable
-        //para que no se pueda eliminar nada
-        //
-        //Primero armo la lista de todos los establecimientos.
-        //Luego recupero los establecimientos que tienen la carrera asignada.
-        //Despues recorro el vector y creo los formularios para asignar, desasignar o dejar disable
-        //armo un array 
-        $resultado = array();
-
-        //determino cuales establecimientos tienen ya asignada la carrera
-        $asignados = $this->getEm()
-                ->getRepository('EstablecimientoBundle:Establecimiento')
-                ->findEstablecimientosPorCarrera($carrera);
-
-        //para cada establecimeinto le genero un boton de asignado, uno de desasignado
-        //
-        // FALTA un cartel avisando que una carrera (asignada o no) tiene cohortes.
-        //en este caso no se deberìa poder desasignar
-
-        foreach ($establecimientos as $key => $value) {
-            $resultado[$key]['nombre'] = $value->getNombre();
-            $resultado[$key]['id'] = $value->getId();
-            if ($asignados) {
-                foreach ($asignados as $asignado) {
-                    if ($asignado->getId() == $resultado[$key]['id']) {
-                        //se crea el boton DESASIGNAR
-                        $resultado[$key]['form'] = $this->crearAsignarForm(
-                                        $carrera->getId(), $value->getId(), 'Desasignar', $key
-                                )
-                                ->createView();
-                        break;
-                    };
-                }
-                if (!isset($resultado[$key]['form'])) {
-                    //no estaba asignado
-                    //se crea el boton ASIGNAR
-                    $resultado[$key]['form'] = $this->crearAsignarForm(
-                                    $carrera->getId(), $value->getId(), 'Asignar', $key
-                            )
-                            ->createView();
-                };
-            };
+        //genero un array con los formuarios tal como se va a mostrar
+        foreach ($establecimientos as $key => $establecimiento) {
+            $resultado[] = $this->crearAsignarForm(
+                    $establecimiento,
+                    $carrera,
+                    $key
+                    )
+                    ->createView();
         };
 
         return $resultado;
     }
 
     /**
-     * Crea un formulario para cada línea de la pàgina.
-     * Cada formulario tiene un nombre diferente dado po r $nro_form
+     * Crea un formulario para un establecimeinto
+     * Cada formulario tiene un nombre diferente dado por $nro_form
      * 
      * @param type $carrera_id
      * @param type $establecimiento_id
      * @param type $accion
      * @param type $nro_form
      */
-    private function crearAsignarForm($carrera_id, $establecimiento_id, $accion_del_form, $nro_form) {
+    private function crearAsignarForm($establecimiento, $carrera, $nro_form) {
 
         $data = array(
-            'carrera_id' => $carrera_id,
-            'establecimiento_id' => $establecimiento_id,
-            'accion_del_form' => $accion_del_form,
+            'nombre' => $establecimiento->getNombre(),
+            'carrera_id' => $carrera->getId(),
+            'establecimiento_id' => $establecimiento->getId(),
+            'accion_del_form' => $establecimiento->hasCarrera($carrera) ? 'Desasignar' : 'Asignar',
         );
 
         $form = $this->get('form.factory')
                 ->createNamedBuilder('form' . $nro_form, 'form', $data)
+                ->add('nombre', 'text', array(
+                    'attr'=>array('class'=>'input_talle_5'),
+                    'disabled'=>true,
+                    'required'=>false,
+                    'label'=>' ',
+                ))
                 ->add('carrera_id', 'hidden')
                 ->add('establecimiento_id', 'hidden')
                 ->add('accion_del_form', 'hidden')
@@ -522,17 +492,17 @@ class CarreraController extends Controller {
      */
     public function donde_se_dictaAction($carrera_id) {
         $em = $this->getDoctrine()->getEntityManager();
-        
+
         $carrera = $em->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
-        
+
         //recupera las unidades_oferta de la carrera
         $unidad_ofertas = $em->getRepository('OfertaEducativaBundle:Carrera')->findUnidadesOfertas($carrera);
-        
+
         $establecimientos = $em->getRepository('EstablecimientoBundle:Establecimiento')->findEstablecimientosPorCarrera($carrera);
         return $this->render('OfertaEducativaBundle:Carrera:includes/donde_se_dicta.html.twig', array(
                     'establecimientos' => $establecimientos,
                     'unidad_ofertas' => $unidad_ofertas,
-                ));
+        ));
     }
 
     /**
@@ -545,7 +515,7 @@ class CarreraController extends Controller {
         $carrera = $em->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
         return $this->render('OfertaEducativaBundle:Carrera:nomina_donde_se_dicta.html.twig', array(
                     'carrera' => $carrera,
-                ));
+        ));
     }
 
     /**
@@ -563,7 +533,7 @@ class CarreraController extends Controller {
 
         return $this->render('OfertaEducativaBundle:Carrera:nomina.html.twig', array(
                     'carreras' => $carreras,
-                ));
+        ));
     }
 
     /**
@@ -587,7 +557,7 @@ class CarreraController extends Controller {
 
         return $this->render('OfertaEducativaBundle:Carrera:nomina_resumida.html.twig', array(
                     'carreras' => $carreras,
-                ));
+        ));
     }
 
     /**
@@ -625,7 +595,7 @@ class CarreraController extends Controller {
         return $this->render('OfertaEducativaBundle:Carrera:nomina_reducida_donde_se_dicta.html.twig', array(
                     'carrera' => $carrera,
                     'establecimientos' => $donde_se_dicta,
-                ));
+        ));
     }
 
     /**
@@ -690,7 +660,7 @@ class CarreraController extends Controller {
         return $this->render('OfertaEducativaBundle:CarreraEstadoValidez:historia.html.twig', array(
                     'carrera' => $entity,
                     'estados' => $estados,
-                ));
+        ));
     }
 
     /**
@@ -701,7 +671,7 @@ class CarreraController extends Controller {
         $establecimientos = $em->getRepository('EstablecimientoBundle:Establecimiento')->findTienenCohortes();
         return $this->render('OfertaEducativaBundle:Carrera:indicadores_cohorte.html.twig', array(
                     'establecimientos' => $establecimientos,
-                ));
+        ));
     }
 
     /**
@@ -715,7 +685,7 @@ class CarreraController extends Controller {
         //muestra todas las ofertas educativas tipo carrera de un establecimiento
         return $this->render('OfertaEducativaBundle:Carrera:indicadores_cohorte_establecimiento.html.twig', array(
                     'unidad_ofertas' => $unidad_ofertas,
-                ));
+        ));
     }
 
     /**
@@ -728,7 +698,7 @@ class CarreraController extends Controller {
 //        //muestra todas las ofertas educativas tipo carrera de un establecimiento
         return $this->render('OfertaEducativaBundle:Carrera:indicadores_cohorte_unidad_oferta.html.twig', array(
                     'unidad_oferta' => $unidad_oferta,
-                ));
+        ));
     }
 
     /**
@@ -742,7 +712,7 @@ class CarreraController extends Controller {
         $establecimientos = $em->getRepository('EstablecimientoBundle:Establecimiento')->findAllOrdenado('orden');
         return $this->render('OfertaEducativaBundle:Carrera:resumen_validez.html.twig', array(
                     'establecimientos' => $establecimientos,
-                ));
+        ));
     }
 
     /**
@@ -755,7 +725,7 @@ class CarreraController extends Controller {
         $carreras = $repo->findCarrerasPorEstablecimiento($establecimiento);
         return $this->render('OfertaEducativaBundle:Carrera:resumen_validez_establecimiento.html.twig', array(
                     'carreras' => $carreras,
-                ));
+        ));
     }
 
     /**
@@ -765,7 +735,7 @@ class CarreraController extends Controller {
         return $this->render('OfertaEducativaBundle:Carrera:resumen_validez_carrera.html.twig', array(
                     'carrera' => $carrera,
                     'clase_css' => $clase_css,
-                ));
+        ));
     }
 
     /**
@@ -806,14 +776,14 @@ class CarreraController extends Controller {
 
         //funcion para ordenar la lista de establecimientos segùn un orden predeterminado de la entity
         $ordenar = function ($elemento1, $elemento2) {
-                    
-                    if ($elemento1["orden"] == $elemento2["orden"])
-                        return 0;
-                    
-                    if ($elemento1["orden"] < $elemento2["orden"])
-                        return -1;
-                    return 1;
-                };
+
+            if ($elemento1["orden"] == $elemento2["orden"])
+                return 0;
+
+            if ($elemento1["orden"] < $elemento2["orden"])
+                return -1;
+            return 1;
+        };
 
         usort($salida, $ordenar);
 
@@ -834,7 +804,7 @@ class CarreraController extends Controller {
 
         return $this->render('OfertaEducativaBundle:Carrera:tarjeta_carrera.html.twig', array(
                     'carrera' => $carrera,
-                ));
+        ));
     }
 
     /**

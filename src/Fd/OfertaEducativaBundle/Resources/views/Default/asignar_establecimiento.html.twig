@@ -1,48 +1,50 @@
 {% extends '::layout.html.twig' %}
 
 {% block main_content %}
-{{ parent() }}
+    {{ parent() }}
 
-<div class="titulo">Asignar establecimientos a {{ titulo }}</div>
-<div class="resaltado">{{ carrera.nombre }}</div>
+    <div class="titulo">Asignar establecimientos a {{ titulo }}</div>
+    <div class="resaltado">{{ carrera.identificacion }}</div>
 
-<br />
-<div class="instrucciones">
-    <span>
-    Aquellos establecimientos donde ya se esté dictando y tenga al menos una cohorte, no podrán ser desasignados.
-    </span>
-</div>
-<br />
-<table class="separador alineado_izquierda" >
-{% for establecimiento in establecimientos %}
-    <tr>
-        <td class="alineado_derecha">{{ establecimiento.nombre }}</td>
-        
-        <!-- formulario -->
-        {% if establecimiento['form'] is defined %}
-            <td>
-                {% set form = establecimiento['form'] %}
-                <form action="{{ path( accion ) }}" method="post" {{ form_enctype(form) }}>
+    <br />
+    <div class="instrucciones">
+        <span>
+            Aquellos establecimientos donde ya se esté dictando y tenga al menos una cohorte, no podrán ser desasignados.
+        </span>
+    </div>
+    <br />
+    
+    {#<table class="separador alineado_izquierda" >#}
+    {% for form in establecimientos_forms %}
+        <div>
+            <form action="{{ path( accion ) }}" method="post" {{ form_enctype(form) }}>
                 {{ form_widget( form ) }}
-                <input class="float_izquierda" type="submit" value="{{ form.vars.value.accion_del_form }}">
-                </form>
-            </td>
-        {% else %}
-            <td></td>
-        {% endif %}    
-        <!-- fin formulario -->
-        
-    </tr>
-{% endfor %}
-</table>        
-  
-<hr>
-<br />
+                <input type="submit" value="{{ form.vars.value.accion_del_form }}">
+            </form>
+        </div>
+        {#    <tr>
+                <td class="alineado_derecha">{{ form.vars.value.nombre }}</td>
+                
+                <!-- formulario -->
+                    <td>
+                        <form action="{{ path( accion ) }}" method="post" {{ form_enctype(form) }}>
+                        {{ form_widget( form ) }}
+                        <input class="float_izquierda" type="submit" value="{{ form.vars.value.accion_del_form }}">
+                        </form>
+                    </td>
+                <!-- fin formulario -->
+                
+            </tr>#}
+    {% endfor %}
+    {#</table>        #}
 
-<div class="float_derecha limpiar_float volver"><a href="{{ path('carrera_ficha', { 'carrera_id': carrera.id } ) }}">Volver a la ficha</a></div>
-<div class="limpiar_float"></div>
+    <hr>
+    <br />
 
-<br />
-<br />
+    <div class="float_derecha limpiar_float volver"><a href="{{ path('carrera_ficha', { 'carrera_id': carrera.id } ) }}">Volver a la ficha</a></div>
+    <div class="limpiar_float"></div>
+
+    <br />
+    <br />
 
 {% endblock %}

@@ -10,8 +10,11 @@ use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
 use Fd\TablaBundle\Entity\Nivel;
+use Fd\OfertaEducativaBundle\Model\AsignarVisitadoInterface;
+use Fd\OfertaEducativaBundle\Model\AsignarVisitador;
+use Fd\OfertaEducativaBundle\Model\AsignarVisitadorInterface;
 
-class CarreraManager {
+class CarreraManager implements AsignarVisitadoInterface {
 
     protected $em;
     protected $respuesta;
@@ -81,17 +84,23 @@ class CarreraManager {
 
         return $respuesta;
     }
-
     /**
-     * Desde una carrera se asignan y desasignan establecimientos en los que se imparte la misma
-     * @param type $carrera
-     * @param type $establecimiento
+     * El visitador es para asignar la carrera a un establecimiento
+     * 
+     * @param AsignarVisitadorInterface $visitador
+     * @return type
      */
+    public function accept(AsignarVisitadorInterface $visitador){
+        return $visitador->visitCarrera($this);
+    }
+
+//    /**
+//     * Desde una carrera se asignan y desasignan establecimientos en los que se imparte la misma
+//     * @param type $carrera
+//     * @param type $establecimiento
+//     */
     public function asignarEstablecimiento($carrera_id, $establecimiento_id, $accion) {
-        /**
-         * Para cada establecimiento, si esta seleccionado se debe crear el registro de la tabla unidad_oferta (en caso de no preexistir).
-         * Si no está seleccionado, se debe borrar el registro de dicha tabla (en caso de preexistir)
-         */
+                
         $carrera = $this->em->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
         if (!$carrera) {
             throw $this->createNotFoundException('Unable to find Carrera entity.');
@@ -102,51 +111,19 @@ class CarreraManager {
             throw $this->createNotFoundException('Unable to find Establecimiento entity.');
         };
 
-        $respuesta = new Respuesta();
-
-        //repositorio donde se crea la unidad_oferta
-        $repo_uo = $this->em->getRepository('EstablecimientoBundle:UnidadOferta');
-
-        if ($accion == 'Asignar') {
-
-            //se verifica si ya existe la unidad_oferta
-            $unidad_educativa = $establecimiento->getTerciario();
-            $oferta_educativa = $carrera->getOferta();
-
-            $unidad_oferta = $repo_uo->findOneBy(
-                    array(
-                        'unidades' => $unidad_educativa->getId(),
-                        'ofertas' => $oferta_educativa->getId(),
-                    ));
-
-            if (!$unidad_oferta) {
-                $handler = new UnidadOfertaHandler($this->em, $unidad_educativa->getNivel());
-
-                $respuesta = $handler->crear($unidad_educativa, $oferta_educativa);
-            }
-        };
-        if ($accion == 'Desasignar') {
-
-            $unidad_educativa = $establecimiento->getTerciario();
-            $oferta_educativa = $carrera->getOferta();
-
-            $unidad_oferta = $repo_uo->findOneBy(
-                    array(
-                        'unidades' => $unidad_educativa->getId(),
-                        'ofertas' => $oferta_educativa->getId(),
-                    ));
-
-            if ($unidad_oferta) {
-                //existe y hay que darlo de baja
-                //
-                //creo el handler para la unidad_oferta
-                $handler = new UnidadOfertaHandler($this->em, $unidad_educativa->getNivel());
-                $respuesta = $handler->eliminar($unidad_oferta);
-            }
-        };
-
+        $data['carrera'] = $carrera;
+        $data['establecimiento'] = $establecimiento;
+        $data['accion'] = $accion;
+        
+        //construye el visitador que va a asignar la carrera al establecimeinto
+        $visitador = new AsignarVisitador($data);
+        
+        //ejecuta el metodo del visitador
+        $respuesta = $this->accept($visitador);
+        
         return $respuesta;
     }
+
 
     /**
      * crear una carrera implica crear el regitro de ofertaeducativa correspondiente
@@ -250,9 +227,14 @@ class CarreraManager {
             $oferta_educativa = $carrera->getOferta();
             
             //se elimina la unidad_oferta y todas sus asociaciones (turnos y cohortes)
+            
+            ESTO SE TIENE QUE ELIMINAR DESDE EL HANDLER DE UNIDAD_OFERTA
+            
             foreach ($oferta_educativa->getUnidades() as $unidad_oferta ) {
                 $this->em->remove($unidad_oferta);
             }
+            
+            ESTO SE TIENE QUE ELIMINAR DESDE EL HANDER de OFERTA_EDUCATIVA
             
             //elimino la oferta
             //por ser carrera el lado propietario debería eliminar oferta_educativa sin programar nada pero eso no pasa

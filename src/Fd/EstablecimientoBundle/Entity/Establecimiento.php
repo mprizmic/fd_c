@@ -199,12 +199,14 @@ class Establecimiento {
      * @ORM\Column(length=4)
      */
     private $anio_inicio_nes;
+
     /**
      * bidireccional lado inverso
      * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso", mappedBy="establecimiento")
      * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
     private $recursos;
+
     /**
      * @ORM\Column(type="datetime")
      */
@@ -215,11 +217,13 @@ class Establecimiento {
      * 
      */
     private $actualizado;
+
     /**
      * @ORM\Column(type="string", length=25, nullable=true)
      * 
      */
     private $te;
+
     /**
      * recuprea el edificio principal que tiene anexo 00. Es un objeto establecimiento_edificio No se si dedería estar sólo en el repository
      * 
@@ -235,6 +239,22 @@ class Establecimiento {
         };
         return $el_principal;
     }
+    /**
+     * Verifica si un establecimiento tiene la carrera asignada
+     * @param type $carrera
+     * @return boolean
+     */
+
+    public function hasCarrera($carrera) {
+        $unidad_ofertas = $this->getUnidadEducativa('Ter')->getOfertas();
+        $oferta_educativa = $carrera->getOferta();
+        foreach ($unidad_ofertas as $unidad_oferta) {
+            if ($unidad_oferta->getOfertas()->getId() == $oferta_educativa->getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Toma la comuna del edificio principal del establecimiento
@@ -244,12 +264,13 @@ class Establecimiento {
         $comuna = $this->getEdificioPrincipal()->getEdificios()->getComuna();
         return $comuna;
     }
+
     /**
      * Toma el CGP del edificio principal del establecimiento
      * 
      */
     public function getCgp() {
-        
+
         return $this->getEdificioPrincipal()->getEdificios()->getCgp();
     }
 
@@ -1033,17 +1054,15 @@ class Establecimiento {
         return $this->anio_inicio_nes;
     }
 
-
     /**
      * Set te
      *
      * @param string $te
      * @return Establecimiento
      */
-    public function setTe($te)
-    {
+    public function setTe($te) {
         $this->te = $te;
-    
+
         return $this;
     }
 
@@ -1052,8 +1071,7 @@ class Establecimiento {
      *
      * @return string 
      */
-    public function getTe()
-    {
+    public function getTe() {
         return $this->te;
     }
 
@@ -1063,10 +1081,9 @@ class Establecimiento {
      * @param \Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $recursos
      * @return Establecimiento
      */
-    public function addRecurso(\Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $recursos)
-    {
+    public function addRecurso(\Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $recursos) {
         $this->recursos[] = $recursos;
-    
+
         return $this;
     }
 
@@ -1075,8 +1092,7 @@ class Establecimiento {
      *
      * @param \Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $recursos
      */
-    public function removeRecurso(\Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $recursos)
-    {
+    public function removeRecurso(\Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $recursos) {
         $this->recursos->removeElement($recursos);
     }
 
@@ -1085,8 +1101,8 @@ class Establecimiento {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getRecursos()
-    {
+    public function getRecursos() {
         return $this->recursos;
     }
+
 }
