@@ -1,0 +1,40 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <h1 class="centrado">Avisos</h1>
+    <div class="limpiar_float"></div>
+
+    <div class="instrucciones centrado italico chica">
+        En esta página se dan avisos que guían acerca del estado de los datos cargados y del desarrollo del sistema. 
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="centrado">
+        <dl>
+            <dt class="reforzado chica">
+            26-9-14
+            </dt>
+            <dd class="grande">
+                Estoy empezando a cargar las carreras de la oferta 2015. Las del 2009 van a quedar con estado RESIDUAL y las 2015 con estado ACTIVA.
+            </dd>
+        </dl>
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <h2 class="centrado"><a href="{{ path('establecimiento_damero') }}">Continuar</a></h2>
+
+    <br />
+
+{% endblock %}

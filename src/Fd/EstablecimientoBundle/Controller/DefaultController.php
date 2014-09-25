@@ -12,6 +12,14 @@ use Goutte\Client;
 class DefaultController extends Controller {
 
     /**
+     * avisos de los avances del sistema o de la carga pendiente
+     * @Route("/avisos", name="avisos")
+     */
+    public function avisosAction(){
+        return $this->render('EstablecimientoBundle:Default:avisos.html.twig');
+    }
+    
+    /**
      * @Route("/",  name="portada")
      */
     public function portadaAction() {
