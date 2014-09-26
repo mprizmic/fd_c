@@ -102,7 +102,7 @@ class Carrera {
             $norma = $value;
             break;
         };
-        return substr($this->nombre, 0, 50) .  ' - ' . $norma;
+        return substr($this->nombre . ' - ' .$this->getEstado(), 0, 50) .  ' - ' . $norma;
     }
     /**
      * Escrito automático y arreglado por mi
