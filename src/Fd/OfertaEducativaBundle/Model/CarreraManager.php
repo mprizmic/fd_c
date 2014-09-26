@@ -6,13 +6,14 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormInterface;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
-use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
-use Fd\TablaBundle\Entity\Nivel;
+use Fd\OfertaEducativaBundle\Model\OfertaEducativaManager;
 use Fd\OfertaEducativaBundle\Model\AsignarVisitadoInterface;
 use Fd\OfertaEducativaBundle\Model\AsignarVisitador;
 use Fd\OfertaEducativaBundle\Model\AsignarVisitadorInterface;
+use Fd\TablaBundle\Entity\Nivel;
 
 class CarreraManager implements AsignarVisitadoInterface {
 
@@ -84,13 +85,14 @@ class CarreraManager implements AsignarVisitadoInterface {
 
         return $respuesta;
     }
+
     /**
      * El visitador es para asignar la carrera a un establecimiento
      * 
      * @param AsignarVisitadorInterface $visitador
      * @return type
      */
-    public function accept(AsignarVisitadorInterface $visitador){
+    public function accept(AsignarVisitadorInterface $visitador) {
         return $visitador->visitCarrera($this);
     }
 
@@ -100,12 +102,12 @@ class CarreraManager implements AsignarVisitadoInterface {
 //     * @param type $establecimiento
 //     */
     public function asignarEstablecimiento($carrera_id, $establecimiento_id, $accion) {
-                
+
         $carrera = $this->em->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
         if (!$carrera) {
             throw $this->createNotFoundException('Unable to find Carrera entity.');
         };
-        
+
         $establecimiento = $this->em->getRepository('EstablecimientoBundle:Establecimiento')->find($establecimiento_id);
         if (!$establecimiento) {
             throw $this->createNotFoundException('Unable to find Establecimiento entity.');
@@ -114,16 +116,15 @@ class CarreraManager implements AsignarVisitadoInterface {
         $data['carrera'] = $carrera;
         $data['establecimiento'] = $establecimiento;
         $data['accion'] = $accion;
-        
+
         //construye el visitador que va a asignar la carrera al establecimeinto
         $visitador = new AsignarVisitador($data);
-        
+
         //ejecuta el metodo del visitador
         $respuesta = $this->accept($visitador);
-        
+
         return $respuesta;
     }
-
 
     /**
      * crear una carrera implica crear el regitro de ofertaeducativa correspondiente
@@ -172,20 +173,19 @@ class CarreraManager implements AsignarVisitadoInterface {
         try {
             $oferta_educativa = $carrera->getOferta();
             $oferta_educativa->removeNorma($norma);
-            
+
             $this->getEm()->persist($oferta_educativa);
             $this->getEm()->flush();
-                    
+
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se desvinculó la norma exitosamente');
-            
         } catch (Exception $e) {
             $respuesta->setCodigo(2);
             $respuesta->setMensaje('Problemas al tratar de desvincular la norma. Verifique y reintente.');
         };
         return $respuesta;
-        
     }
+
     /**
      * vincular una norma a una carrera 
      * 
@@ -196,20 +196,19 @@ class CarreraManager implements AsignarVisitadoInterface {
         try {
             $oferta_educativa = $carrera->getOferta();
             $oferta_educativa->vincularNorma($norma);
-            
+
             $this->getEm()->persist($oferta_educativa);
             $this->getEm()->flush();
-                    
+
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se vinculó la norma exitosamente');
-            
         } catch (Exception $e) {
             $respuesta->setCodigo(2);
             $respuesta->setMensaje('Problemas al tratar de vincular la norma. Verifique y reintente.');
         };
         return $respuesta;
-        
     }
+
     /**
      * Se elimina una carrera y la oferta educativa que le corresponde y la unidad_oferta que le corresponde
      * 
@@ -225,24 +224,29 @@ class CarreraManager implements AsignarVisitadoInterface {
         try {
             //capturo la oferta que hay que eliminar. Estoy borrando desde el lado propietario de la relacion
             $oferta_educativa = $carrera->getOferta();
-            
+
             //se elimina la unidad_oferta y todas sus asociaciones (turnos y cohortes)
-            
-            ESTO SE TIENE QUE ELIMINAR DESDE EL HANDLER DE UNIDAD_OFERTA
-            
-            foreach ($oferta_educativa->getUnidades() as $unidad_oferta ) {
-                $this->em->remove($unidad_oferta);
-            }
-            
-            ESTO SE TIENE QUE ELIMINAR DESDE EL HANDER de OFERTA_EDUCATIVA
-            
-            //elimino la oferta
+            $unidad_oferta_manager = new UnidadOfertaHandler($this->getEm(), 'Ter');
+
+            foreach ($oferta_educativa->getUnidades() as $unidad_oferta) {
+                //se elimina desde el manager
+                $respuesta = $unidad_oferta_manager->eliminar($unidad_oferta, false);
+                if ($respuesta->getCodigo() !== 1) {
+                    throw new Exception;
+                };
+            };
+
+            //elimino la oferta educativa
             //por ser carrera el lado propietario debería eliminar oferta_educativa sin programar nada pero eso no pasa
-            $this->em->remove($oferta_educativa);
-            
+            $oferta_educativa_manager = new OfertaEducativaManager($this->getEm());
+            $respuesta = $oferta_educativa_manager->eliminar($oferta_educativa, false);
+            if ($respuesta->getCodigo() !== 1) {
+                throw new Exception;
+            };
+
             //elimino la carrera
             $this->em->remove($carrera);
-            
+
             if ($flush) {
                 $this->em->flush();
             };
@@ -280,4 +284,3 @@ class CarreraManager implements AsignarVisitadoInterface {
     }
 
 }
-

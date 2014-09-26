@@ -463,7 +463,7 @@ class CarreraController extends Controller {
     private function crearAsignarForm($establecimiento, $carrera, $nro_form) {
 
         $data = array(
-            'nombre' => $establecimiento->getNombre(),
+            'nombre' => $establecimiento->getApodo(),
             'carrera_id' => $carrera->getId(),
             'establecimiento_id' => $establecimiento->getId(),
             'accion_del_form' => $establecimiento->hasCarrera($carrera) ? 'Desasignar' : 'Asignar',

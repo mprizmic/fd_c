@@ -103,12 +103,15 @@ class UnidadOfertaTerciarioHandler {
      * FALTA controlar que se eliminen las cohortes de las carreras
      * 
      */
-    public function eliminar($entity) {
+    public function eliminar($entity, $flush = true) {
         $respuesta = new Respuesta();
 
         try {
             $this->getEm()->remove($entity);
-            $this->getEm()->flush();
+            
+            if ($flush) {
+                $this->getEm()->flush();
+            };
 
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se eliminó la oferta educativa para el establecimiento seleccionado.');
