@@ -48,8 +48,8 @@ class UnidadOfertaHandler {
      * 
      * @return type
      */
-    public function eliminar( $unidad_oferta ){
-        return $this->strategy_instance->eliminar( $unidad_oferta );
+    public function eliminar( $unidad_oferta, $flush = true ){
+        return $this->strategy_instance->eliminar( $unidad_oferta, $flush );
     }
     /**
      * Elimina todas las unidad_oferta de una unidad educativa
@@ -57,8 +57,8 @@ class UnidadOfertaHandler {
      * @param type $unidad_educativa
      * @return type
      */
-    public function eliminarAll( $unidad_educativa ){
-        return $this->strategy_instance->eliminarAll( $unidad_educativa );
+    public function eliminarAll( $unidad_educativa, $flush = true ){
+        return $this->strategy_instance->eliminarAll( $unidad_educativa, $flush);
     }
 
 }
