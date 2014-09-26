@@ -13,31 +13,23 @@
         </span>
     </div>
     <br />
-    
+
     {#<table class="separador alineado_izquierda" >#}
     {% for form in establecimientos_forms %}
-        <div>
-            <form action="{{ path( accion ) }}" method="post" {{ form_enctype(form) }}>
-                {{ form_widget( form ) }}
-                <input type="submit" value="{{ form.vars.value.accion_del_form }}">
-            </form>
-        </div>
-        {#    <tr>
-                <td class="alineado_derecha">{{ form.vars.value.nombre }}</td>
-                
-                <!-- formulario -->
-                    <td>
-                        <form action="{{ path( accion ) }}" method="post" {{ form_enctype(form) }}>
-                        {{ form_widget( form ) }}
-                        <input class="float_izquierda" type="submit" value="{{ form.vars.value.accion_del_form }}">
-                        </form>
-                    </td>
-                <!-- fin formulario -->
-                
-            </tr>#}
-    {% endfor %}
-    {#</table>        #}
+        <form action="{{ path( accion ) }}" method="post" {{ form_enctype(form) }}>
+            <div class="limpiar_float">
+                <div class="en_bloque float_derecha">
+                    {{ form_widget( form ) }}
+                </div>
+                <div class="float_derecha">
+                    <input type="submit" value="{{ form.vars.value.accion_del_form }}">
+                </div>
+            </div>
+        </form>
 
+    {% endfor %}
+
+    <div class="limpiar_float"></div>
     <hr>
     <br />
 
