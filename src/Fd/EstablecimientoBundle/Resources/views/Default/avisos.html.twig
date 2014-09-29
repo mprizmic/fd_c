@@ -12,24 +12,23 @@
 
     <br />
     <br />
-    <br />
-    <br />
 
-    <div class="centrado">
-        <dl>
-            <dt class="reforzado chica">
-            26-9-14
-            </dt>
-            <dd class="grande">
-                Estoy empezando a cargar las carreras de la oferta 2015. Las del 2009 van a quedar con estado RESIDUAL y las 2015 con estado ACTIVA.
-            </dd>
-        </dl>
-    </div>
+    {% spaceless %}
+        {% set avisos_activos = "\n" %}
+        {% for aviso in avisos %}
+            {% if aviso.activo %}
+                {% set fecha = aviso.fecha | date('d-m-Y') %}
+                {% set avisos_activos = avisos_activos ~ fecha ~ ': ' ~ aviso.descripcion ~ "\n\n"%}
+            {% endif %}
+        {% endfor %}
 
-    <br />
-    <br />
-    <br />
-    <br />
+        <div class="centrado">
+            <textarea name="avisos" rows="25" cols="130" readonly="readonly">
+                {{ avisos_activos }}
+            </textarea>
+        </div>
+    {% endspaceless %}
+
     <br />
     <br />
 

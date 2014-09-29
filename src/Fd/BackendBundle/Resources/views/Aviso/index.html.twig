@@ -1,0 +1,42 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+
+    <h1>Lista de avisos</h1>
+
+    <ul>
+        <li>
+            <a href="{{ path('backend_aviso_new') }}">
+                Crear nuevo registro
+            </a>
+        </li>
+    </ul>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descripcion</th>
+                <th>Fecha</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('backend_aviso_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.descripcion }}</td>
+                    <td>{% if entity.fecha %}{{ entity.fecha|date('d-m-Y') }}{% endif %}</td>
+                    <td class="centrado">{{ entity.activo ? 'Si' : 'No' }}</td>
+                    <td>
+                        <a href="{{ path('backend_aviso_edit', { 'id': entity.id }) }}">
+                            Editar
+                        </a>                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

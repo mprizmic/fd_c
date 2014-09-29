@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * es el crud de la tabla_administrada
+ */
+
 namespace Fd\BackendBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +31,7 @@ class PortadaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('BackendBundle:Portada')->findAll();
+        $entities = $em->getRepository('BackendBundle:Portada')->findAllOrdenado('tabla');
 
         return array(
             'entities' => $entities,
