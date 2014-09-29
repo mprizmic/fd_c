@@ -1,0 +1,24 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+
+{% block main_content %}
+
+    <h1>Crear registro de Aviso</h1>
+
+    <form class="well" action="{{ path('backend_aviso_create') }}" method="post" {{ form_enctype(form) }}>
+        <div class="ancho_10">
+            {{ form_widget(form) }}
+        </div>
+        <p>
+            <button type="submit" >Crear</button>
+        </p>
+    </form>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('backend_aviso') }}">
+                Volver a la lista
+            </a>
+        </li>
+    </ul>
+{% endblock %}

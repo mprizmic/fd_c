@@ -1,0 +1,29 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+
+    <h1>Editar Aviso</h1>
+
+    <form class="well" action="{{ path('backend_aviso_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <div class="ancho_5">
+            {{ form_widget(edit_form) }}
+        </div>
+        <p>
+            <button type="submit">Guardar</button>
+        </p>
+    </form>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('backend_aviso') }}">
+                Volver a la lista
+            </a>
+        </li>
+        <li>
+            <form action="{{ path('backend_aviso_delete', { 'id': entity.id }) }}" method="post">
+                {{ form_widget(delete_form) }}
+                <button type="submit" class="boton_rojo">Eliminar</button>
+            </form>
+        </li>
+    </ul>
+{% endblock %}
