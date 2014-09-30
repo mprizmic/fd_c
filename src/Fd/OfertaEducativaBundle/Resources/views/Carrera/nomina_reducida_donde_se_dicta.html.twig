@@ -8,7 +8,8 @@
 <div class="titulo">{{ carrera.nombre }}</div>
 <br />
 
-{% include 'OfertaEducativaBundle:Carrera:includes/donde_se_dicta.html.twig' with {'establecimientos': establecimientos } %}
+{#{% include 'OfertaEducativaBundle:Carrera:includes/donde_se_dicta.html.twig' with {'establecimientos': establecimientos } %}#}
+{% include "OfertaEducativaBundle:Carrera:includes/establecimientos_donde_se_dicta.html.twig" with {'unidad_ofertas': unidades_ofertas } %}
 
 {% include '::includes/volver.html.twig' %}
 {% endblock %}

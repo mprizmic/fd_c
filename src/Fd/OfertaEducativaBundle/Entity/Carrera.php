@@ -58,6 +58,7 @@ class Carrera {
      * @ORM\Column(type="string", nullable=true)
      */
     private $duracion;
+
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Length(min=4, max=4)
@@ -75,6 +76,7 @@ class Carrera {
      * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\EstadoCarrera")
      */
     private $estado;
+
     /**
      * @ORM\Column(type="datetime")
      * 
@@ -85,25 +87,28 @@ class Carrera {
      * @ORM\Column(type="datetime")
      */
     private $creado;
+
     /**
      * @ORM\PrePersist  //en el persist cuando se da de alta uno nuevo
      * @ORM\PreUpdate //en el flush cuando se modifica uno existente
      */
-    public function ultimaModificacion()
-    {
+    public function ultimaModificacion() {
         $this->setActualizado(new \DateTime());
-    }     
+    }
 
     public function __toString() {
         return $this->nombre;
     }
-    public function getIdentificacion(){
+
+    public function getIdentificacion() {
+        $norma = "";
         foreach ($this->getOferta()->getNormas() as $value) {
             $norma = $value;
             break;
         };
-        return substr($this->nombre . ' - ' .$this->getEstado(), 0, 50) .  ' - ' . $norma;
+        return substr($this->nombre . ' - ' . $this->getEstado(), 0, 50) . ' - ' . $norma;
     }
+
     /**
      * Escrito automático y arreglado por mi
      * Add orientaciones
@@ -114,12 +119,14 @@ class Carrera {
         $orientacion->setCarrera($this);
         $this->orientaciones[] = $orientacion;
     }
+
     /**
      * Escrito por mi
      */
     public function removeOrientaciones(Orientacion $orientacion) {
         $this->orientaciones->removeElement($orientacion);
     }
+
     /**
      * Escrito por mi
      */
@@ -129,14 +136,14 @@ class Carrera {
         }
         $this->orientaciones = $orientaciones;
     }
+
     /**
      * Add titulos
      *
      * @param \Fd\OfertaEducativaBundle\Entity\Titulo $titulos
      * @return Carrera
      */
-    public function addTitulos(Titulo $titulo)
-    {
+    public function addTitulos(Titulo $titulo) {
         $titulo->setCarrera($this);
         $this->titulos[] = $titulo;
     }
@@ -146,10 +153,10 @@ class Carrera {
      *
      * @param \Fd\OfertaEducativaBundle\Entity\Titulo $titulos
      */
-    public function removeTitulos(Titulo $titulo)
-    {
+    public function removeTitulos(Titulo $titulo) {
         $this->titulos->removeElement($titulo);
     }
+
     /**
      * Escrito por mi
      */
@@ -163,20 +170,20 @@ class Carrera {
     public function __construct() {
         $this->orientaciones = new ArrayCollection();
         $this->creado = new \DateTime();
-        $this->actualizado = new \DateTime();        
+        $this->actualizado = new \DateTime();
         $this->anio_inicio = date('now');
     }
 
     public function etiqueta() {
         return 'Carrera';
     }
+
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -186,10 +193,9 @@ class Carrera {
      * @param string $nombre
      * @return Carrera
      */
-    public function setNombre($nombre)
-    {
+    public function setNombre($nombre) {
         $this->nombre = $nombre;
-    
+
         return $this;
     }
 
@@ -198,8 +204,7 @@ class Carrera {
      *
      * @return string 
      */
-    public function getNombre()
-    {
+    public function getNombre() {
         return $this->nombre;
     }
 
@@ -209,10 +214,9 @@ class Carrera {
      * @param string $duracion
      * @return Carrera
      */
-    public function setDuracion($duracion)
-    {
+    public function setDuracion($duracion) {
         $this->duracion = $duracion;
-    
+
         return $this;
     }
 
@@ -221,8 +225,7 @@ class Carrera {
      *
      * @return string 
      */
-    public function getDuracion()
-    {
+    public function getDuracion() {
         return $this->duracion;
     }
 
@@ -232,10 +235,9 @@ class Carrera {
      * @param \Fd\OfertaEducativaBundle\Entity\OfertaEducativa $oferta
      * @return Carrera
      */
-    public function setOferta(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $oferta = null)
-    {
+    public function setOferta(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $oferta = null) {
         $this->oferta = $oferta;
-    
+
         return $this;
     }
 
@@ -244,8 +246,7 @@ class Carrera {
      *
      * @return \Fd\OfertaEducativaBundle\Entity\OfertaEducativa 
      */
-    public function getOferta()
-    {
+    public function getOferta() {
         return $this->oferta;
     }
 
@@ -255,10 +256,9 @@ class Carrera {
      * @param \Fd\TablaBundle\Entity\TipoFormacion $formacion
      * @return Carrera
      */
-    public function setFormacion(\Fd\TablaBundle\Entity\TipoFormacion $formacion = null)
-    {
+    public function setFormacion(\Fd\TablaBundle\Entity\TipoFormacion $formacion = null) {
         $this->formacion = $formacion;
-    
+
         return $this;
     }
 
@@ -267,17 +267,16 @@ class Carrera {
      *
      * @return \Fd\TablaBundle\Entity\TipoFormacion 
      */
-    public function getFormacion()
-    {
+    public function getFormacion() {
         return $this->formacion;
     }
+
     /**
      * Get orientaciones
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getOrientaciones()
-    {
+    public function getOrientaciones() {
         return $this->orientaciones;
     }
 
@@ -287,10 +286,9 @@ class Carrera {
      * @param \Fd\TablaBundle\Entity\EstadoCarrera $estado
      * @return Carrera
      */
-    public function setEstado(\Fd\TablaBundle\Entity\EstadoCarrera $estado = null)
-    {
+    public function setEstado(\Fd\TablaBundle\Entity\EstadoCarrera $estado = null) {
         $this->estado = $estado;
-    
+
         return $this;
     }
 
@@ -299,11 +297,9 @@ class Carrera {
      *
      * @return \Fd\TablaBundle\Entity\EstadoCarrera 
      */
-    public function getEstado()
-    {
+    public function getEstado() {
         return $this->estado;
     }
-
 
     /**
      * Set oferta_carrera
@@ -311,10 +307,9 @@ class Carrera {
      * @param \Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertaCarrera
      * @return Carrera
      */
-    public function setOfertaCarrera(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertaCarrera = null)
-    {
+    public function setOfertaCarrera(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertaCarrera = null) {
         $this->oferta_carrera = $ofertaCarrera;
-    
+
         return $this;
     }
 
@@ -323,8 +318,7 @@ class Carrera {
      *
      * @return \Fd\OfertaEducativaBundle\Entity\OfertaEducativa 
      */
-    public function getOfertaCarrera()
-    {
+    public function getOfertaCarrera() {
         return $this->oferta_carrera;
     }
 
@@ -334,10 +328,9 @@ class Carrera {
      * @param \DateTime $actualizado
      * @return Carrera
      */
-    public function setActualizado($actualizado)
-    {
+    public function setActualizado($actualizado) {
         $this->actualizado = $actualizado;
-    
+
         return $this;
     }
 
@@ -346,8 +339,7 @@ class Carrera {
      *
      * @return \DateTime 
      */
-    public function getActualizado()
-    {
+    public function getActualizado() {
         return $this->actualizado;
     }
 
@@ -357,10 +349,9 @@ class Carrera {
      * @param \DateTime $creado
      * @return Carrera
      */
-    public function setCreado($creado)
-    {
+    public function setCreado($creado) {
         $this->creado = $creado;
-    
+
         return $this;
     }
 
@@ -369,8 +360,7 @@ class Carrera {
      *
      * @return \DateTime 
      */
-    public function getCreado()
-    {
+    public function getCreado() {
         return $this->creado;
     }
 
@@ -379,8 +369,7 @@ class Carrera {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getTitulos()
-    {
+    public function getTitulos() {
         return $this->titulos;
     }
 
@@ -390,8 +379,7 @@ class Carrera {
      * @param \DateTime $anioInicio
      * @return Carrera
      */
-    public function setAnioInicio($anioInicio)
-    {
+    public function setAnioInicio($anioInicio) {
         $this->anio_inicio = $anioInicio;
 
         return $this;
@@ -402,8 +390,7 @@ class Carrera {
      *
      * @return \DateTime 
      */
-    public function getAnioInicio()
-    {
+    public function getAnioInicio() {
         return $this->anio_inicio;
     }
 
@@ -413,8 +400,7 @@ class Carrera {
      * @param \Fd\OfertaEducativaBundle\Entity\Titulo $titulos
      * @return Carrera
      */
-    public function addTitulo(\Fd\OfertaEducativaBundle\Entity\Titulo $titulos)
-    {
+    public function addTitulo(\Fd\OfertaEducativaBundle\Entity\Titulo $titulos) {
         $this->titulos[] = $titulos;
 
         return $this;
@@ -425,8 +411,7 @@ class Carrera {
      *
      * @param \Fd\OfertaEducativaBundle\Entity\Titulo $titulos
      */
-    public function removeTitulo(\Fd\OfertaEducativaBundle\Entity\Titulo $titulos)
-    {
+    public function removeTitulo(\Fd\OfertaEducativaBundle\Entity\Titulo $titulos) {
         $this->titulos->removeElement($titulos);
     }
 
@@ -436,8 +421,7 @@ class Carrera {
      * @param \Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones
      * @return Carrera
      */
-    public function addOrientacione(\Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones)
-    {
+    public function addOrientacione(\Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones) {
         $this->orientaciones[] = $orientaciones;
 
         return $this;
@@ -448,8 +432,8 @@ class Carrera {
      *
      * @param \Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones
      */
-    public function removeOrientacione(\Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones)
-    {
+    public function removeOrientacione(\Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones) {
         $this->orientaciones->removeElement($orientaciones);
     }
+
 }
