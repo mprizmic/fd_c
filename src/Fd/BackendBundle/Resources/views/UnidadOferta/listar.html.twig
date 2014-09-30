@@ -1,0 +1,13 @@
+{# parametros:
+lista de unidad_oferta 
+#}
+
+{% for entity in entities %}
+    <span class="separador">
+        <a href="{{ path('backend_unidadoferta_edit', { 'id': entity.id }) }}">{{ entity }}</a><br />
+    </span>
+{% else %}
+    <span class="separador resaltado mediana">
+        No hay datos
+    </span>
+{% endfor %}
