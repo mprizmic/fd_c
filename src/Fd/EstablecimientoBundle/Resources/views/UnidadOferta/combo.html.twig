@@ -1,17 +1,5 @@
 {# parametros: entities 
 colllection de unidad_oferta
-
-
-
-        {% if loop.first %}
-            <option value="0" selected="selected">
-                Carrera
-            </option>
-        {% endif %}
-
-
-
-
 #}
     {% for key, valor in unidad_ofertas %}
                 <option value="{{ valor.id }}">

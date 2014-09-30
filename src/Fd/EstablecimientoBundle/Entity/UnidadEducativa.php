@@ -92,6 +92,17 @@ class UnidadEducativa {
     private $creado;
 
     /**
+     * Devuelve un array con codigo y descripcion del nivel
+     * @return type
+     */
+    public function aJson(){
+        
+        $resultado['value'] = $this->getId();
+        $resultado['text'] = $this->getNivel()->getNombre();
+
+        return $resultado;
+    }
+    /**
      * Devuelve un array con las ofertas de un determinado nivel o unidad academica
      * Si no hay oferta para un nivel determinado devuelve NULL
      * 
