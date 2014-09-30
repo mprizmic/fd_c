@@ -95,24 +95,20 @@ class OfertaEducativa {
     }
 
     public function __toString() {
-        $nombre = $this->getCarrera()->getNombre();
-        if (is_null($nombre)) {
-            $nombre = $this->getEspecializacion()->getNombre();
-            if (is_null($nombre)) {
-                $nombre = $this->getBachillerato()->getNombre();
-                if (is_null($nombre)) {
-                    $nombre = $this->getPrimario();
-                    if (is_null($nombre)) {
-                        $nombre = $this->getInicial();
-                        if (is_null($nombre)) {
-                            $nombre = 's/d';
-                        }
+        $entity = $this->getCarrera();
+        if (is_null($entity)) {
+            $entity = $this->getEspecializacion();
+            if (is_null($entity)) {
+                $entity = $this->getBachillerato();
+                if (is_null($entity)) {
+                    $entity = $this->getPrimario();
+                    if (is_null($entity)) {
+                        $entity = $this->getInicial();
                     }
                 }
             }
         };
-        return $nombre;
-//        return 'OfertaEducativa';
+        return is_null($entity) ? 's/d' : $entity->__toString();
     }
 
     public function esTipo() {
