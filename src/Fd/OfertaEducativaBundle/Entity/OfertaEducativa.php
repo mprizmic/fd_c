@@ -95,11 +95,11 @@ class OfertaEducativa {
     }
 
     public function __toString() {
-        $nombre = $this->getCarrera();
+        $nombre = $this->getCarrera()->getNombre();
         if (is_null($nombre)) {
-            $nombre = $this->getEspecializacion();
+            $nombre = $this->getEspecializacion()->getNombre();
             if (is_null($nombre)) {
-                $nombre = $this->getBachillerato();
+                $nombre = $this->getBachillerato()->getNombre();
                 if (is_null($nombre)) {
                     $nombre = $this->getPrimario();
                     if (is_null($nombre)) {
@@ -111,7 +111,7 @@ class OfertaEducativa {
                 }
             }
         };
-        return 'Oferta: ' . $nombre;
+        return $nombre;
 //        return 'OfertaEducativa';
     }
 
