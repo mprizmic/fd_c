@@ -32,7 +32,7 @@ class DefaultController extends Controller {
      */
     public function nominaAction() {
         $paginador = $this->get('ideup.simple_paginator');
-        $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_corto'));
+        $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_mediano'));
 
         $edificios = $paginador->paginate(
                         $this->getDoctrine()->getEntityManager()->getRepository('EdificioBundle:Edificio')->qyAll())
