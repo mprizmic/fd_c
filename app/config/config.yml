@@ -12,7 +12,7 @@ parameters:
     fd.version_logica: %l_version_logica%
     fd.nombre_corto: 'DFD'
     fd.grilla_corto: 6
-    fd.grilla_mediano: 12
+    fd.grilla_mediano: 15
     fd.grilla_largo: 24
     locale: es
     # array para los campos booleanos
