@@ -2,6 +2,7 @@
 
 namespace Fd\OfertaEducativaBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -392,7 +393,7 @@ class CarreraController extends Controller {
             }
 
             $manager = new CarreraManager($this->getEm());
-            
+
             $respuesta = $manager->asignarEstablecimiento($form['carrera_id'], $form['establecimiento_id'], $form['accion_del_form']);
 
             //se trata el response segùn el resutado
@@ -412,7 +413,7 @@ class CarreraController extends Controller {
             //creo el formulario para seleccionar establecimientos
 
             $establecimientos_forms = $this->getEstablecimientosForms($carrera);
-            
+
             //crear el formulario de asignacion
             return $this->render('OfertaEducativaBundle:Default:asignar_establecimiento.html.twig', array(
                         'establecimientos_forms' => $establecimientos_forms,
@@ -432,7 +433,7 @@ class CarreraController extends Controller {
         // FALTA Los establecimientos que tienen la carrera asignada y tiene cohortes deberían aparecer disable
         //para que no se pueda eliminar nada
         $resultado = array();
-        
+
         //obtengo la lista de establecimientos ordenados
         $establecimientos = $this->getEm()
                 ->getRepository('EstablecimientoBundle:Establecimiento')
@@ -441,9 +442,7 @@ class CarreraController extends Controller {
         //genero un array con los formuarios tal como se va a mostrar
         foreach ($establecimientos as $key => $establecimiento) {
             $resultado[] = $this->crearAsignarForm(
-                    $establecimiento,
-                    $carrera,
-                    $key
+                            $establecimiento, $carrera, $key
                     )
                     ->createView();
         };
@@ -472,10 +471,10 @@ class CarreraController extends Controller {
         $form = $this->get('form.factory')
                 ->createNamedBuilder('form' . $nro_form, 'form', $data)
                 ->add('nombre', 'text', array(
-                    'attr'=>array('class'=>'input_talle_5'),
-                    'disabled'=>true,
-                    'required'=>false,
-                    'label'=>' ',
+                    'attr' => array('class' => 'input_talle_5'),
+                    'disabled' => true,
+                    'required' => false,
+                    'label' => ' ',
                 ))
                 ->add('carrera_id', 'hidden')
                 ->add('establecimiento_id', 'hidden')
@@ -490,20 +489,26 @@ class CarreraController extends Controller {
      * 
      * @Route("/donde_se_dicta/{carrera_id}", name="carrera_donde_se_dicta")
      */
-    public function donde_se_dictaAction($carrera_id) {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $carrera = $em->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
-
-        //recupera las unidades_oferta de la carrera
-        $unidad_ofertas = $em->getRepository('OfertaEducativaBundle:Carrera')->findUnidadesOfertas($carrera);
-
-        $establecimientos = $em->getRepository('EstablecimientoBundle:Establecimiento')->findEstablecimientosPorCarrera($carrera);
-        return $this->render('OfertaEducativaBundle:Carrera:includes/donde_se_dicta.html.twig', array(
-                    'establecimientos' => $establecimientos,
-                    'unidad_ofertas' => $unidad_ofertas,
-        ));
-    }
+    
+    
+//    DEPRECATED
+//    
+//    
+//    
+//    public function donde_se_dictaAction($carrera_id) {
+//        $em = $this->getDoctrine()->getEntityManager();
+//
+//        $carrera = $em->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
+//
+//        //recupera las unidades_oferta de la carrera
+//        $unidad_ofertas = $em->getRepository('OfertaEducativaBundle:Carrera')->findUnidadesOfertas($carrera);
+//
+//        $establecimientos = $em->getRepository('EstablecimientoBundle:Establecimiento')->findEstablecimientosPorCarrera($carrera);
+//        return $this->render('OfertaEducativaBundle:Carrera:includes/donde_se_dicta.html.twig', array(
+//                    'establecimientos' => $establecimientos,
+//                    'unidad_ofertas' => $unidad_ofertas,
+//        ));
+//    }
 
     /**
      * Despliega una pàgina donde se muestra un fiedset con los establecimientos donde se dicta una carrera
@@ -578,23 +583,28 @@ class CarreraController extends Controller {
         // inicializo el ìndice del array de establecimientos resultado
         $i = 0;
 
-        // recupero los establecimientos donde se dictan las carreras
+        /**
+         * Recupero los establecimientos donde se dictan las carreras.
+         * Las carreras son varias y puede haber más de una con el mismo nombre, que se den en establecimientos distintos.
+         * Voy a recuperar todas las unidades_educativas donde se da cada carrera en un ArrayCollection con las unidades_ofertas
+         * pero todas juntas las de distintos id de carreras.
+         */
+        $unidades_ofertas = new ArrayCollection();
+        
         foreach ($carreras as $carrera) {
-
-            $establecimientos = $repo_establecimiento->findEstablecimientosPorCarrera($carrera);
-
-            foreach ($establecimientos as $establecimiento) {
-                if (!array_key_exists($establecimiento->getId(), $donde_se_dicta)) {
-                    $donde_se_dicta[$i]['id'] = $establecimiento->getId();
-                    $donde_se_dicta[$i]['nombre'] = $establecimiento->getNombre();
-                    $i = $i + 1;
-                }
+            
+            //las unidad_oferta de una carrera
+            $unidades_oferta = $carrera->getOferta()->getUnidades();
+            
+            //cargo las unidad_oferta en otro array de a una
+            foreach ( $unidades_oferta as $unidad_oferta) {
+                $unidades_ofertas->add($unidad_oferta);
             }
         }
 
         return $this->render('OfertaEducativaBundle:Carrera:nomina_reducida_donde_se_dicta.html.twig', array(
                     'carrera' => $carrera,
-                    'establecimientos' => $donde_se_dicta,
+                    'unidades_ofertas' => $unidades_ofertas,
         ));
     }
 
