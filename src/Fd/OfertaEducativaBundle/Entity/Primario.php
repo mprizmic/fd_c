@@ -34,12 +34,19 @@ class Primario {
      * @ORM\Column(type="string")
      */
     private $duracion;
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $descripcion;
 
 
     public function __toString() {
-        return 'Primario: ' .$this->duracion;
+        return $this->descripcion . ' - ' .$this->duracion;
     }
 
+    public function __construct() {
+        $this->descripcion = 'Primaria común';
+    }
 
     /**
      * Get id
@@ -112,5 +119,28 @@ class Primario {
     public function getOfertaPrimario()
     {
         return $this->oferta_primario;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return Primario
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
     }
 }
