@@ -1,44 +1,98 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
-{% block title %}
-{{ parent() }} - Lista de UnidadOferta
-{% endblock %}
- 
+
 {% block main_content %}
 
-<h1>Lista de UnidadOferta</h1>
+    <div class="titulo">Oferta educativa en cada unidad educativa de cada establecimiento</div>
+    <br />
 
-<ul>
-    <li>
-        <a href="{{ path('backend_unidadoferta_new') }}">
-            Crear nuevo registro
-        </a>
-    </li>
-</ul>
+    <select id="cmb_establecimientos">
+        {% for key, valor in establecimientos %}
+            <option value="{{ valor.id }}">{{ valor }}</option>
+        {% endfor %}
+    </select>
 
+    <select id="cmb_niveles">
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Unidad educativa</th>
-            <th>Oferta educativa</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('backend_unidadoferta_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td><a href="{{ path('backend_unidadoferta_show', { 'id': entity.id }) }}">{{ entity.unidades }}</a></td>
-            <td><a href="{{ path('backend_unidadoferta_show', { 'id': entity.id }) }}">{{ entity.ofertas }}</a></td>
-            <td><a href="{{ path('backend_unidadoferta_show', { 'id': entity.id }) }}">Mostrar</a>
-                <a href="{{ path('backend_unidadoferta_edit', { 'id': entity.id }) }}">|| Editar</a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+    </select>
 
-{% include '::includes/volver.html.twig' %}
+    <span class="limpiar_float"></span>
+
+    <br />
+    <br />
+    <div id="lista_ofertas"></div>
+
+    <br />
+    <br />
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            //cargo los datos iniciales para completar la pagina
+            cargar_combo_niveles();
+            cargar_lista_ofertas();
+
+            //asigno los eventos
+            $('#cmb_establecimientos').change(function ()
+            {
+                cargar_combo_niveles();
+                cargar_lista_ofertas();
+            });
+
+            $('#cmb_niveles').change(function ()
+            {
+                cargar_lista_ofertas();
+            });
+
+
+        });
+
+        function cargar_combo_niveles() {
+
+            $("#divCargando").show();
+
+            var clave = $("#cmb_establecimientos").val();
+            $('#cmb_niveles option').remove();
+
+            //usando FOSJsRouingBundle
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                async: false,
+                url: Routing.generate('unidad_educativa_combo', {establecimiento_id: clave}),
+                success: function (data) {
+                    $.each(data, function (i) {
+                        $('#cmb_niveles').append($("<option></option>").attr("value", this.value).text(this.text));
+                    });
+                },
+            });
+
+            $('#divCargando').hide();
+
+        };
+
+        function cargar_lista_ofertas() {
+
+            $("#divCargando").show();
+
+            var id_unidad_educativa = $('#cmb_niveles').val();
+
+            //usando FOSJsRouingBundle
+            $.ajax({
+                url: Routing.generate('backend_unidadoferta_listar', {unidad_educativa_id: id_unidad_educativa}),
+                type: 'GET',
+                async: false,
+                success: function (data) {
+                    $("#lista_ofertas").html(data);
+                },
+            });
+            $('#divCargando').hide();
+        };
+
+    </script>
+
+{% endblock %}        
