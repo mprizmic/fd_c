@@ -6,54 +6,96 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase {
 
-    public function testPortada() {
-        $client = static::createClient();
+    private $client = null;
+    private $crawler = null;
 
-        $crawler = $client->request('GET', '/');
+    public function setUp() {
+        $this->client = static::createClient();
+        $this->client->followRedirects(true);
 
-        $this->assertTrue($crawler->filter('html:contains("Accedé con tu usuario")')->count() > 0);
+        $this->crawler = $this->client->request('GET', '/usuario/login');
+        $form = $this->crawler->selectButton('Remitir')->form();
+        $form['_username'] = 'marcelo';
+        $form['_password'] = '888';
+        $this->crawler = $this->client->submit($form);
+    }
+
+    public function testAvisos() {
+
+        $client = $this->client;
+        $crawler = $this->crawler;
+
+        // Llama a la página del index
+        $crawler = $client->request('GET', '/establecimiento/avisos');
+
+        $this->assertTrue(200 === $client->getResponse()->getStatusCode());
+
+        $this->assertGreaterThan(0, $crawler->filter('html:contains("Continuar")')->count(), 'Se visualiza la página de avisos');
     }
 
     public function testContacto() {
-        $client = static::createClient();
 
-        $crawler = $client->request('GET', '/contacto');
+        $client = $this->client;
+        $crawler = $this->crawler;
 
-        $this->assertTrue($crawler->filter('html:contains("Conmutador")')->count() > 0);
+        $crawler = $client->request('GET', '/establecimiento/contacto');
+
+        $this->assertTrue(200 === $client->getResponse()->getStatusCode());
+
+        $this->assertGreaterThan(
+                0, $crawler->filter('html:contains("Conmutador")')->count(), 'Se visualiza la página de contacto');
     }
 
     public function testEnDesarrollo() {
-        $client = static::createClient();
 
-        $crawler = $client->request('GET', '/en_desarrollo');
+        $client = $this->client;
+        $crawler = $this->crawler;
 
-        $this->assertTrue($crawler->filter('html:contains("Página en desarrollo")')->count() == 0);
+        $crawler = $client->request('GET', '/establecimiento/en_desarrollo');
+
+        $this->assertTrue(200 === $client->getResponse()->getStatusCode());
+
+        $this->assertTrue($crawler->filter('html:contains("Página en desarrollo")')->count() > 0);
     }
 
     public function testAgenda() {
-        $client = static::createClient();
 
-        $crawler = $client->request('GET', '/agenda');
+        $client = $this->client;
+        $crawler = $this->crawler;
 
-        $this->assertTrue($crawler->filter('html:contains("Agenda de la DFD")')->count() == 0);
+        $crawler = $client->request('GET', '/establecimiento/agenda');
+
+        $this->assertTrue($crawler->filter('html:contains("Agenda de la DFD")')->count() > 0);
     }
 
     public function testGlosario() {
-        $client = static::createClient();
 
-        $crawler = $client->request('GET', '/glosario');
+        $client = $this->client;
+        $crawler = $this->crawler;
 
-        $this->assertTrue($crawler->filter('html:contains("Desgranamiento")')->count() == 0);
+        $crawler = $client->request('GET', '/establecimiento/glosario');
+
+        $this->assertTrue($crawler->filter('html:contains("Desgranamiento")')->count() > 0);
     }
 
-    public function testAcercaDe()
-    {
-        $client = static::createClient();
+    public function testAcercaDe() {
 
-        $crawler = $client->request('GET', '/acerca_de');
+        $client = $this->client;
+        $crawler = $this->crawler;
 
-        $this->assertTrue($crawler->filter('html:contains("Sistema de Información de la Dirección de Formación Docente")')->count() == 0); 
-            
+        $crawler = $client->request('GET', '/establecimiento/acerca_de');
+
+        $this->assertTrue($crawler->filter('html:contains("Sistema de Información de la Dirección de Formación Docente")')->count() > 0);
     }
-}
+    public function testCumpleanios() {
+
+        $client = $this->client;
+        $crawler = $this->crawler;
+
+        $crawler = $client->request('GET', '/establecimiento/cumpleanios');
+
+        $this->assertTrue($crawler->filter('html:contains("Prizmic")')->count() > 0);
+    }
     
+
+}
