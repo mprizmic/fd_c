@@ -36,9 +36,13 @@ class Inicial {
      * @ORM\Column(type="string")
      */
     private $duracion;
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $descripcion;
 
     public function __toString() {
-        return 'Inicial';
+        return $this->descripcion;
     }
 
     /**
@@ -114,5 +118,28 @@ class Inicial {
     public function getOfertaInicial()
     {
         return $this->oferta_inicial;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return Inicial
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
     }
 }
