@@ -9,7 +9,9 @@
 <h1>Editar Nivel</h1>
 
 <form action="{{ path('backend_nivel_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    <div class="ancho_10">
     {{ form_widget(edit_form) }}
+    </div>
     <p>
         <button type="submit">Guardar</button>
     </p>
