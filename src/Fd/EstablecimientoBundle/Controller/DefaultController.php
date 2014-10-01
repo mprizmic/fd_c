@@ -26,13 +26,14 @@ class DefaultController extends Controller {
             return $this->redirect($this->generateUrl('establecimiento_damero'));
         }
     }
-
-    /**
-     * @Route("/",  name="portada")
-     */
-    public function portadaAction() {
-        return $this->render('EstablecimientoBundle:Default:portada.html.twig');
-    }
+    
+//      DEPRECATED
+//    /**
+//     * @Route("/",  name="portada")
+//     */
+//    public function portadaAction() {
+//        return $this->render('EstablecimientoBundle:Default:portada.html.twig');
+//    }
 
     /**
      * @Route("/agenda", name="agenda")
@@ -43,6 +44,8 @@ class DefaultController extends Controller {
     }
 
     /**
+     * FALTA test
+     * 
      * @Route("/agenda_excel", name="agenda_excel")
      */
     public function agendaExcelAction() {
