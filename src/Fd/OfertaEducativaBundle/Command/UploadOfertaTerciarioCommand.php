@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class UploadOfertaTerciarioCommand extends ContainerAwareCommand {
 
     public $planilla;
-    
+
     protected function configure() {
         $this
                 ->setName('fd:oferta_educativa:upload_carreras')
@@ -19,11 +19,9 @@ class UploadOfertaTerciarioCommand extends ContainerAwareCommand {
         ;
     }
 
-    
     protected function execute(InputInterface $input, OutputInterface $output) {
 
         // actualizar los estados de los existentes       'update Fd.carrera car set car.estado_id=4 where car.id<>71 and car.id<>72';
-    
         //el container esta disponible con $this->getContainer()->get('servicio');
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
@@ -50,54 +48,34 @@ class UploadOfertaTerciarioCommand extends ContainerAwareCommand {
 
         //guardo la planilla
         $this->planilla = $objWorksheet;
-        //captura del numero de acto
+
         $fila = 2;
-//        $dato = $this->leer('A', $fila);
-//
-//        //captura de fecha
-//        $fila = 3;
-//        $fecha_leida = substr($this->leer('A', $fila), -8);
-//        $fecha = $this->rectificacionFechaExcel($fecha_leida);
-//        
+        
         //leo la primera
         $linea = $this->leer($fila);
-
-        //procesamiento de la planilla
-        while ($fila < $highestRow) {
+//
+        while ($fila <= $highestRow) {
 
             $carrera_anterior = $linea['carrera'];
-
-
-            while ($fila < $highestRow or $carrera_anterior == $linea['carrera']) {
-
+//	
+            //genero carrera y oferta educativa
+//
+            while ($fila <= $highestRow or $carrera_anterior == $linea['carrera']) {
+//
                 $establecimiento_anterior = $linea['establecimiento'];
-
+//
+//		genero unidad_oferta
+//
                 while ($fila < $highestRow or $carrera_anterior == $linea['carrera'] or $establecimiento_anterior == $linea['establecimiento']) {
-
-                    //si es inicial o primario lo salto
-                    if ($linea['carrera'] !== 'Profesorado de Inicial o primacio') {
-
-                        //se crea unidad_oferta
-                        //genero los turnos de unidad_oferta
-                        $repetir = explode("-", $linea['turno']);
-
-                        //para cada turno repite la creación de unidadoferta_turno
-                        foreach ($repetir as $key => $value) {
-                            
-                        }
-                    }
-                    //leo siguiente
+//			
+//			genero turno
+//
                     $fila = $fila + 1;
                     $linea = $this->leer($fila);
-                    $establecimiento_anterior = $linea['establecimiento'];
-//                    $this->getEm()->persist($llamado);
-//                    $this->getEm()->flush();
-                };
-                $carrera_anterior = $linea['carrera'];
+                }
             }
         }
 
-        //salida de pantalla
         $output->writeln('terminó');
 
         return;
