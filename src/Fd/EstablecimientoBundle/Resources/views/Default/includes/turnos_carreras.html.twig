@@ -4,7 +4,7 @@
 <a href="{{ path('establecimiento.unidad_oferta.asignar_turno', {'id':unidad_oferta_tipo_carrera.id}) }}">
     {% for turno in unidad_oferta_tipo_carrera.turnos %}
         {% if loop.first %}
-            {{ 'Turnos: ' }}
+            {{ 'Turno/s: ' }}
             {{ turno.turno.descripcion }}
         {% else %}
             {{ ' - ' ~ turno.turno.descripcion }}
