@@ -20,7 +20,6 @@ use Fd\TablaBundle\Model\TurnoManager;
 class UploadOfertaTerciarioCommand extends ContainerAwareCommand {
 
     public $planilla;
-    private $logger;
 
     protected function configure() {
         $this
@@ -30,7 +29,6 @@ class UploadOfertaTerciarioCommand extends ContainerAwareCommand {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        $this->logger = $this->getContainer()->get('logger');
 
         // actualizar los estados de los existentes       'update Fd.carrera car set car.estado_id=4 where car.id<>71 and car.id<>72';
         //el container esta disponible con $this->getContainer()->get('servicio');
@@ -64,8 +62,6 @@ class UploadOfertaTerciarioCommand extends ContainerAwareCommand {
         //leo la primera
         $linea = $this->leer($fila);
 
-        $this->logger->info('primera lectura');
-
         //creo manejadores
         $tipo_formacion_manager = new TipoFormacionManager($em);
         $carrera_manager = new CarreraManager($em);
@@ -86,8 +82,6 @@ class UploadOfertaTerciarioCommand extends ContainerAwareCommand {
 
             //se persiste la carrera y la oferta educativa
             $carrera_manager->crear($carrera);
-
-            $this->logger->info($carrera_anterior);
 
             while ($fila <= $highestRow and $carrera_anterior == $linea['carrera']) {
 
