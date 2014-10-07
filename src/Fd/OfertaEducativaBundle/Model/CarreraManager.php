@@ -15,6 +15,8 @@ use Fd\OfertaEducativaBundle\Model\AsignarVisitadoInterface;
 use Fd\OfertaEducativaBundle\Model\AsignarVisitador;
 use Fd\OfertaEducativaBundle\Model\AsignarVisitadorInterface;
 use Fd\TablaBundle\Entity\Nivel;
+use Fd\TablaBundle\Model\NivelManager;
+
 
 class CarreraManager implements AsignarVisitadoInterface {
 
@@ -133,22 +135,25 @@ class CarreraManager implements AsignarVisitadoInterface {
      * @param \Fd\OfertaEducativaBundle\Entity\Carrera $entity
      * @return type
      */
-    public function crear(Carrera $entity) {
+    public function crear(Carrera $entity, $flush = true) {
 
         try {
             //busco entidad NIVEL
             //devuelve un array de una posicion
-            $nivel = $this->em->getRepository('TablaBundle:Nivel')->findByAbreviatura('Ter');
+            $nivel_manager = new NivelManager($this->getEm());
+            $nivel = $nivel_manager->crearLleno('Ter');
 
             //se genera la oferta educativa
             $oferta = new OfertaEducativa();
-            $oferta->setNivel($nivel[0]);
+            $oferta->setNivel($nivel);
             $this->em->persist($oferta);
 
             //se genera la carrera
             $entity->setOferta($oferta);
             $this->em->persist($entity);
-            $this->em->flush();
+            if ($flush) {
+                $this->em->flush();
+            };
 
             $this->respuesta->setCodigo(1);
             $this->respuesta->setMensaje('La carrera se creó correctamente');
@@ -163,7 +168,14 @@ class CarreraManager implements AsignarVisitadoInterface {
 
         return $this->respuesta;
     }
-
+    /**
+     * Crea un nuevo objeto vacío
+     * 
+     * @return Carrera
+     */
+    public function crearNuevo(){
+        return new Carrera();
+    }
     /**
      * desvincular una norma a una carrera 
      * 
