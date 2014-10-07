@@ -17,7 +17,7 @@ class UnidadOfertaTerciarioHandler {
 
     private $em;
 
-    public function __construct($em) {
+    public function __construct(EntityManager $em) {
         $this->em = $em;
     }
 
@@ -88,6 +88,7 @@ class UnidadOfertaTerciarioHandler {
 
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se generó la oferta educativa para el establecimiento seleccionado.');
+            $respuesta->setClaveNueva($entity->getId());
         } catch (Exception $e) {
             $respuesta->setCodigo(2);
             $respuesta->setMensaje('No se pudo generar la oferta educativa. Verifíquelo y reintente.');
