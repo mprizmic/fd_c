@@ -106,7 +106,7 @@ class Carrera {
             $norma = $value;
             break;
         };
-        return substr($this->nombre . ' - ' . $this->getEstado(), 0, 50) . ' - ' . $norma;
+        return $this->nombre . ' - ' . $this->getEstado() . ' - ' . $norma;
     }
 
     /**
