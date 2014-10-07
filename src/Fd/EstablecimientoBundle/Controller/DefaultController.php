@@ -16,7 +16,7 @@ class DefaultController extends Controller {
      * @Route("/avisos", name="avisos")
      */
     public function avisosAction() {
-        $avisos = $this->getDoctrine()->getEntityManager()->getRepository("TablaBundle:Aviso")->findBy(array('activo' => true), array('fecha'=>'asc'));
+        $avisos = $this->getDoctrine()->getEntityManager()->getRepository("TablaBundle:Aviso")->findBy(array('activo' => true), array('fecha'=>'desc'));
 
         if (count($avisos) > 0) {
             return $this->render('EstablecimientoBundle:Default:avisos.html.twig', array(
