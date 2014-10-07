@@ -10,6 +10,7 @@ use Fd\EstablecimientoBundle\Model\UnidadOfertaInicialHandler;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaTerciarioHandler;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 use Fd\TablaBundle\Entity\Nivel;
+use Fd\TablaBundle\Model\NivelManager;
 
 class UnidadOfertaHandler {
 
@@ -21,6 +22,12 @@ class UnidadOfertaHandler {
     public function __construct(EntityManager $em, $nivel ) {
 
         $this->em = $em;
+        if ($nivel instanceof Nivel) {
+            
+        }else{
+            $nivel_manager = new NivelManager($this->em);
+            $nivel = $nivel_manager->crearLleno('Ter');
+        };
         $strategy = $nivel->getCrearUOClass();
         $strategy_instance = new $strategy($em);
         $this->strategy_instance = $strategy_instance;
