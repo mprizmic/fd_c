@@ -1,7 +1,0 @@
-phpunit -c app src/Fd/EstablecimientoBundle/Tests/Controller/DefaultControllerTest.php 
-phpunit -c app src/Fd/EstablecimientoBundle/Tests/Controller/EstablecimientoControllerTest.php 
-phpunit -c app src/Fd/EstablecimientoBundle/Tests/Controller/LocalizacionControllerTest.php 
-
-phpunit -c app src/Fd/EstablecimientoBundle/Tests/Repository/EstablecimientoRepositoryTest.php 
-
-phpunit -c app src/Fd/EdificioBundle/Tests/Controller/DomicilioControllerTest.php 

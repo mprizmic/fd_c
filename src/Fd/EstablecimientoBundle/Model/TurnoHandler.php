@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimietoBundle\Entity\Respuesta;
 use Fd\EstablecimietoBundle\Entity\TurnoUnidadEducativa;
-//use Fd\TablaBundle\Entity\Nivel;
+use Fd\TablaBundle\Entity\Turno;
 
 class TurnoHandler {
 
@@ -29,9 +29,29 @@ class TurnoHandler {
         return $this->unidad_educativa;
     }
 
+    public function crearVacio() {
+        return new Turno();
+    }
+
+    /**
+     * Devuelve un objeto del turno seleccionado. Si el parametro pasa vacío se crea un turno TM
+     * @param type $nivel
+     * @return type
+     */
+    public function crearLleno($turno = null) {
+        if (!$turno){
+            $turno = 'TM';
+        };
+        
+        $turno = $this->em->getRepository('TablaBundle:Turno')->findBy(array('codigo' => $turno));
+        
+        return $turno[0];
+        
+    }    
     /*
      * elimina todos los registros de turno_unidad_educativa de una unidad educativa
      */
+
     public function eliminar() {
         $em = $this->getEm();
         try {
@@ -41,7 +61,7 @@ class TurnoHandler {
                 $em->remove($turno);
             };
             $this->getEm()->flush();
-            
+
             $this->respuesta->setCodigo(1);
             $this->respuesta->setMensaje('Se eliminaron los turnos de la unidad educativa exitosamente.');
         } catch (Exception $e) {
