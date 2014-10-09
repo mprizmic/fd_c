@@ -57,9 +57,11 @@ class EstablecimientoType extends AbstractType {
 //                ))
                 ->add('fecha_elecciones', 'date', array(
                     'label' => 'Fecha de las próximas elecciones',
+                    'required' => false,
                 ))
                 ->add('fin_mandato', 'date', array(
                     'label' => 'Fin del mandato',
+                    'required' => false,
                 ))
 //                ->add('comparte_edificio', 'si_no_sd', array(
 //                    'label' => 'Comparte edificio',
@@ -67,10 +69,12 @@ class EstablecimientoType extends AbstractType {
 //                ))
                 ->add('fecha_creacion', 'date', array(
                     'label' => 'Fecha de creación',
+                    'required' => false,
                 ))
                 ->add('tiene_cooperadora', 'si_no_sd', array(
                     'required' => false,
                     'label'=>'Tiene cooperadora',
+                    'required' => true,
                 ))
                 ->add('distrito_escolar')
                 ->add('codigo_previo_transferencia')
