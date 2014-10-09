@@ -106,7 +106,7 @@ class EstablecimientoController extends Controller {
      *
      * @Route("/create", name="backend_establecimiento_create")
      * @Method("post")
-     * @Template("EstablecimientoBundle:Establecimiento:new.html.twig")
+     * @Template("BackendBundle:Establecimiento:new.html.twig")
      */
     public function createAction() {
         $entity = new Establecimiento();
@@ -118,10 +118,14 @@ class EstablecimientoController extends Controller {
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('notice', 'El establecimiento fue creada exitosamente');
 
-            return $this->redirect($this->generateUrl('backend_establecimiento_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('backend_establecimiento_edit', array('id' => $entity->getId())));
         }
 
+        $this->get('session')->getFlashBag()->add('error', 'Problemas en la creación del establecimiento.');
+        
         return array(
             'entity' => $entity,
             'form' => $form->createView()
