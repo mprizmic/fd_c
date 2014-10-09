@@ -35,7 +35,7 @@ class Establecimiento {
     /**
      * bidireccional lado inverso
      * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio", mappedBy="establecimientos")
-     * @Assert\NotBlank(message="El dato no puede quedar en blanco")
+     * 
      */
     private $edificio;
 
@@ -203,7 +203,7 @@ class Establecimiento {
     /**
      * bidireccional lado inverso
      * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso", mappedBy="establecimiento")
-     * @Assert\NotBlank(message="El dato no puede quedar en blanco")
+     * 
      */
     private $recursos;
 
