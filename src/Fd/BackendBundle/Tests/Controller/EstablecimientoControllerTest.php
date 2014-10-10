@@ -49,15 +49,6 @@ class EstablecimientoControllerTest extends WebTestCase {
 
         // Selecciono el formulario de la página y lo lleno con el dataProvider
         $formulario = $crawler->selectButton('Crear')->form($establecimiento);
-        return;
-        
-        
-        HASTA ACA
-        
-        
-        
-        
-        
 
         // Envío el formulario con datos de alta
         $crawler = $client->submit($formulario);
@@ -73,7 +64,7 @@ class EstablecimientoControllerTest extends WebTestCase {
          *  Prueba de modificación de un dato y grabación de lo editado
          */
         // Cambio un dato editado
-        $establecimiento['fd_establecimientobundle_establecimientotype[descripcion]'] = 'modificado por el test';
+        $establecimiento['fd_establecimientobundle_establecimientotype[descripcion]'] = 'modificado test';
 
         // Selecciono el formulario de la página y lo lleno con el dataProvider modificado
         $formulario = $crawler->selectButton('Guardar')->form($establecimiento);
@@ -81,7 +72,6 @@ class EstablecimientoControllerTest extends WebTestCase {
         // Envío el formulario con datos de alta
         $crawler = $client->submit($formulario);
         $this->assertTrue($client->getResponse()->isSuccessful());
-
         // Check que se grabó ok
         $this->assertEquals(
                 $establecimiento['fd_establecimientobundle_establecimientotype[descripcion]'], 
@@ -103,7 +93,7 @@ class EstablecimientoControllerTest extends WebTestCase {
         ;
 
         // Se verifica que no aparezca la dirección en la lista de la página de index
-        $this->assertEquals(0, $crawler->filter('html:contains("modificado por el test")')->count(), 'Se eliminó. No figura en la lista.');
+        $this->assertEquals(0, $crawler->filter('html:contains("modificado test")')->count(), 'Se eliminó. No figura en la lista.');
     }
 
     public function establecimientos() {
