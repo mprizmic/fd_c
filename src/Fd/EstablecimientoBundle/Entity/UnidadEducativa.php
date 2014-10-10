@@ -70,13 +70,6 @@ class UnidadEducativa {
     private $ofertas;
 
     /**
-     * bidireccional lado inverso
-     * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\TurnoUnidadEducativa", mappedBy="unidad_educativa", cascade={"persist", "remove"} )
-     * @Assert\Valid()
-     */
-    private $turnos;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $cantidad_docentes;
