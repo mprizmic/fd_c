@@ -29,19 +29,6 @@ class EstablecimientoController extends Controller {
         return $this->getEm()
                         ->getRepository('EstablecimientoBundle:Establecimiento');
     }
-
-    /**
-     * @Route("/listar", name="establecimiento_listar")
-     * @Template()
-     */
-    public function listarAction() {
-        $entities = $this->getRepositorio()->findAllOrdenado('orden');
-
-        return $this->render('EstablecimientoBundle:Default:listar.html.twig', array(
-                    'entities' => $entities,
-        ));
-    }
-
     /**
      * Listado de docentes por nivel de cada establecimiento
      *
@@ -124,14 +111,6 @@ class EstablecimientoController extends Controller {
                     'establecimientos' => $establecimientos,
                     'edificio_id' => $edificio_id,
         ));
-    }
-
-    /**
-     * @Route("/index", name="establecimiento_index")
-     * @Template()
-     */
-    public function indexAction() {
-        return new Response('index de estbablecimientos');
     }
 
     /**
