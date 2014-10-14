@@ -39,7 +39,7 @@ class UnidadOfertaController extends Controller {
      * @Route("/actualizar_turnos/{id}", name="establecimiento.unidad_oferta.actualizar_turnos")
      * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta")
      */
-    public function actualizarTurnos(Request $request, $unidad_oferta) {
+    public function actualizarTurnosAction(Request $request, $unidad_oferta) {
 
         $editForm = $this->createForm(new UnidadOfertaType(), $unidad_oferta);
         
