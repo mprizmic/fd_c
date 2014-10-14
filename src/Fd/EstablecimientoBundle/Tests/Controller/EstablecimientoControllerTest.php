@@ -78,16 +78,64 @@ class EstablecimientoControllerTest extends WebTestCase {
 
         // Create a new entry in the database
         $crawler = $client->request('GET', '/establecimiento/ficha/13');
+        $this->assertTrue(200 === $client->getResponse()->getStatusCode());
+
+        //un dato de autoridades
+        $this->assertGreaterThan(
+                0, $crawler
+                        ->filter('html:contains("Regente Terciario")')
+                        ->count()
+        );
+        //un dato de carrera
+        $this->assertGreaterThan(
+                0, $crawler
+                        ->filter('html:contains("Profesorado de Inicial - Activa")')
+                        ->count()
+        );
+        //un dato de norma
+        $this->assertGreaterThan(
+                0, $crawler
+                        ->filter('html:contains("2438/RES/MEGC/2014")')
+                        ->count()
+        );
+        //un dato de turnos de carreras
+        $this->assertGreaterThan(
+                0, $crawler
+                        ->filter('html:contains("Turno/s:")')
+                        ->count()
+        );
         
+        //un dato de recursos
+        $this->assertGreaterThan(
+                0, $crawler
+                        ->filter('html:contains("Biblioteca")')
+                        ->count()
+        );
+        //un dato de niveles
+        $this->assertGreaterThan(
+                0, $crawler
+                        ->filter('html:contains("que imparte")')
+                        ->count()
+        );
+        //un dato de turnos por nivel 
+        $this->assertGreaterThan(
+                0, $crawler
+                        ->filter('html:contains("Nivel Primario")')
+                        ->count()
+        );
+        //un dato de docentes
+        $this->assertGreaterThan(
+                0, $crawler
+                        ->filter('html:contains("Cantidad de docentes")')
+                        ->count()
+        );
+        //un dato de recuadro de establecimientos de la derecha
+        $this->assertGreaterThan(
+                0, $crawler
+                        ->filter('html:contains("Joaquín")')
+                        ->count()
+        );
         
-        
-        
-        
-        
-        
-        
-        
-        HASTA aca
     }
 
     public function testNomina() {
