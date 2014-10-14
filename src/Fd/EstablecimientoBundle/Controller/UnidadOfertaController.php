@@ -74,16 +74,4 @@ class UnidadOfertaController extends Controller {
         return $this->redirect($this->generateUrl($ruta, $params ) );
     }
 
-    /**
-     * @Route("/index",  name="establecimiento.unidad_oferta.index")
-     * @Template()
-     */
-    public function indexAction() {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entities = $em->getRepository('EstablecimientoBundle:UnidadOferta')->findAll();
-
-        return array('entities' => $entities);
-    }
-
 }
