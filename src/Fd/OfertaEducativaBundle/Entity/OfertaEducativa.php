@@ -33,7 +33,7 @@ class OfertaEducativa {
 
     /**
      * lado inverso
-     * @ORM\OneToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\Carrera", mappedBy="oferta")
+     * @ORM\OneToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\Carrera", mappedBy="oferta", cascade={"remove"})
      */
     private $carrera;
 
@@ -86,12 +86,13 @@ class OfertaEducativa {
     public function ultimaModificacion() {
         $this->setActualizado(new \DateTime());
     }
-    
+
     public function __construct() {
         $this->unidades = new \Doctrine\Common\Collections\ArrayCollection();
         $this->normas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->creado = new \DateTime();
         $this->actualizado = new \DateTime();
+        $this->carrera = null;
     }
 
     public function __toString() {
