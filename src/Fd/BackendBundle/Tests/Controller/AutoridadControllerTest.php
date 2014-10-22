@@ -1,54 +1,60 @@
 <?php
 
-namespace Fd\EstablecimientoBundle\Tests\Controller;
+namespace Fd\BackendBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Fd\EstablecimientoBundle\Tests\Controller\LoginWebTestCase;
 
-class AutoridadControllerTest extends WebTestCase
-{
-    /*
-    public function testCompleteScenario()
-    {
+/**
+ * testea el crud de autoridad que tiene una busqueda en el index
+ * 
+ * FALTA create, update, delete, deleteForm, generarDatosBusquedaPaginada
+ */
+class AutoridadControllerTest extends LoginWebTestCase {
+
+    public function testBuscar() {
         // Create a new client to browse the application
-        $client = static::createClient();
+        $client = $this->client;
 
-        // Create a new entry in the database
-        $crawler = $client->request('GET', '/autoridad/');
+        // buscar una autoridad
+        $crawler = $client->request('GET', '/backend/autoridad/buscar');
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
-        $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
-        // Fill in the form and submit it
-        $form = $crawler->selectButton('Create')->form(array(
-            'autoridad[field_name]'  => 'Test',
-            // ... other fields to fill
-        ));
+        //cliqueo en buscar
+        $form = $crawler->selectButton('Buscar')->form();
+        $crawler = $client->submit($form);
 
-        $client->submit($form);
-        $crawler = $client->followRedirect();
+        $this->assertTrue(200 === $client->getResponse()->getStatusCode());
 
-        // Check data in the show view
-        $this->assertTrue($crawler->filter('td:contains("Test")')->count() > 0);
+        $this->assertGreaterThan(0, $crawler->filter('th:contains("Acciones")')->count()
+        );
 
-        // Edit the entity
-        $crawler = $client->click($crawler->selectLink('Edit')->link());
+        //hace click en la acción editar
+        $crawler = $client->click($crawler->selectLink('Editar')->link());
+        $this->assertTrue(200 === $client->getResponse()->getStatusCode());
 
-        $form = $crawler->selectButton('Edit')->form(array(
-            'autoridad[field_name]'  => 'Foo',
-            // ... other fields to fill
-        ));
-
-        $client->submit($form);
-        $crawler = $client->followRedirect();
-
-        // Check the element contains an attribute with value equals "Foo"
-        $this->assertTrue($crawler->filter('[value="Foo"]')->count() > 0);
-
-        // Delete the entity
-        $client->submit($crawler->selectButton('Delete')->form());
-        $crawler = $client->followRedirect();
-
-        // Check the entity has been delete on the list
-        $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
+        //verifica que fue a la página de edición
+        $this->assertgreaterThan(0, $crawler->filter('h1:contains("Editar Autoridad")')->count());
     }
-    */
+
+    /** @dataProvider provideUrls */
+    public function testPageIsSuccessful($url) {
+        $client = $this->client;
+        $client->request('GET', $url);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+
+    /**
+     * @return type
+     */
+    public function provideUrls() {
+        $x = '/backend/autoridad';
+        return array(
+            array($x . '/buscar'),
+            array($x . '/1/show'),
+            array($x . '/new'),
+            array($x . '/1/edit'),
+// ...
+        );
+    }
+
 }
