@@ -2,14 +2,10 @@
 
 namespace Fd\EstablecimientoBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Fd\EstablecimientoBundle\Tests\Controller\LoginWebTestCase;
 
 class UnidadOfertaControllerTest extends LoginWebTestCase {
 
-    public function setup() {
-        parent::setup();
-    }
     public function testAsignarTurno() {
 //        $client = $this->client;
 //        $crawler = $this->crawler;
