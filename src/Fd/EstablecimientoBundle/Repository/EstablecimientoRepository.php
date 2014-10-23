@@ -221,6 +221,6 @@ class EstablecimientoRepository extends EntityRepository {
      */
     public function findMatriculaCarrera($anio, $carrera = null, $establecimiento=null){
         return $this->_em->getRepository('EstablecimientoBundle:UnidadOferta')
-                ->findMatriculaCarrera($anio, $carrera, $establecimieinto);
+                ->findMatriculaCarrera($anio, $carrera, $establecimiento);
     }
 }
