@@ -43,6 +43,10 @@ class CarreraRepository extends EntityRepository {
                         ->getQuery();
     }
 
+    /**
+     * listado de carreras en estado activo ordenadas por nombre sin repetidos
+     * @return type
+     */
     public function qyResumido() {
         return $this->createQueryBuilder('c')
                         ->select(array(
