@@ -4,6 +4,9 @@ namespace Fd\EdificioBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * testea el crud de domicilio del backend
+ */
 class DomicilioControllerTest extends WebTestCase {
 
     private $client = null;

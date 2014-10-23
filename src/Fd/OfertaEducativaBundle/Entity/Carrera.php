@@ -172,6 +172,7 @@ class Carrera {
         $this->creado = new \DateTime();
         $this->actualizado = new \DateTime();
         $this->anio_inicio = date('now');
+        $this->oferta = null;
     }
 
     public function etiqueta() {
@@ -299,27 +300,6 @@ class Carrera {
      */
     public function getEstado() {
         return $this->estado;
-    }
-
-    /**
-     * Set oferta_carrera
-     *
-     * @param \Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertaCarrera
-     * @return Carrera
-     */
-    public function setOfertaCarrera(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertaCarrera = null) {
-        $this->oferta_carrera = $ofertaCarrera;
-
-        return $this;
-    }
-
-    /**
-     * Get oferta_carrera
-     *
-     * @return \Fd\OfertaEducativaBundle\Entity\OfertaEducativa 
-     */
-    public function getOfertaCarrera() {
-        return $this->oferta_carrera;
     }
 
     /**
