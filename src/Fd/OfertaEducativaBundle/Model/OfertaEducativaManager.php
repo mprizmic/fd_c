@@ -9,10 +9,11 @@ use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
-use Fd\TablaBundle\Entity\Nivel;
 use Fd\OfertaEducativaBundle\Model\AsignarVisitadoInterface;
 use Fd\OfertaEducativaBundle\Model\AsignarVisitador;
 use Fd\OfertaEducativaBundle\Model\AsignarVisitadorInterface;
+use Fd\TablaBundle\Entity\Nivel;
+use Fd\TablaBundle\Model\NivelManager;
 
 class OfertaEducativaManager {
 
@@ -22,6 +23,36 @@ class OfertaEducativaManager {
     public function __construct(EntityManager $em) {
         $this->em = $em;
         $this->respuesta = new Respuesta();
+    }
+
+    /**
+     * crea un registro de oferta_educativa con el nivel incluido
+     * Se crea con el tipo de oferta vacio
+     * 
+     * Deuelve el objeto nuevo o null
+     * 
+     * @param type $nivel
+     */
+    public function crearLlena(Nivel $nivel) {
+        $respuesta = new Respuesta();
+
+        $nivel_manager = new NivelManager($this->em);
+        $nivel = $nivel_manager->crearLleno('Ter');
+
+        //se genera la oferta educativa
+        $oferta = new OfertaEducativa();
+        $oferta->setNivel($nivel);
+
+        try {
+
+            $this->em->persist($oferta);
+            
+            return $oferta;
+            
+        } catch (Exception $ex) {
+            
+            return null;
+        }
     }
 
     /**
@@ -38,7 +69,7 @@ class OfertaEducativaManager {
         $respuesta = new Respuesta();
         try {
             $this->em->remove($oferta_educativa);
-            
+
             if ($flush) {
                 $this->em->flush();
             };
@@ -53,9 +84,9 @@ class OfertaEducativaManager {
 
         return $respuesta;
     }
+
     public function getEm() {
         return $this->em;
     }
 
 }
-
