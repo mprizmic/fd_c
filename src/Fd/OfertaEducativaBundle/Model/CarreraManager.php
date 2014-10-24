@@ -22,10 +22,12 @@ class CarreraManager implements AsignarVisitadoInterface {
 
     protected $em;
     protected $respuesta;
+    protected $repository;
 
     public function __construct(EntityManager $em) {
         $this->em = $em;
         $this->respuesta = new Respuesta();
+        $this->repository = $em->getRepository('OfertaEducativaBundle:Carrera');
     }
 
     /**
@@ -106,7 +108,7 @@ class CarreraManager implements AsignarVisitadoInterface {
 //     */
     public function asignarEstablecimiento($carrera_id, $establecimiento_id, $accion) {
 
-        $carrera = $this->em->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
+        $carrera = $this->getRepository()->find($carrera_id);
         if (!$carrera) {
             throw $this->createNotFoundException('Unable to find Carrera entity.');
         };
@@ -144,9 +146,11 @@ class CarreraManager implements AsignarVisitadoInterface {
             $nivel = $nivel_manager->crearLleno('Ter');
 
             //se genera la oferta educativa
-            $oferta = new OfertaEducativa();
-            $oferta->setNivel($nivel);
-            $this->em->persist($oferta);
+//            $oferta = new OfertaEducativa();
+//            $oferta->setNivel($nivel);
+//            $this->em->persist($oferta);
+            $oe_manager = new OfertaEducativaManager($this->getEm());
+            $oferta = $oe_manager->crearLlena($nivel);
 
             //se genera la carrera
             $entity->setOferta($oferta);
@@ -294,6 +298,9 @@ class CarreraManager implements AsignarVisitadoInterface {
 
     public function getEm() {
         return $this->em;
+    }
+    public function getRepository(){
+        return $this->repository;
     }
 
 }
