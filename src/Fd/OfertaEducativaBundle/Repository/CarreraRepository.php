@@ -84,27 +84,6 @@ class CarreraRepository extends EntityRepository {
     public function findAllOrdenado($campo) {
         return $this->qyAllOrdenado($campo)->getResult();
     }
-
-    /**
-     * devuelve las cohortes de cada carrera de cada establecimiento
-     * SQL directo
-     * DEPRECATED
-     */
-    public function sqlCohortesCarreras() {
-        $sql = "
-            select e.apodo as apodo, e.id as e_id, esp.nombre, esp.id as esp_id, co.anio, co.matricula, co.desgranamiento
-            from Fd.establecimiento as e 
-            inner join Fd.unidad_educativa as ue on e.id=ue.establecimiento_id
-            inner join Fd.unidad_oferta as uo on uo.unidad_educativa_id=ue.id
-            inner join Fd.nivel as n on n.id=ue.nivel_id
-            inner join Fd.oferta_educativa as oe on oe.id=uo.oferta_educativa_id
-            inner join Fd.especializacion as esp on uo.id=esp.oferta_educativa_id
-            inner join Fd.cohorte as co on co.unidad_oferta_id=uo.id
-            where n.abreviatura='Ter'
-            order by e.orden, esp.nombre, co.anio";
-        return $sql;
-    }
-
     /**
      * Lista de carreras para un combo
      */
