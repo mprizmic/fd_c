@@ -85,10 +85,10 @@ class CarreraRepositoryTest extends WebTestCase {
                 ->getResult();
 
         $this->assertCount(2, $carreras);
-        
+
         $carrera = $carreras[0];
 
-        $this->assertTrue($carrera->getAnioInicio() == 2015);        
+        $this->assertTrue($carrera->getAnioInicio() == 2015);
     }
 
     public function testQyActivasOrdenadas($campo = 'nombre') {
@@ -97,23 +97,32 @@ class CarreraRepositoryTest extends WebTestCase {
                 ->getResult();
 
         $this->assertcount(2, $carreras);
-        
     }
 
-    public function findActivasOrdenadas($campo) {
-        
+    public function testFindActivasOrdenadas($campo = 'nombre') {
+        $carreras = $this->repo
+                ->findActivasOrdenadas($campo)
+        ;
+
+        $this->assertcount(2, $carreras);
     }
 
-    public function findAllOrdenado($campo) {
-        
-    }
+    public function testFindAllOrdenado($campo = 'nombre') {
+        $carreras = $this->repo
+                ->findAllOrdenado($campo )
+        ;
 
-    public function sqlCohortesCarreras() {
-        
+        $this->assertcount(56, $carreras);
     }
 
     public function combo($establecimiento = null) {
+        $establecimiento = $this->em
+                ->getRepositoty('EstablecimientoBundle:Establecimiento')
+                ->find( array('apodo'=>'Romero'));
         
+        $carreras = $this->repo->combo($establecimiento);
+        
+        $this->assertCount(1, $carreras);
     }
 
     protected function tearDown() {
