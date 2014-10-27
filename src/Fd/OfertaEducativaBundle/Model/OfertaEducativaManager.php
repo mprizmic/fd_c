@@ -1,4 +1,7 @@
 <?php
+/**
+ * servicio ofertaeducativa.ofertaeducativa.manager
+ */
 
 namespace Fd\OfertaEducativaBundle\Model;
 
