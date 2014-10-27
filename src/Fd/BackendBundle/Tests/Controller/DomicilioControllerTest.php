@@ -1,27 +1,13 @@
 <?php
 
-namespace Fd\EdificioBundle\Tests\Controller;
+namespace Fd\BackendBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Fd\EstablecimientoBundle\Tests\Controller\LoginWebTestCase;
 
 /**
  * testea el crud de domicilio del backend
  */
-class DomicilioControllerTest extends WebTestCase {
-
-    private $client = null;
-    private $crawler = null;
-
-    public function setUp() {
-        $this->client = static::createClient();
-        $this->client->followRedirects(true);
-
-        $this->crawler = $this->client->request('GET', '/');
-        $form = $this->crawler->selectButton('Remitir')->form();
-        $form['_username'] = 'marcelo';
-        $form['_password'] = '1234';
-        $this->crawler = $this->client->submit($form);
-    }
+class DomicilioControllerTest extends LoginWebTestCase {
 
     /**
      * @dataProvider domicilios
