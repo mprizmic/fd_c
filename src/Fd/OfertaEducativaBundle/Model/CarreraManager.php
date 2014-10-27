@@ -1,4 +1,7 @@
 <?php
+/**
+ * servicio ofertaeducativa.carrera.manager
+ */
 
 namespace Fd\OfertaEducativaBundle\Model;
 
@@ -48,10 +51,6 @@ class CarreraManager implements AsignarVisitadoInterface {
 
             // remove the relationship between the tag and the Task
             foreach ($originalOrientaciones as $orientacion) {
-                // remove the Task from the Tag
-                //$orientacion->setCarrera(null);
-                // if it were a ManyToOne relationship, remove the relationship like this
-                //$em->persist($orientacion);
                 // if you wanted to delete the Tag entirely, you can also do that
                 $this->em->remove($orientacion);
             }
@@ -66,11 +65,6 @@ class CarreraManager implements AsignarVisitadoInterface {
             }
             // remove the relationship between the tag and the Task
             foreach ($originalTitulos as $titulo) {
-                // remove the Task from the Tag
-                //$orientacion->setCarrera(null);
-                // if it were a ManyToOne relationship, remove the relationship like this
-                //$em->persist($orientacion);
-                // if you wanted to delete the Tag entirely, you can also do that
                 $this->em->remove($titulo);
             }
 
