@@ -2,28 +2,14 @@
 
 namespace Fd\BackendBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Fd\EstablecimientoBundle\Tests\Controller\LoginWebTestCase;
 use Fd\BackendBundle\Form\EstablecimientoType;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 
 /**
  * testea el crud de establecimiento del backend
  */
-class EstablecimientoControllerTest extends WebTestCase {
-
-    private $client = null;
-    private $crawler = null;
-
-    public function setUp() {
-        $this->client = static::createClient();
-        $this->client->followRedirects(true);
-
-        $this->crawler = $this->client->request('GET', '/usuario/login');
-        $form = $this->crawler->selectButton('Remitir')->form();
-        $form['_username'] = 'marcelo';
-        $form['_password'] = '888';
-        $this->crawler = $this->client->submit($form);
-    }
+class EstablecimientoControllerTest extends LoginWebTestCase {
 
     /**
      * @dataProvider establecimientos
@@ -45,7 +31,9 @@ class EstablecimientoControllerTest extends WebTestCase {
         $crawler = $client->click($crawler->selectLink('Crear nuevo registro')->link());
 
         // Verifica que se visualizò la pagina de edicion
-        $this->assertGreaterThan(0, $crawler->filter('html:contains("Crear registro de Establecimiento")')->count(), 'Se visualiza la página de creación de establecimiento');
+        $this->assertGreaterThan(0, 
+                $crawler->filter('html:contains("Crear registro de Establecimiento")')->count(), 
+                'Se visualiza la página de creación de establecimiento');
 
         // Selecciono el formulario de la página y lo lleno con el dataProvider
         $formulario = $crawler->selectButton('Crear')->form($establecimiento);
