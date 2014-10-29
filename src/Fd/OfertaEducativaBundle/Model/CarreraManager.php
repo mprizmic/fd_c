@@ -27,6 +27,9 @@ class CarreraManager implements AsignarVisitadoInterface {
     protected $respuesta;
     protected $repository;
 
+    public function getRespuesta(){
+        return $this->respuesta;
+    }
     public function __construct(EntityManager $em) {
         $this->em = $em;
         $this->respuesta = new Respuesta();
