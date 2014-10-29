@@ -144,14 +144,65 @@ class CarreraManagerTest extends WebTestCase {
         $this->assertTrue($object instanceof Carrera);
     }
 
-    public function desvincular_norma($carrera = 1, $norma = 10) {
-        //HASTA ACA
+    /**
+     * tiene que ir antes que la desvinculación por que la desvinculacion usa lo vinculado en este test
+     */
+    public function testVincular_norma() {
+        
+        //se elije una norma cualquiera
+        $norma = $this->manager->getEm()->find('OfertaEducativaBundle:Norma', 139);
+        
+        //se usa el profesorado de primaria
+        $carrera = $this->manager->getEm()->find('OfertaEducativaBundle:Carrera', 1);
+        
+        //normas originales
+        $normas_originales = $carrera->getOferta()->getNormas();
+        
+        //se vincular
+        $this->manager->vincular_norma($carrera, $norma);
+        
+        //nuevas normas
+        $normas = $carrera->getOferta()->getNormas();
+        
+        
+        if ($this->manager->getRespuesta()->getCodigo() == 1){
+            $this->assertTrue( count($normas_originales) == count($normas) - 1);
+        }else{
+            $this->assertTrue( count($normas_originales) == count($normas));
+        };
+            
+    }
+    /**
+     * desvincula lo vinculado en el test antesior
+     * @param type $carrera
+     * @param type $norma
+     */
+    public function testDesvincular_norma() {
+        $carrera = new Carrera();
+        //se elije una norma cualquiera
+        $norma = $this->manager->getEm()->find('OfertaEducativaBundle:Norma', 139);
+        
+        //se usa el profesorado de primaria
+        $carrera = $this->manager->getEm()->find('OfertaEducativaBundle:Carrera', 1);
+        
+        //normas originales
+        $normas_originales = $carrera->getOferta()->getNormas();
+        
+        //se desvincula
+        $this->manager->desvincular_norma($carrera, $norma);
+        
+        //nuevas normas
+        $normas = $carrera->getOferta()->getNormas();
+        
+        
+        if ($this->manager->getRespuesta()->getCodigo() == 1){
+            $this->assertTrue( count($normas_originales) == count($normas) + 1);
+        }else{
+            $this->assertTrue( count($normas_originales) == count($normas));
+        };
         
     }
 
-    public function vincular_norma($carrera, $norma) {
-        //HASTA aca
-    }
 
     public function eliminar(Carrera $carrera, $flush = false) {
         //está testeado en el método crearAction de este test
