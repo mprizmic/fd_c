@@ -90,9 +90,8 @@ class EstablecimientoControllerTest extends LoginWebTestCase {
                 array(
                     'fd_establecimientobundle_establecimientotype[cue]' => '256325',
                     'fd_establecimientobundle_establecimientotype[nombre]' => 'este de aca',
-                    'fd_establecimientobundle_establecimientotype[apodo]' => 'CUEC',
+                    'fd_establecimientobundle_establecimientotype[apodo]' => 'TEST',
                     'fd_establecimientobundle_establecimientotype[orden]' => 75,
-                    'fd_establecimientobundle_establecimientotype[descripcion]' => 'creado para el test',
                     'fd_establecimientobundle_establecimientotype[descripcion]' => 'creado para el test',
                     'fd_establecimientobundle_establecimientotype[tiene_cooperadora]' => 'no',
                 )
