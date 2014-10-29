@@ -30,7 +30,7 @@ class CarreraController extends Controller {
 
     private $em;
 
-    private function getEm() {
+    public function getEm() {
         if (!$this->em) {
             $this->em = $this->getDoctrine()->getEntityManager();
         };
@@ -147,20 +147,11 @@ class CarreraController extends Controller {
      * 
      * @return type array
      */
-    private function getComboEstados() {
+    public function getComboEstados() {
 
-        $datos = $this->getEm()->
-                getRepository('TablaBundle:EstadoCarrera')->
-                createQueryBuilder('e')->
-                orderBy('e.orden')->
-                getQuery()->
-                getArrayResult();
-
-        foreach ($datos as $key => $value) {
-            $combo_estados[$value['id']] = $value['descripcion'];
-        }
-
-        return $combo_estados;
+        $manager = $this->get('ofertaeducativa.carrera.manager');
+        
+        return $manager->getComboEstados();
     }
 
     /**
@@ -168,7 +159,7 @@ class CarreraController extends Controller {
      * 
      * @return type array
      */
-    private function getComboFormaciones() {
+    public function getComboFormaciones() {
 
         $datos = $this->getEm()->
                 getRepository('TablaBundle:TipoFormacion')->
