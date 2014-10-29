@@ -222,5 +222,18 @@ class CarreraManagerTest extends WebTestCase {
         //luego del testo hay la misma cantidad de elementos
         $this->assertCount($cantidad_total, $en_array);
     }
+    
+    public function testGetComboEstados() {
 
+        $manager = $this->manager;
+        
+        $combo = $manager->getComboEstados();
+        
+        //lee todos los estados de la tabla
+        $estados = $this->manager->getEm()->getRepository('TablaBundle:EstadoCarrera')->findAll();
+        
+        //ambos tienen que tener igual cantidad
+        $this->assertTrue( count( $estados ) == count($combo));
+        
+    }
 }
