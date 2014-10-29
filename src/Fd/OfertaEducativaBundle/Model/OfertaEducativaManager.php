@@ -1,4 +1,5 @@
 <?php
+
 /**
  * servicio ofertaeducativa.ofertaeducativa.manager
  */
@@ -49,11 +50,10 @@ class OfertaEducativaManager {
         try {
 
             $this->em->persist($oferta);
-            
+
             return $oferta;
-            
         } catch (Exception $ex) {
-            
+
             return null;
         }
     }
@@ -84,6 +84,61 @@ class OfertaEducativaManager {
             $respuesta->setCodigo(2);
             $respuesta->setMensaje('Problemas al eliminar. Verifique y reintente.');
         }
+
+        return $respuesta;
+    }
+
+    /**
+     * Vincula o desvincular una norma a un oferta educativa
+     * 
+     * @param \Fd\OfertaEducativaBundle\Entity\OfertaEducativa $oferta_educativa
+     * @param type $norma
+     * @param type $flush
+     * @return type
+     */
+    public function vincularNorma(OfertaEducativa $oferta_educativa, $norma, $accion, $flush = false) {
+        $respuesta = new Respuesta();
+
+        if ($accion == 'vincular') {
+            $oferta_educativa->vincularNorma($norma);
+        } else {
+            $oferta_educativa->removeNorma($norma);
+        };
+
+        $this->getEm()->persist($oferta_educativa);
+
+        if ($flush) {
+            try {
+                $this->getEm()->flush();
+
+                $respuesta->setCodigo(1);
+                $respuesta->setMensaje('Se actualizó la norma exitosamente');
+            } catch (Exception $ex) {
+                $respuesta->setCodigo(2);
+                $respuesta->setMensaje('Problemas al tratar de actualizar la norma. Verifique y reintente.');
+            }
+        };
+
+        return $respuesta;
+    }
+
+    /**
+     * desvincular una norma a una carrera 
+     * 
+     * @return type
+     */
+    public function desvincularNorma() {
+        if ($flush) {
+            try {
+                $this->getEm()->flush();
+
+                $respuesta->setCodigo(1);
+                $respuesta->setMensaje('Se desvinculó la norma exitosamente');
+            } catch (Exception $ex) {
+                $respuesta->setCodigo(2);
+                $respuesta->setMensaje('Problemas al tratar de desvincular la norma. Verifique y reintente.');
+            }
+        };
 
         return $respuesta;
     }

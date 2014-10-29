@@ -147,7 +147,7 @@ class OfertaEducativa {
      * vincula una norma de esta oferta
      */
     public function vincularNorma($norma) {
-        $this->getNormas()->add($norma);
+        $this->addNorma($norma);
     }
 
     /**
