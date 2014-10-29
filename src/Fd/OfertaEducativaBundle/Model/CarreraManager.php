@@ -269,6 +269,26 @@ class CarreraManager implements AsignarVisitadoInterface {
 
         return $carreras;
     }
+    /**
+     * Genera el array para popular el combo de estados de la carrera que aparece en el form de busqueda
+     * 
+     * @return type array
+     */
+    public function getComboEstados() {
+
+        $datos = $this->getEm()->
+                getRepository('TablaBundle:EstadoCarrera')->
+                createQueryBuilder('e')->
+                orderBy('e.orden')->
+                getQuery()->
+                getArrayResult();
+
+        foreach ($datos as $key => $value) {
+            $combo_estados[$value['id']] = $value['descripcion'];
+        }
+
+        return $combo_estados;
+    }
 
     public function getEm() {
         return $this->em;
