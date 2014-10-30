@@ -3,3 +3,11 @@ services:
         class: Fd\OfertaEducativaBundle\Form\Extension\HelpTypeExtension
         tags: 
             - { name: form.type_extension, alias: form }
+    ofertaeducativa.carrera.manager:
+        class: Fd\OfertaEducativaBundle\Model\CarreraManager
+        arguments: 
+            entity_manager: "@doctrine.orm.entity_manager"
+    ofertaeducativa.ofertaeducativa.manager:
+        class: Fd\OfertaEducativaBundle\Model\OfertaEducativaManager
+        arguments: 
+            entity_manager: "@doctrine.orm.entity_manager"

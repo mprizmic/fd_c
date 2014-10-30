@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * servicio ofertaeducativa.carrera.manager
+ */
+
 namespace Fd\OfertaEducativaBundle\Model;
 
 use Doctrine\ORM\EntityManager;
@@ -17,15 +21,19 @@ use Fd\OfertaEducativaBundle\Model\AsignarVisitadorInterface;
 use Fd\TablaBundle\Entity\Nivel;
 use Fd\TablaBundle\Model\NivelManager;
 
-
 class CarreraManager implements AsignarVisitadoInterface {
 
     protected $em;
     protected $respuesta;
+    protected $repository;
 
+    public function getRespuesta(){
+        return $this->respuesta;
+    }
     public function __construct(EntityManager $em) {
         $this->em = $em;
         $this->respuesta = new Respuesta();
+        $this->repository = $em->getRepository('OfertaEducativaBundle:Carrera');
     }
 
     /**
@@ -46,10 +54,6 @@ class CarreraManager implements AsignarVisitadoInterface {
 
             // remove the relationship between the tag and the Task
             foreach ($originalOrientaciones as $orientacion) {
-                // remove the Task from the Tag
-                //$orientacion->setCarrera(null);
-                // if it were a ManyToOne relationship, remove the relationship like this
-                //$em->persist($orientacion);
                 // if you wanted to delete the Tag entirely, you can also do that
                 $this->em->remove($orientacion);
             }
@@ -64,11 +68,6 @@ class CarreraManager implements AsignarVisitadoInterface {
             }
             // remove the relationship between the tag and the Task
             foreach ($originalTitulos as $titulo) {
-                // remove the Task from the Tag
-                //$orientacion->setCarrera(null);
-                // if it were a ManyToOne relationship, remove the relationship like this
-                //$em->persist($orientacion);
-                // if you wanted to delete the Tag entirely, you can also do that
                 $this->em->remove($titulo);
             }
 
@@ -106,7 +105,7 @@ class CarreraManager implements AsignarVisitadoInterface {
 //     */
     public function asignarEstablecimiento($carrera_id, $establecimiento_id, $accion) {
 
-        $carrera = $this->em->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
+        $carrera = $this->getRepository()->find($carrera_id);
         if (!$carrera) {
             throw $this->createNotFoundException('Unable to find Carrera entity.');
         };
@@ -144,9 +143,8 @@ class CarreraManager implements AsignarVisitadoInterface {
             $nivel = $nivel_manager->crearLleno('Ter');
 
             //se genera la oferta educativa
-            $oferta = new OfertaEducativa();
-            $oferta->setNivel($nivel);
-            $this->em->persist($oferta);
+            $oe_manager = new OfertaEducativaManager($this->getEm());
+            $oferta = $oe_manager->crearLlena($nivel);
 
             //se genera la carrera
             $entity->setOferta($oferta);
@@ -168,57 +166,37 @@ class CarreraManager implements AsignarVisitadoInterface {
 
         return $this->respuesta;
     }
+
     /**
      * Crea un nuevo objeto vacío
      * 
      * @return Carrera
      */
-    public function crearNuevo(){
+    public function crearNuevo() {
         return new Carrera();
     }
+
     /**
      * desvincular una norma a una carrera 
-     * 
-     * FALTA tal vez debería ir en un manager de OfertEducativa
      */
     public function desvincular_norma($carrera, $norma) {
-        $respuesta = new Respuesta();
-        try {
-            $oferta_educativa = $carrera->getOferta();
-            $oferta_educativa->removeNorma($norma);
 
-            $this->getEm()->persist($oferta_educativa);
-            $this->getEm()->flush();
+        $oe_manager = new OfertaEducativaManager($this->getEm());
 
-            $respuesta->setCodigo(1);
-            $respuesta->setMensaje('Se desvinculó la norma exitosamente');
-        } catch (Exception $e) {
-            $respuesta->setCodigo(2);
-            $respuesta->setMensaje('Problemas al tratar de desvincular la norma. Verifique y reintente.');
-        };
+        $respuesta = $oe_manager->vincularNorma($carrera->getOferta(), $norma, 'desvincular', true);
+
         return $respuesta;
     }
 
     /**
-     * vincular una norma a una carrera 
-     * 
-     * FALTA tal vez debería ir en un manager de OfertEducativa
+     * vincular una norma a una carrera y la persiste
      */
     public function vincular_norma($carrera, $norma) {
-        $respuesta = new Respuesta();
-        try {
-            $oferta_educativa = $carrera->getOferta();
-            $oferta_educativa->vincularNorma($norma);
 
-            $this->getEm()->persist($oferta_educativa);
-            $this->getEm()->flush();
+        $oe_manager = new OfertaEducativaManager($this->getEm());
 
-            $respuesta->setCodigo(1);
-            $respuesta->setMensaje('Se vinculó la norma exitosamente');
-        } catch (Exception $e) {
-            $respuesta->setCodigo(2);
-            $respuesta->setMensaje('Problemas al tratar de vincular la norma. Verifique y reintente.');
-        };
+        $respuesta = $oe_manager->vincularNorma($carrera->getOferta(), $norma, 'vincular', true);
+
         return $respuesta;
     }
 
@@ -291,9 +269,33 @@ class CarreraManager implements AsignarVisitadoInterface {
 
         return $carreras;
     }
+    /**
+     * Genera el array para popular el combo de estados de la carrera que aparece en el form de busqueda
+     * 
+     * @return type array
+     */
+    public function getComboEstados() {
+
+        $datos = $this->getEm()->
+                getRepository('TablaBundle:EstadoCarrera')->
+                createQueryBuilder('e')->
+                orderBy('e.orden')->
+                getQuery()->
+                getArrayResult();
+
+        foreach ($datos as $key => $value) {
+            $combo_estados[$value['id']] = $value['descripcion'];
+        }
+
+        return $combo_estados;
+    }
 
     public function getEm() {
         return $this->em;
+    }
+
+    public function getRepository() {
+        return $this->repository;
     }
 
 }

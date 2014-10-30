@@ -1,26 +1,13 @@
 <?php
 
-namespace Fd\EstablecimientoBundle\Tests\Controller;
+namespace Fd\BackendBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Fd\EstablecimientoBundle\Tests\Controller\LoginWebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-class LocalizacionControllerTest extends WebTestCase {
+class LocalizacionControllerTest extends LoginWebTestCase {
 
-    private $client = null;
-    private $crawler = null;
-
-    public function setUp() {
-        $this->client = static::createClient();
-        
-        $this->crawler = $this->client->request('GET', '/');
-        $form = $this->crawler->selectButton('Remitir')->form();
-        $form['_username'] = 'marcelo';
-        $form['_password'] = '1234';
-        $this->crawler = $this->client->submit($form);
-
-    }
 
     /**
      * testea el index con logueo de usuario
