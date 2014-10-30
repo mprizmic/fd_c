@@ -600,13 +600,15 @@ class CarreraController extends Controller {
     }
 
     /**
+     * FALTA no anda
+     * 
      * @Route("/nomina_resumida_planilla_de_calculo", name="carrera_nomina_resumida_planilla_de_calculo")
      */
     public function nomina_resumida_planilla_de_calculoAction() {
         $filename = "Carrera_resumida.xls";
 
         // ask the service for a Excel5
-        $excelService = $this->get('xls.service_xls2007');
+        $excelService = $this->get('phpexcel');
 
         $active_sheet_index = $excelService->excelObj->setActiveSheetIndex(0);
 
@@ -643,27 +645,6 @@ class CarreraController extends Controller {
         $response->headers->set('Cache-Control', 'maxage=1');
         return $response;
     }
-
-    /**
-     * @Route("/historia_estado_validez/{id}", name="carrera_historia_estado_validez")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
-    public function historia_estado_validezAction(Request $request, $id) {
-        try {
-            $entity = $this->getEm()->getRepository('OfertaEducativaBundle:Carrera')->find($id);
-        } catch (Exception $e) {
-            throw $this->createNotFoundException('No se encontró la carrera buscada');
-        };
-
-        $estados = $this->getEm()->getRepository('OfertaEducativaBundle:CarreraEstadoValidez')
-                ->findHistoriaEstadoValidez($entity);
-
-        return $this->render('OfertaEducativaBundle:CarreraEstadoValidez:historia.html.twig', array(
-                    'carrera' => $entity,
-                    'estados' => $estados,
-        ));
-    }
-
     /**
      * @Route("/indicadores_cohorte", name="carrera_indicadores_cohorte")
      */
@@ -701,43 +682,43 @@ class CarreraController extends Controller {
                     'unidad_oferta' => $unidad_oferta,
         ));
     }
-
-    /**
-     * entrega una lista de establecimientos 
-     * en la plantilla se selecciona un establecimiento y se va a mostrar la nómina de carreras del establecimiento
-     * 
-     * @Route("/resumen_validez", name="carrera_resumen_validez")
-     */
-    public function resumen_validezAction() {
-        $em = $this->getDoctrine()->getEntityManager();
-        $establecimientos = $em->getRepository('EstablecimientoBundle:Establecimiento')->findAllOrdenado('orden');
-        return $this->render('OfertaEducativaBundle:Carrera:resumen_validez.html.twig', array(
-                    'establecimientos' => $establecimientos,
-        ));
-    }
-
-    /**
-     * @Route("/resumen_validez_establecimiento/{establecimiento_id}", name="carrera_resumen_validez_establecimiento")
-     */
-    public function resumen_validez_establecimientoAction($establecimiento_id) {
-        $em = $this->getDoctrine()->getEntityManager();
-        $establecimiento = $em->getRepository('EstablecimientoBundle:Establecimiento')->find($establecimiento_id);
-        $repo = $em->getRepository('OfertaEducativaBundle:Carrera');
-        $carreras = $repo->findCarrerasPorEstablecimiento($establecimiento);
-        return $this->render('OfertaEducativaBundle:Carrera:resumen_validez_establecimiento.html.twig', array(
-                    'carreras' => $carreras,
-        ));
-    }
-
-    /**
-     * @Route("/resumen_validez_carrera/{carrera}", name="carrera_resumen_validez_carrera")
-     */
-    public function resumen_validez_carreraAction($carrera, $clase_css) {
-        return $this->render('OfertaEducativaBundle:Carrera:resumen_validez_carrera.html.twig', array(
-                    'carrera' => $carrera,
-                    'clase_css' => $clase_css,
-        ));
-    }
+//DEPRECATED se deja como modelo de lo que se haga luego
+//    /**
+//     * entrega una lista de establecimientos 
+//     * en la plantilla se selecciona un establecimiento y se va a mostrar la nómina de carreras del establecimiento
+//     * 
+//     * @Route("/resumen_validez", name="carrera_resumen_validez")
+//     */
+//    public function resumen_validezAction() {
+//        $em = $this->getDoctrine()->getEntityManager();
+//        $establecimientos = $em->getRepository('EstablecimientoBundle:Establecimiento')->findAllOrdenado('orden');
+//        return $this->render('OfertaEducativaBundle:Carrera:resumen_validez.html.twig', array(
+//                    'establecimientos' => $establecimientos,
+//        ));
+//    }
+//DEPRECATED se deja como modelo de lo que se haga luego
+//    /**
+//     * @Route("/resumen_validez_establecimiento/{establecimiento_id}", name="carrera_resumen_validez_establecimiento")
+//     */
+//    public function resumen_validez_establecimientoAction($establecimiento_id) {
+//        $em = $this->getDoctrine()->getEntityManager();
+//        $establecimiento = $em->getRepository('EstablecimientoBundle:Establecimiento')->find($establecimiento_id);
+//        $repo = $em->getRepository('OfertaEducativaBundle:Carrera');
+//        $carreras = $repo->findCarrerasPorEstablecimiento($establecimiento);
+//        return $this->render('OfertaEducativaBundle:Carrera:resumen_validez_establecimiento.html.twig', array(
+//                    'carreras' => $carreras,
+//        ));
+//    }
+//DEPRECATED se deja como modelo de lo que se haga luego
+//    /**
+//     * @Route("/resumen_validez_carrera/{carrera}", name="carrera_resumen_validez_carrera")
+//     */
+//    public function resumen_validez_carreraAction($carrera, $clase_css) {
+//        return $this->render('OfertaEducativaBundle:Carrera:resumen_validez_carrera.html.twig', array(
+//                    'carrera' => $carrera,
+//                    'clase_css' => $clase_css,
+//        ));
+//    }
 
     /**
      * muestra un cuadro de matricula de las ultimas 3 años de la carrera 
