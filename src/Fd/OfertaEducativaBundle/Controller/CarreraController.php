@@ -790,24 +790,6 @@ class CarreraController extends Controller {
     }
 
     /**
-     * testeado
-     * desvincula una norma previamente vinculada a una carrera
-     * 
-     * @Route("/desvincular_norma/{carrera_id}/{norma_id}", name="carrera_desvincular_norma")
-     * @ParamConverter("carrera", class="OfertaEducativaBundle:Carrera", options={"id"="carrera_id"} )
-     * @ParamConverter("norma", class="OfertaEducativaBundle:Norma", options={"id"="norma_id"} )
-     */
-    public function desvincularNormaAction($carrera, $norma) {
-        $carrera_manager = new CarreraManager($this->getEm());
-
-        $respuesta = $carrera_manager->desvincular_norma($carrera, $norma);
-
-        $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
-
-        return $this->redirect($this->generateUrl('carrera_editar', array('id' => $carrera->getId())));
-    }
-
-    /**
      * FALTA migrar. Estaba en el normacontroller frontal
      * 
      * @Route("/norma_vincular_carrera/{carrera_id}/{norma_id}", name="norma_vincular_carrera")
@@ -825,5 +807,23 @@ class CarreraController extends Controller {
 
         return $this->redirect($this->generateUrl('carrera_editar', array('id' => $carrera->getId())));
     }
+    /**
+     * testeado
+     * desvincula una norma previamente vinculada a una carrera
+     * 
+     * @Route("/desvincular_norma/{carrera_id}/{norma_id}", name="carrera_desvincular_norma")
+     * @ParamConverter("carrera", class="OfertaEducativaBundle:Carrera", options={"id"="carrera_id"} )
+     * @ParamConverter("norma", class="OfertaEducativaBundle:Norma", options={"id"="norma_id"} )
+     */
+    public function desvincularNormaAction($carrera, $norma) {
+        $carrera_manager = new CarreraManager($this->getEm());
+
+        $respuesta = $carrera_manager->desvincular_norma($carrera, $norma);
+
+        $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+
+        return $this->redirect($this->generateUrl('carrera_editar', array('id' => $carrera->getId())));
+    }
+
 
 }
