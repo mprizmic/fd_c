@@ -12,6 +12,7 @@ use Fd\OfertaEducativaBundle\Controller\CarreraController;
 class CarreraControllerTest extends LoginWebTestCase {
 
     const ACTIVA = 1;
+    const PROF_PRIMARIA = 1;
 
     public $manager;
     public $controlador;
@@ -27,9 +28,6 @@ class CarreraControllerTest extends LoginWebTestCase {
 
         $this->controlador = new CarreraController();
     }
-
-//    private function getEm() {
-//    private function getRepo() {
 
     /**
      * @dataProvider filtros
@@ -234,27 +232,154 @@ class CarreraControllerTest extends LoginWebTestCase {
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 
-//    public function fichaAction($carrera) {
-//    public function do_asignarAction(Request $request) {
-//    public function asignar_establecimientoAction(Carrera $carrera, Request $request) {
+    public function testFichaAction() {
+        $client = $this->client;
+
+        $crawler = $client->request('GET', '/oferta/carrera/ficha/1');
+        $this->assertTrue(200 === $client->getResponse()->getStatusCode());
+
+        $this->assertTrue($crawler->filter('html:contains("Estado")')->count() > 0);
+        $this->assertTrue($crawler->filter('html:contains("Normas")')->count() > 0);
+        $this->assertTrue($crawler->filter('html:contains("dicta")')->count() > 0);
+        $this->assertTrue($crawler->filter('html:contains("cuadro")')->count() > 0);
+        $this->assertTrue($crawler->filter('html:contains("plan")')->count() > 0);
+    }
+
+    public function do_asignarAction(Request $request) {
+        
+    }
+
+    public function testAsignar_establecimientoAction() {
+
+        $carrera = $this->manager
+                ->getEm()
+                ->getRepository('OfertaEducativaBundle:Carrera')
+                ->findOneBy(
+                array(
+                    'id' => self::PROF_PRIMARIA,
+        ));
+
+        $client = $this->client;
+
+        $crawler = $client->request('GET', '/oferta/carrera/asignar_establecimiento/' . $carrera->getId());
+        $this->assertTrue(200 === $client->getResponse()->getStatusCode());
+
+        $this->assertTrue($crawler->filter('html:contains("dictando")')->count() > 0);
+        $this->assertTrue($crawler->filter('html:contains("Volver a la ficha")')->count() > 0);
+    }
+
 //    private function getEstablecimientosForms($carrera) {
 //    private function crearAsignarForm($establecimiento, $carrera, $nro_form) {
-////    public function donde_se_dictaAction($carrera_id) {
-//    public function nomina_donde_se_dictaAction($carrera_id) {
-//    public function nominaAction() {
-//    public function nomina_resumidaAction() {
-//    public function nomina_resumida_donde_se_dictaAction(Carrera $carrera) {
-//    public function nomina_resumida_planilla_de_calculoAction() {
-//    public function historia_estado_validezAction(Request $request, $id) {
-//    public function indicadores_cohorteAction() {
-//    public function indicadores_cohorte_establecimientoAction($establecimiento_id) {
-//    public function indicadores_cohorte_unidad_ofertaAction($unidad_oferta_id) {
-//    public function resumen_validezAction() {
-//    public function resumen_validez_establecimientoAction($establecimiento_id) {
-//    public function resumen_validez_carreraAction($carrera, $clase_css) {
-//    public function cuadro_matriculaAction($carrera) {
-//        $ordenar = function ($elemento1, $elemento2) {
-//    public function tarjeta_carreraAction($carrera_id) {
-//    public function desvincularNormaAction($carrera, $norma) {
-//    public function vincularNormaAction($carrera, $norma) {
+
+    public function testNomina_donde_se_dictaAction($carrera_id = 1) {
+        $client = $this->client;
+
+        $crawler = $client->request('GET', '/oferta/carrera/nomina_donde_se_dicta/' . $carrera_id);
+
+        $this->assertTrue(200 == $client->getResponse()->getStatusCode());
+    }
+
+    public function testNominaAction() {
+        $client = $this->client;
+
+        $crawler = $client->request('GET', '/oferta/carrera/nomina');
+        $this->assertTrue(200 == $client->getResponse()->getStatusCode());
+
+        $link = $crawler->filter('a:contains("Siguiente")')->last()->link();
+
+        //hace click en el link
+        $crawler = $client->click($link);
+        $this->assertTrue(200 == $client->getResponse()->getStatusCode());
+
+        $this->assertTrue($crawler->filter('html:contains("Volver")')->count() > 0);
+    }
+
+    /**
+     * @dataProvider provideUrls 
+     * 
+     * Vale por:
+     * nomina_resumida
+     * nomina_resumida_donde_se_dicta
+     * indicadores_cohorte
+     * indicadores_cohorte_estalecimiento/13
+     * indicadores_cohorte_unidad_oferta/10
+     */
+    public function testPageIsSuccessful($url) {
+        $client = $this->client;
+        $client->request('GET', $url);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertTrue(200 == $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @return type
+     */
+    public function provideUrls() {
+        $x = '/oferta/carrera';
+        return array(
+            array($x . '/nomina_resumida'),
+            array($x . '/nomina_resumida_donde_se_dicta/1'),
+//            array($x . '/nomina_resumida_planilla_de_calculo'), NO ANDA. COPIAR de ACTO PUBLICO
+//            array($x . '/indicadores_cohorte'),
+//            array($x . '/indicadores_cohorte_estalecimiento/13'),
+//            array($x . '/indicadores_cohorte_unidad_oferta/10'),
+        );
+    }
+
+    /**
+     * @dataProvider otraTandas 
+     * 
+     * vale por:
+     * /indicadores_cohorte_estalecimiento/13
+     * /indicadores_cohorte_unidad_oferta/10
+     * /cuadro_matricula/1
+     * /tarjeta_carrera/1
+     */
+    public function testOtraTandaDePaginas($otraTanda) {
+        $client = $this->client;
+        $client->request('GET', $otraTanda);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+    }
+    /**
+     * 
+     * @return type
+     */
+    public function otraTandas() {
+        $x = '/oferta/carrera';
+        return array(
+//            array($x . '/indicadores_cohorte'), NO SE PUEDE TESTEAR POR QUE SOBREPASA LAS 100 LLAMADAS ANIDADAS
+            array($x . '/indicadores_cohorte_estalecimiento/13'),
+            array($x . '/indicadores_cohorte_unidad_oferta/10'),
+            array($x . '/cuadro_matricula/1'),
+            array($x . '/tarjeta_carrera/1'),
+        );
+    }
+    /**
+     * Se usa la norma_id 10 que es la Nro 609
+     * 
+     * @param type $carrera_id
+     * @param type $norma_id
+     */
+    public function testVincularNormaAction($carrera_id = 1, $norma_id = 10) {
+                
+        $client = $this->client;
+        $crawler= $client->request('GET', '/oferta/carrera/norma_vincular_carrera/'. $carrera_id . '/' . $norma_id);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        
+        $this->assertTrue($crawler->filter('td:contains("609")')->count() > 0);
+    }
+    /**
+     * Desvincula la vinculada en el test anterior
+     * 
+     * @param type $carrera_id
+     * @param type $norma_id
+     */
+    public function testDesvincularNormaAction($carrera_id=1, $norma_id= 10) {
+        $client = $this->client;
+                
+        $crawler= $client->request('GET', '/oferta/carrera/desvincular_norma/'. $carrera_id . '/' . $norma_id);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        
+        $this->assertTrue($crawler->filter('td:contains("609")')->count() == 0);
+    }
 }
