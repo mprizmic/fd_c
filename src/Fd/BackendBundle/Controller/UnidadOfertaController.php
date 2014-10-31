@@ -105,28 +105,28 @@ class UnidadOfertaController extends Controller {
         };
         return $this->em;
     }
-
-    /**
-     * Finds and displays a UnidadOferta entity.
-     *
-     * @Route("/{id}/show", name="backend_unidadoferta_show")
-     * @Template()
-     */
-    public function showAction($id) {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('EstablecimientoBundle:UnidadOferta')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find UnidadOferta entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),);
-    }
+// DEPRECATED
+//    /**
+//     * Finds and displays a UnidadOferta entity.
+//     *
+//     * @Route("/{id}/show", name="backend_unidadoferta_show")
+//     * @Template()
+//     */
+//    public function showAction($id) {
+//        $em = $this->getDoctrine()->getEntityManager();
+//
+//        $entity = $em->getRepository('EstablecimientoBundle:UnidadOferta')->find($id);
+//
+//        if (!$entity) {
+//            throw $this->createNotFoundException('Unable to find UnidadOferta entity.');
+//        }
+//
+//        $deleteForm = $this->createDeleteForm($id);
+//
+//        return array(
+//            'entity' => $entity,
+//            'delete_form' => $deleteForm->createView(),);
+//    }
 
     /**
      * Displays a form to create a new UnidadOferta entity.
