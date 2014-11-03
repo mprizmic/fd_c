@@ -27,13 +27,12 @@ class DefaultController extends Controller {
         }
     }
     
-//      DEPRECATED
-//    /**
-//     * @Route("/",  name="portada")
-//     */
-//    public function portadaAction() {
-//        return $this->render('EstablecimientoBundle:Default:portada.html.twig');
-//    }
+    /**
+     * @Route("/",  name="portada")
+     */
+    public function portadaAction() {
+        return $this->render('EstablecimientoBundle:Default:portada.html.twig');
+    }
 
     /**
      * @Route("/agenda", name="agenda")
