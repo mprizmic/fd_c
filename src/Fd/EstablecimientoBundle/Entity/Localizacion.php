@@ -3,6 +3,7 @@
 namespace Fd\EstablecimientoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Validator\ExecutionContext;
@@ -46,6 +47,11 @@ class Localizacion {
      * bidireccional lado inverso
      */
     private $domicilio;
+    /**
+     * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", mappedBy="localizacion")
+     * bidireccional lado inverso
+     */
+    private $ofertas;
 
     /**
      * es el metodo del callback
@@ -59,7 +65,8 @@ class Localizacion {
     }
 
     public function __construct() {
-        $this->domicilio = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->domicilio = new ArrayCollection();
+        $this->ofertas = new ArrayCollection();
     }
 
     public function __toString() {

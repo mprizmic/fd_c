@@ -33,6 +33,12 @@ class UnidadOferta {
 
     /**
      * bidireccional lado propietario
+     * @ORM\ManyToOne(targetEntity="Fd\EstablecimientoBundle\Entity\Localizacion", inversedBy="ofertas")
+     * @ORM\JoinColumn(name="localizacion_id", referencedColumnName="id")
+     */
+    private $localizacion;
+    /**
+     * bidireccional lado propietario
      * @ORM\ManyToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadEducativa", inversedBy="ofertas")
      * @ORM\JoinColumn(name="unidad_educativa_id", referencedColumnName="id")
      */
@@ -44,6 +50,7 @@ class UnidadOferta {
      * @ORM\JoinColumn(name="oferta_educativa_id", referencedColumnName="id")
      */
     private $ofertas;
+    
 
     /**
      * bidireccional lado inverso
