@@ -37,12 +37,6 @@ class UnidadOferta {
      * @ORM\JoinColumn(name="localizacion_id", referencedColumnName="id")
      */
     private $localizacion;
-    /**
-     * bidireccional lado propietario
-     * @ORM\ManyToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadEducativa", inversedBy="ofertas")
-     * @ORM\JoinColumn(name="unidad_educativa_id", referencedColumnName="id")
-     */
-    private $unidades;
 
     /**
      * bidireccional lado propietario
@@ -97,7 +91,7 @@ class UnidadOferta {
         return $this;
     }
     public function __toString() {
-        return $this->getUnidades() . ' - ' . $this->getOfertas();
+        return $this->getLocalizacion() . ' - ' . $this->getOfertas();
     }
 
     public function __construct() {
@@ -124,71 +118,9 @@ class UnidadOferta {
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
-    }
-
-    /**
-     * Set unidades
-     *
-     * @param Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidades
-     */
-    public function setUnidades(\Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidades) {
-        $this->unidades = $unidades;
-    }
-
-    /**
-     * Get unidades
-     *
-     * @return Fd\EstablecimientoBundle\Entity\UnidadEducativa 
-     */
-    public function getUnidades() {
-        return $this->unidades;
-    }
-
-    /**
-     * Set ofertas
-     *
-     * @param Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertas
-     */
-    public function setOfertas(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertas) {
-        $this->ofertas = $ofertas;
-    }
-
-    /**
-     * Get ofertas
-     *
-     * @return Fd\OfertaEducativaBundle\Entity\OfertaEducativa 
-     */
-    public function getOfertas() {
-        return $this->ofertas;
-    }
-
-    /**
-     * Add cohortes
-     *
-     * @param Fd\OfertaEducativaBundle\Entity\Cohorte $cohortes
-     */
-    public function addCohorte(\Fd\OfertaEducativaBundle\Entity\Cohorte $cohortes) {
-        $this->cohortes[] = $cohortes;
-    }
-
-    /**
-     * Get cohortes
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getCohortes() {
-        return $this->cohortes;
-    }
-
-    /**
-     * Remove cohortes
-     *
-     * @param \Fd\OfertaEducativaBundle\Entity\Cohorte $cohortes
-     */
-    public function removeCohorte(\Fd\OfertaEducativaBundle\Entity\Cohorte $cohortes) {
-        $this->cohortes->removeElement($cohortes);
     }
 
     /**
@@ -197,7 +129,8 @@ class UnidadOferta {
      * @param \DateTime $creado
      * @return UnidadOferta
      */
-    public function setCreado($creado) {
+    public function setCreado($creado)
+    {
         $this->creado = $creado;
 
         return $this;
@@ -208,7 +141,8 @@ class UnidadOferta {
      *
      * @return \DateTime 
      */
-    public function getCreado() {
+    public function getCreado()
+    {
         return $this->creado;
     }
 
@@ -218,7 +152,8 @@ class UnidadOferta {
      * @param \DateTime $actualizado
      * @return UnidadOferta
      */
-    public function setActualizado($actualizado) {
+    public function setActualizado($actualizado)
+    {
         $this->actualizado = $actualizado;
 
         return $this;
@@ -229,11 +164,89 @@ class UnidadOferta {
      *
      * @return \DateTime 
      */
-    public function getActualizado() {
+    public function getActualizado()
+    {
         return $this->actualizado;
     }
 
+    /**
+     * Set localizacion
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\Localizacion $localizacion
+     * @return UnidadOferta
+     */
+    public function setLocalizacion(\Fd\EstablecimientoBundle\Entity\Localizacion $localizacion = null)
+    {
+        $this->localizacion = $localizacion;
 
+        return $this;
+    }
+
+    /**
+     * Get localizacion
+     *
+     * @return \Fd\EstablecimientoBundle\Entity\Localizacion 
+     */
+    public function getLocalizacion()
+    {
+        return $this->localizacion;
+    }
+
+    /**
+     * Set ofertas
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertas
+     * @return UnidadOferta
+     */
+    public function setOfertas(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertas = null)
+    {
+        $this->ofertas = $ofertas;
+
+        return $this;
+    }
+
+    /**
+     * Get ofertas
+     *
+     * @return \Fd\OfertaEducativaBundle\Entity\OfertaEducativa 
+     */
+    public function getOfertas()
+    {
+        return $this->ofertas;
+    }
+
+    /**
+     * Add cohortes
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\Cohorte $cohortes
+     * @return UnidadOferta
+     */
+    public function addCohorte(\Fd\OfertaEducativaBundle\Entity\Cohorte $cohortes)
+    {
+        $this->cohortes[] = $cohortes;
+
+        return $this;
+    }
+
+    /**
+     * Remove cohortes
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\Cohorte $cohortes
+     */
+    public function removeCohorte(\Fd\OfertaEducativaBundle\Entity\Cohorte $cohortes)
+    {
+        $this->cohortes->removeElement($cohortes);
+    }
+
+    /**
+     * Get cohortes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCohortes()
+    {
+        return $this->cohortes;
+    }
 
     /**
      * Remove turnos
