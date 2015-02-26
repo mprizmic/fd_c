@@ -8,148 +8,209 @@
 {% endblock menu_derecha %}
 
 {% block contenido %}
-<div id="contenido">
-    {# nombre del establecimiento #}
-    <div class="titulo">{{ establecimiento.nombre }} - D.E.: {{establecimiento.distritoEscolar}} - Comuna: {{ establecimiento.comuna }}<br />
-    CUE: {{ establecimiento.cue}}
-    </div>
+    <div id="contenido">
+        {# nombre del establecimiento #}
+        <div class="titulo">
+            {{ establecimiento.nombre }} - D.E.: {{establecimiento.distritoEscolar}} - Comuna: {{ establecimiento.comuna }}<br />
+            CUE: {{ establecimiento.cue}}
+        </div>
 
-    <div>
-        {# datos generales #}
-        <fieldset>
-            {% set domicilio_principal = edificio_principal.domicilioPrincipal %}
-                <span class="mediana resaltado">{{ domicilio_principal }}</span>
+        <div>
+            {# direcciones de los edificios #}
 
-                {% include "EdificioBundle:Default:includes/ver_mapa.html.twig" with 
-                    {'calle': domicilio_principal.calle,
-                     'altura': domicilio_principal.altura } %}
+            {% for establecimiento_edificio in establecimiento_edificios %}
 
-            <div>TE: {{ establecimiento.te | default('Sin datos') }}</div>
-            <div>Barrio: {{ edificio_principal.barrio }}</div>
-            <div>Código postal: {{ domicilio_principal.cPostal }} </div>
-            <div>Email: <a href="{{establecimiento.email}}">{{establecimiento.email | default('sin datos') }}</a></div>
-            <div>Sitio web: <a href="{{establecimiento.url}}">http://{{establecimiento.url}}</a></div>
-            <div><a href="{{ path('edificio_de_un_cue', {'establecimiento_id': establecimiento.id } ) }}">Edificio(s) (con quien se comparte)</a></div>
-            <br />
-            <fieldset>
-                <div>Autoridades del rectorado:</div>
-                {% for autoridad in establecimiento.autoridadesRectorado %}
-                    <div class="identado_1">
-                        {{ autoridad.cargoAutoridad ~ ': ' ~ autoridad ~ (autoridad.celular ? ' - Cel: ' ~ autoridad.celular : '') }}
-                    </div>
-                {% else %}
-                    <div>Sin datos de las autoridades</div>
-                {% endfor %}
-                <br />
-                    <span>Fecha de las elecciones:
-                    {% if establecimiento.fechaElecciones %}
-                        {{ establecimiento.fechaElecciones|date('d-m-Y') }}
-                    {% else %}
-                        Sin datos
-                    {% endif %}
-                    </span><br />
-                    <span>Fecha de finalización del mandato:
-                    {% if establecimiento.finMandato %}
-                        {{ establecimiento.finMandato | date('d-m-Y') }}
-                    {% else %}
-                        Sin datos
-                    {% endif %}
+                {% set edificio = establecimiento_edificio.edificios %}
+                {% set domicilio_principal = edificio.domicilioPrincipal %}
+
+                {% if not loop.first %}
+                    <span class="resaltado">
+                        ( Anexo : <a href='#{{ establecimiento_edificio.cueAnexo }}'>{{ domicilio_principal }}</a>)
                     </span>
-            </fieldset>
-            
-        </fieldset>
-        <br />
+                {% else %}
+                    <span class="mediana resaltado">
+                        {{ domicilio_principal }}
+                    </span>
+                {% endif %}
+                {% include "EdificioBundle:Default:includes/ver_mapa.html.twig" with 
+                        {'calle': domicilio_principal.calle,
+                         'altura': domicilio_principal.altura } 
+                %}
 
-        {# carreras #}
-        <fieldset>
-        <span class="resaltado">Carreras terciarias:</span><br/>
+            {% endfor %}
 
-            {# se refactoriza por que se agrega a la ficha las unidades_ofertas de nivel terciario del establecimeinto #}
-            {% for oferta_carrera in unidad_ofertas %}
-                {% set la_carrera = oferta_carrera.ofertas.carrera %}
-                <div class="separador">
-                    <a href="{{ path('carrera_ficha', {'carrera_id': la_carrera.id }) }}">{{ la_carrera.identificacion }}</a>
+            {# datos generales #}
 
-                    {#                    se muestran los turnos de una carrera#}
-                    {% include 'EstablecimientoBundle:Default:includes/turnos_carreras.html.twig' with {'unidad_oferta_tipo_carrera':oferta_carrera }  %}
-                </div>
-            {% endfor %}  
-        </fieldset>
-        <br />
-        
-        <fieldset>
-
-            {# niveles que imparte #}
-            <fieldset class="float_izquierda">
-            <span class="resaltado">Niveles que imparte:</span><br/>
-                {% for unidad in establecimiento.unidadesEducativas  %}
-
-                    {# se detalla las salas de inicial que tiene el establecimiento #}
-
-                        <div name="mostrable">
-                            {{ 'Nivel ' ~ unidad.nivel.nombre}}
-                            {% if unidad.nivel.abreviatura == 'Ini' and salas_inicial | length > 0 %}
-                                <span class="chica">[+ info]</span>
-
-                                <fieldset class="invisible">
-                                    <legend>Salas de: </legend>
-                                    <span class="chica">
-                                        {% set salas = salas_inicial.salas %}
-                                        {% for sala in salas  %}
-                                            {{ sala }}{{ ' - ' ~ sala.qSecciones ~ ' sección/es'}}
-                                            {% if not loop.last %}
-                                                <br />
-                                            {% endif %}
-                                        {% endfor %}  
-                                                <br />
-                                        {{ 'Matrícula total: ' ~ salas_inicial.matricula ~ ' alumnos' }}        
-                                        </span>
-                                </fieldset>
-                            {% endif %}  
-                            {% if unidad.nivel.abreviatura == 'Pri' %}
-                                <span class="chica">[+ info]</span>
-
-                                <fieldset class="invisible">
-                                    <span class="chica">
-                                        {{ 'Matrícula total: ' ~  ' alumnos' }}        
-                                    </span>
-                                </fieldset>
-                            {% endif %}  
-                        </div>
-
-                {% endfor %}  
-                <br />
-                <a class="float_derecha chica" href="#">Matrícula total</a>
             <br />
-            </fieldset>
+            <br />
+            <div>Sitio web: <a href="{{establecimiento.url}}">http://{{establecimiento.url}}</a></div>
+            <div>Autoridades del rectorado:</div>
+            {% for autoridad in establecimiento.autoridadesRectorado %}
+                <div class="identado_1">
+                    {{ autoridad.cargoAutoridad ~ ': ' ~ autoridad ~ (autoridad.celular ? ' - Cel: ' ~ autoridad.celular : '') }}
+                </div>
+            {% else %}
+                <div>Sin datos de las autoridades</div>
+            {% endfor %}
+            <br />
+            <span>Fecha de las elecciones:
+                {% if establecimiento.fechaElecciones %}
+                    {{ establecimiento.fechaElecciones|date('d-m-Y') }}
+                {% else %}
+                    Sin datos
+                {% endif %}
+            </span><br />
+            <span>Fecha de finalización del mandato:
+                {% if establecimiento.finMandato %}
+                    {{ establecimiento.finMandato | date('d-m-Y') }}
+                {% else %}
+                    Sin datos
+                {% endif %}
+            </span>
 
-            {# turno de los niveles #}
-            {% include 'EstablecimientoBundle:Default:includes/turnos_niveles.html.twig' with { 'establecimiento': establecimiento } %}
+            {# datos especificos de acada anexo #}
+            
+            {% for establecimiento_edificio in establecimiento_edificios %}
+                
+                {# dentro de este div va toda una localizacion #}
+                
+                <div class="float_izquierda ancho">
 
-            {# docentes por nivel #}
-            <fieldset class="float_izquierda">
-                <span class="resaltado">Cantidad de docentes por nivel:</span><br/>
-                {% for unidad in establecimiento.unidadesEducativas  %}
+                    {% set edificio = establecimiento_edificio.edificios %}
 
-                    <span class="separador"></span>
-                    {{ 'Nivel ' ~ unidad.nivel.nombre ~ ': ' }}
-                    <span class="reforzado">{{ unidad.cantidadDocentes }}</span>
+                    {% if not loop.first %}
+                        <fieldset style="background-color: #ffc;">
+                            <a class="mediana resaltado" name='{{ establecimiento_edificio.cueAnexo }}'>
+                                Anexo {{ edificio.domicilioPrincipal }}</a>
+                    {% endif %}
+
+                    <div>TE: {{ establecimiento_edificio.te1 | default('Sin datos') }}</div>
+                    <div>Barrio: {{ edificio.barrio }}</div>
+                    <div>Código postal: {{ edificio.domicilioPrincipal.cPostal }} </div>
+                    <div>Email: <a href="{{establecimiento_edificio.email1}}">{{establecimiento_edificio.email1 | default('sin datos') }}</a></div>
+                        {# <div><a href="{{ path('edificio_de_un_cue', {'establecimiento_id': establecimiento.id } ) }}">Edificio(s) (con quien se comparte)</a></div> #}
                     <br />
-                {% endfor %}  
-                <a class="float_derecha chica" href="{{ path('backend_establecimiento_docentes_nivel_editar', {'establecimiento_id': establecimiento.id} ) }}">Editar</a>
+
+                    {# localizaciones de las unidades educativas de un establecimiento  #}
+                    {% for localizacion in establecimiento_edificio.localizacion %}
+
+                        {# localizacion del terciario #}
+                        {% if localizacion.unidadEducativa.nivel.abreviatura == 'Ter' %}
+
+                            {# carreras #}
+                            <fieldset>
+
+                                <span class="resaltado">Carreras terciarias (en el edificio):</span><br/>
+
+                                {# en una localizacion de un terciario hay muchas ofertas de carreras y especializaciones 
+                                primero se muestran las carreras #}
+                                {% for unidad_oferta in localizacion.ofertas %}
+
+                                    {# verifico si se trata de una oferta de tipo carrera #}
+                                    {% if unidad_oferta.ofertas.carrera is not empty %}
+
+                                        {% set la_carrera = unidad_oferta.ofertas.carrera %}
+                                        {% set unidad_oferta_carrera = unidad_oferta %}
+
+                                            <div class="separador">
+                                                <a href="{{ path('carrera_ficha', {'carrera_id': la_carrera.id }) }}">{{ la_carrera.identificacion }}</a>
+
+                                                {#  se muestran los turnos de una carrera #}
+                                                {% include 'EstablecimientoBundle:Default:includes/turnos_carreras.html.twig' with {'unidad_oferta_tipo_carrera':unidad_oferta_carrera }  %}
+                                            </div>
+
+                                {% endif %}
+                            {% endfor %}
+                            </fieldset>
+                            <br />                            
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                    {# niveles que imparte en la localizacion #}
+
+                    <fieldset class="float_izquierda">
+                        <span class="resaltado">Niveles en el edificio:</span><br/>
+
+                        {% for localizacion in establecimiento_edificio.localizacion %}
+                            {% set unidad = localizacion.unidadEducativa  %}
+
+                            <div name="mostrable">
+                                {{ 'Nivel ' ~ unidad.nivel.nombre }}
+                                    {# se detalla las salas de inicial que tiene el establecimiento #}
+    {#                               {% if unidad.nivel.abreviatura == 'Ini' and salas_inicial | length > 0 %}
+                                    <span class="chica">[+ info]</span>
+
+                                    <fieldset class="invisible">
+                                        <legend>Salas de: </legend>
+                                        <span class="chica">
+                                            {% set salas = salas_inicial.salas %}
+                                            {% for sala in salas  %}
+                                                {{ sala }}{{ ' - ' ~ sala.qSecciones ~ ' sección/es'}}
+                                                {% if not loop.last %}
+                                                    <br />
+                                                {% endif %}
+                                            {% endfor %}  
+                                                    <br />
+                                            {{ 'Matrícula total: ' ~ salas_inicial.matricula ~ ' alumnos' }}        
+                                            </span>
+                                    </fieldset>
+                                {% endif %}#}  
+     {#                           {% if unidad.nivel.abreviatura == 'Pri' %}
+                                    <span class="chica">[+ info]</span>
+
+                                    <fieldset class="invisible">
+                                        <span class="chica">
+                                            {{ 'Matrícula total: ' ~  ' alumnos' }}        
+                                        </span>
+                                    </fieldset>
+                                {% endif %} #} 
+                            </div>
+
+                        {% endfor %}  
+                        <br />
+                        <a class="float_derecha chica" href="#">Matrícula total</a>
+                        <br />
+                    </fieldset>
+
+                    {# turno de los niveles #}
+                    {# FALTA (muestra cualquier cosa a partir de la modificacion de la localizaciond ela oferta) #}
+                    {% include 'EstablecimientoBundle:Default:includes/turnos_niveles.html.twig' with { 'establecimiento': establecimiento } %}
+                    
+                    {# docentes por nivel #}
+                    <fieldset class="float_izquierda">
+                        <span class="resaltado">Docentes por nivel en el edificio:</span><br/>
+                        
+                        {% for localizacion in establecimiento_edificio.localizacion %}
+                            {% set unidad = localizacion.unidadEducativa  %}
+
+{#                            <span class="separador"></span>#}
+                            {{ 'Nivel ' ~ unidad.nivel.nombre ~ ': ' }}
+                            <span class="reforzado">{{ unidad.cantidadDocentes }}</span>
+                            <br />
+                        {% endfor %}  
+                        <a class="float_derecha chica" href="{{ path('backend_establecimiento_docentes_nivel_editar', {'establecimiento_id': establecimiento.id} ) }}">Editar</a>
+                        <br />
+                    </fieldset>
+
+                    {% if not loop.first %}
+                        </fieldset>
+                    {% endif %}
+
+                </div>
+                
+                <div class="limpiar_float"></div>
+                
                 <br />
-            </fieldset>
 
-
-        </fieldset>
-        <br />
-
-
-        {# Otros datos #}
-        <fieldset>
-            <span class="resaltado">Otros datos</span><br/>
-            <div>Tiene cooperadora: {{ establecimiento.tieneCooperadora |default('Sin datos') }}</div>
-            <div>Laboratorios/Centros:</div>
+            {% endfor %}
+            
+            {# Otros datos #}
+            <fieldset>
+                <span class="resaltado">Otros datos</span><br/>
+                <div>Tiene cooperadora: {{ establecimiento.tieneCooperadora |default('Sin datos') }}</div>
+                <div>Laboratorios/Centros:</div>
                 {% for recurso in establecimiento.recursos %}
                     <div class="identar_1">
                         {{ '-- ' ~ recurso.recurso.descripcion ~ ': ' ~ recurso.cantidad }}
@@ -159,33 +220,17 @@
                 {% else %}
                     <div class="identar_1">Sin datos</div>
                 {% endfor %}
-            <div>Campo de deportes: {{ establecimiento.campoDeportes |default('Sin datos') }}</div>
-            <div>Año de inicio de la Nueva Escuela Secundaria: {{ establecimiento.anioInicioNes | default( 'Sin datos' ) }}</div>
-        </fieldset>
-        <br />
+                <div>Campo de deportes: {{ establecimiento.campoDeportes |default('Sin datos') }}</div>
+                <div>Año de inicio de la Nueva Escuela Secundaria: {{ establecimiento.anioInicioNes | default( 'Sin datos' ) }}</div>
+            </fieldset>
+            <br />
 
-        {# cuadro de matricula #}
-        <fieldset>
-            <a class="resaltado" target="_blank" href="{{ path('establecimientos_cuadro_matricula', {'establecimiento_id': establecimiento.id, 'tipo':'carrera' } ) }}">Cuadro de matrícula de carreras</a><br/>
-        </fieldset>
-        <br />
-
-
-        {# especializaciones #}
-        <fieldset>
-        <span class="resaltado">Postítulos:</span><br/>
-            {% for especializacion in especializaciones %}
-                <div class="separador"><a href="{{ path('especializacion_ficha', {'especializacion_id': especializacion.id }) }}">{{ especializacion.nombre }}</a></div>
-            {% else %}  
-                <div class="separador">No hay datos disponibles</div>
-            {% endfor %}  
-        </fieldset>
-        <br />
+            {# ROi #}
             <fieldset>
                 <div><span class="mediana resaltado">
                         {{ 'ROI' }}
                     </span>
-                        <br />
+                    <br />
                     {% if establecimiento.fechaPresentacionRoi or establecimiento.fechaAprobacionRoi %}
                         {% if establecimiento.fechaPresentacionRoi %}
                             {{ ' Fecha de presentación: ' ~ establecimiento.fechaPresentacionRoi|date('d-m-Y') }}
@@ -196,16 +241,17 @@
                     {% else %}
                         {{ 'Sin información del trámite' }}
                     {% endif %}
-                        
+
                 </div>
             </fieldset>
+            <br />
 
-        <br />
+            {# RAM #}
             <fieldset>
                 <div><span class="mediana resaltado">
                         {{ 'RAM' }}
                     </span>
-                        <br />
+                    <br />
                     {% if establecimiento.fechaPresentacionRam or establecimiento.fechaAprobacionRam %}
                         {% if establecimiento.fechaPresentacionRam %}
                             {{ ' Fecha de presentación: ' ~ establecimiento.fechaPresentacionRam|date('d-m-Y') }}
@@ -216,16 +262,16 @@
                     {% else %}
                         {{ 'Sin información del trámite' }}
                     {% endif %}
-                        
+
                 </div>
             </fieldset>
 
-        <br />
+            <br />
             <fieldset>
                 <div><span class="mediana resaltado">
                         {{ 'R. PRÁCTICAS' }}
                     </span>
-                        <br />
+                    <br />
                     {% if establecimiento.fechaPresentacionRp or establecimiento.fechaAprobacionRp %}
                         {% if establecimiento.fechaPresentacionRp %}
                             {{ ' Fecha de presentación: ' ~ establecimiento.fechaPresentacionRp|date('d-m-Y') }}
@@ -236,12 +282,13 @@
                     {% else %}
                         {{ 'Sin información del trámite' }}
                     {% endif %}
-                        
+
                 </div>
             </fieldset>
+        </div>
+
+        <span class="limpiar_float"></span>
     </div>
-    <span class="limpiar_float"></span>
-</div>
 
 {% endblock contenido %}
 
@@ -249,24 +296,3 @@
     {{ parent() }}
     {% include '::includes/volver.html.twig' %}
 {% endblock main_content %}
-
-{% block javascripts %}
-{{ parent() }}
-
-<script type="text/javascript">
-    
-    $(document).ready( function (){
-
-        function ocultar_y_mostrar(elemento) {
-            var $kids = $(elemento).children();
-            $($kids[1]).toggle();
-        };
-        
-        $("div[name='mostrable']").css("cursor", "pointer"); 
-        $("div[name='mostrable']").click( function () { ocultar_y_mostrar(this); });  
-                    
-    });
-
-
-</script>
-{% endblock %}

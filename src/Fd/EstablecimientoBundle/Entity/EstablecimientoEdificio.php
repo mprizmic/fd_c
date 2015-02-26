@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio
  *
  * @ORM\Table(name="establecimiento_edificio")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fd\EstablecimientoBundle\Repository\EstablecimientoEdificioRepository")
  */
 class EstablecimientoEdificio
 {

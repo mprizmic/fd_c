@@ -18,14 +18,22 @@ use Fd\OfertaEducativaBundle\Entity\CarreraEstadoValidez;
 class CarreraRepository extends EntityRepository {
 
     /**
-     * dado un establecimeinto devuelve objetos de tipo carrera de las carreras del mismo
+     * 25/2/15 modificado para la migracion de localizaciones
+     * 
+     * dado un establecimeinto devuelve objetos de tipo carrera de las carreras del mismo, sin localizar
+     * 
      * @return type resultados objetos carrera
      */
     public function findCarrerasPorEstablecimiento($establecimiento) {
+        
+        /** aca hay que pasar por las localizaciones de cada carrera y eliminar los casos de carreras que se den en más de una localización
+         * para qu no queden repetidas
+         */
+        
         $dql = "select c
             from OfertaEducativaBundle:Carrera c 
             join c.oferta o 
-            join o.unidades u 
+            join o.unidades u
             join u.unidades ue
             join ue.establecimiento e 
             where e.id = :establecimiento";

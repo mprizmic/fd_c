@@ -81,6 +81,14 @@ class EstablecimientoRepository extends EntityRepository {
         };
         return $edificio;
     }
+    /**
+     * devuelve los edificios de un establecimiento
+     * 
+     * @return arraycollection de EstablecimientoEdificio
+     */
+    public function findEdificios($establecimiento){
+        return $this->_em->getRepository('EstablecimientoBundle:EstablecimientoEdificio')->findEdificios($establecimiento);
+    }
 
     /**
      * devuelve las carreras del establecimiento
@@ -175,38 +183,42 @@ class EstablecimientoRepository extends EntityRepository {
     }
 
     /**
+     * FALTA cambia a partir del cambio de localizacion de la oferta
+     * 
      * devuelve una collection con los apodos de los establecimientos que tienen corhortes cargadas en sus carreras
      */
-    public function findTienenCohortes() {
-        $dql = "
-            select e
-            from EstablecimientoBundle:Establecimiento e 
-            join e.unidades_educativas ue 
-            join ue.ofertas uo 
-            join uo.ofertas oe 
-            join oe.carrera car 
-            join uo.cohortes co 
-            order by e.orden";
-        $q = $this->_em->createQuery($dql);
-        return $q->getResult();
-    }
+//    public function findTienenCohortes() {
+//        $dql = "
+//            select e
+//            from EstablecimientoBundle:Establecimiento e 
+//            join e.unidades_educativas ue 
+//            join ue.ofertas uo 
+//            join uo.ofertas oe 
+//            join oe.carrera car 
+//            join uo.cohortes co 
+//            order by e.orden";
+//        $q = $this->_em->createQuery($dql);
+//        return $q->getResult();
+//    }
 
     /**
-     * devuelve las unidades_ofertas (las ofertas educativas asociadas a una unidad educativa
+     * FALTA cambia a partir del cambio de localizacion de la oferta
+     * 
+     * devuelve las unidades_ofertas (las ofertas educativas asociadas a una localizacion de una unidad
      * Tipo es el tipo de oferta. Ej: "carrera"
      * $tipo es una string
      */
-    public function findUnidadesOfertas($establecimiento, $tipo) {
-        $dql = "
-            select uo from EstablecimientoBundle:UnidadOferta uo
-            join uo.unidades ue
-            join uo.ofertas oe
-            join oe." . $tipo . " t 
-            where ue.establecimiento=:establecimiento";
-        $q = $this->_em->createQuery($dql);
-        $q->setParameter('establecimiento', $establecimiento);
-        return $q->getResult();
-    }
+//    public function findUnidadesOfertas($establecimiento, $tipo = null) {
+//        $dql = "
+//            select uo from EstablecimientoBundle:UnidadOferta uo
+//            join uo.unidades ue
+//            join uo.ofertas oe
+//            join oe." . $tipo . " t 
+//            where ue.establecimiento=:establecimiento";
+//        $q = $this->_em->createQuery($dql);
+//        $q->setParameter('establecimiento', $establecimiento);
+//        return $q->getResult();
+//    }
 
     /**
      * Lista de establecimientos para un combo
@@ -215,12 +227,14 @@ class EstablecimientoRepository extends EntityRepository {
         return $this->findAllOrdenado('orden');
     }
     /*
+     * FALTA cambia a partir del cambio de localizacion de la oferta
+     * 
      * Invoca al UnidadOfertaRepository. Ver ahí todo el detalle
      * 
      * Devuelve un array con los ingresantes, matriculados y egresador de un año en particular de carreras del terciario
      */
-    public function findMatriculaCarrera($anio, $carrera = null, $establecimiento=null){
-        return $this->_em->getRepository('EstablecimientoBundle:UnidadOferta')
-                ->findMatriculaCarrera($anio, $carrera, $establecimiento);
-    }
+//    public function findMatriculaCarrera($anio, $carrera = null, $establecimiento=null){
+//        return $this->_em->getRepository('EstablecimientoBundle:UnidadOferta')
+//                ->findMatriculaCarrera($anio, $carrera, $establecimiento);
+//    }
 }

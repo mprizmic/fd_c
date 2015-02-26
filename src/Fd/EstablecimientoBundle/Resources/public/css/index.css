@@ -37,6 +37,9 @@ body {
 #contenido {
     width:80%;
 }
+.ancho {
+    width:100%;
+}
 #footer {
     padding: 0 10px;
     background: #666;

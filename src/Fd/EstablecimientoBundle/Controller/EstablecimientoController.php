@@ -116,8 +116,9 @@ class EstablecimientoController extends Controller {
     /**
      * @Route("/ficha/{establecimiento_id}", name="establecimiento_ficha")
      * @Template("EstablecimientoBundle:Default:ficha.html.twig")
+     * @ParamConverter("establecimiento", class="EstablecimientoBundle:Establecimiento", options={"id"="establecimiento_id"})
      */
-    public function fichaAction($establecimiento_id) {
+    public function fichaAction($establecimiento) {
         $request = $this->getRequest();
         
         // establezco la ruta para la pagina que tenga que volver aca
@@ -127,28 +128,38 @@ class EstablecimientoController extends Controller {
         //repositorio de establecimiento
         $repo = $this->getDoctrine()->getRepository('EstablecimientoBundle:Establecimiento');
         
-        $establecimiento = $repo->find($establecimiento_id);
         $establecimientos = $repo->qyAllOrdenado('orden')->getResult();
-        $edificio_principal = $repo->findEdificioPrincipal($establecimiento);
+        
+        //son obj establecimiento_edificio
+        $establecimiento_edificios = $repo->findEdificios($establecimiento);
         
         //devuelve los objetos carrera
-        $carreras = $repo->findCarreras($establecimiento);
-        $especializaciones = $repo->findEspecializaciones($establecimiento);
-        $salas_inicial = $repo->findSalasInicial($establecimiento);
-        $primario = $repo->findPrimario($establecimiento);
+//        $carreras = $repo->findCarreras($establecimiento);
+
+        //ver
+//        $especializaciones = $repo->findEspecializaciones($establecimiento);
+        
+        //ver
+//        $salas_inicial = $repo->findSalasInicial($establecimiento);
+        
+        //ver
+//        $primario = $repo->findPrimario($establecimiento);
+        
+        //ver    debería ser por localizacion
         //son los objetos unidad_oferta para poder mostrar los turnos de cada oferta educativa de tipo carrera
-        //representan el dicatado de una carrera en eel establecimiento en tratamiento
-        $unidad_ofertas = $repo->findUnidadesOfertas($establecimiento, "carrera");
+        //representan el dictado de una carrera en el establecimiento en tratamiento
+//        $localizaciones_terciario = $repo->findUnidadesOfertas($localizacion, "carrera");
 
         return array(
-            'establecimiento' => $establecimiento,
-            'edificio_principal' => $edificio_principal,
-            'carreras' => $carreras,
-            'especializaciones' => $especializaciones,
-            'salas_inicial' => $salas_inicial,
             'establecimientos' => $establecimientos,
-            'primario' => $primario,
-            'unidad_ofertas' => $unidad_ofertas,
+            'establecimiento' => $establecimiento,
+            'establecimiento_edificios' => $establecimiento_edificios,
+//            'edificio_principal' => $edificio_principal,
+//            'carreras' => $carreras,
+//            'especializaciones' => $especializaciones,
+//            'salas_inicial' => $salas_inicial,
+//            'primario' => $primario,
+//            'unidad_ofertas' => $unidad_ofertas,
         );
     }
 
