@@ -24,7 +24,9 @@
 {# tarjeta del establecimiento   #}
     <div class="chica italico">Establecimiento</div>
     <span>
-        {% render "EstablecimientoBundle:Establecimiento:tarjeta_establecimiento" with {'establecimiento_id': entity.unidades.establecimiento.id } %}
+        {% set establecimiento_edificio = entity.localizacion.establecimientoEdificio %}
+        {% render "EstablecimientoBundle:Establecimiento:tarjeta_establecimiento_edificio" with 
+                {'establecimiento': establecimiento_edificio } %}
     </span>
 {#  tarjeta de la carrera  #}
     <div class="chica italico">Carrera</div>
