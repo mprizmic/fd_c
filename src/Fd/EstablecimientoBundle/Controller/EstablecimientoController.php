@@ -216,5 +216,15 @@ class EstablecimientoController extends Controller {
                     'establecimiento' => $establecimiento,
         ));
     }
+    /**
+     * @Route("/tarjeta_establecimiento_edificio/{establecimiento_edificio_id}", name="tarjeta_establecimiento_edificio")
+     * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:EstablecimientoEdificio", options={"id", "establecimiento_edificio_id"})
+     */
+    public function tarjeta_establecimiento_edificioAction($establecimiento_edificio) {
+
+        return $this->render('EstablecimientoBundle:Default:tarjeta_establecimiento_edificio.html.twig', array(
+                    'establecimiento_edificio' => $establecimiento_edificio,
+        ));
+    }
 
 }
