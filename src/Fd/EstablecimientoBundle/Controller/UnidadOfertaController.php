@@ -30,7 +30,7 @@ class UnidadOfertaController extends Controller {
         $form = $this->createForm(new UnidadOfertaType(), $unidad_oferta);
 
         return $this->render('EstablecimientoBundle:UnidadOferta:turnos.html.twig', array(
-                    'entity' => $unidad_oferta,
+                    'unidad_oferta' => $unidad_oferta,
                     'form' => $form->createView(),
         ));
     }
@@ -54,7 +54,7 @@ class UnidadOfertaController extends Controller {
 
         if ($editForm->isValid()) {
 
-            $manager = new UnidadOfertaHandler($this->getDoctrine()->getEntityManager(), $unidad_oferta->getUnidades()->getNivel());
+            $manager = new UnidadOfertaHandler($this->getDoctrine()->getEntityManager(), $unidad_oferta->getLocalizacion()->getUnidadEducativa()->getNivel());
 
             $respuesta = $manager->actualizar($unidad_oferta, $originalTurnos);
 
@@ -70,7 +70,6 @@ class UnidadOfertaController extends Controller {
         $ruta = $this->get('session')->get('ruta_completa');
         $params = $this->get('session')->get('parametros');
         
-//        return $this->redirect($this->get('session')->get('ruta_completa'));
         return $this->redirect($this->generateUrl($ruta, $params ) );
     }
 

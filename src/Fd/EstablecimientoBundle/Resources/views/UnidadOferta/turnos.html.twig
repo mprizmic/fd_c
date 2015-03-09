@@ -24,19 +24,19 @@
 {# tarjeta del establecimiento   #}
     <div class="chica italico">Establecimiento</div>
     <span>
-        {% set establecimiento_edificio = entity.localizacion.establecimientoEdificio %}
+        {% set establecimiento_edificio = unidad_oferta.localizacion.establecimientoEdificio %}
         {% render "EstablecimientoBundle:Establecimiento:tarjeta_establecimiento_edificio" with 
-                {'establecimiento': establecimiento_edificio } %}
+                {'establecimiento_edificio': establecimiento_edificio } %}
     </span>
 {#  tarjeta de la carrera  #}
     <div class="chica italico">Carrera</div>
     <span>
-        {% render "OfertaEducativaBundle:Carrera:tarjeta_carrera" with {'carrera_id': entity.ofertas.carrera.id } %}
+        {% render "OfertaEducativaBundle:Carrera:tarjeta_carrera" with {'carrera_id': unidad_oferta.ofertas.carrera.id } %}
     </span>
     <br />
 
 {#  formulario de turnos  #}
-    <form action="{{ path('establecimiento.unidad_oferta.actualizar_turnos', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('establecimiento.unidad_oferta.actualizar_turnos', { 'id': unidad_oferta.id }) }}" method="post" {{ form_enctype(form) }}>
         {# turnos en que se imparte #}
         <fieldset>
             <legend class="resaltado">

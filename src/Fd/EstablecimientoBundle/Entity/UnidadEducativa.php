@@ -112,23 +112,7 @@ class UnidadEducativa {
             return null;
         };
     }
-    /**
-     * FALTA este se modifica por 'ofertas'
-     * Al cambiar la relacion de ofertas de unidad educativa a localizaciones esto se modifica. No existe más getOfertas()
-     */
-    public function getTurnosSinRepetir(){
-        $salida = array();
-//        foreach ($this->getOfertas() as $unidadoferta) {
-//            foreach ($unidadoferta->getTurnos() as $turno) {
-//                $descripcion = $turno->getTurno()->getDescripcion(); 
-//                if (!in_array($descripcion, $salida)){
-//                    $salida[]=$descripcion;
-//                }
-//            }
-//            
-//        };
-        return $salida;
-    }
+
     public function __toString() {
         return $this->getNivel() . '/' . $this->getEstablecimiento();
     }

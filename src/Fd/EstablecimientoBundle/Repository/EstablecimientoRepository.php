@@ -5,6 +5,7 @@ namespace Fd\EstablecimientoBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection as ArrCol;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
+use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 
 class EstablecimientoRepository extends EntityRepository {
 
@@ -142,24 +143,7 @@ class EstablecimientoRepository extends EntityRepository {
         return $q->getResult();
     }
 
-    /**
-     * Devuelve las salas que tiene el establecimiento, si tiene
-     * 
-     * @param type $establecimiento
-     */
-    public function findSalasInicial($establecimiento) {
-        $inicial_x = new ArrCol();
-        $inicial = $establecimiento->getUnidadEducativa('Ini');
-        if ($inicial) {
-            $ofertas = $inicial->existeOferta();
-            if ($ofertas) {
-                $repo = $this->_em
-                        ->getRepository('OfertaEducativaBundle:InicialX');
-                $inicial_x = $repo->findSalas( $ofertas[0] );
-            };
-        };
-        return $inicial_x;
-    }
+
     /**
      * FALTA se modifica suponiendo que puede existir unidad_oferta de primario pero no primario_x
      * Devuelve la oferta de primario , si tiene

@@ -4,9 +4,30 @@ namespace Fd\EstablecimientoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EdificioBundle\Repository\DomicilioLocalizacionRepository;
 
 class LocalizacionRepository extends EntityRepository {
+    /**
+     * dada una localizacion devuelve todos los turnos que tienen todas las ofertas que en dicha unidad educativa se imparta en esa sede
+     */
+    public function findTurnos( \Fd\EstablecimientoBundle\Entity\Localizacion $localizacion) {
+        
+        $todos = array();
+        
+        foreach ($localizacion->getOfertas() as $key => $unidad_oferta) {
+            
+            $parcial = array();
+            
+            foreach ($unidad_oferta->getTurnos() as $key2 => $un_turno) {
+                $parcial[] = $un_turno->getTurno()->getDescripcion();
+            }
+            
+            $todos = array_merge($todos, $parcial);
+        };
+        
+        return array_unique($todos);
+    }
 
     /**
      * Asigna domicilios a una localizacion creando los registros de la tabla domicilio_localizacion

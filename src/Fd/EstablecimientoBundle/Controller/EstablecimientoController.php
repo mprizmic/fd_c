@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
+use Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno;
+use Fd\EstablecimientoBundle\Repository\UnidadOfertaRepository;
 
 /**
  * @Route("/")
@@ -133,8 +135,90 @@ class EstablecimientoController extends Controller {
         //son obj establecimiento_edificio
         $establecimiento_edificios = $repo->findEdificios($establecimiento);
         
-        //devuelve los objetos carrera
-//        $carreras = $repo->findCarreras($establecimiento);
+        foreach($establecimiento_edificios as $key => $establecimiento_edificio){
+            
+            $domicilio = $establecimiento_edificio->getEdificios()->getDomicilioPrincipal();
+            
+            $establecimiento_edificio_array[$key]['cue_anexo'] = $establecimiento_edificio->getCueAnexo();
+            
+            $establecimiento_edificio_array[$key]['domicilio']['calle'] = $domicilio->getCalle();
+            $establecimiento_edificio_array[$key]['domicilio']['altura'] = $domicilio->getAltura();
+            
+                $datos_grales['te'] = $establecimiento_edificio->getTe1();
+                $datos_grales['barrio'] = $establecimiento_edificio->getEdificios()->getBarrio();
+                $datos_grales['cp'] = $domicilio->getCPostal();
+                $datos_grales['email'] = $establecimiento_edificio->getEmail1();
+            
+            
+            $establecimiento_edificio_array[$key]['datos_grales'] = $datos_grales;
+            
+            /**
+             * establecimiento_edificio_array[][cue_anexo]
+             * establecimiento_edificio_array[][domicilio][calle]
+             * establecimiento_edificio_array[][domicilio][altura]
+             * establecimiento_edificio_array[][datos_grales][te]
+             * establecimiento_edificio_array[][datos_grales][barrio]
+             * establecimiento_edificio_array[][datos_grales][cp]
+             * establecimiento_edificio_array[][datos_grales][email]
+             * establecimiento_edificio_array[][unidad_educativas][][nivel]
+             * establecimiento_edificio_array[][unidad_educativas][][nivel_id]
+             * establecimiento_edificio_array[][unidad_educativas][][nivel_abreviatura]
+             * establecimiento_edificio_array[][unidad_educativas][][ofertas][][id][]
+             * establecimiento_edificio_array[][unidad_educativas][][ofertas][][salas_inicial][]
+             * establecimiento_edificio_array[][unidad_educativas][][ofertas][][turnos][]
+             * establecimiento_edificio_array[][unidad_educativas][][ofertas][][tipo]
+             * establecimiento_edificio_array[][unidad_educativas][][ofertas][][carrera]
+             * establecimiento_edificio_array[][unidad_educativas][][ofertas][][carrera_id]
+             * establecimiento_edificio_array[][unidad_educativas][][turnos_nivel][]
+             */
+            $unidad_educativas = array();
+            foreach ($establecimiento_edificio->getLocalizacion() as $key2 => $localizacion) {
+                
+                $nivel = $localizacion->getUnidadEducativa()->getNivel();
+
+                $unidad_educativas[$key2] = array();
+                $unidad_educativas[$key2]['nivel'] = $nivel->getNombre();
+                $unidad_educativas[$key2]['nivel_id'] = $nivel->getId();
+                $unidad_educativas[$key2]['nivel_abreviatura'] = $nivel->getAbreviatura();
+
+            
+                /**
+                 * de cada localizacion se toman todas sus unidades ofertas asociadas al nivel
+                 */
+                $unidad_ofertas = array();
+                foreach ($localizacion->getOfertas() as $key_uo => $unidad_oferta) {
+                    $unidad_ofertas[$key_uo]['id'] = $unidad_oferta->getId();
+                    $unidad_ofertas[$key_uo]['salas_inicial'] = 'salas_inicial';
+                    $unidad_ofertas[$key_uo]['turnos'] = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')->findTurnosArray($unidad_oferta);
+                    $tipo = $unidad_oferta->getOfertas()->esTipo();
+                    $unidad_ofertas[$key_uo]['tipo'] = $tipo;
+                    if ($tipo == 'Carrera'){
+                        $carrera = $unidad_oferta->getOfertas()->getCarrera(); 
+                        $unidad_ofertas[$key_uo]['carrera'] = $carrera->getIdentificacion();
+                        $unidad_ofertas[$key_uo]['carrera_id'] = $carrera->getId();
+                    }
+                    
+                }
+                /**
+                 * guardo todas las ofertas de un nivel
+                 */
+                $unidad_educativas[$key2]['ofertas'] = $unidad_ofertas;
+                
+                $unidad_educativas[$key2]['turnos_nivel'] = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')->findTurnos($localizacion);
+                
+            }
+            
+            $establecimiento_edificio_array[$key]['unidad_educativas'] = $unidad_educativas;
+            
+            /**
+             * turnos en que funciona la oferta de cada nivel de cada sede
+             * se calcula por el nivel de la unidad_oferta
+             * puede haber unidad_oferta con turno distinto de nivel repetido y hay que considerarlo
+             * ej: carrrera 1 TM y TV, carrera 2 TV y TT. El resultado es que Terciario tiene TM. TT y TV
+             */
+                    
+        }
+        
 
         //ver
 //        $especializaciones = $repo->findEspecializaciones($establecimiento);
@@ -151,9 +235,16 @@ class EstablecimientoController extends Controller {
 //        $localizaciones_terciario = $repo->findUnidadesOfertas($localizacion, "carrera");
 
         return array(
-            'establecimientos' => $establecimientos,
+            //todos los datos separador por localizacion
+            'datos_localizados' => $establecimiento_edificio_array,
+            
+            //el establecimiento en tratamiento
             'establecimiento' => $establecimiento,
-            'establecimiento_edificios' => $establecimiento_edificios,
+            //toda la lista de establecimientos para hacer el menu derecho
+            'establecimientos' => $establecimientos,
+            
+            
+            'establecimiento_edificios' => $establecimiento_edificios, //deprecated
 //            'edificio_principal' => $edificio_principal,
 //            'carreras' => $carreras,
 //            'especializaciones' => $especializaciones,

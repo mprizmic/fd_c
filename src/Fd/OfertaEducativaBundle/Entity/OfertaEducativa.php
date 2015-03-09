@@ -138,7 +138,7 @@ class OfertaEducativa {
                 $tipo = 'Especializacion';
             }
         } else {
-            $tipo = 'Carrerea';
+            $tipo = 'Carrera';
         };
         return $tipo;
     }

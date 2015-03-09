@@ -59,6 +59,13 @@ class UnidadOferta {
     private $turnos;
 
     /**
+     * bidireccional lado propietario
+     * @ORM\OneToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\InicialX", inversedBy="unidad_oferta")
+     * @ORM\JoinColumn(name="salas_inicial_id", referencedColumnName="id")
+     */
+    private $salas_inicial;
+    
+    /**
      * @ORM\Column(type="datetime")
      */
     private $creado;
@@ -112,6 +119,7 @@ class UnidadOferta {
     public function ultimaModificacion() {
         $this->setActualizado(new \DateTime());
     }
+
 
     /**
      * Get id
@@ -266,5 +274,28 @@ class UnidadOferta {
     public function getTurnos()
     {
         return $this->turnos;
+    }
+
+    /**
+     * Set salas_inicial
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\InicialX $salasInicial
+     * @return UnidadOferta
+     */
+    public function setSalasInicial(\Fd\OfertaEducativaBundle\Entity\InicialX $salasInicial = null)
+    {
+        $this->salas_inicial = $salasInicial;
+
+        return $this;
+    }
+
+    /**
+     * Get salas_inicial
+     *
+     * @return \Fd\OfertaEducativaBundle\Entity\InicialX 
+     */
+    public function getSalasInicial()
+    {
+        return $this->salas_inicial;
     }
 }

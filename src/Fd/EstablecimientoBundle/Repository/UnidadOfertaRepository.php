@@ -5,8 +5,40 @@ namespace Fd\EstablecimientoBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
+use Fd\OfertaEducativaBundle\Repository\InicialXRepository;
 
 class UnidadOfertaRepository extends EntityRepository {
+
+    /**
+     * devuelve el array de turnos de una unidad_oferta
+     */
+    public function findTurnosArray(UnidadOferta $unidad_oferta){
+        $parcial = $unidad_oferta->getTurnos();
+        
+        if (count($parcial) < 1){
+            return array();
+        };
+        
+        foreach ($parcial as $key => $value) {
+            $resultado[$key] = $value->getTurno()->getDescripcion();
+        };
+        
+//        $resultado = array_unique($repetidos, SORT_LOCALE_STRING);
+        
+        return $resultado;
+        
+    }
+    /**
+     * devuelve un obj inicial_x con la cabecera de las salas de inicial de una unidad_oferta en particular
+     */
+    public function findSalas(UnidadOferta $unidad_oferta) {
+        $inicial_x = $this
+                ->_em
+                ->getRepository('OfertaEducativaBundle:InicialX')
+                ->findSalas($unidad_oferta);
+        
+        return $inicial_x;
+    }
 
     /**
      * devuelve las ofertas carrera de un establecimiento que tienen cohortes
@@ -147,14 +179,14 @@ class UnidadOfertaRepository extends EntityRepository {
         //el establecimiento puede o no estar presente
         if ($establecimiento_id) {
             $keys = array_merge($keys, array('establecimiento_id'));
-            
+
             $qb->addSelect('e.id as establecimiento_id, e.apodo');
             $qb->andWhere('ue.establecimiento = :establecimiento');
             $qb->setParameter('establecimiento', $establecimiento_id);
         };
         if ($carrera_id) {
             $keys = array_merge($keys, array('carrera_id'));
-            
+
             $qb->addSelect('car.id as carrrera_id', 'car.nombre');
             $qb->andWhere('car.id = :carrera');
             $qb->setParameter('carrera', $carrera_id);
