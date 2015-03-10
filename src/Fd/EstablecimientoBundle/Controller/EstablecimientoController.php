@@ -139,6 +139,7 @@ class EstablecimientoController extends Controller {
             
             $domicilio = $establecimiento_edificio->getEdificios()->getDomicilioPrincipal();
             
+            $establecimiento_edificio_array[$key]['id'] = $establecimiento_edificio->getId();
             $establecimiento_edificio_array[$key]['cue_anexo'] = $establecimiento_edificio->getCueAnexo();
             
             $establecimiento_edificio_array[$key]['domicilio']['calle'] = $domicilio->getCalle();
@@ -153,6 +154,7 @@ class EstablecimientoController extends Controller {
             $establecimiento_edificio_array[$key]['datos_grales'] = $datos_grales;
             
             /**
+             * establecimiento_edificio_array[][id]
              * establecimiento_edificio_array[][cue_anexo]
              * establecimiento_edificio_array[][domicilio][calle]
              * establecimiento_edificio_array[][domicilio][altura]

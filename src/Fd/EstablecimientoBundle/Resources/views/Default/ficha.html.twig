@@ -90,6 +90,7 @@
                     <div>Código postal: {{ establecimiento_edificio['datos_grales']['cp'] }} </div>
                     <div>Email: <a href="{{ establecimiento_edificio['datos_grales']['email'] }}">{{ establecimiento_edificio['datos_grales']['email'] | default('sin datos') }}</a></div>
 {#                    <div><a href="{{ path('edificio_de_un_cue', {'establecimiento_id': establecimiento.id } ) }}">Edificio(s) (con quien se comparte)</a></div> #}
+                    <div><a href="{{ path('edificio_de_un_cue', {'establecimiento_id': establecimiento.id } ) }}">Edificio(s) (con quien se comparte)</a></div>
                     <br />
                     
                     {# carreras  #}
@@ -147,7 +148,28 @@
 {#                        <a class="float_derecha chica" href="{{ path('backend_establecimiento_docentes_nivel_editar', {'establecimiento_id': establecimiento.id} ) }}">Editar</a>#}
                         <a class="float_derecha chica" href="#">Editar</a>
                     </fieldset>
+                    <br />                        
                         
+                    {# cuadro de matricula #}
+{#                    FALTA . no esta localizado #}
+                    <div class="limpiar_float">
+                        <BR />
+                    </div>
+                    <fieldset >
+                        <a class="resaltado" target="_blank" href="{{ path('establecimientos_cuadro_matricula', {'establecimiento_id': establecimiento.id, 'tipo':'carrera' } ) }}">Cuadro de matrícula de carreras</a><br/>
+                    </fieldset>
+                    <br />                        
+                        
+                    {# especializaciones #}
+                    <fieldset>
+                    <span class="resaltado">Postítulos:</span><br/>
+            {#            {% for especializacion in especializaciones %}
+                            <div class="separador"><a href="{{ path('especializacion_ficha', {'especializacion_id': especializacion.id }) }}">{{ especializacion.nombre }}</a></div>
+                        {% else %}  
+            #}                <div class="separador">No hay datos disponibles</div>
+            {#            {% endfor %}  #}
+                    </fieldset>
+        
                     {% if not loop.first %}
                         </fieldset>
                     {% endif %}
@@ -156,6 +178,26 @@
 
                 <span class="limpiar_float"></span>
             {% endfor %}
+            
+            
+            {# Otros datos #}
+            <fieldset>
+                <span class="resaltado">Otros datos</span><br/>
+                <div>Tiene cooperadora: {{ establecimiento.tieneCooperadora |default('Sin datos') }}</div>
+                <div>Laboratorios/Centros:</div>
+                    {% for recurso in establecimiento.recursos %}
+                        <div class="identar_1">
+                            {{ '-- ' ~ recurso.recurso.descripcion ~ ': ' ~ recurso.cantidad }}
+                            {{ recurso.origenHora ? ' (' ~ recurso.origenHora.descripcion ~ ')' }}
+                            {{ recurso.comentario ? ' (' ~ recurso.comentario ~ ')' }}
+                        </div>
+                    {% else %}
+                        <div class="identar_1">Sin datos</div>
+                    {% endfor %}
+                <div>Campo de deportes: {{ establecimiento.campoDeportes |default('Sin datos') }}</div>
+                <div>Año de inicio de la Nueva Escuela Secundaria: {{ establecimiento.anioInicioNes | default( 'Sin datos' ) }}</div>
+            </fieldset>
+            <br />
             
             <fieldset>
                 <span class="mediana resaltado">
