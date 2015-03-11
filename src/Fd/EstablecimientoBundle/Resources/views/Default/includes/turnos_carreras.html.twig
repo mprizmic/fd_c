@@ -1,7 +1,7 @@
-{# despliega en horizontal los turnos anteponiendo la palabra "tunos:" #}
-{# la variable que espera recibir es oferta_carreras y es un objeto oferta_carrera #}
+{# despliega en horizontal los turnos anteponiendo la palabra "turnos:" #}
+{# la variable que espera recibir es el array unidad_oferta[turnos] con la descripcion del turno #}
 <span class="separador"></span>
-<a href="{{ path('establecimiento.unidad_oferta.asignar_turno', { 'id' : unidad_oferta['id'] } ) }}">
+<a href="{{ path('establecimiento.unidad_oferta.asignar_turno', { 'id' : unidad_oferta['unidad_oferta_id'] } ) }}">
     {% for turno in unidad_oferta['turnos'] %}
         {% if loop.first %}
             {{ 'Turno/s: ' }}
