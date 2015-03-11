@@ -6,26 +6,28 @@ use Doctrine\ORM\EntityRepository;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EdificioBundle\Repository\DomicilioLocalizacionRepository;
+use Fd\OfertaEducativaBundle\Entity\Carrera;
 
 class LocalizacionRepository extends EntityRepository {
+
     /**
      * dada una localizacion devuelve todos los turnos que tienen todas las ofertas que en dicha unidad educativa se imparta en esa sede
      */
-    public function findTurnos( \Fd\EstablecimientoBundle\Entity\Localizacion $localizacion) {
-        
+    public function findTurnos(\Fd\EstablecimientoBundle\Entity\Localizacion $localizacion) {
+
         $todos = array();
-        
+
         foreach ($localizacion->getOfertas() as $key => $unidad_oferta) {
-            
+
             $parcial = array();
-            
+
             foreach ($unidad_oferta->getTurnos() as $key2 => $un_turno) {
                 $parcial[] = $un_turno->getTurno()->getDescripcion();
             }
-            
+
             $todos = array_merge($todos, $parcial);
         };
-        
+
         return array_unique($todos);
     }
 
@@ -106,6 +108,32 @@ class LocalizacionRepository extends EntityRepository {
         };
 
         return $respuesta;
+    }
+
+    /**
+     * dada una carrera devuelve todas sus localizaciones
+     */
+    public function findDeCarrera(Carrera $carrera) {
+        $q = $this->_em->createQueryBuilder()
+                ->select('l.id as localizacion_id')
+                ->addSelect('e.id as establecimiento_id')
+                ->addSelect('ee.cue_anexo as cue_anexo')
+                ->addSelect('e.nombre as establecimiento_nombre')
+                ->addSelect('ee.nombre as localizacion_nombre')
+                ->addSelect('uo.id as unidad_oferta_id')
+                ->from('EstablecimientoBundle:Localizacion', 'l')
+                ->join('l.establecimiento_edificio', 'ee')
+                ->join('ee.establecimientos', 'e')
+                ->join('l.ofertas', 'uo')
+                ->join('uo.ofertas', 'oe')
+                ->where('oe.id= ?1')
+                ->orderBy('e.orden')
+                ->addOrderBy('ee.cue_anexo')
+                ->setParameter(1, $carrera->getOferta()->getId());
+
+        $dql = $q->getDQL();
+        $resultado = $q->getQuery()->getResult();
+        return $resultado;
     }
 
     /**
