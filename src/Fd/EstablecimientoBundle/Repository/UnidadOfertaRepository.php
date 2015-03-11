@@ -23,10 +23,7 @@ class UnidadOfertaRepository extends EntityRepository {
             $resultado[$key] = $value->getTurno()->getDescripcion();
         };
         
-//        $resultado = array_unique($repetidos, SORT_LOCALE_STRING);
-        
         return $resultado;
-        
     }
     /**
      * devuelve un obj inicial_x con la cabecera de las salas de inicial de una unidad_oferta en particular
