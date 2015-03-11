@@ -2,17 +2,18 @@
 {# recibe como parametro las unidades_ofertas de donde se sacan los establecimientos #}
 <fieldset>
     <legend class="resaltado">Establecimientos en los que se dicta</legend>
-    {% for unidad_oferta in unidad_ofertas %}
-        
-        {% set establecimiento = unidad_oferta.unidades.establecimiento %}
+    {% for establecimiento in establecimientos_array %}
         
         <div class="separador">
             
             {# muestra el nombre de cada establecimiento #}
-            <a href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento.id}) }}">{{ establecimiento.nombre }}</a>
+            <a href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento['establecimiento_id'] }) }}">
+                {{ establecimiento['establecimiento_nombre'] }}
+                {{ establecimiento['cue_anexo'] == '01' ? ' - ' ~ establecimiento['localizacion_nombre'] }}
+            </a>
             
             {# muestra el turno de cada establecimento           #}
-            {% include 'EstablecimientoBundle:Default:includes/turnos_carreras.html.twig' with {'unidad_oferta_tipo_carrera': unidad_oferta } %}
+            {% include 'EstablecimientoBundle:Default:includes/turnos_carreras.html.twig' with {'unidad_oferta': establecimiento } %}
         </div>
     {% endfor %}  
 </fieldset>
