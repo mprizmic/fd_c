@@ -22,21 +22,31 @@ class CarreraRepositoryTest extends WebTestCase {
         ;
     }
 
+    public function testFindLocalizaciones($carrera_id = 8){
+        $carrera = $this->repo->find( $carrera_id ) ;
+        
+        $resultado = $this->repo->findLocalizaciones($carrera);
+        
+        $this->assertCount(13, $resultado);
+        
+        $output->writeln('duplicado creado');
+        
+    }
     /**
      * dado un establecimeinto devuelve objetos de tipo carrera de las carreras del mismo
      * Se prueba con el ISPEE
      * 
      * @param type $establecimiento_id
      */
-    public function testFindCarrerasPorEstablecimiento($establecimiento_id = 30) {
-        $establecimiento = $this->em->getRepository('EstablecimientoBundle:Establecimiento')
-                ->findOneBy(array('apodo' => 'ISPEE'));
-
-        $carreras = $this->repo
-                ->findCarrerasPorEstablecimiento($establecimiento);
-
-        $this->assertCount(1, $carreras);
-    }
+//    public function testFindCarrerasPorEstablecimiento($establecimiento_id = 30) {
+//        $establecimiento = $this->em->getRepository('EstablecimientoBundle:Establecimiento')
+//                ->findOneBy(array('apodo' => 'ISPEE'));
+//
+//        $carreras = $this->repo
+//                ->findCarrerasPorEstablecimiento($establecimiento);
+//
+//        $this->assertCount(1, $carreras);
+//    }
 
     /**
      * Se testea en el siguiente
@@ -66,7 +76,7 @@ class CarreraRepositoryTest extends WebTestCase {
         $carreras = $this->repo
                 ->qyResumido()
                 ->getResult();
-        $this->assertCount(2, $carreras);
+        $this->assertCount(37, $carreras);
     }
 
     public function testDqlActivas() {
@@ -75,7 +85,7 @@ class CarreraRepositoryTest extends WebTestCase {
                 ->getQuery()
                 ->getResult();
 
-        $this->assertCount(2, $carreras);
+        $this->assertCount(41, $carreras);
     }
 
     public function testDqlActivasOrdenadas($campo = 'nombre') {
@@ -84,11 +94,11 @@ class CarreraRepositoryTest extends WebTestCase {
                 ->getQuery()
                 ->getResult();
 
-        $this->assertCount(2, $carreras);
+        $this->assertCount(41, $carreras);
 
         $carrera = $carreras[0];
 
-        $this->assertTrue($carrera->getAnioInicio() == 2015);
+        $this->assertTrue($carrera->getAnioInicio() != 2015);
     }
 
     public function testQyActivasOrdenadas($campo = 'nombre') {
@@ -96,7 +106,7 @@ class CarreraRepositoryTest extends WebTestCase {
                 ->qyActivasOrdenadas($campo)
                 ->getResult();
 
-        $this->assertcount(2, $carreras);
+        $this->assertcount(41, $carreras);
     }
 
     public function testFindActivasOrdenadas($campo = 'nombre') {
@@ -104,7 +114,7 @@ class CarreraRepositoryTest extends WebTestCase {
                 ->findActivasOrdenadas($campo)
         ;
 
-        $this->assertcount(2, $carreras);
+        $this->assertcount(41, $carreras);
     }
 
     public function testFindAllOrdenado($campo = 'nombre') {
@@ -112,7 +122,7 @@ class CarreraRepositoryTest extends WebTestCase {
                 ->findAllOrdenado($campo )
         ;
 
-        $this->assertcount(56, $carreras);
+        $this->assertcount(100, $carreras);
     }
 
     public function combo($establecimiento = null) {
