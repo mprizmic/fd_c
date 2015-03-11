@@ -189,7 +189,7 @@ class EstablecimientoController extends Controller {
                  */
                 $unidad_ofertas = array();
                 foreach ($localizacion->getOfertas() as $key_uo => $unidad_oferta) {
-                    $unidad_ofertas[$key_uo]['id'] = $unidad_oferta->getId();
+                    $unidad_ofertas[$key_uo]['unidad_oferta_id'] = $unidad_oferta->getId();
                     $unidad_ofertas[$key_uo]['salas_inicial'] = 'salas_inicial';
                     $unidad_ofertas[$key_uo]['turnos'] = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')->findTurnosArray($unidad_oferta);
                     $tipo = $unidad_oferta->getOfertas()->esTipo();
