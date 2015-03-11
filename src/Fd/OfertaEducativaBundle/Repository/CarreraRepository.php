@@ -4,10 +4,11 @@ namespace Fd\OfertaEducativaBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
-use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
-use Fd\TablaBundle\Entity\EstadoCarrera;
+use Fd\EstablecimientoBundle\Repository\LocalizacionRepository;
 use Fd\OfertaEducativaBundle\Entity\CarreraEstadoValidez;
+use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
+use Fd\TablaBundle\Entity\EstadoCarrera;
 
 /**
  * CarreraRepository
@@ -24,24 +25,36 @@ class CarreraRepository extends EntityRepository {
      * 
      * @return type resultados objetos carrera
      */
-    public function findCarrerasPorEstablecimiento($establecimiento) {
-        
-        /** aca hay que pasar por las localizaciones de cada carrera y eliminar los casos de carreras que se den en más de una localización
-         * para qu no queden repetidas
-         */
-        
-        $dql = "select c
-            from OfertaEducativaBundle:Carrera c 
-            join c.oferta o 
-            join o.unidades u
-            join u.unidades ue
-            join ue.establecimiento e 
-            where e.id = :establecimiento";
-        $q = $this->_em->createQuery($dql);
-        $q->setParameter('establecimiento', $establecimiento);
-        return $q->getResult();
-    }
+//    public function findCarrerasPorEstablecimiento($establecimiento) {
+//        
+//        /** aca hay que pasar por las localizaciones de cada carrera y eliminar los casos de carreras que se den en más de una localización
+//         * para qu no queden repetidas
+//         */
+//        
+//        $dql = "select c
+//            from OfertaEducativaBundle:Carrera c 
+//            join c.oferta o 
+//            join o.unidades u
+//            join u.unidades ue
+//            join ue.establecimiento e 
+//            where e.id = :establecimiento";
+//        $q = $this->_em->createQuery($dql);
+//        $q->setParameter('establecimiento', $establecimiento);
+//        return $q->getResult();
+//    }
 
+    /**
+     * devuelve todas las localizaciones donde se dicta la carrera informada
+     * Los datos devueltos son un array
+     * 
+     */
+    public function findLocalizaciones( \Fd\OfertaEducativaBundle\Entity\Carrera $carrera ){
+        
+        $resultado = $this->_em->getRepository('EstablecimientoBundle:Localizacion')
+                ->findDeCarrera($carrera);
+        return $resultado;
+    }
+    
     public function qbAllOrdenado($campo){
         return $this->createQueryBuilder('c')
                         ->orderBy('c.' . $campo);
