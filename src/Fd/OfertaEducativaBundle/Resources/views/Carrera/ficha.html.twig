@@ -63,14 +63,12 @@ Se refactoriza.
 Se agregan los turnos en que funciona la carrera en cada establecimento que se muestra.
 EL "includes/donde_se_dicta_html.twig" se usa en otros lugares que habrìa que revisar.
 Se lo reemplaza por otro.
-
-{% render "OfertaEducativaBundle:Carrera:donde_se_dicta" with {'carrera_id': carrera.id } %}
 #}
 
-{% set unidad_ofertas = carrera.oferta.unidades %}
-{% include "OfertaEducativaBundle:Carrera:includes/establecimientos_donde_se_dicta.html.twig" with {'unidad_ofertas': unidad_ofertas } %}
+{% include "OfertaEducativaBundle:Carrera:includes/establecimientos_donde_se_dicta.html.twig" with {'establecimientos_array': localizaciones } %}
 
-<div class="float_derecha"><a href="{{ path( 'carrera_asignar_establecimiento', { 'id': carrera.id }) }}">Asignar establecimiento</a></div>
+{#<div class="float_derecha"><a href="{{ path( 'carrera_asignar_establecimiento', { 'id': carrera.id }) }}">Asignar establecimiento</a></div>#}
+<div class="float_derecha"><a href="#">Asignar establecimiento</a></div>
 
 <span class="limpiar_float"></span>
 
@@ -89,7 +87,6 @@ Se lo reemplaza por otro.
 {% endif %}
 
 {# cuadro de matricula de la carrera por establecimiento donde se dicta #}
-<br />
 <br />
 <fieldset>
     <a class="resaltado" target="_blank" href="{{ path('carrera_cuadro_matricula', {'carrera_id': carrera.id } ) }}">Clickee aquí para ver el cuadro de matrícula por establecimiento</a><br/>

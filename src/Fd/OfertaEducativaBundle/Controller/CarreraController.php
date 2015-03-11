@@ -150,7 +150,7 @@ class CarreraController extends Controller {
     public function getComboEstados() {
 
         $manager = $this->get('ofertaeducativa.carrera.manager');
-        
+
         return $manager->getComboEstados();
     }
 
@@ -351,6 +351,7 @@ class CarreraController extends Controller {
     }
 
     /**
+     * 
      * @Route("/ficha/{carrera_id}", name="carrera_ficha")
      * @ParamConverter("carrera", class="OfertaEducativaBundle:Carrera", options={"id":"carrera_id"} )
      */
@@ -361,8 +362,33 @@ class CarreraController extends Controller {
         $this->get('session')->set('ruta_completa', $request->get('_route'));
         $this->get('session')->set('parametros', $request->get('_route_params'));
 
+
+        //establecimientos en los que se dicta la carrera, según sede y anexo
+        $localizaciones_temporario = $this->getRepo()->findLocalizaciones($carrera);
+
+        foreach ($localizaciones_temporario as $key => $localizacion) {
+            $unidad_oferta = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')->find($localizacion['unidad_oferta_id']);
+            $turnos = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')->findTurnosArray($unidad_oferta);
+            $localizacion['turnos'] = $turnos;
+            
+            $localizaciones[] = $localizacion;
+            $x = true;
+        }
+
+        /**
+         * estructura del array que se pasa a la plantilla
+         * 
+         * localizaciones[][localizacion_id]
+         * localizaciones[][establecimiento_id]
+         * localizaciones[][establecimiento_nombre]
+         * localizaciones[][localizacion_nombre]
+         * localizaciones[][cue_anexo]
+         * localizaciones[][unidad_oferta_id]
+         * localizaciones[][turnos]
+         */
         return $this->render('OfertaEducativaBundle:Carrera:ficha.html.twig', array(
                     'carrera' => $carrera,
+                    'localizaciones' => $localizaciones,
         ));
     }
 
@@ -480,8 +506,6 @@ class CarreraController extends Controller {
      * 
      * @Route("/donde_se_dicta/{carrera_id}", name="carrera_donde_se_dicta")
      */
-    
-    
 //    DEPRECATED
 //    
 //    
@@ -581,14 +605,14 @@ class CarreraController extends Controller {
          * pero todas juntas las de distintos id de carreras.
          */
         $unidades_ofertas = new ArrayCollection();
-        
+
         foreach ($carreras as $carrera) {
-            
+
             //las unidad_oferta de una carrera
             $unidades_oferta = $carrera->getOferta()->getUnidades();
-            
+
             //cargo las unidad_oferta en otro array de a una
-            foreach ( $unidades_oferta as $unidad_oferta) {
+            foreach ($unidades_oferta as $unidad_oferta) {
                 $unidades_ofertas->add($unidad_oferta);
             }
         }
@@ -645,6 +669,7 @@ class CarreraController extends Controller {
         $response->headers->set('Cache-Control', 'maxage=1');
         return $response;
     }
+
     /**
      * @Route("/indicadores_cohorte", name="carrera_indicadores_cohorte")
      */
@@ -682,6 +707,7 @@ class CarreraController extends Controller {
                     'unidad_oferta' => $unidad_oferta,
         ));
     }
+
 //DEPRECATED se deja como modelo de lo que se haga luego
 //    /**
 //     * entrega una lista de establecimientos 
@@ -807,6 +833,7 @@ class CarreraController extends Controller {
 
         return $this->redirect($this->generateUrl('carrera_editar', array('id' => $carrera->getId())));
     }
+
     /**
      * testeado
      * desvincula una norma previamente vinculada a una carrera
@@ -824,6 +851,5 @@ class CarreraController extends Controller {
 
         return $this->redirect($this->generateUrl('carrera_editar', array('id' => $carrera->getId())));
     }
-
 
 }
