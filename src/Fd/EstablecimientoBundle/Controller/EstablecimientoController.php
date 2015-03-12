@@ -220,39 +220,15 @@ class EstablecimientoController extends Controller {
              */
                     
         }
-        
-
-        //ver
-//        $especializaciones = $repo->findEspecializaciones($establecimiento);
-        
-        //ver
-//        $salas_inicial = $repo->findSalasInicial($establecimiento);
-        
-        //ver
-//        $primario = $repo->findPrimario($establecimiento);
-        
-        //ver    debería ser por localizacion
-        //son los objetos unidad_oferta para poder mostrar los turnos de cada oferta educativa de tipo carrera
-        //representan el dictado de una carrera en el establecimiento en tratamiento
-//        $localizaciones_terciario = $repo->findUnidadesOfertas($localizacion, "carrera");
 
         return array(
             //todos los datos separador por localizacion
             'datos_localizados' => $establecimiento_edificio_array,
-            
             //el establecimiento en tratamiento
             'establecimiento' => $establecimiento,
             //toda la lista de establecimientos para hacer el menu derecho
             'establecimientos' => $establecimientos,
-            
-            
             'establecimiento_edificios' => $establecimiento_edificios, //deprecated
-//            'edificio_principal' => $edificio_principal,
-//            'carreras' => $carreras,
-//            'especializaciones' => $especializaciones,
-//            'salas_inicial' => $salas_inicial,
-//            'primario' => $primario,
-//            'unidad_ofertas' => $unidad_ofertas,
         );
     }
 
