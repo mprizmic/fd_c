@@ -10,26 +10,6 @@ class UnidadEducativaControllerTest extends LoginWebTestCase {
     public function setup() {
         parent::setup();
     }
-    public function testDe_un_cue() {
-        $client = $this->client;
-        $crawler = $this->crawler;
-
-        // Llama a la página del index
-        $crawler = $client->request('GET', '/establecimiento/unidad_educativa/unidad_educativa_de_un_cue/13');
-        $this->assertTrue(200 === $client->getResponse()->getStatusCode());
-
-        // Verifica el cue del establecimiento
-        $this->assertGreaterThan(0, $crawler
-                        ->filter('html:contains("200696")')
-                        ->count()
-                );
-        // Verifica alguna autoridad
-        $this->assertGreaterThan(0, $crawler
-                        ->filter('html:contains("Autoridad:")')
-                        ->count()
-                );
-    }
-
     public function testCombo() {
 
         // Llama a la página del index
