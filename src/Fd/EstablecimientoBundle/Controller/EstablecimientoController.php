@@ -165,7 +165,7 @@ class EstablecimientoController extends Controller {
              * establecimiento_edificio_array[][unidad_educativas][][nivel]
              * establecimiento_edificio_array[][unidad_educativas][][nivel_id]
              * establecimiento_edificio_array[][unidad_educativas][][nivel_abreviatura]
-             * establecimiento_edificio_array[][unidad_educativas][][ofertas][][id][]
+             * establecimiento_edificio_array[][unidad_educativas][][ofertas][][unidad_oferta_id][]
              * establecimiento_edificio_array[][unidad_educativas][][ofertas][][salas_inicial][]
              * establecimiento_edificio_array[][unidad_educativas][][ofertas][][turnos][]
              * establecimiento_edificio_array[][unidad_educativas][][ofertas][][tipo]

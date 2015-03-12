@@ -101,11 +101,14 @@
                         {% for ue in establecimiento_edificio['unidad_educativas'] %}
                             {% if ue['nivel_abreviatura'] == 'Ter' %}
                                 {% for oferta in ue['ofertas'] %}
-                                    <a href="{{ path('carrera_ficha', {'carrera_id': oferta['carrera_id'] }) }}">{{ oferta['carrera'] }}</a>
+                                    {% if oferta['tipo'] == 'Carrera' %}
+                                    
+                                        <a href="{{ path('carrera_ficha', {'carrera_id': oferta['carrera_id'] }) }}">{{ oferta['carrera'] }}</a>
 
-                                    {# se muestran los turnos de una carrera#}
-                                    {% include 'EstablecimientoBundle:Default:includes/turnos_carreras.html.twig' with {'unidad_oferta':oferta }  %}
-                                    <br />
+                                        {# se muestran los turnos de una carrera#}
+                                        {% include 'EstablecimientoBundle:Default:includes/turnos_carreras.html.twig' with {'unidad_oferta':oferta }  %}
+                                        <br />
+                                    {% endif %}
                                 {% endfor %}  
                             {% endif %}
                         {% endfor %}  
