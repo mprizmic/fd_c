@@ -11,6 +11,53 @@ use Fd\OfertaEducativaBundle\Entity\Carrera;
 class LocalizacionRepository extends EntityRepository {
 
     /**
+     * verifica si una carrera se imparte en una sede/anexo de un establecimiento
+     */
+    public function findSeImparte(Localizacion $localizacion, Carrera $carrera) {
+        $unidad_oferta = $this->_em->getRepository('EstablecimientoBundle:UnidadOferta')->findBy(
+                array(
+                    'localizacion' => $localizacion,
+                    'ofertas' => $carrera->getOferta(),
+                )
+        );
+        if (!$unidad_oferta){
+            return false;
+        };
+        return true;
+    }
+
+    /**
+     * devuelve un array de localizaciones de las sedes y anexos en los que se imparten terciarios
+     * ordenados por establecimiento y cue_anexo
+     * 
+     * resultado[][establecimiento_nombre]
+     * resultado[][localizacion_id]
+     * resultado[][establecimiento_edificio_nombre]
+     */
+    public function findTerciarios() {
+        $qb = $this->_em->createQueryBuilder()
+                ->select('l as localizacion')
+                ->addSelect('e.apodo as establecimiento_nombre')
+                ->addSelect('l.id as localizacion_id')
+                ->addSelect('ee.nombre as establecimiento_edificio_nombre')
+                ->from('EstablecimientoBundle:Localizacion', 'l')
+                ->innerJoin('l.establecimiento_edificio', 'ee')
+                ->innerJoin('ee.establecimientos', 'e')
+                ->innerJoin('l.unidad_educativa', 'ue')
+                ->innerJoin('ue.nivel', 'n')
+                ->where('n.abreviatura = ?1')
+                ->orderBy('e.orden')
+                ->addOrderBy('ee.cue_anexo');
+
+        $qb->setParameter(1, 'Ter');
+        $x = $qb->getDQL();
+        $resultado = $qb->getQuery()
+                        ->getResult();
+        return $resultado;
+    }
+
+    /**
+     * 
      * dada una localizacion devuelve todos los turnos que tienen todas las ofertas que en dicha unidad educativa se imparta en esa sede
      */
     public function findTurnos(\Fd\EstablecimientoBundle\Entity\Localizacion $localizacion) {

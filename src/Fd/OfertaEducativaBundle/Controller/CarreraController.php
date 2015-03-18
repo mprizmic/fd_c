@@ -427,11 +427,11 @@ class CarreraController extends Controller {
     public function asignar_establecimientoAction(Carrera $carrera, Request $request) {
 
         if ($request->getMethod() == 'GET') {
-            //creo el formulario para seleccionar establecimientos
-
+            
+            //creo el array de formularios para seleccionar establecimientos localizados
             $establecimientos_forms = $this->getEstablecimientosForms($carrera);
 
-            //crear el formulario de asignacion
+            //muestra la pagina para elegir en que localizacion se dicta la carrera
             return $this->render('OfertaEducativaBundle:Default:asignar_establecimiento.html.twig', array(
                         'establecimientos_forms' => $establecimientos_forms,
                         'carrera' => $carrera,
@@ -449,17 +449,27 @@ class CarreraController extends Controller {
     private function getEstablecimientosForms($carrera) {
         // FALTA Los establecimientos que tienen la carrera asignada y tiene cohortes deberían aparecer disable
         //para que no se pueda eliminar nada
+        
+        /**
+         * array usado
+         * localizaciones[][(localizacion)localizacion]
+         * localizaciones[][establecimiento_nombre]
+         * localizaciones[][localizacion_id]
+         * localizaciones[][establecimiento_edificio_nombre]
+         */
+        
         $resultado = array();
 
         //obtengo la lista de establecimientos ordenados
-        $establecimientos = $this->getEm()
-                ->getRepository('EstablecimientoBundle:Establecimiento')
-                ->findAllOrdenado('orden');
+        //cada sede/anexo es una entrada en la lista por que la carrera se asigna a la localizacion del establecimiento
+        $localizaciones = $this->getEm()
+                ->getRepository('EstablecimientoBundle:Localizacion')
+                ->findTerciarios();
 
         //genero un array con los formuarios tal como se va a mostrar
-        foreach ($establecimientos as $key => $establecimiento) {
+        foreach ($localizaciones as $key => $una_localizacion) {
             $resultado[] = $this->crearAsignarForm(
-                            $establecimiento, $carrera, $key
+                            $una_localizacion, $carrera, $key
                     )
                     ->createView();
         };
@@ -468,7 +478,7 @@ class CarreraController extends Controller {
     }
 
     /**
-     * Crea un formulario para un establecimeinto
+     * Crea un formulario para una localizacion
      * Cada formulario tiene un nombre diferente dado por $nro_form
      * 
      * @param type $carrera_id
@@ -476,13 +486,20 @@ class CarreraController extends Controller {
      * @param type $accion
      * @param type $nro_form
      */
-    private function crearAsignarForm($establecimiento, $carrera, $nro_form) {
-
+    private function crearAsignarForm($una_localizacion, Carrera $carrera, $nro_form) {
+        
+        //vertifica si en esa localizacion se está impartiendo la carrera
+        $se_imparte = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')->findSeImparte( $una_localizacion['localizacion'], $carrera);
+        
+        $nombre = $una_localizacion['establecimiento_nombre'] 
+                . 
+                ($una_localizacion['establecimiento_edificio_nombre'] ? ' - ' . $una_localizacion['establecimiento_edificio_nombre'] : '');
+        
         $data = array(
-            'nombre' => $establecimiento->getApodo(),
+            'nombre' =>  $nombre,
             'carrera_id' => $carrera->getId(),
-            'establecimiento_id' => $establecimiento->getId(),
-            'accion_del_form' => $establecimiento->hasCarrera($carrera) ? 'Desasignar' : 'Asignar',
+            'localizacion_id' => $una_localizacion['localizacion_id'],
+            'accion_del_form' => $se_imparte ? 'Desasignar' : 'Asignar',
         );
 
         $form = $this->get('form.factory')
