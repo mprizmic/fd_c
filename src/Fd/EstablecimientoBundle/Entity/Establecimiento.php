@@ -240,21 +240,23 @@ class Establecimiento {
         return $el_principal;
     }
     /**
+     * DEPRECATED en la localizacion de la oferta
+     * 
      * Verifica si un establecimiento tiene la carrera asignada
      * @param type $carrera
      * @return boolean
      */
 
-    public function hasCarrera($carrera) {
-        $unidad_ofertas = $this->getUnidadEducativa('Ter')->getOfertas();
-        $oferta_educativa = $carrera->getOferta();
-        foreach ($unidad_ofertas as $unidad_oferta) {
-            if ($unidad_oferta->getOfertas()->getId() == $oferta_educativa->getId()) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public function hasCarrera($carrera) {
+//        $unidad_ofertas = $this->getUnidadEducativa('Ter')->getOfertas();
+//        $oferta_educativa = $carrera->getOferta();
+//        foreach ($unidad_ofertas as $unidad_oferta) {
+//            if ($unidad_oferta->getOfertas()->getId() == $oferta_educativa->getId()) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     /**
      * Toma la comuna del edificio principal del establecimiento
