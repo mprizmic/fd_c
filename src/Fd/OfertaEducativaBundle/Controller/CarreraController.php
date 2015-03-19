@@ -411,7 +411,7 @@ class CarreraController extends Controller {
 
             $manager = new CarreraManager($this->getEm());
 
-            $respuesta = $manager->asignarEstablecimiento($form['carrera_id'], $form['establecimiento_id'], $form['accion_del_form']);
+            $respuesta = $manager->asignarEstablecimiento($form['carrera_id'], $form['localizacion_id'], $form['accion_del_form']);
 
             //se trata el response segùn el resutado
             $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
@@ -511,7 +511,7 @@ class CarreraController extends Controller {
                     'label' => ' ',
                 ))
                 ->add('carrera_id', 'hidden')
-                ->add('establecimiento_id', 'hidden')
+                ->add('localizacion_id', 'hidden')
                 ->add('accion_del_form', 'hidden')
                 ->getForm();
 

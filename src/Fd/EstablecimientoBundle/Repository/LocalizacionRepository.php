@@ -13,17 +13,18 @@ class LocalizacionRepository extends EntityRepository {
     /**
      * verifica si una carrera se imparte en una sede/anexo de un establecimiento
      */
-    public function findSeImparte(Localizacion $localizacion, Carrera $carrera) {
-        $unidad_oferta = $this->_em->getRepository('EstablecimientoBundle:UnidadOferta')->findBy(
+    public function findSeImparte(Localizacion $localizacion, Carrera $carrera, $booleano = true) {
+        $unidad_oferta = $this->_em->getRepository('EstablecimientoBundle:UnidadOferta')->findOneBy(
                 array(
                     'localizacion' => $localizacion,
                     'ofertas' => $carrera->getOferta(),
                 )
         );
+        
         if (!$unidad_oferta){
-            return false;
+            return ( $booleano ? false : $unidad_oferta );
         };
-        return true;
+        return ( $booleano ? true : $unidad_oferta );
     }
 
     /**

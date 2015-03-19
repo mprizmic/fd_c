@@ -98,25 +98,24 @@ class CarreraManager implements AsignarVisitadoInterface {
         return $visitador->visitCarrera($this);
     }
 
-//    /**
-//     * Desde una carrera se asignan y desasignan establecimientos en los que se imparte la misma
-//     * @param type $carrera
-//     * @param type $establecimiento
-//     */
-    public function asignarEstablecimiento($carrera_id, $establecimiento_id, $accion) {
+    /**
+     * Desde una carrera se asignan y desasignan localizaciones de establecimientos en los que se imparte la carrera 
+     * @param type $carrera
+     */
+    public function asignarEstablecimiento($carrera_id, $localizacion_id, $accion) {
 
         $carrera = $this->getRepository()->find($carrera_id);
         if (!$carrera) {
             throw $this->createNotFoundException('Unable to find Carrera entity.');
         };
 
-        $establecimiento = $this->em->getRepository('EstablecimientoBundle:Establecimiento')->find($establecimiento_id);
-        if (!$establecimiento) {
+        $localizacion = $this->em->getRepository('EstablecimientoBundle:Localizacion')->find($localizacion_id);
+        if (!$localizacion) {
             throw $this->createNotFoundException('Unable to find Establecimiento entity.');
         };
 
         $data['carrera'] = $carrera;
-        $data['establecimiento'] = $establecimiento;
+        $data['localizacion'] = $localizacion;
         $data['accion'] = $accion;
 
         //construye el visitador que va a asignar la carrera al establecimeinto
