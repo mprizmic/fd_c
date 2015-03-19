@@ -68,11 +68,6 @@ class UnidadEducativa {
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $nombre_autoridad;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $cantidad_docentes;
     /**
      * @ORM\Column(type="datetime")
      * 
@@ -243,29 +238,6 @@ class UnidadEducativa {
     public function getNombreAutoridad()
     {
         return $this->nombre_autoridad;
-    }
-
-    /**
-     * Set cantidad_docentes
-     *
-     * @param integer $cantidadDocentes
-     * @return UnidadEducativa
-     */
-    public function setCantidadDocentes($cantidadDocentes)
-    {
-        $this->cantidad_docentes = $cantidadDocentes;
-
-        return $this;
-    }
-
-    /**
-     * Get cantidad_docentes
-     *
-     * @return integer 
-     */
-    public function getCantidadDocentes()
-    {
-        return $this->cantidad_docentes;
     }
 
     /**

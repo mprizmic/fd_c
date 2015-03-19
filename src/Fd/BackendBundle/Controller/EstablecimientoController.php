@@ -9,12 +9,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
+use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
-use Fd\EstablecimientoBundle\Model\DocentesNivelClass;
-use Fd\EstablecimientoBundle\Model\DocentesNivelManager;
+//use Fd\EstablecimientoBundle\Model\DocentesNivelClass;
+//use Fd\EstablecimientoBundle\Model\DocentesNivelManager;
 use Fd\BackendBundle\Form\EstablecimientoType;
-use Fd\BackendBundle\Form\Model\DocentesNivelType;
-use Fd\BackendBundle\Form\Handler\DocentesNivelFormHandler;
+//use Fd\BackendBundle\Form\Model\DocentesNivelType;
+//use Fd\BackendBundle\Form\Handler\DocentesNivelFormHandler;
 
 /**
  * Establecimiento controller.
@@ -132,23 +133,23 @@ class EstablecimientoController extends Controller {
         );
     }
 
-    /**
-     * @Route("/docentes_nivel/editar/{establecimiento_id}",  name="backend_establecimiento_docentes_nivel_editar")
-     * @ParamConverter("establecimiento", class="EstablecimientoBundle:Establecimiento", options={"id"="establecimiento_id"})
-     */
-    public function docentesNivelEditarAction($establecimiento) {
-        
-        $niveles = $this->getEm()->getRepository('TablaBundle:Nivel')->descripciones_niveles();
-        
-        $docentes_nivel = new DocentesNivelClass($establecimiento);
-
-        $editForm = $this->createForm(new DocentesNivelType($establecimiento, $niveles ), $docentes_nivel);
-
-        return $this->render('BackendBundle:Docentes:edit.html.twig', array(
-                    'entity' => $docentes_nivel,
-                    'edit_form' => $editForm->createView(),
-                ));
-    }
+//    /**
+//     * @Route("/docentes_nivel/editar/{establecimiento_edificio_id}",  name="backend_establecimiento_docentes_nivel_editar")
+//     * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:Establecimiento", options={"id"="establecimiento_edificio_id"})
+//     */
+//    public function docentesNivelEditarAction($establecimiento_edificio) {
+//        
+//        $niveles = $this->getEm()->getRepository('TablaBundle:Nivel')->descripciones_niveles();
+//        
+//        $docentes_nivel = new DocentesNivelClass($establecimiento);
+//
+//        $editForm = $this->createForm(new DocentesNivelType($establecimiento, $niveles ), $docentes_nivel);
+//
+//        return $this->render('BackendBundle:Docentes:edit.html.twig', array(
+//                    'entity' => $docentes_nivel,
+//                    'edit_form' => $editForm->createView(),
+//                ));
+//    }
 
     /**
      * Displays a form to edit an existing Establecimiento entity.
@@ -212,36 +213,6 @@ class EstablecimientoController extends Controller {
         );
     }
 
-    /**
-     * @Route("/docentes_nivel/actualizar/{establecimiento_id}",  name="backend_establecimiento_docentes_nivel_actualizar")
-     * @Method("post")
-     * @ParamConverter("establecimiento", class="EstablecimientoBundle:Establecimiento", options={"id"="establecimiento_id"})
-     */
-    public function docentesNivelActualizarAction($establecimiento, Request $request) {
-
-        $respuesta = new Respuesta();
-        
-        $niveles = $this->getEm()->getRepository('TablaBundle:Nivel')->descripciones_niveles();
-        
-        $docentes_nivel_anterior = new DocentesNivelClass($establecimiento);
-
-        $formulario = $this->createForm(new DocentesNivelType($establecimiento, $niveles), $docentes_nivel_anterior);
-
-        $form_handler = new DocentesNivelFormHandler(new DocentesNivelManager($this->getEm(), $this->get('fd.backend.handler.unidad_educativa')));
-
-        $respuesta = $form_handler->actualizar($formulario, $request);
-
-        if ($respuesta->getCodigo() == 1) {
-            $this->get('session')->getFlashBag()->add('exito', $respuesta->getMensaje());
-            return $this->redirect($this->generateUrl('backend_establecimiento_docentes_nivel_editar', array('establecimiento_id' => $establecimiento->getId())));
-        };
-
-        $this->get('session')->getFlashBag()->add('aviso', $respuesta->getMensaje());
-        return $this->render('BackendBundle:Docentes:edit.html.twig', array(
-                    'entity' => $docentes_nivel,
-                    'edit_form' => $formulario->createView(),
-                ));
-    }
 
     /**
      * Deletes a Establecimiento entity.

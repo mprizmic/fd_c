@@ -144,12 +144,11 @@
                         {% for ue in establecimiento_edificio['unidad_educativas'] %}
                             <div name="mostrable">
                                 {{ 'Nivel ' ~ ue['nivel'] ~ ': ' }}
-                                <span class="reforzado">{{ '#' }}</span>
+                                <span class="reforzado">{{ ue['cantidad_docentes'] }}</span>
                                 <br />
                         {% endfor %}  
 
-{#                        <a class="float_derecha chica" href="{{ path('backend_establecimiento_docentes_nivel_editar', {'establecimiento_id': establecimiento.id} ) }}">Editar</a>#}
-                        <a class="float_derecha chica" href="#">Editar</a>
+                        <a class="float_derecha chica" href="{{ path('backend_establecimiento_edificio_docentes_nivel_editar', {'establecimiento_edificio_id': establecimiento_edificio.id} ) }}">Editar</a>
                     </fieldset>
                     <br />                        
                         

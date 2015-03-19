@@ -5,7 +5,7 @@ namespace Fd\BackendBundle\Form\Model;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Fd\EstablecimientoBundle\Entity\Establecimiento;
+use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Model\DocentesNivelClass;
 
 class DocentesNivelType extends AbstractType {
@@ -16,22 +16,22 @@ class DocentesNivelType extends AbstractType {
      * @param FormBuilderInterface $builder
      * @param array $options 
      */
-    private $unidades_educativas;
+    private $localizaciones;
     private $niveles;
 
-    public function __construct(Establecimiento $establecimiento, $niveles) {
+    public function __construct(EstablecimientoEdificio $establecimiento_edificio, $niveles) {
         
 
-        $this->unidades_educativas = $establecimiento->getUnidadesEducativas();
+        $this->localizaciones = $establecimiento_edificio->getLocalizacion();
         $this->niveles = $niveles;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         
-        foreach ($this->unidades_educativas as $unidad_educativa) {
+        foreach ($this->localizaciones as $localizacion) {
 
             //tomo el nombre del nivel que es el mismo que el subfijo del campo de unidad_educativa, pero todo en minuscula
-            $nombre_nivel = strtolower(array_search($unidad_educativa->getNivel()->getAbreviatura(), $this->niveles));
+            $nombre_nivel = strtolower(array_search($localizacion->getUnidadEducativa()->getNivel()->getAbreviatura(), $this->niveles));
     
             $builder
                     ->add('cantidad_' . $nombre_nivel, 'integer', array(

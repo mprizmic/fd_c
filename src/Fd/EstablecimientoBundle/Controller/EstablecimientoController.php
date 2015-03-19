@@ -172,6 +172,7 @@ class EstablecimientoController extends Controller {
              * establecimiento_edificio_array[][unidad_educativas][][ofertas][][carrera]
              * establecimiento_edificio_array[][unidad_educativas][][ofertas][][carrera_id]
              * establecimiento_edificio_array[][unidad_educativas][][turnos_nivel][]
+             * establecimiento_edificio_array[][unidad_educativas][][cantidad_docentes][]
              */
             $unidad_educativas = array();
             foreach ($establecimiento_edificio->getLocalizacion() as $key2 => $localizacion) {
@@ -182,6 +183,7 @@ class EstablecimientoController extends Controller {
                 $unidad_educativas[$key2]['nivel'] = $nivel->getNombre();
                 $unidad_educativas[$key2]['nivel_id'] = $nivel->getId();
                 $unidad_educativas[$key2]['nivel_abreviatura'] = $nivel->getAbreviatura();
+                $unidad_educativas[$key2]['cantidad_docentes'] = $localizacion->getCantidadDocentes();
 
             
                 /**

@@ -49,12 +49,18 @@ class Localizacion {
      * bidireccional lado inverso
      */
     private $domicilio;
+
     /**
      * bidireccional lado inverso
      * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", mappedBy="localizacion")
      */
     private $ofertas;
-    
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $cantidad_docentes;
+
     /**
      * @ORM\Column(type="datetime")
      * 
@@ -70,16 +76,16 @@ class Localizacion {
      * @ORM\PrePersist  //en el persist cuando se da de alta uno nuevo
      * @ORM\PreUpdate //en el flush cuando se modifica uno existente
      */
-    public function ultimaModificacion()
-    {
+    public function ultimaModificacion() {
         $this->setActualizado(new \DateTime());
-    }    
+    }
+
     /**
      * es el metodo del callback
      * verifica que la unidad educativa y el edificio seleccionados correspondan al mismo establecimiento
      */
     public function esIgualEstablecimiento(ExecutionContext $context) {
-        if ($this->getUnidadEducativa()->getEstablecimiento()->getId() != $this->getEstablecimientoEdificio()->getEstablecimientos()->getId()){
+        if ($this->getUnidadEducativa()->getEstablecimiento()->getId() != $this->getEstablecimientoEdificio()->getEstablecimientos()->getId()) {
             $context->addViolationAtSubPath('unidad_educativa', 'La unidad educativa y el edificio no corresponden al mismo establecimiento', array(), null);
         };
         return;
@@ -117,6 +123,75 @@ class Localizacion {
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set cantidad_docentes
+     *
+     * @param integer $cantidadDocentes
+     * @return Localizacion
+     */
+    public function setCantidadDocentes($cantidadDocentes)
+    {
+        $this->cantidad_docentes = $cantidadDocentes;
+
+        return $this;
+    }
+
+    /**
+     * Get cantidad_docentes
+     *
+     * @return integer 
+     */
+    public function getCantidadDocentes()
+    {
+        return $this->cantidad_docentes;
+    }
+
+    /**
+     * Set actualizado
+     *
+     * @param \DateTime $actualizado
+     * @return Localizacion
+     */
+    public function setActualizado($actualizado)
+    {
+        $this->actualizado = $actualizado;
+
+        return $this;
+    }
+
+    /**
+     * Get actualizado
+     *
+     * @return \DateTime 
+     */
+    public function getActualizado()
+    {
+        return $this->actualizado;
+    }
+
+    /**
+     * Set creado
+     *
+     * @param \DateTime $creado
+     * @return Localizacion
+     */
+    public function setCreado($creado)
+    {
+        $this->creado = $creado;
+
+        return $this;
+    }
+
+    /**
+     * Get creado
+     *
+     * @return \DateTime 
+     */
+    public function getCreado()
+    {
+        return $this->creado;
     }
 
     /**
@@ -229,51 +304,5 @@ class Localizacion {
     public function getOfertas()
     {
         return $this->ofertas;
-    }
-
-    /**
-     * Set actualizado
-     *
-     * @param \DateTime $actualizado
-     * @return Localizacion
-     */
-    public function setActualizado($actualizado)
-    {
-        $this->actualizado = $actualizado;
-
-        return $this;
-    }
-
-    /**
-     * Get actualizado
-     *
-     * @return \DateTime 
-     */
-    public function getActualizado()
-    {
-        return $this->actualizado;
-    }
-
-    /**
-     * Set creado
-     *
-     * @param \DateTime $creado
-     * @return Localizacion
-     */
-    public function setCreado($creado)
-    {
-        $this->creado = $creado;
-
-        return $this;
-    }
-
-    /**
-     * Get creado
-     *
-     * @return \DateTime 
-     */
-    public function getCreado()
-    {
-        return $this->creado;
     }
 }
