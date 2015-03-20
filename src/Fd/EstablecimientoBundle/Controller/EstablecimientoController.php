@@ -48,45 +48,7 @@ class EstablecimientoController extends Controller {
         ;
     }
 
-    /**
-     * @Route("/cuadro_matricula/{establecimiento_id}/{tipo}", name="establecimientos_cuadro_matricula")
-     * @Template("EstablecimientoBundle:Default:cuadro_matricula.html.twig")
-     * @ParamConverter("establecimiento", class="EstablecimientoBundle:Establecimiento", options={"id"="establecimiento_id"})
-     */
-    public function cuadro_matriculaAction($establecimiento, $tipo) {
 
-        $hoy = date("Y");
-        $anio_desde = $hoy - 2;
-
-        //todas las carreras de un establecimiento
-        $carreras = $this->getRepositorio()
-                ->findCarreras($establecimiento);
-
-        foreach ($carreras as $key => $value) {
-            $una_carrera['nombre'] = $value->getNombre();
-            $una_carrera['id'] = $value->getId();
-            $una_carrera['cohortes'] = array();
-            for ($i = $anio_desde; $i <= $hoy; $i++) {
-
-                $datos = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')
-                        ->findMatriculaCarrera($i, $value->getId(), $establecimiento->getId());
-                //el resultado vienen en un array con key de cero en adelante
-                //en este caso el resultado siempre es un solo array 
-                $una_carrera['cohortes'][$i]['ingresantes'] = $datos[0]['matricula_ingresantes'];
-                $una_carrera['cohortes'][$i]['matricula'] = $datos[0]['matricula'];
-                $una_carrera['cohortes'][$i]['egreso'] = $datos[0]['egreso'];
-            }
-            $salida[] = $una_carrera;
-        }
-
-        return array(
-            'unidades_ofertas' => null,
-            'establecimiento' => $establecimiento,
-            'salida' => $salida,
-            'anio_desde' => $anio_desde,
-            'anio_hasta' => $hoy,
-        );
-    }
 
     /**
      * @Route("/damero", name="establecimiento_damero")
@@ -184,6 +146,7 @@ class EstablecimientoController extends Controller {
                 $unidad_educativas[$key2]['nivel_id'] = $nivel->getId();
                 $unidad_educativas[$key2]['nivel_abreviatura'] = $nivel->getAbreviatura();
                 $unidad_educativas[$key2]['cantidad_docentes'] = $localizacion->getCantidadDocentes();
+                $unidad_educativas[$key2]['localizacion_id'] = $localizacion->getId();
 
             
                 /**
