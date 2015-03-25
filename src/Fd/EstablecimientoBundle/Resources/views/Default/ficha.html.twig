@@ -153,13 +153,18 @@
                     <br />                        
                         
                     {# cuadro de matricula #}
-{#                    FALTA . no esta localizado #}
+
                     <div class="limpiar_float">
                         <BR />
                     </div>
-                    <fieldset >
-                        <a class="resaltado" target="_blank" href="{{ path('sede_anexo_cuadro_matricula', {'localizacion_id': establecimiento_edificio['localizacion_id'], 'tipo':'carrera' } ) }}">Cuadro de matrícula de carreras</a><br/>
-                    </fieldset>
+                    {#  busco cual es la localizacion del nivel terciario #}
+                    {% for ue in establecimiento_edificio['unidad_educativas'] %}
+                        {% if ue['nivel_abreviatura'] == 'Ter' %}
+                            <fieldset >
+                                <a class="resaltado" target="_blank" href="{{ path('sede_anexo_cuadro_matricula', {'localizacion_id': ue['localizacion_id'], 'tipo':'carrera' } ) }}">Cuadro de matrícula de carreras</a><br/>
+                            </fieldset>
+                        {% endif %}  
+                    {% endfor %}  
                     <br />                        
                         
                     {# especializaciones #}
