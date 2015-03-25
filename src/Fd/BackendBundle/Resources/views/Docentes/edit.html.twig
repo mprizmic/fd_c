@@ -7,7 +7,7 @@
 
 {% set establecimiento_edificio = entity.establecimientoEdificio %}
 
-{#{% render "EstablecimientoBundle:Establecimiento:tarjeta_establecimiento_edificio" with {'establecimiento_edificio_id': establecimiento_edificio_id} %}#}
+{% include  "EstablecimientoBundle:Default:tarjeta_establecimiento_edificio.html.twig" with {'establecimiento_edificio_id': establecimiento_edificio.id } %}
 
 <br />
 <br />
