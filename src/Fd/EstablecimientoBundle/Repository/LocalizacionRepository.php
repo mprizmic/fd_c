@@ -5,13 +5,26 @@ namespace Fd\EstablecimientoBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
+use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EdificioBundle\Repository\DomicilioLocalizacionRepository;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 
 class LocalizacionRepository extends EntityRepository {
 
     /**
+     * dada una localizacion de un terciario, devuelve loca obj unidad_oferta de todas las carreras que se imparten en esa localizacion
+     */
+    public function findCarreras( Localizacion $localizacion, $cohortes = false ){
+
+        $resultado = $this->_em->getRepository('EstablecimientoBundle:UnidadOferta')
+                ->findCarreras($localizacion, $cohortes);
+        
+        return $resultado;
+    }
+
+    /**
      * verifica si una carrera se imparte en una sede/anexo de un establecimiento
+     * Si el último parametro es false se devuelve un obj tipo unidad_oferta, si es tru se devuelve un valor booleano
      */
     public function findSeImparte(Localizacion $localizacion, Carrera $carrera, $booleano = true) {
         $unidad_oferta = $this->_em->getRepository('EstablecimientoBundle:UnidadOferta')->findOneBy(
@@ -58,8 +71,7 @@ class LocalizacionRepository extends EntityRepository {
     }
 
     /**
-     * 
-     * dada una localizacion devuelve todos los turnos que tienen todas las ofertas que en dicha unidad educativa se imparta en esa sede
+     * dada una localizacion devuelve todos los turnos que tienen todas las ofertas que en dicha unidad educativa se impartan
      */
     public function findTurnos(\Fd\EstablecimientoBundle\Entity\Localizacion $localizacion) {
 

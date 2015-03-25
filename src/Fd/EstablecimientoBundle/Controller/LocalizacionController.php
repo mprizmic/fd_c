@@ -34,6 +34,9 @@ class LocalizacionController extends Controller {
         return $this->em;
     }
     /**
+     * Muestra el cuadro de matricula de cada carrera que se imparte en la localizacion.
+     * La localizacion corresponde a un terciario 
+     * 
      * @Route("/cuadro_matricula/{localizacion_id}/{tipo}", name="sede_anexo_cuadro_matricula")
      * @Template("EstablecimientoBundle:Localizacion:cuadro_matricula.html.twig")
      * @ParamConverter("localizacion", class="EstablecimientoBundle:Localizacion", options={"id"="localizacion_id"})
@@ -43,30 +46,32 @@ class LocalizacionController extends Controller {
         $hoy = date("Y");
         $anio_desde = $hoy - 2;
 
-        //todas las carreras de un establecimiento
-        $carreras = $this->getRepositorio()
-                ->findCarreras($establecimiento);
+        //todas las carreras de una localizacion de una unidad educativo terciario
+        $unidad_oferta_carreras = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')
+                ->findCarreras($localizacion, true);
 
-        foreach ($carreras as $key => $value) {
-            $una_carrera['nombre'] = $value->getNombre();
-            $una_carrera['id'] = $value->getId();
+        foreach ($unidad_oferta_carreras as $key => $unidad_oferta) {
+            $carrera = $unidad_oferta->getOfertas()->getCarrera();
+            $una_carrera['nombre'] = $carrera->getNombre() . ' - ' . $carrera->getEstado();
+            $una_carrera['id'] = $carrera->getId();
             $una_carrera['cohortes'] = array();
-            for ($i = $anio_desde; $i <= $hoy; $i++) {
 
-                $datos = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')
-                        ->findMatriculaCarrera($i, $value->getId(), $establecimiento->getId());
-                //el resultado vienen en un array con key de cero en adelante
-                //en este caso el resultado siempre es un solo array 
-                $una_carrera['cohortes'][$i]['ingresantes'] = $datos[0]['matricula_ingresantes'];
-                $una_carrera['cohortes'][$i]['matricula'] = $datos[0]['matricula'];
-                $una_carrera['cohortes'][$i]['egreso'] = $datos[0]['egreso'];
+            $cohortes = $unidad_oferta->getCohortes();
+            
+            foreach ($cohortes  as $key => $cohorte) {
+                $anio = $cohorte->getAnio();
+                if ($anio>= $anio_desde and $anio <= $hoy ){
+                    $una_carrera['cohortes'][$anio]['ingresantes'] = $cohorte->getMatriculaIngresantes();
+                    $una_carrera['cohortes'][$anio]['matricula'] = $cohorte->getMatricula();
+                    $una_carrera['cohortes'][$anio]['egreso'] = $cohorte->getEgreso();
+                }
             }
             $salida[] = $una_carrera;
         }
 
         return array(
             'unidades_ofertas' => null,
-            'establecimiento' => $establecimiento,
+            'establecimiento_edificio' => $localizacion->getEstablecimientoEdificio(),
             'salida' => $salida,
             'anio_desde' => $anio_desde,
             'anio_hasta' => $hoy,

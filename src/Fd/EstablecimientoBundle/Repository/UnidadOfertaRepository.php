@@ -3,6 +3,7 @@
 namespace Fd\EstablecimientoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\OfertaEducativaBundle\Repository\InicialXRepository;
@@ -10,21 +11,44 @@ use Fd\OfertaEducativaBundle\Repository\InicialXRepository;
 class UnidadOfertaRepository extends EntityRepository {
 
     /**
-     * devuelve el array de turnos de una unidad_oferta
+     * dada una localizacion de un terciario, devuelve obj unidad_oferta de todas las carreras que se imparten en esa localizacion
+     * Si el 2do parametro es verdadero, devuelve también las cohortes que encuentre
      */
-    public function findTurnosArray(UnidadOferta $unidad_oferta){
-        $parcial = $unidad_oferta->getTurnos();
+    public function findCarreras(Localizacion $localizacion, $cohortes = false) {
+        $qb = $this->_em->createQueryBuilder()
+                ->select('uo')
+                ->from('EstablecimientoBundle:UnidadOferta', 'uo')
+                ->innerJoin('uo.ofertas', 'oe')
+                ->innerJoin('oe.carrera', 'car')
+                ->where('uo.localizacion = ?1')
+                ->orderBy('car.nombre');
         
-        if (count($parcial) < 1){
-            return array();
+        if ( $cohortes ){
+            $qb->leftJoin('uo.cohortes', 'co');
         };
         
+        $qb->setParameter(1, $localizacion->getId());
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * devuelve el array de turnos de una unidad_oferta
+     */
+    public function findTurnosArray(UnidadOferta $unidad_oferta) {
+        $parcial = $unidad_oferta->getTurnos();
+
+        if (count($parcial) < 1) {
+            return array();
+        };
+
         foreach ($parcial as $key => $value) {
             $resultado[$key] = $value->getTurno()->getDescripcion();
         };
-        
+
         return $resultado;
     }
+
     /**
      * devuelve un obj inicial_x con la cabecera de las salas de inicial de una unidad_oferta en particular
      */
@@ -33,11 +57,12 @@ class UnidadOfertaRepository extends EntityRepository {
                 ->_em
                 ->getRepository('OfertaEducativaBundle:InicialX')
                 ->findSalas($unidad_oferta);
-        
+
         return $inicial_x;
     }
 
     /**
+     * FALTA ver si no queda DEPRECATED
      * devuelve las ofertas carrera de un establecimiento que tienen cohortes
      */
     public function findCarrerasConCohortes($establecimiento_id) {
@@ -152,56 +177,47 @@ class UnidadOfertaRepository extends EntityRepository {
     }
 
     /*
-     * Devuelve un array con los ingresantes, matriculados y egresador de un año en particular de carreras del terciario
-     * Si la carrera está informada, se agrega dicho filtro.
-     * Si el establecimiento está informado, se agrega dicho filtro
-     * Pueden estar los 2, ninguno o uno de los 2.
+     * FALTA terminar DEPRECATED?
+     * 
+     * Devuelve un array con los ingresantes, matriculados y egresador de un año en particular de todas las carreras de un terciario localizado.
      * Si no encontró resultados el array se carga con ceros en todas las posiciones
      */
 
-    public function findMatriculaCarrera($anio, $carrera_id = null, $establecimiento_id = null) {
-        //vector de claves del array de resultado. Se usa si el resultado es un array vacio
-        $keys = array('anio', 'matricula', 'matricula_ingresantes', 'egreso');
-
-        $qb = $this->createQueryBuilder('uo')
-                ->select('co.anio, co.matricula, co.matricula_ingresantes, co.egreso')
-                ->innerJoin('uo.unidades', 'ue')
-                ->innerJoin('uo.ofertas', 'oe')
-                ->innerJoin('oe.carrera', 'car')
-                ->innerjoin('uo.cohortes', 'co')
-                ->innerJoin('ue.establecimiento', 'e')
-                ->where('co.anio = :anio');
-        $qb->setParameter('anio', $anio);
-
-        //el establecimiento puede o no estar presente
-        if ($establecimiento_id) {
-            $keys = array_merge($keys, array('establecimiento_id'));
-
-            $qb->addSelect('e.id as establecimiento_id, e.apodo');
-            $qb->andWhere('ue.establecimiento = :establecimiento');
-            $qb->setParameter('establecimiento', $establecimiento_id);
-        };
-        if ($carrera_id) {
-            $keys = array_merge($keys, array('carrera_id'));
-
-            $qb->addSelect('car.id as carrrera_id', 'car.nombre');
-            $qb->andWhere('car.id = :carrera');
-            $qb->setParameter('carrera', $carrera_id);
-        };
-        $dql = $qb->getDQL();
-        $unidades_ofertas = $qb->getQuery()->getArrayResult();
-
-        if (count($unidades_ofertas) == 0) {
-            $unidades_ofertas[] = $this->limpiar_array($keys, 0);
-        };
-
-        //se pasan los datos a un array
-
-        return $unidades_ofertas;
-    }
-
-    public function limpiar_array($keys, $valor) {
-        return array_fill_keys($keys, $valor);
-    }
+//    public function findMatriculaCarrera($unidad_oferta, $anio) {
+//        
+//        //vector de claves del array de resultado. Se usa si el resultado es un array vacio
+//        $keys = array('anio', 'matricula', 'matricula_ingresantes', 'egreso');
+//        
+//        foreach ($unidad_oferta->getCohortes() as $key => $un_anio) {
+//            if ($un_anio->getAnio)
+//            
+//        }
+//
+//        $qb = $this->_em->createQueryBuilder()
+//                ->select('co.anio, co.matricula, co.matricula_ingresantes, co.egreso')
+//                ->from('EstablecimientoBundle:UnidadOferta', 'uo')
+//                ->innerJoin('uo.localizacion', 'l')
+//                ->leftJoin('uo.cohortes', 'co')
+//                ->where('l.')
+//                ->where('co.anio = :anio');
+//                ->
+//        $qb->setParameter('anio', $anio);
+//
+//        $dql = $qb->getDQL();
+//
+//        $unidades_ofertas = $qb->getQuery()->getArrayResult();
+//
+//        if (count($unidades_ofertas) == 0) {
+//            $unidades_ofertas[] = $this->limpiar_array($keys, 0);
+//        };
+//
+//        //se pasan los datos a un array
+//
+//        return $unidades_ofertas;
+//    }
+//
+//    public function limpiar_array($keys, $valor) {
+//        return array_fill_keys($keys, $valor);
+//    }
 
 }
