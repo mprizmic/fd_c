@@ -93,8 +93,20 @@ class EstablecimientoEdificio {
      */
     private $email2;
 
+    /**
+     * devuelve el objeto localizacion de nivel terciario correspondiente $this
+     */
+    public function getTerciario() {
+        foreach ($this->getLocalizacion() as $localizacion) {
+            if ($localizacion->esTerciario()) {
+                return $localizacion;
+            }
+        };
+        return null;
+    }
+
     public function __toString() {
-        return $this->getEstablecimientos()->getApodo() . ($this->getCueAnexo() == '00' ? '' : ' - ' .$this->getNombre());
+        return $this->getEstablecimientos()->getApodo() . ($this->getCueAnexo() == '00' ? '' : ' - ' . $this->getNombre());
     }
 
     public function __construct() {
