@@ -298,15 +298,16 @@ class CarreraController extends Controller {
      * FALTA testear
      * 
      * Lista de carreras para un combo formateados en json
-     * Se puede filtrar por establecimiento
+     * Se puede filtrar por establecimiento_edificio
      * 
-     * @Route("/combo/{establecimiento_id}", name="carrera_combo")
+     * @Route("/combo/{establecimiento_edificio_id}", name="carrera_combo")
+     * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:EstablecimientoEdificio", options={"id":"establecimiento_edificio_id"})
      */
-    public function comboAction($establecimiento_id = null) {
+    public function comboAction($establecimiento_edificio = null) {
 
-        $establecimiento = $this->getEm()->getRepository('EstablecimientoBundle:Establecimiento')->find($establecimiento_id);
+//        $establecimiento = $this->getEm()->getRepository('EstablecimientoBundle:Establecimiento')->find($establecimiento_id);
 
-        $entities = $this->getEm()->getRepository('OfertaEducativaBundle:Carrera')->combo($establecimiento);
+        $entities = $this->getEm()->getRepository('OfertaEducativaBundle:Carrera')->combo($establecimiento_edificio);
 
         $carrera_manager = new CarreraManager($this->getEm());
 

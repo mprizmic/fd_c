@@ -51,11 +51,11 @@ class CohorteController extends Controller {
      */
     public function indexAction() {
 
-        $establecimientos = $this->getEm()->getRepository('EstablecimientoBundle:Establecimiento')->findAllOrdenado('orden');
+        $establecimiento_edificios = $this->getEm()->getRepository('EstablecimientoBundle:EstablecimientoEdificio')->findAllOrdenado();
         $carreras = $this->getEm()->getRepository('OfertaEducativaBundle:Carrera')->findAllOrdenado('nombre');
 
         return array(
-            'establecimientos' => $establecimientos,
+            'sedes_anexos' => $establecimiento_edificios,
             'carrera' => $carreras,
         );
     }

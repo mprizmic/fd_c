@@ -3,6 +3,7 @@
 namespace Fd\OfertaEducativaBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Repository\LocalizacionRepository;
@@ -19,29 +20,21 @@ use Fd\TablaBundle\Entity\EstadoCarrera;
 class CarreraRepository extends EntityRepository {
 
     /**
-     * 25/2/15 modificado para la migracion de localizaciones
-     * 
      * dado un establecimeinto devuelve objetos de tipo carrera de las carreras del mismo, sin localizar
      * 
      * @return type resultados objetos carrera
      */
-//    public function findCarrerasPorEstablecimiento($establecimiento) {
-//        
-//        /** aca hay que pasar por las localizaciones de cada carrera y eliminar los casos de carreras que se den en más de una localización
-//         * para qu no queden repetidas
-//         */
-//        
-//        $dql = "select c
-//            from OfertaEducativaBundle:Carrera c 
-//            join c.oferta o 
-//            join o.unidades u
-//            join u.unidades ue
-//            join ue.establecimiento e 
-//            where e.id = :establecimiento";
-//        $q = $this->_em->createQuery($dql);
-//        $q->setParameter('establecimiento', $establecimiento);
-//        return $q->getResult();
-//    }
+    public function findCarrerasPorSedeAnexo(EstablecimientoEdificio $establecimiento_edificio) {
+        $qb = $this->createQueryBuilder('car')
+                ->select('car')
+                ->join('car.oferta', 'oe')
+                ->join('oe.unidades', 'uo')
+                ->join('uo.localizacion', 'l')
+                ->where('l.establecimiento_edificio = :ee');
+        
+        $qb->setParameter('ee', $establecimiento_edificio);
+        return $qb->getQuery()->getResult();
+    }
 
     /**
      * devuelve todas las localizaciones donde se dicta la carrera informada
@@ -108,9 +101,9 @@ class CarreraRepository extends EntityRepository {
     /**
      * Lista de carreras para un combo
      */
-    public function combo($establecimiento = null) {
-        if ($establecimiento) {
-            return $this->findCarrerasPorEstablecimiento($establecimiento);
+    public function combo($establecimiento_edificio = null) {
+        if ($establecimiento_edificio) {
+            return $this->findCarrerasPorSedeAnexo($establecimiento_edificio);
         };
         return $this->findAllOrdenado('nombre');
     }
