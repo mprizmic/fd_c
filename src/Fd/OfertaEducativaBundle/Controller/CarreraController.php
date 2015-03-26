@@ -20,6 +20,7 @@ use Fd\OfertaEducativaBundle\Repository\CarreraRepository;
 use Fd\OfertaEducativaBundle\Repository\CarreraEstadoValidezRepository;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
+use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Repository\UnidadOfertaRepository;
 
@@ -771,23 +772,27 @@ class CarreraController extends Controller {
      * @ParamConverter("carrera", class="OfertaEducativaBundle:Carrera", options={"id"="carrera_id"})
      * @Template("OfertaEducativaBundle:Carrera:cuadro_matricula.html.twig")
      *      */
-    public function cuadro_matriculaAction($carrera) {
-        $unidades_ofertas = $this->getEm()
-                ->getRepository('EstablecimientoBundle:UnidadOferta')
-                ->findUnidadesOfertas($carrera);
+    public function cuadro_matriculaAction(Carrera $carrera) {
+        
+        $repositorio_unidad_oferta = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta');
+        
+        $unidades_ofertas = $repositorio_unidad_oferta->findUnidadOferta(null, $carrera, true);
 
         //se prepara un array para el formato del cuadro de salida
         //se filtran los últimos 4 años
-        $salida = array();
-        $un_establecimiento = array();
+        $salida = [];
+        $un_establecimiento = [];
         $hoy = date("Y");
         $anio_desde = $hoy - 2;
 
         foreach ($unidades_ofertas as $una_unidad_oferta) {
-            $un_establecimiento['nombre'] = $una_unidad_oferta->getUnidades()->getEstablecimiento()->getNombre();
-            $un_establecimiento['id'] = $una_unidad_oferta->getUnidades()->getEstablecimiento()->getId();
-            $un_establecimiento['orden'] = $una_unidad_oferta->getUnidades()->getEstablecimiento()->getOrden();
+            
+            $establecimiento_edificio = $repositorio_unidad_oferta->findSedeAnexo($una_unidad_oferta);
+            $un_establecimiento['nombre_anexo'] = $establecimiento_edificio->__toString();
+            $un_establecimiento['establecimiento_id'] = $establecimiento_edificio->getEstablecimientos()->getId();
+            $un_establecimiento['orden'] = $establecimiento_edificio->getEstablecimientos()->getOrden();
             $cohortes = $una_unidad_oferta->getCohortes();
+            
             $un_establecimiento['cohortes'] = array();
             foreach ($cohortes as $una_cohorte) {
                 if ($una_cohorte->getAnio() <= $hoy and $una_cohorte->getAnio() >= $anio_desde) {

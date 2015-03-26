@@ -94,7 +94,7 @@ class EstablecimientoEdificio {
     private $email2;
 
     public function __toString() {
-        return $this->getEstablecimientos()->getApodo() . ' Sede ' . $this->getCueAnexo();
+        return $this->getEstablecimientos()->getApodo() . ($this->getCueAnexo() == '00' ? '' : ' - ' .$this->getNombre());
     }
 
     public function __construct() {

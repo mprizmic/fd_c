@@ -3,32 +3,69 @@
 namespace Fd\EstablecimientoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
+use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\OfertaEducativaBundle\Repository\InicialXRepository;
 
 class UnidadOfertaRepository extends EntityRepository {
+
+        /**
+     * devuelve el establecimiento localizacido donde se dicta una unidad oferta
+     * El resultado es un objeto establecimiento_edificio
+     */
+    public function findSedeAnexo(UnidadOferta $unidad_oferta){
+        
+        $loc = $unidad_oferta->getLocalizacion();
+        
+        if (!$loc){
+            return new NotFoundHttpException('la uo ' . $unidad_oferta->getId() . ' no tiene localizacion');
+        };
+         
+        $ee = $loc->getEstablecimientoEdificio();
+        
+        if (!$ee){
+            return new NotFoundHttpException('la uo ' . $unidad_oferta->getId() . ' no tiene estab_ed');
+        }
+        
+        return $ee;
+    }
 
     /**
      * dada una localizacion de un terciario, devuelve obj unidad_oferta de todas las carreras que se imparten en esa localizacion
      * Si el 2do parametro es verdadero, devuelve también las cohortes que encuentre
      */
     public function findCarreras(Localizacion $localizacion, $cohortes = false) {
-        $qb = $this->_em->createQueryBuilder()
+
+        return $this->findUnidadOferta($localizacion, null, $cohortes);
+    }
+    /**
+     * dada una carrera me devuelve un array de objetos unidad_oferta donde se imparte esa carrera
+     */
+    public function findUnidadOferta(Localizacion $localizacion = null, Carrera $carrera = null, $cohortes = false ){
+        $qb = $this->createQueryBuilder('uo')
                 ->select('uo')
-                ->from('EstablecimientoBundle:UnidadOferta', 'uo')
                 ->innerJoin('uo.ofertas', 'oe')
-                ->innerJoin('oe.carrera', 'car')
-                ->where('uo.localizacion = ?1')
-                ->orderBy('car.nombre');
+                ->where('true = true');
         
-        if ( $cohortes ){
-            $qb->leftJoin('uo.cohortes', 'co');
+        if ($carrera){
+            $qb->innerJoin('oe.carrera', 'car');
+            $qb->andWhere('car = :carrera');
+            $qb->setParameter('carrera', $carrera);
         };
         
-        $qb->setParameter(1, $localizacion->getId());
-
+        if ( $localizacion ){
+            $qb->andWhere('uo.localizacion = :localizacion');
+            $qb->setParameter('localizacion', $localizacion);
+        };
+                
+        if ( $cohortes ){
+                $qb->leftJoin('uo.cohortes', 'co');
+        };
+        
+                
         return $qb->getQuery()->getResult();
     }
 
@@ -83,6 +120,8 @@ class UnidadOfertaRepository extends EntityRepository {
     }
 
     /**
+     * FALTA ver si queda DEPRECATED
+     * 
      * devuelve una collection de objetos unidad_oferta (las ofertas educativas asociadas a una unidad educativa)
      * de una carrera en particular
      */
