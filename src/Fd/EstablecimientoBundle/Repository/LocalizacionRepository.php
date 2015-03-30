@@ -44,6 +44,7 @@ class LocalizacionRepository extends EntityRepository {
      * devuelve un array de localizaciones de las sedes y anexos en los que se imparten terciarios
      * ordenados por establecimiento y cue_anexo
      * 
+     * resultado[][localizacion]
      * resultado[][establecimiento_nombre]
      * resultado[][localizacion_id]
      * resultado[][establecimiento_edificio_nombre]
