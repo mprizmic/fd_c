@@ -12,8 +12,8 @@ use Fd\OfertaEducativaBundle\Repository\InicialXRepository;
 
 class UnidadOfertaRepository extends EntityRepository {
 
-        /**
-     * devuelve el establecimiento localizacido donde se dicta una unidad oferta
+    /**
+     * devuelve el establecimiento localizado donde se dicta una unidad oferta
      * El resultado es un objeto establecimiento_edificio
      */
     public function findSedeAnexo(UnidadOferta $unidad_oferta){
@@ -34,7 +34,7 @@ class UnidadOfertaRepository extends EntityRepository {
     }
 
     /**
-     * dada una localizacion de un terciario, devuelve obj unidad_oferta de todas las carreras que se imparten en esa localizacion
+     * dada una localizacion de un terciario, devuelve array de obj unidad_oferta de todas las carreras que se imparten en esa localizacion
      * Si el 2do parametro es verdadero, devuelve también las cohortes que encuentre
      */
     public function findCarreras(Localizacion $localizacion, $cohortes = false) {
