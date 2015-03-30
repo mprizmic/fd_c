@@ -10,6 +10,22 @@ use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 class CohorteRepository extends EntityRepository {
 
     /**
+     * Devuelve los registro de COHORTE de una determinada unidad_oferta
+     * 
+     */
+    public function findCohortes(UnidadOferta $unidad_oferta) {
+
+        $qb = $this->createQueryBuilder('c')
+                ->where('c.unidad_oferta = :uo')
+                ->orderBy('c.anio')
+                ->setParameter('uo', $unidad_oferta);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * FATA ver si no esta DEPRECATED por findCohortes
+     * 
      * Devuelve los registro de COHORTE de un determinado establecimiento y una determinada carrera
      * 
      * @param type $establecimiento
@@ -17,15 +33,15 @@ class CohorteRepository extends EntityRepository {
      * @return type $cohorte
      */
     public function findMatricula($establecimiento, $carrera) {
-        if ($establecimiento == NULL or $carrera == NULL){
+        if ($establecimiento == NULL or $carrera == NULL) {
             return NULL;
         };
-        
+
         $oe_id = $carrera->getOferta()->getId();
         $ue_id = $establecimiento->getTerciario()->getId();
-        
-        $unidad_oferta = $this->_em->getRepository('EstablecimientoBundle:UnidadOferta')->findBy(array('ofertas'=>$oe_id, 'unidades'=>$ue_id));
-        
+
+        $unidad_oferta = $this->_em->getRepository('EstablecimientoBundle:UnidadOferta')->findBy(array('ofertas' => $oe_id, 'unidades' => $ue_id));
+
         $xx = $this
                 ->createQueryBuilder('c')
                 ->where('c.unidad_oferta = :uo')
@@ -34,7 +50,7 @@ class CohorteRepository extends EntityRepository {
         $yy = $xx->getDQL();
         $entities = $xx->getQuery()
                 ->getResult();
-        
+
         return $entities;
     }
 

@@ -5,8 +5,11 @@ namespace Fd\BackendBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Fd\EstablecimientoBundle\Entity\Localizacion;
+use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\OfertaEducativaBundle\Entity\Cohorte;
 use Fd\BackendBundle\Form\CohorteType;
 
@@ -27,16 +30,19 @@ class CohorteController extends Controller {
     }
 
     /**
+     * Devuelve un pedazo de html con la lista de los años en que hay cargada matrícula para la carrera y la localizacion informados
+     * 
      * @Route("/listar/{establecimiento_id}/{carrera_id}", name="backend_cohorte_listar")
      * @Template("BackendBundle:Cohorte:listar.html.twig")
+     * @ParamConverter("localizacion", class="EstablecimientoBundle:Localizacion", options={"id":"establecimiento_id"})
+     * @ParamConverter("carrera", class="OfertaEducativaBundle:Carrera", options={"id":"carrera_id"})
      */
-    public function listarAction($establecimiento_id, $carrera_id) {
+    public function listarAction($localizacion, $carrera) {
 
-        $establecimiento = $this->getEm()->getRepository('EstablecimientoBundle:Establecimiento')->find($establecimiento_id);
-        $carrera = $this->getEm()->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
+        $unidad_oferta = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')->findUnidadOferta($localizacion, $carrera);
 
         $entities = $this->getEm()->getRepository("OfertaEducativaBundle:Cohorte")
-                ->findMatricula($establecimiento, $carrera);
+                ->findCohortes($unidad_oferta[0]);
 
         return array(
             'entities' => $entities,
@@ -51,11 +57,11 @@ class CohorteController extends Controller {
      */
     public function indexAction() {
 
-        $establecimiento_edificios = $this->getEm()->getRepository('EstablecimientoBundle:EstablecimientoEdificio')->findAllOrdenado();
+        $terciarios = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')->findTerciarios();
         $carreras = $this->getEm()->getRepository('OfertaEducativaBundle:Carrera')->findAllOrdenado('nombre');
 
         return array(
-            'sedes_anexos' => $establecimiento_edificios,
+            'sedes_anexos' => $terciarios,
             'carrera' => $carreras,
         );
     }
@@ -90,8 +96,8 @@ class CohorteController extends Controller {
      */
     public function newAction() {
         $entity = new Cohorte();
-        $entity->setAnio(  date('Y') * 1);
-                                        
+        $entity->setAnio(date('Y') * 1);
+
         $form = $this->createForm(new CohorteType(), $entity);
 
         return array(
@@ -178,9 +184,9 @@ class CohorteController extends Controller {
         if ($editForm->isValid()) {
             $this->getEm()->persist($entity);
             $this->getEm()->flush();
-            
-            $this->get('session')->getFlashBag()->add('notice', 'Se guardó exitosamente');          
-        }else{
+
+            $this->get('session')->getFlashBag()->add('notice', 'Se guardó exitosamente');
+        } else {
             $this->get('session')->getFlashBag()->add('error', 'La información no fue guardada. Verifique y reintente.');
         }
 

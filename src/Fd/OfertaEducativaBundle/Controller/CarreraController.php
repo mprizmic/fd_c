@@ -18,6 +18,7 @@ use Fd\OfertaEducativaBundle\Form\Filter\CarreraFilterType;
 use Fd\OfertaEducativaBundle\Model\CarreraManager;
 use Fd\OfertaEducativaBundle\Repository\CarreraRepository;
 use Fd\OfertaEducativaBundle\Repository\CarreraEstadoValidezRepository;
+use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
@@ -300,14 +301,14 @@ class CarreraController extends Controller {
      * Lista de carreras para un combo formateados en json
      * Se puede filtrar por establecimiento_edificio
      * 
-     * @Route("/combo/{establecimiento_edificio_id}", name="carrera_combo")
-     * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:EstablecimientoEdificio", options={"id":"establecimiento_edificio_id"})
+     * @Route("/combo/{establecimiento_id}", name="carrera_combo")
+     * @ParamConverter("localizacion_terciario", class="EstablecimientoBundle:Localizacion", options={"id":"establecimiento_id"})
      */
-    public function comboAction($establecimiento_edificio = null) {
+    public function comboAction(Localizacion $localizacion_terciario = null) {
 
 //        $establecimiento = $this->getEm()->getRepository('EstablecimientoBundle:Establecimiento')->find($establecimiento_id);
 
-        $entities = $this->getEm()->getRepository('OfertaEducativaBundle:Carrera')->combo($establecimiento_edificio);
+        $entities = $this->getEm()->getRepository('OfertaEducativaBundle:Carrera')->combo($localizacion_terciario);
 
         $carrera_manager = new CarreraManager($this->getEm());
 

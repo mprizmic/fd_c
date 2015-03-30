@@ -101,9 +101,9 @@ class CarreraRepository extends EntityRepository {
     /**
      * Lista de carreras para un combo
      */
-    public function combo($establecimiento_edificio = null) {
-        if ($establecimiento_edificio) {
-            return $this->findCarrerasPorSedeAnexo($establecimiento_edificio);
+    public function combo($localizacion = null) {
+        if ($localizacion) {
+            return $this->findCarrerasPorSedeAnexo($localizacion->getEstablecimientoEdificio());
         };
         return $this->findAllOrdenado('nombre');
     }
