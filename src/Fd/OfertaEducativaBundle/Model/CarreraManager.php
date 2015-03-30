@@ -262,7 +262,7 @@ class CarreraManager implements AsignarVisitadoInterface {
 
         foreach ($entities as $entity) {
             $carrera['value'] = $entity->getId();
-            $carrera['text'] = $entity->getNombre();
+            $carrera['text'] = $entity->getIdentificacion();
             $carreras[] = $carrera;
         };
 
