@@ -16,20 +16,20 @@ class UnidadOfertaRepository extends EntityRepository {
      * devuelve el establecimiento localizado donde se dicta una unidad oferta
      * El resultado es un objeto establecimiento_edificio
      */
-    public function findSedeAnexo(UnidadOferta $unidad_oferta){
-        
+    public function findSedeAnexo(UnidadOferta $unidad_oferta) {
+
         $loc = $unidad_oferta->getLocalizacion();
-        
-        if (!$loc){
+
+        if (!$loc) {
             return new NotFoundHttpException('la uo ' . $unidad_oferta->getId() . ' no tiene localizacion');
         };
-         
+
         $ee = $loc->getEstablecimientoEdificio();
-        
-        if (!$ee){
+
+        if (!$ee) {
             return new NotFoundHttpException('la uo ' . $unidad_oferta->getId() . ' no tiene estab_ed');
         }
-        
+
         return $ee;
     }
 
@@ -41,32 +41,46 @@ class UnidadOfertaRepository extends EntityRepository {
 
         return $this->findUnidadOferta($localizacion, null, $cohortes);
     }
+
     /**
-     * dada una carrera me devuelve un array de objetos unidad_oferta donde se imparte esa carrera
+     * Dada una localizacion o una carrera me devuelve un array de objetos unidad_oferta donde se imparte esa carrera.
+     * Se pueda generar el dato con o sin cohortes
      */
-    public function findUnidadOferta(Localizacion $localizacion = null, Carrera $carrera = null, $cohortes = false ){
+    public function findUnidadOferta(Localizacion $localizacion = null, Carrera $carrera = null, $cohortes = false) {
+
+        return $this->qbUnidadOferta($localizacion, $carrera, $cohortes)->getQuery()->getResult();
+    }
+
+    /**
+     * Dada una localizacion o una carrera me devuelve el query builder.
+     * Se pueda generar el dato con o sin cohortes
+     */
+    public function qbUnidadOferta($localizacion = null, Carrera $carrera = null, $cohortes = false) {
         $qb = $this->createQueryBuilder('uo')
                 ->select('uo')
                 ->innerJoin('uo.ofertas', 'oe')
                 ->where('true = true');
-        
-        if ($carrera){
+
+        if ($carrera) {
             $qb->innerJoin('oe.carrera', 'car');
             $qb->andWhere('car = :carrera');
             $qb->setParameter('carrera', $carrera);
         };
-        
-        if ( $localizacion ){
+
+        if ($localizacion) {
             $qb->andWhere('uo.localizacion = :localizacion');
             $qb->setParameter('localizacion', $localizacion);
+        }else{
+            $qb->andWhere('uo.localizacion = :localizacion');
+            $qb->setParameter('localizacion', 88);
+            
+        }
+
+        if ($cohortes) {
+            $qb->leftJoin('uo.cohortes', 'co');
         };
-                
-        if ( $cohortes ){
-                $qb->leftJoin('uo.cohortes', 'co');
-        };
-        
-                
-        return $qb->getQuery()->getResult();
+
+        return $qb;
     }
 
     /**
@@ -116,25 +130,6 @@ class UnidadOfertaRepository extends EntityRepository {
             order by car.nombre";
         $q = $this->_em->createQuery($dql);
         $q->setParameter('establecimiento', $establecimiento_id);
-        return $q->getResult();
-    }
-
-    /**
-     * FALTA ver si queda DEPRECATED
-     * 
-     * devuelve una collection de objetos unidad_oferta (las ofertas educativas asociadas a una unidad educativa)
-     * de una carrera en particular
-     */
-    public function findUnidadesOfertas($carrera) {
-        $dql = "
-            select uo from EstablecimientoBundle:UnidadOferta uo
-            join uo.unidades ue
-            join ue.establecimiento e
-            join uo.ofertas oe
-            join oe.carrera c 
-            where c.id = :carrera";
-        $q = $this->_em->createQuery($dql);
-        $q->setParameter('carrera', $carrera);
         return $q->getResult();
     }
 
@@ -196,25 +191,6 @@ class UnidadOfertaRepository extends EntityRepository {
 //        return $respuesta;
     }
 
-    /**
-     * dado un terciario de un establecimiento devuelve un querybuilder para 
-     * recuperar los objetos de tipo unidad_oferta 
-     * de las ofertas de carreras del establecimiento
-     * 
-     * @return type resultados objetos unidad_oferta correspondientes a las ofertas de carreras existentes
-     */
-    public function qbCarrerasPorEstablecimiento($unidad_educativa_id = null) {
-
-        $qb = $this->createQueryBuilder('uo')
-                ->join('uo.unidades', 'ue')
-                ->join('uo.ofertas', 'oe')
-                ->join('oe.carrera', 'c')
-                ->where('ue.id = :unidad_educativa')
-                ->setParameter('unidad_educativa', $unidad_educativa_id)
-        ;
-        return $qb;
-    }
-
     /*
      * FALTA terminar DEPRECATED?
      * 
@@ -258,5 +234,4 @@ class UnidadOfertaRepository extends EntityRepository {
 //    public function limpiar_array($keys, $valor) {
 //        return array_fill_keys($keys, $valor);
 //    }
-
 }

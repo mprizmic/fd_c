@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Fd\BackendBundle\Form\UnidadOfertaType;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
+use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\TablaBundle\Entity\Nivel;
 
@@ -78,20 +79,15 @@ class UnidadOfertaController extends Controller {
      * Lista de unidades_oferta para un combo formateados en html como combo
      * Filtrado por unidad_educativa
      * 
-     * @Route("/combo/{unidad_educativa_id}", name="backend_unidad_oferta_combo")
+     * @Route("/combo/{localizacion_id}", name="backend_unidad_oferta_combo", options={"expose"=true})
      */
-    public function comboAction($unidad_educativa_id) {
-
-        try {
-            $unidad_educativa = $this->getEm()->getRepository('EstablecimientoBundle:UnidadEducativa')->find($unidad_educativa_id);
-        } catch (Exception $e) {
-            throw new createNotFoundException();
-        };
-
-        $entities = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')
-                ->qbCarrerasPorEstablecimiento($unidad_educativa_id)
-                ->getQuery()
-                ->getResult()
+    public function comboAction($localizacion_id) {
+        
+        $localizacion = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')->find($localizacion_id);
+        
+        $entities = $this->getEm()
+                ->getRepository('EstablecimientoBundle:UnidadOferta')
+                ->findUnidadOferta($localizacion)
         ;
 
         return $this->render('EstablecimientoBundle:UnidadOferta:combo.html.twig', array(

@@ -105,8 +105,9 @@
                 //usando FOSJsRouingBundle
                 //recupera sólo los option
                 $.ajax({
-                    url: Routing.generate('backend_unidad_oferta_combo', { unidad_educativa_id: clave } ),
+                    url: Routing.generate('backend_unidad_oferta_combo', { localizacion_id: 88 } ),
                     type: 'GET',
+                    dataType: 'html',
                     success: function (data){
                         $('#fd_cohorte_type_unidad_oferta').html(data);
                         return true;
