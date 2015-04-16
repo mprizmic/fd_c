@@ -185,24 +185,6 @@ class EstablecimientoRepositoryTest extends WebTestCase {
 //        $this->assertGreaterThan(0, $establecimientos);
 //    }
 
-    /**
-     * FALTA cambia a partir del cambio de localizacion de la oferta
-     * 
-     * devuelve las unidades_oferta de un tipo determinado que tiene un establecimiento dado
-     * Se prueba con el ISPEE y el nivel primario
-     * 
-     * @param type $establecimiento_id
-     * @param type $tipo
-     */
-//    public function testFindUnidadesOfertas($establecimiento_id = 17, $tipo = 'primario') {
-//        $establecimiento = $this->repo->findOneBy(array('apodo' => 'ISPEE'));
-//
-//        $uos = $this->repo
-//                ->findUnidadesOfertas($establecimiento, $tipo);
-//
-//        $this->assertCount(0, $uos);
-//    }
-
     public function testCombo() {
         $establecimientos = $this->repo
                 ->combo()

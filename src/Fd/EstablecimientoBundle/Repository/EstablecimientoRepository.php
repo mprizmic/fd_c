@@ -186,25 +186,6 @@ class EstablecimientoRepository extends EntityRepository {
 //    }
 
     /**
-     * FALTA cambia a partir del cambio de localizacion de la oferta
-     * 
-     * devuelve las unidades_ofertas (las ofertas educativas asociadas a una localizacion de una unidad
-     * Tipo es el tipo de oferta. Ej: "carrera"
-     * $tipo es una string
-     */
-//    public function findUnidadesOfertas($establecimiento, $tipo = null) {
-//        $dql = "
-//            select uo from EstablecimientoBundle:UnidadOferta uo
-//            join uo.unidades ue
-//            join uo.ofertas oe
-//            join oe." . $tipo . " t 
-//            where ue.establecimiento=:establecimiento";
-//        $q = $this->_em->createQuery($dql);
-//        $q->setParameter('establecimiento', $establecimiento);
-//        return $q->getResult();
-//    }
-
-    /**
      * Lista de establecimientos para un combo
      */
     public function combo() {
