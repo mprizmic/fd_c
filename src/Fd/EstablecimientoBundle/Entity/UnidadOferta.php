@@ -111,6 +111,10 @@ class UnidadOferta {
     public function combo() {
         return $this->getOfertas()->getCarrera()->getNombre();
     }
+    public function getCarreraIdentificacion() {
+        return $this->getOfertas()->getCarrera()->getIdentificacion();
+    }
+    
 
     /**
      * @ORM\PrePersist  //en el persist cuando se da de alta uno nuevo

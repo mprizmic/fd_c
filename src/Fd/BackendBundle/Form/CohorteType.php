@@ -44,7 +44,6 @@ class CohorteType extends AbstractType {
             $form->add($factory->createNamed('unidad_oferta', 'entity', null, array(
                         'class' => 'EstablecimientoBundle:UnidadOferta',
                         'label' => 'Carrera',
-//                        'property' => 'localizacion',
                         'query_builder' => function (UnidadOfertaRepository $repository) use ($localizacion) {
 
                             if ($localizacion instanceof Localizacion) {
