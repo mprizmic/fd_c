@@ -167,12 +167,12 @@ class Establecimiento {
     /**
      * @ORM\Column(nullable=true, type="date")
      */
-    private $fecha_presentacion_ram;
+    private $fecha_presentacion_rai;
 
     /**
      * @ORM\Column(nullable=true, type="date")
      */
-    private $fecha_aprobacion_ram;
+    private $fecha_aprobacion_rai;
 
     /**
      * @ORM\Column(nullable=true, type="date")
@@ -957,8 +957,8 @@ class Establecimiento {
      * @param \DateTime $fechaPresentacionRam
      * @return Establecimiento
      */
-    public function setFechaPresentacionRam($fechaPresentacionRam) {
-        $this->fecha_presentacion_ram = $fechaPresentacionRam;
+    public function setFechaPresentacionRai($fechaPresentacionRai) {
+        $this->fecha_presentacion_rai = $fechaPresentacionRai;
 
         return $this;
     }
@@ -968,8 +968,8 @@ class Establecimiento {
      *
      * @return \DateTime 
      */
-    public function getFechaPresentacionRam() {
-        return $this->fecha_presentacion_ram;
+    public function getFechaPresentacionRai() {
+        return $this->fecha_presentacion_rai;
     }
 
     /**
@@ -978,8 +978,8 @@ class Establecimiento {
      * @param \DateTime $fechaAprobacionRam
      * @return Establecimiento
      */
-    public function setFechaAprobacionRam($fechaAprobacionRam) {
-        $this->fecha_aprobacion_ram = $fechaAprobacionRam;
+    public function setFechaAprobacionRai($fechaAprobacionRai) {
+        $this->fecha_aprobacion_rai = $fechaAprobacionRai;
 
         return $this;
     }
@@ -989,8 +989,8 @@ class Establecimiento {
      *
      * @return \DateTime 
      */
-    public function getFechaAprobacionRam() {
-        return $this->fecha_aprobacion_ram;
+    public function getFechaAprobacionRai() {
+        return $this->fecha_aprobacion_rai;
     }
 
     /**

@@ -227,15 +227,15 @@
             <br />
             <fieldset>
                 <span class="mediana resaltado">
-                        {{ 'RAM' }}
+                        {{ 'RAI' }}
                     </span>
                         <br />
-                    {% if establecimiento.fechaPresentacionRam or establecimiento.fechaAprobacionRam %}
-                        {% if establecimiento.fechaPresentacionRam %}
-                            {{ ' Fecha de presentación: ' ~ establecimiento.fechaPresentacionRam|date('d-m-Y') }}
+                    {% if establecimiento.fechaPresentacionRai or establecimiento.fechaAprobacionRai %}
+                        {% if establecimiento.fechaPresentacionRai %}
+                            {{ ' Fecha de presentación: ' ~ establecimiento.fechaPresentacionRai|date('d-m-Y') }}
                         {% endif %}
-                        {% if establecimiento.fechaAprobacionRam %}
-                            {{ ' - Fecha de aprobación: ' ~ establecimiento.fechaAprobacionRam|date('d-m-Y') }}
+                        {% if establecimiento.fechaAprobacionRai %}
+                            {{ ' - Fecha de aprobación: ' ~ establecimiento.fechaAprobacionRai|date('d-m-Y') }}
                         {% endif %}
                     {% else %}
                         {{ 'Sin información del trámite' }}
