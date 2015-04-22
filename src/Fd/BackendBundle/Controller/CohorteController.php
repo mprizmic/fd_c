@@ -140,18 +140,13 @@ class CohorteController extends Controller {
      * Displays a form to edit an existing Cohorte entity.
      *
      * @Route("/{id}/edit", name="backend_cohorte_edit")
+     * @ParamConverter("entity", class="OfertaEducativaBundle:Cohorte", options={"id":"cohorte_id"} )
      * @Template()
      */
-    public function editAction($id) {
-
-        $entity = $this->getEm()->getRepository('OfertaEducativaBundle:Cohorte')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Cohorte entity.');
-        }
+    public function editAction($entity) {
 
         $editForm = $this->createForm(new CohorteType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         return array(
             'entity' => $entity,
