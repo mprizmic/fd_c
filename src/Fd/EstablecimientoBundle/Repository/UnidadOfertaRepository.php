@@ -70,10 +70,6 @@ class UnidadOfertaRepository extends EntityRepository {
         if ($localizacion) {
             $qb->andWhere('uo.localizacion = :localizacion');
             $qb->setParameter('localizacion', $localizacion);
-        }else{
-            $qb->andWhere('uo.localizacion = :localizacion');
-            $qb->setParameter('localizacion', 88);
-            
         }
 
         if ($cohortes) {
