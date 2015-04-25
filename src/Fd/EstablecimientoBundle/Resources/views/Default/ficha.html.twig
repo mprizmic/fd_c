@@ -168,14 +168,14 @@
                     <br />                        
                         
                     {# especializaciones #}
-                    <fieldset>
-                    <span class="resaltado">Postítulos:</span><br/>
+{#                    <fieldset>#}
+{#                    <span class="resaltado">Postítulos:</span><br/>#}
             {#            {% for especializacion in especializaciones %}
                             <div class="separador"><a href="{{ path('especializacion_ficha', {'especializacion_id': especializacion.id }) }}">{{ especializacion.nombre }}</a></div>
                         {% else %}  
-            #}                <div class="separador">No hay datos disponibles</div>
+                            <div class="separador">No hay datos disponibles</div>
             {#            {% endfor %}  #}
-                    </fieldset>
+{#                    </fieldset>#}
         
                     {% if not loop.first %}
                         </fieldset>
