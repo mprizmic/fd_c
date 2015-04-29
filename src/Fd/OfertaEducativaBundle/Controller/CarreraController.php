@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method; //permite la annotation method
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
+use Fd\OfertaEducativaBundle\Entity\Norma;
 use Fd\OfertaEducativaBundle\Form\CarreraType;
 use Fd\OfertaEducativaBundle\Form\EstablecimientosType;
 use Fd\OfertaEducativaBundle\Form\Handler\CarreraFormHandler;
@@ -373,7 +374,7 @@ class CarreraController extends Controller {
             $unidad_oferta = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')->find($localizacion['unidad_oferta_id']);
             $turnos = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')->findTurnosArray($unidad_oferta);
             $localizacion['turnos'] = $turnos;
-            
+
             $localizaciones[] = $localizacion;
             $x = true;
         }
@@ -430,7 +431,7 @@ class CarreraController extends Controller {
     public function asignar_establecimientoAction(Carrera $carrera, Request $request) {
 
         if ($request->getMethod() == 'GET') {
-            
+
             //creo el array de formularios para seleccionar establecimientos localizados
             $establecimientos_forms = $this->getEstablecimientosForms($carrera);
 
@@ -452,7 +453,7 @@ class CarreraController extends Controller {
     private function getEstablecimientosForms($carrera) {
         // FALTA Los establecimientos que tienen la carrera asignada y tiene cohortes deberían aparecer disable
         //para que no se pueda eliminar nada
-        
+
         /**
          * array usado
          * localizaciones[][(localizacion)localizacion]
@@ -460,7 +461,6 @@ class CarreraController extends Controller {
          * localizaciones[][localizacion_id]
          * localizaciones[][establecimiento_edificio_nombre]
          */
-        
         $resultado = array();
 
         //obtengo la lista de establecimientos ordenados
@@ -490,16 +490,16 @@ class CarreraController extends Controller {
      * @param type $nro_form
      */
     private function crearAsignarForm($una_localizacion, Carrera $carrera, $nro_form) {
-        
+
         //vertifica si en esa localizacion se está impartiendo la carrera
-        $se_imparte = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')->findSeImparte( $una_localizacion['localizacion'], $carrera);
-        
-        $nombre = $una_localizacion['establecimiento_nombre'] 
-                . 
+        $se_imparte = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')->findSeImparte($una_localizacion['localizacion'], $carrera);
+
+        $nombre = $una_localizacion['establecimiento_nombre']
+                .
                 ($una_localizacion['establecimiento_edificio_nombre'] ? ' - ' . $una_localizacion['establecimiento_edificio_nombre'] : '');
-        
+
         $data = array(
-            'nombre' =>  $nombre,
+            'nombre' => $nombre,
             'carrera_id' => $carrera->getId(),
             'localizacion_id' => $una_localizacion['localizacion_id'],
             'accion_del_form' => $se_imparte ? 'Desasignar' : 'Asignar',
@@ -622,43 +622,54 @@ class CarreraController extends Controller {
     }
 
     /**
-     * FALTA no anda
-     * 
-     * @Route("/nomina_resumida_planilla_de_calculo", name="carrera_nomina_resumida_planilla_de_calculo")
+     * @Route("/buscar_planilla_de_calculo", name="carrera_buscar_planilla_de_calculo")
      */
-    public function nomina_resumida_planilla_de_calculoAction() {
-        $filename = "Carrera_resumida.xls";
+    public function buscar_planilla_de_calculoAction() {
+        $filename = "Carreras.xls";
 
         // ask the service for a Excel5
         $excelService = $this->get('phpexcel');
 
-        $active_sheet_index = $excelService->excelObj->setActiveSheetIndex(0);
+        $excelObj = $excelService->createPHPExcelObject();
+
+        $active_sheet_index = $excelObj->setActiveSheetIndex(0);
 
         $carreras = $this
                 ->getDoctrine()
                 ->getEntityManager()
                 ->getRepository('OfertaEducativaBundle:Carrera')
-                ->qyResumido()
-                ->getResult();
+                ->findAll();
 
-        $fila = 4;
 
         $active_sheet_index->setCellValue('A1', 'Dirección de Formación Docente');
         $active_sheet_index->setCellValue('A2', 'Listado de carreras activas');
 
-        foreach ($carreras as $carrera) {
+        $fila = 5;
 
+        //titulos
+        $titulos = $fila - 1;
+        $active_sheet_index->setCellValue('A' . $titulos, "#");
+        $active_sheet_index->setCellValue('B' . $titulos, "Nombre");
+        $active_sheet_index->setCellValue('C' . $titulos, "Estado");
+        $active_sheet_index->setCellValue('D' . $titulos, "Norma");
+
+        foreach ($carreras as $carrera) {
             $active_sheet_index->setCellValue('A' . $fila, $fila - 2);
-            $active_sheet_index->setCellValue('B' . $fila, $carrera['nombre']);
-            $active_sheet_index->setCellValue('C' . $fila, $carrera['codigo']);
+            $active_sheet_index->setCellValue('B' . $fila, $carrera->getNombre());
+            $active_sheet_index->setCellValue('C' . $fila, $carrera->getEstado()->getDescripcion());
+            $norma = ( $carrera->getNorma() ? $carrera->getNorma()->__toString() : 'sin datos');
+            $active_sheet_index->setCellValue('D' . $fila, $norma);
             $fila += 1;
         }
-        $excelService->excelObj->getActiveSheet()->setTitle('Carreras activas');
+        $excelObj->getActiveSheet()->setTitle('Carreras activas');
         // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-        $excelService->excelObj->setActiveSheetIndex(0);
+        $excelObj->setActiveSheetIndex(0);
 
+        // create the writer
+        $writer = $excelService->createWriter($excelObj, 'Excel5');
+        // create the response
+        $response = $excelService->createStreamedResponse($writer);
         //create the response
-        $response = $excelService->getResponse();
         $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment;filename=' . $filename);
 
@@ -753,9 +764,9 @@ class CarreraController extends Controller {
      * @Template("OfertaEducativaBundle:Carrera:cuadro_matricula.html.twig")
      *      */
     public function cuadro_matriculaAction(Carrera $carrera) {
-        
+
         $repositorio_unidad_oferta = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta');
-        
+
         $unidades_ofertas = $repositorio_unidad_oferta->findUnidadOferta(null, $carrera, true);
 
         //se prepara un array para el formato del cuadro de salida
@@ -766,13 +777,13 @@ class CarreraController extends Controller {
         $anio_desde = $hoy - 2;
 
         foreach ($unidades_ofertas as $una_unidad_oferta) {
-            
+
             $establecimiento_edificio = $repositorio_unidad_oferta->findSedeAnexo($una_unidad_oferta);
             $un_establecimiento['nombre_anexo'] = $establecimiento_edificio->__toString();
             $un_establecimiento['establecimiento_id'] = $establecimiento_edificio->getEstablecimientos()->getId();
             $un_establecimiento['orden'] = $establecimiento_edificio->getEstablecimientos()->getOrden();
             $cohortes = $una_unidad_oferta->getCohortes();
-            
+
             $un_establecimiento['cohortes'] = array();
             foreach ($cohortes as $una_cohorte) {
                 if ($una_cohorte->getAnio() <= $hoy and $una_cohorte->getAnio() >= $anio_desde) {

@@ -100,13 +100,16 @@ class Carrera {
         return $this->nombre;
     }
 
-    public function getIdentificacion() {
+    public function getNorma(){
         $norma = "";
         foreach ($this->getOferta()->getNormas() as $value) {
             $norma = $value;
             break;
         };
-        return $this->nombre . ' - ' . $this->getEstado() . ' - ' . $norma;
+        return $norma;
+    }
+    public function getIdentificacion() {
+        return $this->nombre . ' - ' . $this->getEstado() . ' - ' . $this->getNorma();
     }
 
     /**
