@@ -58,22 +58,24 @@ class CarreraRepository extends EntityRepository {
     }
 
     /**
+     * DEPRECATED
+     * 
      * listado de carreras en estado activo ordenadas por nombre sin repetidos
      * @return type
      */
-    public function qyResumido() {
-        return $this->createQueryBuilder('c')
-                        ->select(array(
-                            'distinct c.nombre', 'f.codigo', 'c.id',
-                        ))
-                        ->innerJoin('c.estado', 'e')
-                        ->innerJoin('c.formacion', 'f')
-                        ->where('e.codigo = :codigo_estado')
-                        ->groupBy('c.nombre')
-                        ->orderBy('c.nombre')
-                        ->setParameter('codigo_estado', 'ACT')
-                        ->getQuery();
-    }
+//    public function qyResumido() {
+//        return $this->createQueryBuilder('c')
+//                        ->select(array(
+//                            'distinct c.nombre', 'f.codigo', 'c.id',
+//                        ))
+//                        ->innerJoin('c.estado', 'e')
+//                        ->innerJoin('c.formacion', 'f')
+//                        ->where('e.codigo = :codigo_estado')
+//                        ->groupBy('c.nombre')
+//                        ->orderBy('c.nombre')
+//                        ->setParameter('codigo_estado', 'ACT')
+//                        ->getQuery();
+//    }
 
     public function dqlActivas() {
         $x = $this->getEntityManager()->getReference('TablaBundle:EstadoCarrera', 1);

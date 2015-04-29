@@ -553,28 +553,30 @@ class CarreraController extends Controller {
     }
 
     /**
+     * DEPRECATED no tiene sentido
+     * 
      * Saca la lista de carreras activas pero por nombre: una fila por cada nombre.
      * Por el momento hay más de una carrera con el mismo nombre. Acá sale sólo una vez.
      * 
      * @Route("/nomina_resumida", name="carrera_nomina_resumida")
      */
-    public function nomina_resumidaAction() {
-
-        $paginador = $this->get('ideup.simple_paginator');
-
-        $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_largo'));
-
-        $carreras = $paginador->paginate(
-                        $this->getDoctrine()
-                                ->getEntityManager()
-                                ->getRepository('OfertaEducativaBundle:Carrera')
-                                ->qyResumido()
-                )->getResult();
-
-        return $this->render('OfertaEducativaBundle:Carrera:nomina_resumida.html.twig', array(
-                    'carreras' => $carreras,
-        ));
-    }
+//    public function nomina_resumidaAction() {
+//
+//        $paginador = $this->get('ideup.simple_paginator');
+//
+//        $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_largo'));
+//
+//        $carreras = $paginador->paginate(
+//                        $this->getDoctrine()
+//                                ->getEntityManager()
+//                                ->getRepository('OfertaEducativaBundle:Carrera')
+//                                ->qyResumido()
+//                )->getResult();
+//
+//        return $this->render('OfertaEducativaBundle:Carrera:nomina_resumida.html.twig', array(
+//                    'carreras' => $carreras,
+//        ));
+//    }
 
     /**
      * @Route("/nomina_resumida_donde_se_dicta/{carrera_id}", name="carrera_nomina_resumida_donde_se_dicta")
