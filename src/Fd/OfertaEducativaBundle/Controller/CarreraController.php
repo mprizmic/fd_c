@@ -111,8 +111,8 @@ class CarreraController extends Controller {
      */
     public function generarDatosBusquedaPaginada($form) {
         //se crear la consulta
-        $filterBuilder = $this->getRepo()->createQueryBuilder('c')->orderBy('c.nombre');
-
+        $filterBuilder = $this->getRepo()->qbAllOrdenado('nombre');
+        
         // build the query from the given form object
         $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
 
@@ -625,6 +625,8 @@ class CarreraController extends Controller {
      * @Route("/buscar_planilla_de_calculo", name="carrera_buscar_planilla_de_calculo")
      */
     public function buscar_planilla_de_calculoAction() {
+        //en la sesión puede ser que esté giardado el filtro de busqueda
+        
         $filename = "Carreras.xls";
 
         // ask the service for a Excel5
@@ -634,13 +636,25 @@ class CarreraController extends Controller {
 
         $active_sheet_index = $excelObj->setActiveSheetIndex(0);
 
-        $carreras = $this
-                ->getDoctrine()
-                ->getEntityManager()
-                ->getRepository('OfertaEducativaBundle:Carrera')
-                ->findAll();
+        $filterBuilder = $this
+                ->getRepo()
+                ->qbAllOrdenado('nombre');
 
-
+         // si en la sesiòn hay datos del filtro, los tomo para construir el querybuilder
+        $session = $this->getRequest()->getSession();
+        
+        if ($session->has('datos')) {
+            //si existen ls datos en la sesion se los toma
+            $filterData = $session->get('datos');       
+            
+            //se crea el oformulario con los datos de la sesion
+            $form = $this->crearFormBusqueda($filterData);
+            
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+            
+            $carreras = $filterBuilder->getQuery()->getResult();
+        }            
+        
         $active_sheet_index->setCellValue('A1', 'Dirección de Formación Docente');
         $active_sheet_index->setCellValue('A2', 'Listado de carreras activas');
 
@@ -652,13 +666,15 @@ class CarreraController extends Controller {
         $active_sheet_index->setCellValue('B' . $titulos, "Nombre");
         $active_sheet_index->setCellValue('C' . $titulos, "Estado");
         $active_sheet_index->setCellValue('D' . $titulos, "Norma");
+        $active_sheet_index->setCellValue('E' . $titulos, "Tipo formación");
 
         foreach ($carreras as $carrera) {
-            $active_sheet_index->setCellValue('A' . $fila, $fila - 2);
+            $active_sheet_index->setCellValue('A' . $fila, $fila - 4);
             $active_sheet_index->setCellValue('B' . $fila, $carrera->getNombre());
             $active_sheet_index->setCellValue('C' . $fila, $carrera->getEstado()->getDescripcion());
             $norma = ( $carrera->getNorma() ? $carrera->getNorma()->__toString() : 'sin datos');
             $active_sheet_index->setCellValue('D' . $fila, $norma);
+            $active_sheet_index->setCellValue('E' . $fila, $carrera->getFormacion()->__toString());
             $fila += 1;
         }
         $excelObj->getActiveSheet()->setTitle('Carreras activas');
@@ -678,6 +694,7 @@ class CarreraController extends Controller {
         $response->headers->set('Cache-Control', 'maxage=1');
         return $response;
     }
+
 
     /**
      * @Route("/indicadores_cohorte", name="carrera_indicadores_cohorte")
