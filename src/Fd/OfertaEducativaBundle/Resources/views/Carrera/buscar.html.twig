@@ -36,7 +36,6 @@
                     <th>Nombre</th>
                     <th>Año inicio</th>
                     <th>Norma</th>
-                    <th></th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
@@ -51,7 +50,6 @@
                         {% else %}
                             <td></td>
                         {% endif %}
-                        <td><a href="{{path('carrera_nomina_donde_se_dicta', {'carrera_id': carrera.id})}}">Dónde se dicta</a></td>
                         <td>{{ carrera.estado }}</td>
                         <td><a href="{{path('carrera_editar', {'id': carrera.id})}}">Editar</a></td>
                     </tr>
