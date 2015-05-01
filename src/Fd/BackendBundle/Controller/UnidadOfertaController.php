@@ -24,7 +24,7 @@ class UnidadOfertaController extends Controller {
     private $em;
 
     /**
-     * Lists all Cohorte entities.
+     * Muestra una pagina para seleccionar de cada localizacion, alguno de sus niveles educativos.
      *
      * @Route("/", name="backend_unidadoferta")
      */
@@ -36,11 +36,11 @@ class UnidadOfertaController extends Controller {
         $this->get('session')->set('ruta_completa', $request->get('_route'));
         $this->get('session')->set('parametros', $request->get('_route_params'));
 
-        $establecimientos = $this->getEm()->getRepository('EstablecimientoBundle:Establecimiento')->findAllOrdenado('orden');
+        $establecimiento_edificios = $this->getEm()->getRepository('EstablecimientoBundle:EstablecimientoEdificio')->findAllOrdenado();
         $niveles = $this->getEm()->getRepository('TablaBundle:Nivel')->findBy(array(), array('orden' => 'asc'));
 
         return $this->render('BackendBundle:UnidadOferta:index.html.twig', array(
-                    'establecimientos' => $establecimientos,
+                    'establecimiento_edificios' => $establecimiento_edificios,
                     'niveles' => $niveles,
         ));
     }
