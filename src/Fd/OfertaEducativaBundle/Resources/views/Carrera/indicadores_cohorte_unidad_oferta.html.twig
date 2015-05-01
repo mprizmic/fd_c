@@ -8,33 +8,40 @@ escribe la tabla de cohortes de una carrera informada relacionada a un estableci
         
         {# una unidad_oferta #}
         <div>
-            <a href="{{path('carrera_ficha', {'carrera_id': carrera.id})}}">{{ carrera }}</a>
+            <a href="{{path('carrera_ficha', {'carrera_id': carrera.id})}}">{{ carrera.identificacion }}</a>
         </div>
-            
-        {# las matriculas por año de la carrera #}
-        <table class="tabla_modo_1">
-            <thead>
-                <tr>
-                    <th>Año</th>
-                    <th>Ingresantes</th>
-                    <th>Matrícula</th>
-                    <th>Egreso</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% set cohortes = unidad_oferta.cohortes %}
+        {% set cohortes = unidad_oferta.cohortes %}
+        
+        {% if cohortes|length > 0 %}
 
-            {% set ordenados = cohortes | ksort_cohortes  %}
+            {# las matriculas por año de la carrera #}
+            <table class="tabla_modo_1">
+                <thead>
+                    <tr>
+                        <th>Año</th>
+                        <th>Ingresantes</th>
+                        <th>Matrícula</th>
+                        <th>Egreso</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-            {% for uno in ordenados %}
-                <tr class="{{ cycle(['even','odd'],loop.index) }}">
-                    <td>{{ uno[0] }}</td> <!-- año cohorte -->
-                    <td>{{ uno[1] }}</td> <!-- matricula ingresantes -->
-                    <td>{{ uno[2] }}</td> <!-- matricula -->
-                    <td>{{ uno[3] }}</td> <!-- egreso -->
-                </tr>
-            {% endfor %} 
-            </tbody>
-        </table>
+                {% set ordenados = cohortes | ksort_cohortes  %}
+
+                {% for uno in ordenados %}
+                    <tr class="{{ cycle(['even','odd'],loop.index) }}">
+                        <td>{{ uno[0] }}</td> <!-- año cohorte -->
+                        <td>{{ uno[1] }}</td> <!-- matricula ingresantes -->
+                        <td>{{ uno[2] }}</td> <!-- matricula -->
+                        <td>{{ uno[3] }}</td> <!-- egreso -->
+                    </tr>
+                {% endfor %} 
+                </tbody>
+            </table>
+        {% else %}
+            <div>
+                No hay matrícula cargada para esta carrera
+            </div>
+        {% endif %}
         <br />
     </div>

@@ -697,25 +697,33 @@ class CarreraController extends Controller {
 
 
     /**
+     * Muestra un listado con la matricula por carrera de todos los establecimeintos
+     * 
      * @Route("/indicadores_cohorte", name="carrera_indicadores_cohorte")
      */
     public function indicadores_cohorteAction() {
-        $em = $this->getDoctrine()->getEntityManager();
-        $establecimientos = $em->getRepository('EstablecimientoBundle:Establecimiento')->findTienenCohortes();
+        $localizaciones = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')
+                ->qbTerciariosCompleto()
+                ->getQuery()
+                ->getResult();
+        
         return $this->render('OfertaEducativaBundle:Carrera:indicadores_cohorte.html.twig', array(
-                    'establecimientos' => $establecimientos,
+                    'localizaciones' => $localizaciones,
         ));
     }
 
     /**
-     * @Route("/indicadores_cohorte_estalecimiento/{establecimiento_id}", name="carrera_indicadores_cohorte_establecimiento")
+     * @Route("/indicadores_cohorte_establecimiento/{localizacion_id}", name="carrera_indicadores_cohorte_establecimiento")
+     * @ParamConverter("localizacion", class="EstablecimientoBundle:Localizacion", options={"id":"localizacion_id"} )
      */
-    public function indicadores_cohorte_establecimientoAction($establecimiento_id) {
-        $em = $this->getDoctrine()->getEntityManager();
-        $repo = $em->getRepository('EstablecimientoBundle:UnidadOferta');
-        $unidad_ofertas = $repo->findCarrerasConCohortes($establecimiento_id);
+    public function indicadores_cohorte_establecimientoAction($localizacion) {
+        
+        $repo = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta');
+        
+        //recupera las ofertas de carreras de la localizacion en cuestion
+        $unidad_ofertas = $repo->findCarreras($localizacion);
 
-        //muestra todas las ofertas educativas tipo carrera de un establecimiento
+        //muestra todas las ofertas educativas tipo carrera de una localizacion
         return $this->render('OfertaEducativaBundle:Carrera:indicadores_cohorte_establecimiento.html.twig', array(
                     'unidad_ofertas' => $unidad_ofertas,
         ));
