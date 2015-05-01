@@ -522,13 +522,13 @@ class CarreraController extends Controller {
     }
 
     /**
-     * Despliega una pàgina donde se muestra un fiedset con los establecimientos donde se dicta una carrera
+     * Despliega una pàgina donde se muestra un fieldset con los establecimientos donde se dicta una carrera
      * 
      * @Route("/nomina_donde_se_dicta/{carrera_id}", name="carrera_nomina_donde_se_dicta")
+     * @ParamConverter("carrera", class="OfertaEducativaBundle:Carrera", options={"id":"carrera_id"} )
      */
-    public function nomina_donde_se_dictaAction($carrera_id) {
-        $em = $this->getDoctrine()->getEntityManager();
-        $carrera = $em->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
+    public function nomina_donde_se_dictaAction($carrera) {
+
         return $this->render('OfertaEducativaBundle:Carrera:nomina_donde_se_dicta.html.twig', array(
                     'carrera' => $carrera,
         ));
