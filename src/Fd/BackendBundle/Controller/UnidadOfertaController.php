@@ -70,7 +70,7 @@ class UnidadOfertaController extends Controller {
      * @Template("BackendBundle:UnidadOferta:listar.html.twig")
      */
     public function listarAction($localizacion) {
-
+        $entities = array();
         //recupero todas las ofertas de la unidad educativa
         //de acuerdo al nivel de las ofertas quiero que se muestren de forma distinta
         foreach ($localizacion->getOfertas() as $oferta) {
