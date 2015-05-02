@@ -109,7 +109,7 @@ class UnidadEducativa {
     }
 
     public function __toString() {
-        return $this->getNivel() . '/' . $this->getEstablecimiento();
+        return  $this->getEstablecimiento(). '/' .  $this->getNivel();
     }
 
     /*
