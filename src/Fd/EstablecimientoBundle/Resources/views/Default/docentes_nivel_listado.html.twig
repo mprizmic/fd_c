@@ -17,20 +17,20 @@
         <th>{{ 'Terciario' }}</th>
     </tr>
 
-    {% for establecimiento in establecimientos %}
+    {% for sede_anexo in establecimiento_edificios %}
         <tr>
             <td>
-                <a href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento.id }) }}">{{ establecimiento.apodo }}</a>
+                <a href="{{ path('establecimiento_ficha', {'establecimiento_id': sede_anexo.establecimientos.id }) }}">{{ sede_anexo }}</a>
             </td>
 
-            {% set niveles = establecimiento.unidadesEducativas %}
+            {% set niveles = sede_anexo.localizacion %}
             {% set inicial, primario, medio, terciario = '--','--','--','--' %}
 
 
-            {% for unidad_educativa in niveles %}
+            {% for un_nivel in niveles %}
                 {# se asigna el dato a la columna que corresponde #}
-                {% set nivel = unidad_educativa.nivel.nombre|lower %}
-                {% set cantidad = unidad_educativa.cantidadDocentes %}
+                {% set nivel = un_nivel.unidadEducativa.nivel.nombre|lower %}
+                {% set cantidad = un_nivel.cantidadDocentes %}
 
                 {% if nivel == 'inicial' %}{% set inicial = cantidad %}{% endif %}
                 {% if nivel == 'primario' %}{% set primario = cantidad %}{% endif %}

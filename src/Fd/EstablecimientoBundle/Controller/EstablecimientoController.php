@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
+use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno;
 use Fd\EstablecimientoBundle\Repository\UnidadOfertaRepository;
 
@@ -38,12 +39,12 @@ class EstablecimientoController extends Controller {
      */
     public function docentesNivelListadoAction() {
 
-        $establecimientos = $this->getEm()
-                ->getRepository('EstablecimientoBundle:Establecimiento')
+        $establecimiento_edificios = $this->getEm()
+                ->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
                 ->findAllOrdenado('orden');
 
         return $this->render('EstablecimientoBundle:Default:docentes_nivel_listado.html.twig', array(
-                    'establecimientos' => $establecimientos,
+                    'establecimiento_edificios' => $establecimiento_edificios,
                 ))
         ;
     }
