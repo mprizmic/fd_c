@@ -20,6 +20,7 @@ class OfertaEducativa {
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * bidireccional lado inverso
      * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", mappedBy="ofertas")
@@ -70,10 +71,12 @@ class OfertaEducativa {
      * )
      */
     private $normas;
+
     /**
      * @ORM\Column(type="datetime")
      */
     private $creado;
+
     /**
      * @ORM\Column(type="datetime")
      */
@@ -94,7 +97,6 @@ class OfertaEducativa {
         $this->actualizado = new \DateTime();
         $this->carrera = null;
     }
-
     public function __toString() {
         $entity = $this->getCarrera();
         if (is_null($entity)) {
@@ -108,8 +110,32 @@ class OfertaEducativa {
                     }
                 }
             }
+        } else {
+            
         };
         return is_null($entity) ? 's/d' : $entity->__toString();
+    }
+
+    /**
+     * devuelve un objeto del tipo que sea la oferta educativa
+     * 
+     * @return type
+     */
+    public function getObjetoOferta() {
+        $entity = $this->getCarrera();
+        if (is_null($entity)) {
+            $entity = $this->getEspecializacion();
+            if (is_null($entity)) {
+                $entity = $this->getBachillerato();
+                if (is_null($entity)) {
+                    $entity = $this->getPrimario();
+                    if (is_null($entity)) {
+                        $entity = $this->getInicial();
+                    }
+                }
+            }
+        }
+        return $entity;
     }
 
     public function esTipo() {
@@ -345,17 +371,15 @@ class OfertaEducativa {
         return $this->normas;
     }
 
-
     /**
      * Set j
      *
      * @param string $j
      * @return OfertaEducativa
      */
-    public function setJ($j)
-    {
+    public function setJ($j) {
         $this->j = $j;
-    
+
         return $this;
     }
 
@@ -364,20 +388,19 @@ class OfertaEducativa {
      *
      * @return string 
      */
-    public function getJ()
-    {
+    public function getJ() {
         return $this->j;
     }
+
     /**
      * Set creado
      *
      * @param \DateTime $creado
      * @return OfertaEducativa
      */
-    public function setCreado($creado)
-    {
+    public function setCreado($creado) {
         $this->creado = $creado;
-    
+
         return $this;
     }
 
@@ -386,8 +409,7 @@ class OfertaEducativa {
      *
      * @return \DateTime 
      */
-    public function getCreado()
-    {
+    public function getCreado() {
         return $this->creado;
     }
 
@@ -397,10 +419,9 @@ class OfertaEducativa {
      * @param \DateTime $actualizado
      * @return OfertaEducativa
      */
-    public function setActualizado($actualizado)
-    {
+    public function setActualizado($actualizado) {
         $this->actualizado = $actualizado;
-    
+
         return $this;
     }
 
@@ -409,8 +430,8 @@ class OfertaEducativa {
      *
      * @return \DateTime 
      */
-    public function getActualizado()
-    {
+    public function getActualizado() {
         return $this->actualizado;
     }
+
 }

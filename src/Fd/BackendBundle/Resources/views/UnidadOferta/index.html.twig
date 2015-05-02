@@ -10,12 +10,14 @@
     </div>
     <br />
 
+{# este combo tiene el codigo de los establecimiento_edificio   #}
     <select id="cmb_establecimientos">
         {% for key, valor in establecimiento_edificios %}
-            <option value="{{ valor.id }}">{{ valor }}</option>
+            {{ '<option ' }}{% if loop.first %}{{ 'selected ' }}{% endif %}{{ 'value=' }}"{{ valor.id }}">{{ valor }}</option>
         {% endfor %}
     </select>
 
+{# el combo de niveles tiene los codigos de las localizaciones, no de las unidades educativas   #}
     <select id="cmb_niveles">
 
     </select>
@@ -84,11 +86,11 @@
 
             $("#divCargando").show();
 
-            var id_unidad_educativa = $('#cmb_niveles').val();
+            var id_localizacion = $('#cmb_niveles').val();
 
             //usando FOSJsRouingBundle
             $.ajax({
-                url: Routing.generate('backend_unidadoferta_listar', {unidad_educativa_id: id_unidad_educativa}),
+                url: Routing.generate('backend_unidadoferta_listar', {localizacion_id: id_localizacion}),
                 type: 'GET',
                 async: false,
                 success: function (data) {

@@ -3,8 +3,14 @@ lista de unidad_oferta
 #}
 
 {% for entity in entities %}
-    <span class="separador">
-        <a href="{{ path('backend_unidadoferta_edit', { 'id': entity.id }) }}">{{ entity }}</a><br />
+    <span>
+        <a href="{{ path('backend_unidadoferta_edit', { 'id': entity.id }) }}">
+            {% if entity is instancia_de_carrera %}
+                {{ entity.identificacion }}
+            {% else %}
+                {{ entity }}
+            {% endif %}
+        </a><br />
     </span>
 {% else %}
     <span class="separador resaltado mediana">

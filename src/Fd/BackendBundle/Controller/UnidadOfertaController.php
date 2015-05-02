@@ -12,6 +12,7 @@ use Fd\BackendBundle\Form\UnidadOfertaType;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
+use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\TablaBundle\Entity\Nivel;
 
 /**
@@ -62,16 +63,21 @@ class UnidadOfertaController extends Controller {
 //    }
 
     /**
-     * @Route("/listar/{unidad_educativa_id}", name="backend_unidadoferta_listar")
-     * @ParamConverter("unidad_educativa", class="EstablecimientoBundle:UnidadEducativa", options={"id"="unidad_educativa_id"} )
+     * ACA TENDRIA QUE ENTRAR UNA LOCALIZACION
+     * 
+     * @Route("/listar/{localizacion_id}", name="backend_unidadoferta_listar")
+     * @ParamConverter("localizacion", class="EstablecimientoBundle:Localizacion", options={"id"="localizacion_id"} )
      * @Template("BackendBundle:UnidadOferta:listar.html.twig")
      */
-    public function listarAction($unidad_educativa) {
+    public function listarAction($localizacion) {
 
         //recupero todas las ofertas de la unidad educativa
-
+        //de acuerdo al nivel de las ofertas quiero que se muestren de forma distinta
+        foreach ($localizacion->getOfertas() as $oferta) {
+            $entities[] = $oferta->getOfertas()->getObjetoOferta();
+        }
         return array(
-            'entities' => $unidad_educativa->getOfertas(),
+            'entities' => $entities,
         );
     }
 
