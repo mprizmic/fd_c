@@ -97,7 +97,7 @@ class Carrera {
     }
 
     public function __toString() {
-        return $this->nombre;
+        return substr($this->nombre, 0, 25) . ' - ' . $this->getNorma();;
     }
 
     public function getNorma(){
