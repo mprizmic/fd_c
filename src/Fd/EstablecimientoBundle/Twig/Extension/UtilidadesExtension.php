@@ -1,5 +1,10 @@
 <?php
+
 namespace Fd\EstablecimientoBundle\Twig\Extension;
+
+use Fd\EstablecimientoBundle\Entity\UnidadOferta;
+use Fd\OfertaEducativaBundle\Entity\Carrera;
+use Fd\OfertaEducativaBundle\Entity\Inicial;
 
 class UtilidadesExtension extends \Twig_Extension {
 
@@ -21,17 +26,36 @@ class UtilidadesExtension extends \Twig_Extension {
         ksort($arr);
         return $arr;
     }
-    public function a_combo( $arreglo ) {
+
+    public function a_combo($arreglo) {
         $salida = "<select id=\"combo_norma\">";
-        foreach ( $arreglo as $key => $value) {
-            $salida = $salida . "<option value='" . $key . "'>" . 
-                    $value['numero'] . "/" .  
-                    $value['codigo'] . "/" .  
-                    $value['anio'] . 
+        foreach ($arreglo as $key => $value) {
+            $salida = $salida . "<option value='" . $key . "'>" .
+                    $value['numero'] . "/" .
+                    $value['codigo'] . "/" .
+                    $value['anio'] .
                     "</option>";
         }
-        
-        return $salida."</select>";
+
+        return $salida . "</select>";
+    }
+
+    public function getTests() {
+        return array(
+            'instancia_de_carrera' =>  new \Twig_Test_Method($this, 'isCarrera') ,
+            'instancia_de_inicial' =>  new \Twig_Test_Method($this, 'isInicial') ,
+            'instancia_de_unidad_oferta' =>  new \Twig_Test_Method($this, 'isUnidadOferta') ,
+            );
+    }
+
+    public function isUnidadOferta($var){
+        return ($var instanceof UnidadOferta);
+    }
+    public function isCarrera($var) {
+        return ($var instanceof Carrera);
+    }
+    public function isInicial($var){
+        return ($var instanceof Inicial);
     }
 
 }
