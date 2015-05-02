@@ -74,7 +74,14 @@ class UnidadOfertaController extends Controller {
         //recupero todas las ofertas de la unidad educativa
         //de acuerdo al nivel de las ofertas quiero que se muestren de forma distinta
         foreach ($localizacion->getOfertas() as $oferta) {
-            $entities[] = $oferta->getOfertas()->getObjetoOferta();
+            $elemento['value'] = $oferta->getId();
+            $entity = $oferta->getOfertas()->getObjetoOferta();
+            if ($entity instanceof Carrera){
+                $elemento['text'] = $entity->getIdentificacion();
+            }else{
+                $elemento['text']=$entity->__toString();
+            };
+            $entities[] = $elemento;
         }
         return array(
             'entities' => $entities,
@@ -88,9 +95,9 @@ class UnidadOfertaController extends Controller {
      * @Route("/combo/{localizacion_id}", name="backend_unidad_oferta_combo", options={"expose"=true})
      */
     public function comboAction($localizacion_id) {
-        
+
         $localizacion = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')->find($localizacion_id);
-        
+
         $entities = $this->getEm()
                 ->getRepository('EstablecimientoBundle:UnidadOferta')
                 ->findUnidadOferta($localizacion)
@@ -178,7 +185,7 @@ class UnidadOfertaController extends Controller {
      * Displays a form to edit an existing UnidadOferta entity.
      *
      * @Route("/{id}/edit", name="backend_unidadoferta_edit")
-     * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta")
+     * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta", options={"id":"unidad_oferta_id"})
      * @Template()
      */
     public function editAction($unidad_oferta) {

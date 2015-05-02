@@ -4,12 +4,12 @@ lista de unidad_oferta
 
 {% for entity in entities %}
     <span>
-        <a href="{{ path('backend_unidadoferta_edit', { 'id': entity.id }) }}">
-            {% if entity is instancia_de_carrera %}
+        <a href="{{ path('backend_unidadoferta_edit', { 'id': entity.value }) }}">
+{#            {% if entity is instancia_de_carrera %}
                 {{ entity.identificacion }}
-            {% else %}
-                {{ entity }}
-            {% endif %}
+            {% else %}#}
+                {{ entity.text }}
+{#            {% endif %}#}
         </a><br />
     </span>
 {% else %}
