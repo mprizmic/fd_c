@@ -110,7 +110,7 @@ class Localizacion {
     }
 
     public function __toString() {
-        return $this->getUnidadEducativa() . ' ' . $this->getDomicilioPrincipal();
+        return $this->getUnidadEducativa() . ' - ' . $this->getDomicilioPrincipal();
     }
 
     /**
