@@ -173,8 +173,8 @@ class Carrera {
     public function __construct() {
         $this->orientaciones = new ArrayCollection();
         $this->creado = new \DateTime();
-        $this->actualizado = new \DateTime();
-        $this->anio_inicio = date('now');
+        $this->actualizado = new \DateTime('now');
+        $this->anio_inicio = date("Y");
         $this->oferta = null;
     }
 
