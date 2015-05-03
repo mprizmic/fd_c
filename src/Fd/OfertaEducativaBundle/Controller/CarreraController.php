@@ -369,6 +369,8 @@ class CarreraController extends Controller {
 
         //establecimientos en los que se dicta la carrera, según sede y anexo
         $localizaciones_temporario = $this->getRepo()->findLocalizaciones($carrera);
+        
+        $localizaciones = array();
 
         foreach ($localizaciones_temporario as $key => $localizacion) {
             $unidad_oferta = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')->find($localizacion['unidad_oferta_id']);
@@ -376,7 +378,6 @@ class CarreraController extends Controller {
             $localizacion['turnos'] = $turnos;
 
             $localizaciones[] = $localizacion;
-            $x = true;
         }
 
         /**
