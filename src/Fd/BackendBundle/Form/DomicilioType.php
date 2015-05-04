@@ -4,6 +4,8 @@ namespace Fd\BackendBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Fd\EdificioBundle\Entity\Edificio;
+use Fd\EdificioBundle\Repository\EdificioRepository;
 
 class DomicilioType extends AbstractType {
 
@@ -16,7 +18,14 @@ class DomicilioType extends AbstractType {
                     'required' => false,
                 ))
                 ->add('principal', 'checkbox', array('required' => FALSE))
-                ->add('edificio')
+                ->add('edificio', 'entity', array(
+                    'class' => 'EdificioBundle:Edificio',
+                    'query_builder' => function (EdificioRepository $repository) {
+                        $qb = $repository->qbAllOrdenado();
+                        return $qb;
+                    },
+                    'help' => 'Edificio al que pertenece este domicilio',
+                ))
         ;
     }
 
