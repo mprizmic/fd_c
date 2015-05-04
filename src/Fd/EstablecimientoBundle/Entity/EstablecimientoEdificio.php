@@ -104,6 +104,13 @@ class EstablecimientoEdificio {
         };
         return null;
     }
+    /**
+     * Si el edificio es sede devuelve true. Si es anexo devuelve false.
+     * @return type
+     */
+    public function isSede(){
+        return ($this->getCueAnexo() == '00');
+    }
 
     public function __toString() {
         return $this->getEstablecimientos()->getApodo() . ($this->getCueAnexo() == '00' ? '' : ' - ' . $this->getNombre());
