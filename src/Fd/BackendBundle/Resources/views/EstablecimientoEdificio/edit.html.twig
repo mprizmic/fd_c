@@ -117,26 +117,34 @@
     {{ form_rest(edit_form) }}
         
     <br />
-    <div class="float_izquierda separador">
+    <div class="separador">
         <input type="submit" value="Guardar" />
     </div>
 </form>
+    
+<div class="limpiar_float"></div>
+    
+<div>
+    <form action="{{ path('backend_establecimiento_edificio_delete', { 'id': entity.id }) }}" method="post" onsubmit="return confirm('Está seguro?')">
+        {{ form_widget(delete_form) }}
+        <span class="float_izquierda separador">
+            <input type="submit" class="boton_rojo" value="Eliminar" />
+        </span>
+    </form>
+</div>
 
-<form class="float_izquierda" action="{{ path('backend_establecimiento_edificio_delete', { 'id': entity.id }) }}" method="post" onsubmit="return confirm('Está seguro?')">
-    {{ form_widget(delete_form) }}
-    <span class="float_izquierda separador">
-        <input type="submit" class="boton_rojo" value="Eliminar" />
-    </span>
-</form>
-<a href="{{ path('backend_establecimiento_edificio') }}">
-    Volver a la lista
-</a>
+<div >        
+    <a href="{{ path('backend_establecimiento_edificio') }}">
+        Volver a la lista
+    </a>
+</div>
 
 <br />
 <br />
+<div class="limpiar_float"></div>
 
 {# unidades educativas que usan el edificio (tabla localizaciones) #}
-<fieldset>
+<fieldset class="float_izquierda">
     <legend class="resaltado">Unidades educativas que usan el edificio</legend>
     {% set localizaciones  = entity.localizacion %}
     {% if localizaciones is null %}
@@ -150,6 +158,7 @@
         {% endfor %}  
     {% endif %}  
 </fieldset>
+<div class="limpiar_float"></div>
 
 <br />
 <br />
