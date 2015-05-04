@@ -12,14 +12,15 @@
 </span>
 <br />
 
-{% for establecimiento in establecimientos %}
+{% for establecimiento_edificio in establecimiento_edificios %}
 
-<span class="mediana"><a href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento.id }) }}">{{ establecimiento.nombre }}</a></span><br />
-    CUE: {{ establecimiento.cue }}<br />
-    Distrito escolar: {{ establecimiento.distritoEscolar }}<br/>
+<span class="mediana"><a href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento_edificio.establecimientos.id }) }}">{{ establecimiento_edificio.identificacion }}</a></span><br />
+    CUE: {{ establecimiento_edificio.establecimientos.cue }}/{{ establecimiento_edificio.cueAnexo}}<br />
+    Distrito escolar: {{ establecimiento_edificio.establecimientos.distritoEscolar }}
+    <br/><br/>
     <span class="resaltado">Niveles:</span><br/>
-        {% for unidad in establecimiento.unidadesEducativas %}
-            <span class="separador"></span>{{unidad.nivel.nombre}}<br/>
+        {% for localizacion in establecimiento_edificio.localizacion %}
+            <span class="separador"></span>{{ localizacion.unidadEducativa.nivel.nombre}}<br/>
         {% endfor %}    
     <br />
     <br />

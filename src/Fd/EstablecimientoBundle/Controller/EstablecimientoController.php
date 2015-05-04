@@ -68,13 +68,16 @@ class EstablecimientoController extends Controller {
 
     /**
      * @Route("/establecimiento_de_un_cui/{edificio_id}", name="establecimiento_de_un_cui")
+     * @ParamConverter("edificio", class="EdificioBundle:Edificio", options={"id":"edificio_id"})
      */
-    public function establecimiento_de_un_cuiAction($edificio_id) {
-        $establecimientos = $this->getDoctrine()->getEntityManager()->getRepository('EstablecimientoBundle:Establecimiento')->findDeUnCui($edificio_id);
+    public function establecimiento_de_un_cuiAction($edificio) {
+        $establecimiento_edificios = $this->getEm()
+                ->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
+                ->findDeUnCui($edificio);
 
         return $this->render('EstablecimientoBundle:Default:establecimiento_de_un_cui.html.twig', array(
-                    'establecimientos' => $establecimientos,
-                    'edificio_id' => $edificio_id,
+                    'establecimiento_edificios' => $establecimiento_edificios,
+                    'edificio_id' => $edificio->getId(),
         ));
     }
 

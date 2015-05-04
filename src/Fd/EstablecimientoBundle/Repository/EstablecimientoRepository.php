@@ -29,25 +29,18 @@ class EstablecimientoRepository extends EntityRepository {
     }
 
     /**
+     * DEPRECATED para a establecimientoedificiorepository
      * devuelve la query para preguntar por todos los alumnos ordenados alfabeticamente por apellido y nombre
      */
-    public function queryDeUnCui($edificio_id) {
-        $dql = 'select es 
-            from EstablecimientoBundle:Establecimiento es
-            join es.edificio esed
-            where esed.edificios = :edificio_id';
-
-        $q = $this->_em->createQuery($dql);
-        $q->setParameter('edificio_id', $edificio_id);
-        return $q;
-    }
+//    public function queryDeUnCui($edificio_id) {
+//    }
 
     /**
+     * DEPRECATED para a establecimientoedificiorepository
      * devuelve todos los edificios de un establecimiento
      */
-    public function findDeUnCui($edificio_id) {
-        return $this->queryDeUnCui($edificio_id)->getResult();
-    }
+//    public function findDeUnCui($edificio_id) {
+//    }
 
     /**
      * devuelve la query de una colecion de objetos de establecimientos que tienen nivel primario

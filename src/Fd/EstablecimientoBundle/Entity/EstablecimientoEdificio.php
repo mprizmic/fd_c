@@ -109,6 +109,10 @@ class EstablecimientoEdificio {
         return $this->getEstablecimientos()->getApodo() . ($this->getCueAnexo() == '00' ? '' : ' - ' . $this->getNombre());
     }
 
+    public function getIdentificacion() {
+        return $this->getEstablecimientos()->getNombre() . ($this->getCueAnexo() == '00' ? '' : ' - ' . $this->getNombre());
+    }
+
     public function __construct() {
         $this->localizacion = new \Doctrine\Common\Collections\ArrayCollection();
         $this->establecimientos = new \Doctrine\Common\Collections\ArrayCollection();

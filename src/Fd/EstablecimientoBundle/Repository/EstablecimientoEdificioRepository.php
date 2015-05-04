@@ -10,6 +10,29 @@ use Fd\OfertaEducativaBundle\Entity\InicialX;
 
 class EstablecimientoEdificioRepository extends EntityRepository {
 
+        /**
+     * devuelve la query para preguntar por todos los alumnos ordenados alfabeticamente por apellido y nombre
+     */
+    public function queryDeUnCui($edificio) {
+        $dql = 'select ee
+            from EstablecimientoBundle:EstablecimientoEdificio ee
+            join ee.edificios ed
+            join ee.establecimientos e
+            where ed.id = :edificio 
+            order By e.orden, ee.cue_anexo';
+
+        $q = $this->_em->createQuery($dql);
+        $q->setParameter('edificio', $edificio);
+        return $q;
+    }
+
+    /**
+     * devuelve todos los edificios de un establecimiento
+     */
+    public function findDeUnCui($edificio) {
+        return $this->queryDeUnCui($edificio)->getResult();
+    }
+    
     public function findAllOrdenado() {
         $qb = $this->createQueryBuilder('ee')
                 ->innerJoin('ee.establecimientos', 'e')
