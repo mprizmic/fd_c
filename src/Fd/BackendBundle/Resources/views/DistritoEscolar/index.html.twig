@@ -12,7 +12,7 @@
     <thead>
         <tr>
             <th>Id</th>
-            <th>Numero</th>
+            <th>Número</th>
             <th>Nombre</th>
             <th>Acciones</th>
         </tr>
@@ -24,18 +24,12 @@
             <td>{{ entity.numero }}</td>
             <td>{{ entity.nombre }}</td>
             <td>
-                <ul>
-                    <li>
                         <a href="{{ path('backend_distrito_escolar_show', { 'id': entity.id }) }}">
-                                                    Mostrar
+                                                    Mostrar ||
                                                 </a>
-                    </li>
-                    <li>
                         <a href="{{ path('backend_distrito_escolar_edit', { 'id': entity.id }) }}">
                                                     Editar
                                                 </a>
-                    </li>
-                </ul>
             </td>
         </tr>
     {% endfor %}
