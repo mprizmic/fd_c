@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * MIGRACION
+ * Se agrega localizacion a la unidad_oferta
+ */
 namespace Application\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;

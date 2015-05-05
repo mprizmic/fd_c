@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * MIGRACION
+ * Elimina la unidad educativa de la tabla unidad_oferta.
+ * Esto hay que correrlo luego de la migracion.
+ */
 namespace Application\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
