@@ -4,10 +4,19 @@
             primero armar la segunda relacion       LISTO
             impactar en la bd                       LISTO
             cargar en produccion todas las localizaciones de los anexos ISPEE, ENS 3 y JRF
+
+            MIGRACION
             copiar datos: para cada unidadoferta se debe tomar la unidad_educativa, 
-                ver todas sus localizaciones 
-                y copiar la localizacion en el lugar de la unidad_educativa
-                Si hay mas de una localizacion se deben generar nuevos registros en unidad_oferta
+                ver todas sus localizaciones en produccion               LISTO
+                limpiar cache en  produccion                            LISTO
+                verificar el branch en producción: es el master y tiene un stash con 2 archivos modificados     LISTO
+                hacer merge en el local
+                hacer el merge en producción
+                correr las migraciones en producción
+                volver para atrás el stash
+                limpiar cache en el remoto
+                reubicar carreras a mano copiando la localizacion en el lugar de la unidad_educativa (tal vez se deban crear registros de unidad_oferta)
+                
             eliminar primera relacion               LISTO
             
             revisar el diseño de la ficha y luego
