@@ -3,9 +3,10 @@
 namespace Fd\EstablecimientoBundle\Model;
 
 use Doctrine\ORM\EntityManager;
+use Fd\EstablecimientoBundle\Entity\Localizacion;
+use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
-use Fd\EstablecimietoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaInicialHandler;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaTerciarioHandler;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
@@ -41,9 +42,9 @@ class UnidadOfertaHandler {
         return $this->strategy_instance->actualizar( $entity, $turnos);
     }
     
-    public function crear(UnidadEducativa $unidad_educativa = null, $oferta_educativa = null) {
+    public function crear(Localizacion $localizacion = null, $oferta_educativa = null) {
 
-        return $this->strategy_instance->crear( $unidad_educativa, $oferta_educativa);
+        return $this->strategy_instance->crear( $localizacion, $oferta_educativa);
     }
 
 //    public function getUnidadEducativa() {

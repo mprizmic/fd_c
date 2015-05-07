@@ -44,6 +44,12 @@ class UnidadEducativa {
     private $establecimiento;
 
     /**
+     * bidireccional lado inverso
+     * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\Localizacion", mappedBy="unidad_educativa")
+     */
+    private $localizaciones;
+    
+    /**
      * @var Nivel
      *
      * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\Nivel")
@@ -62,17 +68,6 @@ class UnidadEducativa {
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $nombre_autoridad;
-
-    /**
-     * bidireccional lado inverso
-     * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", mappedBy="unidades")
-     */
-    private $ofertas;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $cantidad_docentes;
     /**
      * @ORM\Column(type="datetime")
      * 
@@ -96,13 +91,16 @@ class UnidadEducativa {
         return $resultado;
     }
     /**
+     * FALTA este se modifica por 'ofertas'
+     * Al cambiar la relacion de ofertas de unidad educativa a localizaciones esto se modifica. No existe más getOfertas()
+     * 
      * Devuelve un array con las ofertas de un determinado nivel o unidad academica
      * Si no hay oferta para un nivel determinado devuelve NULL
      * 
      * @return null
      */
     public function existeOferta() {
-        $ofertas = $this->getOfertas();
+        $ofertas = array(); //$this->getOfertas();
         if (count($ofertas) > 0) {
             return $ofertas;
         } else {
@@ -110,21 +108,8 @@ class UnidadEducativa {
         };
     }
 
-    public function getTurnosSinRepetir(){
-        $salida = array();
-        foreach ($this->getOfertas() as $unidadoferta) {
-            foreach ($unidadoferta->getTurnos() as $turno) {
-                $descripcion = $turno->getTurno()->getDescripcion(); 
-                if (!in_array($descripcion, $salida)){
-                    $salida[]=$descripcion;
-                }
-            }
-            
-        };
-        return $salida;
-    }
     public function __toString() {
-        return $this->getNivel() . '/' . $this->getEstablecimiento();
+        return  $this->getEstablecimiento(). '/' .  $this->getNivel();
     }
 
     /*
@@ -174,7 +159,7 @@ class UnidadEducativa {
     }
 
     public function __construct() {
-        $this->ofertas = new ArrayCollection();
+
         $this->turnos = new ArrayCollection();
         $this->creado = new \DateTime();
         $this->actualizado = new \DateTime();
@@ -204,7 +189,8 @@ class UnidadEducativa {
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -214,7 +200,8 @@ class UnidadEducativa {
      * @param string $descripcion
      * @return UnidadEducativa
      */
-    public function setDescripcion($descripcion) {
+    public function setDescripcion($descripcion)
+    {
         $this->descripcion = $descripcion;
 
         return $this;
@@ -225,7 +212,8 @@ class UnidadEducativa {
      *
      * @return string 
      */
-    public function getDescripcion() {
+    public function getDescripcion()
+    {
         return $this->descripcion;
     }
 
@@ -235,7 +223,8 @@ class UnidadEducativa {
      * @param string $nombreAutoridad
      * @return UnidadEducativa
      */
-    public function setNombreAutoridad($nombreAutoridad) {
+    public function setNombreAutoridad($nombreAutoridad)
+    {
         $this->nombre_autoridad = $nombreAutoridad;
 
         return $this;
@@ -246,119 +235,9 @@ class UnidadEducativa {
      *
      * @return string 
      */
-    public function getNombreAutoridad() {
+    public function getNombreAutoridad()
+    {
         return $this->nombre_autoridad;
-    }
-
-    /**
-     * Set establecimiento
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento
-     * @return UnidadEducativa
-     */
-    public function setEstablecimiento(\Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento = null) {
-        $this->establecimiento = $establecimiento;
-
-        return $this;
-    }
-
-    /**
-     * Get establecimiento
-     *
-     * @return \Fd\EstablecimientoBundle\Entity\Establecimiento 
-     */
-    public function getEstablecimiento() {
-        return $this->establecimiento;
-    }
-
-    /**
-     * Set nivel
-     *
-     * @param \Fd\TablaBundle\Entity\Nivel $nivel
-     * @return UnidadEducativa
-     */
-    public function setNivel(\Fd\TablaBundle\Entity\Nivel $nivel = null) {
-        $this->nivel = $nivel;
-
-        return $this;
-    }
-
-    /**
-     * Get nivel
-     *
-     * @return \Fd\TablaBundle\Entity\Nivel 
-     */
-    public function getNivel() {
-        return $this->nivel;
-    }
-
-    /**
-     * Set cargo_autoridad
-     *
-     * @param \Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad
-     * @return UnidadEducativa
-     */
-    public function setCargoAutoridad(\Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad = null) {
-        $this->cargo_autoridad = $cargoAutoridad;
-
-        return $this;
-    }
-
-    /**
-     * Get cargo_autoridad
-     *
-     * @return \Fd\TablaBundle\Entity\CargoAutoridad 
-     */
-    public function getCargoAutoridad() {
-        return $this->cargo_autoridad;
-    }
-
-    /**
-     * Add ofertas
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\UnidadOferta $ofertas
-     * @return UnidadEducativa
-     */
-    public function addOferta(\Fd\EstablecimientoBundle\Entity\UnidadOferta $ofertas) {
-        $this->ofertas[] = $ofertas;
-
-        return $this;
-    }
-
-    /**
-     * Remove ofertas
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\UnidadOferta $ofertas
-     */
-    public function removeOferta(\Fd\EstablecimientoBundle\Entity\UnidadOferta $ofertas) {
-        $this->ofertas->removeElement($ofertas);
-    }
-
-    /**
-     * Get ofertas
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getOfertas() {
-        return $this->ofertas;
-    }
-
-    /**
-     * Remove turnos
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\TurnoUnidadEducativa $turnos
-     */
-    public function removeTurno(TurnoUnidadEducativa $turno) {
-        $this->turnos->removeElement($turno);
-    }
-
-    /**
-     * Get turnos
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTurnos() {
-        return $this->turnos;
     }
 
     /**
@@ -370,7 +249,7 @@ class UnidadEducativa {
     public function setActualizado($actualizado)
     {
         $this->actualizado = $actualizado;
-    
+
         return $this;
     }
 
@@ -393,7 +272,7 @@ class UnidadEducativa {
     public function setCreado($creado)
     {
         $this->creado = $creado;
-    
+
         return $this;
     }
 
@@ -408,25 +287,104 @@ class UnidadEducativa {
     }
 
     /**
-     * Set cantidad_docentes
+     * Set establecimiento
      *
-     * @param integer $cantidadDocentes
+     * @param \Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento
      * @return UnidadEducativa
      */
-    public function setCantidadDocentes($cantidadDocentes)
+    public function setEstablecimiento(\Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento = null)
     {
-        $this->cantidad_docentes = $cantidadDocentes;
-    
+        $this->establecimiento = $establecimiento;
+
         return $this;
     }
 
     /**
-     * Get cantidad_docentes
+     * Get establecimiento
      *
-     * @return integer 
+     * @return \Fd\EstablecimientoBundle\Entity\Establecimiento 
      */
-    public function getCantidadDocentes()
+    public function getEstablecimiento()
     {
-        return $this->cantidad_docentes;
+        return $this->establecimiento;
+    }
+
+    /**
+     * Add localizaciones
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\Localizacion $localizaciones
+     * @return UnidadEducativa
+     */
+    public function addLocalizacione(\Fd\EstablecimientoBundle\Entity\Localizacion $localizaciones)
+    {
+        $this->localizaciones[] = $localizaciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove localizaciones
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\Localizacion $localizaciones
+     */
+    public function removeLocalizacione(\Fd\EstablecimientoBundle\Entity\Localizacion $localizaciones)
+    {
+        $this->localizaciones->removeElement($localizaciones);
+    }
+
+    /**
+     * Get localizaciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLocalizaciones()
+    {
+        return $this->localizaciones;
+    }
+
+    /**
+     * Set nivel
+     *
+     * @param \Fd\TablaBundle\Entity\Nivel $nivel
+     * @return UnidadEducativa
+     */
+    public function setNivel(\Fd\TablaBundle\Entity\Nivel $nivel = null)
+    {
+        $this->nivel = $nivel;
+
+        return $this;
+    }
+
+    /**
+     * Get nivel
+     *
+     * @return \Fd\TablaBundle\Entity\Nivel 
+     */
+    public function getNivel()
+    {
+        return $this->nivel;
+    }
+
+    /**
+     * Set cargo_autoridad
+     *
+     * @param \Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad
+     * @return UnidadEducativa
+     */
+    public function setCargoAutoridad(\Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad = null)
+    {
+        $this->cargo_autoridad = $cargoAutoridad;
+
+        return $this;
+    }
+
+    /**
+     * Get cargo_autoridad
+     *
+     * @return \Fd\TablaBundle\Entity\CargoAutoridad 
+     */
+    public function getCargoAutoridad()
+    {
+        return $this->cargo_autoridad;
     }
 }

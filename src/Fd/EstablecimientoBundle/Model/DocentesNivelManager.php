@@ -4,11 +4,11 @@ namespace Fd\EstablecimientoBundle\Model;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormInterface;
-use Fd\EstablecimientoBundle\Entity\Establecimiento;
+use Fd\EstablecimientoBundle\Entity\EstablecimientoEstablecimiento;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Model\LocalizacionHandler;
 use Fd\BackendBundle\Form\Model\DocentesNivelHandler;
-use Fd\BackendBundle\Form\Handler\UnidadEducativaHandler;
 
 class DocentesNivelManager {
 
@@ -16,10 +16,10 @@ class DocentesNivelManager {
     private $respuesta;
     private $unidad_educativa_handler;
 
-    public function __construct(EntityManager $em, UnidadEducativaHandler $unidad_educativa_handler) {
+    public function __construct(EntityManager $em, LocalizacionHandler $localizacion_handler) {
         $this->em = $em;
         $this->respuesta = new Respuesta();
-        $this->unidad_educativa_handler = $unidad_educativa_handler;
+        $this->localizacion_handler = $localizacion_handler;
     }
 
     /**
@@ -31,14 +31,14 @@ class DocentesNivelManager {
         try {
             //aca se guardan todos los niveles que correspondan
 
-            $establecimiento = $formulario->getEstablecimiento();
-            $unidades_educativas = $establecimiento->getUnidadesEducativas();
+            $establecimiento_edificio = $formulario->getEstablecimientoEdificio();
+            $localizaciones = $establecimiento_edificio->getLocalizacion();
 
-            foreach ($unidades_educativas as $unidad_educativa) {
-                $unidad_educativa->setCantidadDocentes($formulario->getCantidad($unidad_educativa->getNivel()->getAbreviatura()));
+            foreach ($localizaciones as $localizacion) {
+                $localizacion->setCantidadDocentes($formulario->getCantidad($localizacion->getUnidadEducativa()->getNivel()->getAbreviatura()));
 
                 //se persiste en el repositorio de unidad educativa
-                $this->unidad_educativa_handler->actualizar($unidad_educativa, true);
+                $this->localizacion_handler->actualizar($localizacion, true);
             };
 
             $respuesta->setCodigo(1);

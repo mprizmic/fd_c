@@ -5,7 +5,7 @@ namespace Fd\EstablecimientoBundle\Model;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Fd\EstablecimientoBundle\Entity\Establecimiento;
+use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\TablaBundle\Entity\Nivel;
 
 /**
@@ -19,7 +19,7 @@ class DocentesNivelClass {
      *
      */
     private $id;
-    private $establecimiento;
+    private $establecimiento_edificio;
 
     /**
      * @Assert\Type("integer")
@@ -41,17 +41,17 @@ class DocentesNivelClass {
      */
     private $cantidad_terciario;
 
-    public function __construct(Establecimiento $establecimiento) {
+    public function __construct(EstablecimientoEdificio $establecimiento_edificio) {
 
-        $this->establecimiento = $establecimiento;
-        $unidades_educativas = $establecimiento->getUnidadesEducativas();
-        foreach ($unidades_educativas as $unidad_educativa) {
-            $this->setCantidad( $unidad_educativa->getNivel()->getAbreviatura(), $unidad_educativa->getCantidadDocentes());
+        $this->establecimiento_edificio = $establecimiento_edificio;
+        $localizaciones = $establecimiento_edificio->getLocalizacion();
+        foreach ($localizaciones as $localizacion) {
+            $this->setCantidad( $localizacion->getUnidadEducativa()->getNivel()->getAbreviatura(), $localizacion->getCantidadDocentes());
         }
     }
 
-    public function getEstablecimiento() {
-        return $this->establecimiento;
+    public function getEstablecimientoEdificio() {
+        return $this->establecimiento_edificio;
     }
 
     public function getCantidad($nivel) {
@@ -99,8 +99,8 @@ class DocentesNivelClass {
         return $this->cantidad_terciario;
     }
 
-    public function setEstablecimiento($establecimiento) {
-        $this->establecimiento = $establecimiento;
+    public function setEstablecimientoEdificio(EstablecimientoEdificio $establecimiento_edificio) {
+        $this->establecimiento_edificio = $establecimiento_edificio;
     }
 
     public function setCantidadInicial($cantidad) {

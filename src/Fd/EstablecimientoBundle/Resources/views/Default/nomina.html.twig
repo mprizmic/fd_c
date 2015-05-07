@@ -25,7 +25,6 @@
         <th>D.E.</th>
         <th>Comuna</th>
         <th>CUE</th>
-        <th></th>
         <th>Edificios</th>
 <!--        <th>Url</th> -->
     </tr>
@@ -36,7 +35,6 @@
         <td>{{ establecimiento.distritoEscolar }}</td>
         <td>{{ establecimiento.edificioPrincipal.edificios.comuna }}</td>
         <td>{{ establecimiento.cue }}</td>
-        <td><a href="{{ path('unidad_educativa_de_un_cue', {'establecimiento_id': establecimiento.id } ) }}">Oferta educativa</a></td>
         <td>
         {% set cuales = '' %}
         {% for un_edificio in establecimiento.edificio %}

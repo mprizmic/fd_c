@@ -269,7 +269,6 @@ class ActoPublicoController extends Controller {
         //devuelve un string con formato de fecha
         $fecha_con_formato = $this->dateToString($fecha);
         return \DateTime::createFromFormat('d-m-Y', $fecha_con_formato);
-        ;
     }
 
     public function dateToString($fecha) {

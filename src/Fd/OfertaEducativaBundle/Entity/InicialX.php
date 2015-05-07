@@ -23,9 +23,8 @@ class InicialX {
     private $id;
 
     /**
-     * lado propietario no bidireccional
-     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta")
-     * @ORM\JoinColumn(name="unidad_oferta_id", referencedColumnName="id")
+     * lado inverso bidireccional
+     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", mappedBy="salas_inicial", cascade={"remove"}))
      */
     private $unidad_oferta;
 

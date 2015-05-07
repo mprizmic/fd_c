@@ -1,10 +1,3 @@
-{# parametros:             
-            'unidades_ofertas' => $unidades_ofertas,
-            'carrera' => $carrera,
-            'salida' => $salida,
-            'anio_desde' => $anio_desde,
-            'anio_hasta' => $hoy,
- #}
 {% extends '::layout.html.twig' %}
 
 {% block main_content %}
@@ -46,7 +39,7 @@
     <tbody>
         {% for un_establecimiento in salida %}
             <tr>
-                <td><a href="{{ path('establecimiento_ficha', {'establecimiento_id':un_establecimiento['id'] } ) }}">{{ un_establecimiento['nombre'] }}</a></td>
+                <td><a href="{{ path('establecimiento_ficha', {'establecimiento_id':un_establecimiento['establecimiento_id'] } ) }}">{{ un_establecimiento['nombre_anexo'] }}</a></td>
                 {% for i in anio_desde..anio_hasta %}
                     {% if un_establecimiento['cohortes'][i] is defined %}
                         <td>{{ un_establecimiento['cohortes'][i]['ingresantes'] }}</td>

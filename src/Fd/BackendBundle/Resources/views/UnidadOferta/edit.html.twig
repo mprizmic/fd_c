@@ -19,7 +19,7 @@
 
     <form action="{{ path('backend_unidadoferta_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <div class="ancho_10">
-            {{ form_row(edit_form.unidades) }}
+            {{ form_row(edit_form.localizacion) }}
             {{ form_row(edit_form.ofertas) }}
         </div>
         {# turnos en que se imparte #}

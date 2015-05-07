@@ -3,8 +3,6 @@ services:
         class: Fd\EstablecimientoBundle\Validator\Constraints\ApellidoValidator
         tags:
             - { name: validator.constraint_validator, alias: apellido_alfabetico }
-#    sonata.fd.establecimiento.admin.establecimiento:
-#        class: Fd\EstablecimientoBundle\Admin\EstablecimientoAdmin
-#        tags:
-#            - { name: sonata.admin, manager_type: orm, group: Establecimiento, label: Establecimiento }
-#        arguments: [ null, Fd\EstablecimientoBundle\Entity\Establecimiento , EstablecimientoBundle:EstablecimientoAdmin ]
+    fd.establecimiento.model.localizacion:
+        class: Fd\EstablecimientoBundle\Model\LocalizacionHandler
+        arguments: ["@doctrine.orm.entity_manager"]

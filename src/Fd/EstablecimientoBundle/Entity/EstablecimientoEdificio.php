@@ -10,10 +10,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio
  *
  * @ORM\Table(name="establecimiento_edificio")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fd\EstablecimientoBundle\Repository\EstablecimientoEdificioRepository")
  */
-class EstablecimientoEdificio
-{
+class EstablecimientoEdificio {
+
     /**
      * @var integer $id
      *
@@ -22,83 +22,116 @@ class EstablecimientoEdificio
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
      * bidireccional lado propietario
      * @ORM\ManyToOne(targetEntity="Fd\EstablecimientoBundle\Entity\Establecimiento", inversedBy="edificio")
      * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
     private $establecimientos;
+
     /**
      * bidireccional lado propietario
      * @ORM\ManyToOne(targetEntity="Fd\EdificioBundle\Entity\Edificio", inversedBy="establecimiento")
      * @Assert\NotBlank(message="El dato no puede quedar en blanco")
-     */    
+     */
     private $edificios;
+
     /**
      * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\Localizacion", mappedBy="establecimiento_edificio")
      * bidireccional lado inverso
      */
     private $localizacion;
+
     /**
      * @ORM\Column(name="cue_anexo", type="string", length=2, nullable=false)
      * @Assert\Length(min=2, max=2, exactMessage="El número de anexo debe tener 2 dígitos")
      */
     private $cue_anexo;
+
     /**
      * @var string $nombre
      *
      * @ORM\Column(name="nombre", type="string", length=50, nullable=true)
      */
     private $nombre;
+
     /**
      *
      * @ORM\Column(type="date", nullable=true)
      */
     private $fecha_creacion;
+
     /**
      *
      * @ORM\Column(type="date", nullable=true)
      */
     private $fecha_baja;
+
     /**
      * @ORM\Column(nullable=true)
      */
     private $te1;
+
     /**
      * @ORM\Column(nullable=true)
      */
     private $te2;
+
     /**
      * @ORM\Column(nullable=true)
      */
     private $te3;
+
     /**
      * @ORM\Column(nullable=true)
      */
     private $email1;
+
     /**
      * @ORM\Column(nullable=true)
      */
     private $email2;
 
-    public function __toString() {
-        return $this->getEstablecimientos()->getApodo().' Sede '.$this->getCueAnexo();
+    /**
+     * devuelve el objeto localizacion de nivel terciario correspondiente $this
+     */
+    public function getTerciario() {
+        foreach ($this->getLocalizacion() as $localizacion) {
+            if ($localizacion->esTerciario()) {
+                return $localizacion;
+            }
+        };
+        return null;
     }
-    public function __construct()
-    {
+    /**
+     * Si el edificio es sede devuelve true. Si es anexo devuelve false.
+     * @return type
+     */
+    public function isSede(){
+        return ($this->getCueAnexo() == '00');
+    }
+
+    public function __toString() {
+        return $this->getEstablecimientos()->getApodo() . ($this->getCueAnexo() == '00' ? '' : ' - ' . $this->getNombre());
+    }
+
+    public function getIdentificacion() {
+        return $this->getEstablecimientos()->getNombre() . ($this->getCueAnexo() == '00' ? '' : ' - ' . $this->getNombre());
+    }
+
+    public function __construct() {
         $this->localizacion = new \Doctrine\Common\Collections\ArrayCollection();
         $this->establecimientos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->edificios = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -107,8 +140,7 @@ class EstablecimientoEdificio
      *
      * @param string $cueAnexo
      */
-    public function setCueAnexo($cueAnexo)
-    {
+    public function setCueAnexo($cueAnexo) {
         $this->cue_anexo = $cueAnexo;
     }
 
@@ -117,8 +149,7 @@ class EstablecimientoEdificio
      *
      * @return string 
      */
-    public function getCueAnexo()
-    {
+    public function getCueAnexo() {
         return $this->cue_anexo;
     }
 
@@ -127,8 +158,7 @@ class EstablecimientoEdificio
      *
      * @param string $nombre
      */
-    public function setNombre($nombre)
-    {
+    public function setNombre($nombre) {
         $this->nombre = $nombre;
     }
 
@@ -137,8 +167,7 @@ class EstablecimientoEdificio
      *
      * @return string 
      */
-    public function getNombre()
-    {
+    public function getNombre() {
         return $this->nombre;
     }
 
@@ -147,8 +176,7 @@ class EstablecimientoEdificio
      *
      * @param date $fechaCreacion
      */
-    public function setFechaCreacion($fechaCreacion)
-    {
+    public function setFechaCreacion($fechaCreacion) {
         $this->fecha_creacion = $fechaCreacion;
     }
 
@@ -157,8 +185,7 @@ class EstablecimientoEdificio
      *
      * @return date 
      */
-    public function getFechaCreacion()
-    {
+    public function getFechaCreacion() {
         return $this->fecha_creacion;
     }
 
@@ -167,8 +194,7 @@ class EstablecimientoEdificio
      *
      * @param date $fechaBaja
      */
-    public function setFechaBaja($fechaBaja)
-    {
+    public function setFechaBaja($fechaBaja) {
         $this->fecha_baja = $fechaBaja;
     }
 
@@ -177,8 +203,7 @@ class EstablecimientoEdificio
      *
      * @return date 
      */
-    public function getFechaBaja()
-    {
+    public function getFechaBaja() {
         return $this->fecha_baja;
     }
 
@@ -187,8 +212,7 @@ class EstablecimientoEdificio
      *
      * @param string $te1
      */
-    public function setTe1($te1)
-    {
+    public function setTe1($te1) {
         $this->te1 = $te1;
     }
 
@@ -197,8 +221,7 @@ class EstablecimientoEdificio
      *
      * @return string 
      */
-    public function getTe1()
-    {
+    public function getTe1() {
         return $this->te1;
     }
 
@@ -207,8 +230,7 @@ class EstablecimientoEdificio
      *
      * @param string $te2
      */
-    public function setTe2($te2)
-    {
+    public function setTe2($te2) {
         $this->te2 = $te2;
     }
 
@@ -217,8 +239,7 @@ class EstablecimientoEdificio
      *
      * @return string 
      */
-    public function getTe2()
-    {
+    public function getTe2() {
         return $this->te2;
     }
 
@@ -227,8 +248,7 @@ class EstablecimientoEdificio
      *
      * @param string $te3
      */
-    public function setTe3($te3)
-    {
+    public function setTe3($te3) {
         $this->te3 = $te3;
     }
 
@@ -237,8 +257,7 @@ class EstablecimientoEdificio
      *
      * @return string 
      */
-    public function getTe3()
-    {
+    public function getTe3() {
         return $this->te3;
     }
 
@@ -247,8 +266,7 @@ class EstablecimientoEdificio
      *
      * @param string $email1
      */
-    public function setEmail1($email1)
-    {
+    public function setEmail1($email1) {
         $this->email1 = $email1;
     }
 
@@ -257,8 +275,7 @@ class EstablecimientoEdificio
      *
      * @return string 
      */
-    public function getEmail1()
-    {
+    public function getEmail1() {
         return $this->email1;
     }
 
@@ -267,8 +284,7 @@ class EstablecimientoEdificio
      *
      * @param string $email2
      */
-    public function setEmail2($email2)
-    {
+    public function setEmail2($email2) {
         $this->email2 = $email2;
     }
 
@@ -277,8 +293,7 @@ class EstablecimientoEdificio
      *
      * @return string 
      */
-    public function getEmail2()
-    {
+    public function getEmail2() {
         return $this->email2;
     }
 
@@ -287,8 +302,7 @@ class EstablecimientoEdificio
      *
      * @param Fd\EstablecimientoBundle\Entity\Establecimiento $establecimientos
      */
-    public function setEstablecimientos(\Fd\EstablecimientoBundle\Entity\Establecimiento $establecimientos)
-    {
+    public function setEstablecimientos(\Fd\EstablecimientoBundle\Entity\Establecimiento $establecimientos) {
         $this->establecimientos = $establecimientos;
     }
 
@@ -297,8 +311,7 @@ class EstablecimientoEdificio
      *
      * @return Fd\EstablecimientoBundle\Entity\Establecimiento 
      */
-    public function getEstablecimientos()
-    {
+    public function getEstablecimientos() {
         return $this->establecimientos;
     }
 
@@ -307,8 +320,7 @@ class EstablecimientoEdificio
      *
      * @param Fd\EdificioBundle\Entity\Edificio $edificios
      */
-    public function setEdificios(\Fd\EdificioBundle\Entity\Edificio $edificios)
-    {
+    public function setEdificios(\Fd\EdificioBundle\Entity\Edificio $edificios) {
         $this->edificios = $edificios;
     }
 
@@ -317,8 +329,7 @@ class EstablecimientoEdificio
      *
      * @return Fd\EdificioBundle\Entity\Edificio 
      */
-    public function getEdificios()
-    {
+    public function getEdificios() {
         return $this->edificios;
     }
 
@@ -327,8 +338,7 @@ class EstablecimientoEdificio
      *
      * @param Fd\EstablecimientoBundle\Entity\Localizacion $localizacion
      */
-    public function addLocalizacion(\Fd\EstablecimientoBundle\Entity\Localizacion $localizacion)
-    {
+    public function addLocalizacion(\Fd\EstablecimientoBundle\Entity\Localizacion $localizacion) {
         $this->localizacion[] = $localizacion;
     }
 
@@ -337,8 +347,8 @@ class EstablecimientoEdificio
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getLocalizacion()
-    {
+    public function getLocalizacion() {
         return $this->localizacion;
     }
+
 }

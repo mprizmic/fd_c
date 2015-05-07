@@ -97,16 +97,19 @@ class Carrera {
     }
 
     public function __toString() {
-        return $this->nombre;
+        return substr($this->nombre, 0, 40) . ' - ' . $this->getNorma();;
     }
 
-    public function getIdentificacion() {
+    public function getNorma(){
         $norma = "";
         foreach ($this->getOferta()->getNormas() as $value) {
             $norma = $value;
             break;
         };
-        return $this->nombre . ' - ' . $this->getEstado() . ' - ' . $norma;
+        return $norma;
+    }
+    public function getIdentificacion() {
+        return $this->nombre . ' - ' . $this->getEstado() . ' - ' . $this->getNorma();
     }
 
     /**
@@ -170,8 +173,8 @@ class Carrera {
     public function __construct() {
         $this->orientaciones = new ArrayCollection();
         $this->creado = new \DateTime();
-        $this->actualizado = new \DateTime();
-        $this->anio_inicio = date('now');
+        $this->actualizado = new \DateTime('now');
+        $this->anio_inicio = date("Y");
         $this->oferta = null;
     }
 

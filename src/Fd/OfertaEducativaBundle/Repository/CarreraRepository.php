@@ -3,11 +3,13 @@
 namespace Fd\OfertaEducativaBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
-use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
-use Fd\TablaBundle\Entity\EstadoCarrera;
+use Fd\EstablecimientoBundle\Repository\LocalizacionRepository;
 use Fd\OfertaEducativaBundle\Entity\CarreraEstadoValidez;
+use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
+use Fd\TablaBundle\Entity\EstadoCarrera;
 
 /**
  * CarreraRepository
@@ -18,22 +20,34 @@ use Fd\OfertaEducativaBundle\Entity\CarreraEstadoValidez;
 class CarreraRepository extends EntityRepository {
 
     /**
-     * dado un establecimeinto devuelve objetos de tipo carrera de las carreras del mismo
+     * dado un establecimeinto devuelve objetos de tipo carrera de las carreras del mismo, sin localizar
+     * 
      * @return type resultados objetos carrera
      */
-    public function findCarrerasPorEstablecimiento($establecimiento) {
-        $dql = "select c
-            from OfertaEducativaBundle:Carrera c 
-            join c.oferta o 
-            join o.unidades u 
-            join u.unidades ue
-            join ue.establecimiento e 
-            where e.id = :establecimiento";
-        $q = $this->_em->createQuery($dql);
-        $q->setParameter('establecimiento', $establecimiento);
-        return $q->getResult();
+    public function findCarrerasPorSedeAnexo(EstablecimientoEdificio $establecimiento_edificio) {
+        $qb = $this->createQueryBuilder('car')
+                ->select('car')
+                ->join('car.oferta', 'oe')
+                ->join('oe.unidades', 'uo')
+                ->join('uo.localizacion', 'l')
+                ->where('l.establecimiento_edificio = :ee');
+        
+        $qb->setParameter('ee', $establecimiento_edificio);
+        return $qb->getQuery()->getResult();
     }
 
+    /**
+     * devuelve todas las localizaciones donde se dicta la carrera informada
+     * Los datos devueltos son un array
+     * 
+     */
+    public function findLocalizaciones( \Fd\OfertaEducativaBundle\Entity\Carrera $carrera ){
+        
+        $resultado = $this->_em->getRepository('EstablecimientoBundle:Localizacion')
+                ->findDeCarrera($carrera);
+        return $resultado;
+    }
+    
     public function qbAllOrdenado($campo){
         return $this->createQueryBuilder('c')
                         ->orderBy('c.' . $campo);
@@ -44,22 +58,24 @@ class CarreraRepository extends EntityRepository {
     }
 
     /**
+     * DEPRECATED
+     * 
      * listado de carreras en estado activo ordenadas por nombre sin repetidos
      * @return type
      */
-    public function qyResumido() {
-        return $this->createQueryBuilder('c')
-                        ->select(array(
-                            'distinct c.nombre', 'f.codigo', 'c.id',
-                        ))
-                        ->innerJoin('c.estado', 'e')
-                        ->innerJoin('c.formacion', 'f')
-                        ->where('e.codigo = :codigo_estado')
-                        ->groupBy('c.nombre')
-                        ->orderBy('c.nombre')
-                        ->setParameter('codigo_estado', 'ACT')
-                        ->getQuery();
-    }
+//    public function qyResumido() {
+//        return $this->createQueryBuilder('c')
+//                        ->select(array(
+//                            'distinct c.nombre', 'f.codigo', 'c.id',
+//                        ))
+//                        ->innerJoin('c.estado', 'e')
+//                        ->innerJoin('c.formacion', 'f')
+//                        ->where('e.codigo = :codigo_estado')
+//                        ->groupBy('c.nombre')
+//                        ->orderBy('c.nombre')
+//                        ->setParameter('codigo_estado', 'ACT')
+//                        ->getQuery();
+//    }
 
     public function dqlActivas() {
         $x = $this->getEntityManager()->getReference('TablaBundle:EstadoCarrera', 1);
@@ -87,9 +103,9 @@ class CarreraRepository extends EntityRepository {
     /**
      * Lista de carreras para un combo
      */
-    public function combo($establecimiento = null) {
-        if ($establecimiento) {
-            return $this->findCarrerasPorEstablecimiento($establecimiento);
+    public function combo($localizacion = null) {
+        if ($localizacion) {
+            return $this->findCarrerasPorSedeAnexo($localizacion->getEstablecimientoEdificio());
         };
         return $this->findAllOrdenado('nombre');
     }

@@ -4,7 +4,7 @@
 {{ parent() }}
 
 
-<div class="titulo float_izquierda">Nómina de establecimientos que imparten nivel medio</div>
+<div class="titulo float_izquierda">Nómina de establecimientos que imparten nivel {{ nivel }}</div>
 
 <div class="limpiar_float"></div>
 
@@ -30,7 +30,7 @@
 </table>
 
 
-{{ simple_paginator_render('medio_nomina', null, {
+{{ simple_paginator_render('{{ nivel }}_nomina', null, {
     'container_class':'simple_paginator',
     'previousPageText':'Anterior',
     'nextPageText':'Siguiente',
@@ -39,5 +39,4 @@
     'lastPageText':'Último'
 }) }} 
 
-{% include '::includes/volver.html.twig' %}
 {% endblock %}

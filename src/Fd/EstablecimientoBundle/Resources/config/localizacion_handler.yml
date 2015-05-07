@@ -1,0 +1,4 @@
+services:
+    fd.establecimiento.model.localizacion:
+        class: Fd\EstablecimientoBundle\Model\LocalizacionHandler
+        arguments: ["@doctrine.orm.entity_manager"]

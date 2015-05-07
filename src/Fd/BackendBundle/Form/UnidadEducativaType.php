@@ -64,13 +64,6 @@ class UnidadEducativaType extends AbstractType {
                 ))
                 ->add('nombre_autoridad')
                 ->add('cargo_autoridad')
-                ->add('cantidad_docentes', 'integer', array(
-                    'label' => 'Cantidad de docentes',
-                    'required' => false,
-                    'attr' => array(
-                        'class' => 'input_talle_05',
-                    )
-                ))
         ;
     }
 

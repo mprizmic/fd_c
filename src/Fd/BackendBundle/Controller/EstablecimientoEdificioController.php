@@ -11,7 +11,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
+use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Model\DocentesNivelClass;
+use Fd\EstablecimientoBundle\Model\DocentesNivelManager;
+//use Fd\EstablecimientoBundle\Model\LocalizacionHandler;
 use Fd\BackendBundle\Form\EstablecimientoEdificioType;
+use Fd\BackendBundle\Form\Model\DocentesNivelType;
+use Fd\BackendBundle\Form\Handler\DocentesNivelFormHandler;
 
 /**
  * EstablecimientoEdificio controller.
@@ -19,7 +25,64 @@ use Fd\BackendBundle\Form\EstablecimientoEdificioType;
  * @Route("/establecimiento_edificio")
  */
 class EstablecimientoEdificioController extends Controller {
+    
+    private $em;
 
+    private function getEm() {
+        if (is_null($this->em)) {
+            $this->em = $this->getDoctrine()->getEntityManager();
+        };
+        return $this->em;
+    }
+    /**
+     * @Route("/docentes_nivel/editar/{establecimiento_edificio_id}",  name="backend_establecimiento_edificio_docentes_nivel_editar")
+     * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:EstablecimientoEdificio", options={"id"="establecimiento_edificio_id"})
+     */
+    public function docentesNivelEditarAction(EstablecimientoEdificio $establecimiento_edificio) {
+        
+        $em = $this->getDoctrine()->getEntityManager();
+        $niveles = $em->getRepository('TablaBundle:Nivel')->descripciones_niveles();
+        
+        $docentes_nivel = new DocentesNivelClass($establecimiento_edificio);
+
+        $editForm = $this->createForm(new DocentesNivelType($establecimiento_edificio, $niveles ), $docentes_nivel);
+
+        return $this->render('BackendBundle:Docentes:edit.html.twig', array(
+                    'entity' => $docentes_nivel,
+                    'edit_form' => $editForm->createView(),
+                ));
+    }    
+
+    /**
+     * @Route("/docentes_nivel/actualizar/{establecimiento_edificio_id}",  name="backend_establecimiento_edificio_docentes_nivel_actualizar")
+     * @Method("post")
+     * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:EstablecimientoEdificio", options={"id"="establecimiento_edificio_id"})
+     */
+    public function docentesNivelActualizarAction(EstablecimientoEdificio $establecimiento_edificio, Request $request) {
+
+        $respuesta = new Respuesta();
+        
+        $niveles = $this->getEm()->getRepository('TablaBundle:Nivel')->descripciones_niveles();
+        
+        $docentes_nivel_anterior = new DocentesNivelClass($establecimiento_edificio);
+
+        $formulario = $this->createForm(new DocentesNivelType($establecimiento_edificio, $niveles), $docentes_nivel_anterior);
+
+        $form_handler = new DocentesNivelFormHandler(new DocentesNivelManager($this->getEm(), $this->get('fd.establecimiento.model.localizacion')));
+
+        $respuesta = $form_handler->actualizar($formulario, $request);
+
+        if ($respuesta->getCodigo() == 1) {
+            $this->get('session')->getFlashBag()->add('exito', $respuesta->getMensaje());
+            return $this->redirect($this->generateUrl('backend_establecimiento_edificio_docentes_nivel_editar', array('establecimiento_edificio_id' => $establecimiento_edificio->getId())));
+        };
+
+        $this->get('session')->getFlashBag()->add('aviso', $respuesta->getMensaje());
+        return $this->render('BackendBundle:Docentes:edit.html.twig', array(
+                    'entity' => $docentes_nivel,
+                    'edit_form' => $formulario->createView(),
+                ));
+    }
     /**
      * @Route("/listar/{id}", name="backend_establecimiento_edificio_listar")
      * @Template("BackendBundle:EstablecimientoEdificio:listar.html.twig")

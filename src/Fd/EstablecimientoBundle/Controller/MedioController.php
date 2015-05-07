@@ -25,8 +25,9 @@ class MedioController extends Controller
                 ->qyAllNivelOrdenado('Med','orden') 
                 )->getResult();
         
-        return $this->render('EstablecimientoBundle:Medio:nomina.html.twig', array(
+        return $this->render('EstablecimientoBundle:Default:nomina_nivel.html.twig', array(
             'establecimientos'=>$establecimientos,
+            'nivel'=>'medio',
             ));
     }
 }

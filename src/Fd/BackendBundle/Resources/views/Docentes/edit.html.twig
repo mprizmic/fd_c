@@ -5,12 +5,14 @@
 
 <h1>Editar cantidad de docentes de cada nivel</h1>
 
-{% render "EstablecimientoBundle:Establecimiento:tarjeta_establecimiento" with {'establecimiento_id': entity.establecimiento.id} %}
+{% set establecimiento_edificio = entity.establecimientoEdificio %}
+
+{% include  "EstablecimientoBundle:Default:tarjeta_establecimiento_edificio.html.twig" with {'establecimiento_edificio_id': establecimiento_edificio.id } %}
 
 <br />
 <br />
 
-<form action="{{ path('backend_establecimiento_docentes_nivel_actualizar', {'establecimiento_id':entity.establecimiento.id} ) }}" method="post" {{ form_enctype(edit_form) }}>
+<form action="{{ path('backend_establecimiento_edificio_docentes_nivel_actualizar', {'establecimiento_edificio_id':establecimiento_edificio.id} ) }}" method="post" {{ form_enctype(edit_form) }}>
     <div class="ancho_10">
         {{ form_widget(edit_form) }}
     </div>
@@ -21,7 +23,7 @@
 
 <br />
 
-<a class="float_izquierda separador" href="{{ path('establecimiento_ficha', {'establecimiento_id': entity.establecimiento.id }) }}">
+<a class="float_izquierda separador" href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento_edificio.establecimientos.id }) }}">
     Volver a la ficha
 </a>
 

@@ -37,6 +37,9 @@ body {
 #contenido {
     width:80%;
 }
+.ancho {
+    width:100%;
+}
 #footer {
     padding: 0 10px;
     background: #666;
@@ -241,7 +244,7 @@ tamaños y tipos de escritura
     display: block;
 }
 .rojo{
-    color: red;
+    color: #FF1717;
 }
 .azul{
     color: #08C;

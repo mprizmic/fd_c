@@ -10,7 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Fd\BackendBundle\Form\UnidadOfertaType;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
+use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
+use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\TablaBundle\Entity\Nivel;
 
 /**
@@ -23,7 +25,7 @@ class UnidadOfertaController extends Controller {
     private $em;
 
     /**
-     * Lists all Cohorte entities.
+     * Muestra una pagina para seleccionar de cada localizacion, alguno de sus niveles educativos.
      *
      * @Route("/", name="backend_unidadoferta")
      */
@@ -35,11 +37,11 @@ class UnidadOfertaController extends Controller {
         $this->get('session')->set('ruta_completa', $request->get('_route'));
         $this->get('session')->set('parametros', $request->get('_route_params'));
 
-        $establecimientos = $this->getEm()->getRepository('EstablecimientoBundle:Establecimiento')->findAllOrdenado('orden');
+        $establecimiento_edificios = $this->getEm()->getRepository('EstablecimientoBundle:EstablecimientoEdificio')->findAllOrdenado();
         $niveles = $this->getEm()->getRepository('TablaBundle:Nivel')->findBy(array(), array('orden' => 'asc'));
 
         return $this->render('BackendBundle:UnidadOferta:index.html.twig', array(
-                    'establecimientos' => $establecimientos,
+                    'establecimiento_edificios' => $establecimiento_edificios,
                     'niveles' => $niveles,
         ));
     }
@@ -61,16 +63,28 @@ class UnidadOfertaController extends Controller {
 //    }
 
     /**
-     * @Route("/listar/{unidad_educativa_id}", name="backend_unidadoferta_listar")
-     * @ParamConverter("unidad_educativa", class="EstablecimientoBundle:UnidadEducativa", options={"id"="unidad_educativa_id"} )
+     * ACA TENDRIA QUE ENTRAR UNA LOCALIZACION
+     * 
+     * @Route("/listar/{localizacion_id}", name="backend_unidadoferta_listar")
+     * @ParamConverter("localizacion", class="EstablecimientoBundle:Localizacion", options={"id"="localizacion_id"} )
      * @Template("BackendBundle:UnidadOferta:listar.html.twig")
      */
-    public function listarAction($unidad_educativa) {
-
+    public function listarAction($localizacion) {
+        $entities = array();
         //recupero todas las ofertas de la unidad educativa
-
+        //de acuerdo al nivel de las ofertas quiero que se muestren de forma distinta
+        foreach ($localizacion->getOfertas() as $oferta) {
+            $elemento['value'] = $oferta->getId();
+            $entity = $oferta->getOfertas()->getObjetoOferta();
+            if ($entity instanceof Carrera){
+                $elemento['text'] = $entity->getIdentificacion();
+            }else{
+                $elemento['text']=$entity->__toString();
+            };
+            $entities[] = $elemento;
+        }
         return array(
-            'entities' => $unidad_educativa->getOfertas(),
+            'entities' => $entities,
         );
     }
 
@@ -78,20 +92,15 @@ class UnidadOfertaController extends Controller {
      * Lista de unidades_oferta para un combo formateados en html como combo
      * Filtrado por unidad_educativa
      * 
-     * @Route("/combo/{unidad_educativa_id}", name="backend_unidad_oferta_combo")
+     * @Route("/combo/{localizacion_id}", name="backend_unidad_oferta_combo", options={"expose"=true})
      */
-    public function comboAction($unidad_educativa_id) {
+    public function comboAction($localizacion_id) {
 
-        try {
-            $unidad_educativa = $this->getEm()->getRepository('EstablecimientoBundle:UnidadEducativa')->find($unidad_educativa_id);
-        } catch (Exception $e) {
-            throw new createNotFoundException();
-        };
+        $localizacion = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')->find($localizacion_id);
 
-        $entities = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')
-                ->qbCarrerasPorEstablecimiento($unidad_educativa_id)
-                ->getQuery()
-                ->getResult()
+        $entities = $this->getEm()
+                ->getRepository('EstablecimientoBundle:UnidadOferta')
+                ->findUnidadOferta($localizacion)
         ;
 
         return $this->render('EstablecimientoBundle:UnidadOferta:combo.html.twig', array(
@@ -176,7 +185,7 @@ class UnidadOfertaController extends Controller {
      * Displays a form to edit an existing UnidadOferta entity.
      *
      * @Route("/{id}/edit", name="backend_unidadoferta_edit")
-     * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta")
+     * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta", options={"id":"unidad_oferta_id"})
      * @Template()
      */
     public function editAction($unidad_oferta) {

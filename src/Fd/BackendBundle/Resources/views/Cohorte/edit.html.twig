@@ -14,8 +14,8 @@
 
 <fieldset>
     <legend>
-        {{ unidad_oferta.unidades.establecimiento ~ ' - '}}
-        {{ unidad_oferta.ofertas }}
+        {{ unidad_oferta.localizacion.establecimientoEdificio ~ ' - '}}
+        {{ unidad_oferta.ofertas.carrera.identificacion }}
     </legend>
         <span class="mediana resaltado">
             {{ 'Año ' ~ entity.anio }}

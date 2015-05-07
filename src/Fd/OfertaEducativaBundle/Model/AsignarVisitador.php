@@ -38,35 +38,28 @@ class AsignarVisitador implements AsignarVisitadorInterface {
      */
     public function visitCarrera(AsignarVisitadoInterface $visitado) {
         /**
-         * Para cada establecimiento, si esta seleccionado se debe crear el registro de la tabla unidad_oferta (en caso de no preexistir).
+         * Para cada establecimiento localizado, si esta seleccionado se debe crear el registro de la tabla unidad_oferta (en caso de no preexistir).
          * Si no está seleccionado, se debe borrar el registro de dicha tabla (en caso de preexistir)
          */
         
         //se setea la respuesta negativa
         $respuesta = new Respuesta(2, 'Problemas en la asignación');
 
-        //se verifica si ya existe la unidad_oferta
-        $establecimiento = $this->data['establecimiento'];
+        //se verifica si ya existe la unidad_oferta, si se imparte o no la carrera en la localizacion
+        $localizacion = $this->data['localizacion'];
         $carrera = $this->data['carrera'];
-
-        $unidad_educativa = $establecimiento->getTerciario();
-        $oferta_educativa = $carrera->getOferta();
-
-        $unidad_oferta = $visitado->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')->findOneBy(
-                array(
-                    'unidades' => $unidad_educativa->getId(),
-                    'ofertas' => $oferta_educativa->getId(),
-        ));
+        $unidad_oferta = $visitado->getEm()->getRepository('EstablecimientoBundle:Localizacion')
+                ->findSeImparte( $localizacion, $carrera, false);
 
         //se crea el manejador de unidad_oferta
-        $handler = new UnidadOfertaHandler($visitado->getEm(), $unidad_educativa->getNivel());
+        $handler = new UnidadOfertaHandler($visitado->getEm(), $localizacion->getUnidadEducativa()->getNivel());
         
         //accion asignar carrera
         if (!$unidad_oferta) {
             if ($this->data['accion'] == 'Asignar') {
                 
                 //no existe la asignacion y hay que crearla
-                $respuesta = $handler->crear($unidad_educativa, $oferta_educativa);
+                $respuesta = $handler->crear($localizacion, $carrera->getOferta());
             }
         };
 

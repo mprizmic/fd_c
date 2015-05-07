@@ -33,18 +33,20 @@ class EstablecimientoControllerTest extends WebTestCase {
                         ->filter('html:contains("Dickens")')
                         ->count(), 'Se visualiza la página de creación de establecimiento');
     }
-
-    public function testCuadroMatricula() {
-
-        // llamada al recurso
-        $this->crawler = $this->client->request('GET', '/establecimiento/cuadro_matricula/14/carrera');
-        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
-
-        $this->assertGreaterThan(0, $this->crawler
-                        ->filter('html:contains("Graduados")')
-                        ->count(), 'se visualiza la página de matrícula'
-        );
-    }
+    /**
+     * FALTA se cambia a partir del cambio de la localizacion de la oferta educativa
+     */
+//    public function testCuadroMatricula() {
+//
+//        // llamada al recurso
+//        $this->crawler = $this->client->request('GET', '/establecimiento/cuadro_matricula/14/carrera');
+//        $this->assertTrue(200 === $this->client->getResponse()->getStatusCode());
+//
+//        $this->assertGreaterThan(0, $this->crawler
+//                        ->filter('html:contains("Graduados")')
+//                        ->count(), 'se visualiza la página de matrícula'
+//        );
+//    }
 
     public function testDamero() {
         $client = $this->client;
@@ -89,7 +91,7 @@ class EstablecimientoControllerTest extends WebTestCase {
         //un dato de carrera
         $this->assertGreaterThan(
                 0, $crawler
-                        ->filter('html:contains("Profesorado de Inicial - Activa")')
+                        ->filter('html:contains("Profesorado de Educación Inicial - Activa")')
                         ->count()
         );
         //un dato de norma
@@ -114,7 +116,7 @@ class EstablecimientoControllerTest extends WebTestCase {
         //un dato de niveles
         $this->assertGreaterThan(
                 0, $crawler
-                        ->filter('html:contains("que imparte")')
+                        ->filter('html:contains("Niveles")')
                         ->count()
         );
         //un dato de turnos por nivel 
@@ -126,7 +128,7 @@ class EstablecimientoControllerTest extends WebTestCase {
         //un dato de docentes
         $this->assertGreaterThan(
                 0, $crawler
-                        ->filter('html:contains("Cantidad de docentes")')
+                        ->filter('html:contains("Docentes")')
                         ->count()
         );
         //un dato de recuadro de establecimientos de la derecha

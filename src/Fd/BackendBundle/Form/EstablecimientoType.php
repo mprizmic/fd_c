@@ -96,14 +96,14 @@ class EstablecimientoType extends AbstractType {
                     'label' => 'Fecha de aprobación del ROI',
                     'required' => false,
                 ))
-                ->add('fecha_presentacion_ram', 'date', array(
+                ->add('fecha_presentacion_rai', 'date', array(
                     'help' => 'Fecha en que se presentaron los papeles para el trámite de aprobación del RAM',
-                    'label' => 'Fecha de presentación del RAM',
+                    'label' => 'Fecha de presentación del RAI',
                     'required' => false,
                 ))
-                ->add('fecha_aprobacion_ram', 'date', array(
+                ->add('fecha_aprobacion_rai', 'date', array(
                     'help' => 'Fecha en que se aprobó el trámite de aprobación del RAM',
-                    'label' => 'Fecha de aprobación del RAM',
+                    'label' => 'Fecha de aprobación del RAI',
                     'required' => false,
                 ))
                 ->add('fecha_presentacion_rp', 'date', array(

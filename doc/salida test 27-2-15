@@ -1,0 +1,266 @@
+PHPUnit 4.3.4 by Sebastian Bergmann.
+
+Configuration read from /home/marcelo/proyectos/fd.local/app/phpunit.xml
+
+.......
+
+Time: 4.34 seconds, Memory: 24.50Mb
+
+[30;42mOK (7 tests, 17 assertions)[0m
+PHPUnit 4.3.4 by Sebastian Bergmann.
+
+Configuration read from /home/marcelo/proyectos/fd.local/app/phpunit.xml
+
+..
+
+Time: 1.55 seconds, Memory: 22.50Mb
+
+[30;42mOK (2 tests, 5 assertions)[0m
+PHPUnit 4.3.4 by Sebastian Bergmann.
+
+Configuration read from /home/marcelo/proyectos/fd.local/app/phpunit.xml
+
+[41;37mF[0m[41;37mF[0m
+
+Time: 2.16 seconds, Memory: 24.25Mb
+
+There were 2 failures:
+
+1) Fd\EstablecimientoBundle\Tests\Controller\UnidadOfertaControllerTest::testAsignarTurno
+Failed asserting that false is true.
+
+/home/marcelo/proyectos/fd.local/src/Fd/EstablecimientoBundle/Tests/Controller/UnidadOfertaControllerTest.php:14
+
+2) Fd\EstablecimientoBundle\Tests\Controller\UnidadOfertaControllerTest::testActualizarTurnos
+Failed asserting that false is true.
+
+/home/marcelo/proyectos/fd.local/src/Fd/EstablecimientoBundle/Tests/Controller/UnidadOfertaControllerTest.php:35
+[37;41m                                     [0m
+[37;41mFAILURES!                            [0m
+[37;41mTests: 2, Assertions: 2, Failures: 2.[0m
+PHPUnit 4.3.4 by Sebastian Bergmann.
+
+Configuration read from /home/marcelo/proyectos/fd.local/app/phpunit.xml
+
+[41;37mF[0m.[41;37mF[0m..[41;37mF[0m.[41;37mF[0m
+Fatal error: Call to undefined method Fd\EstablecimientoBundle\Entity\UnidadEducativa::getOfertas() in /home/marcelo/proyectos/fd.local/src/Fd/EstablecimientoBundle/Entity/Establecimiento.php on line 249
+
+Call Stack:
+    0.0011     169612   1. {main}() /usr/local/bin/phpunit:0
+    0.0219     437652   2. PHPUnit_TextUI_Command::main() /usr/local/bin/phpunit:605
+    0.0219     437972   3. PHPUnit_TextUI_Command->run() phar:///usr/local/bin/phpunit/phpunit/TextUI/Command.php:138
+    0.0542    2143676   4. PHPUnit_TextUI_TestRunner->doRun() phar:///usr/local/bin/phpunit/phpunit/TextUI/Command.php:186
+    0.0579    2326892   5. PHPUnit_Framework_TestSuite->run() phar:///usr/local/bin/phpunit/phpunit/TextUI/TestRunner.php:423
+   11.7632   41069308   6. PHPUnit_Framework_TestCase->run() phar:///usr/local/bin/phpunit/phpunit/Framework/TestSuite.php:751
+   11.7633   41069308   7. PHPUnit_Framework_TestResult->run() phar:///usr/local/bin/phpunit/phpunit/Framework/TestCase.php:711
+   11.7633   41069780   8. PHPUnit_Framework_TestCase->runBare() phar:///usr/local/bin/phpunit/phpunit/Framework/TestResult.php:643
+   12.2478   42149748   9. PHPUnit_Framework_TestCase->runTest() phar:///usr/local/bin/phpunit/phpunit/Framework/TestCase.php:775
+   12.2478   42150300  10. ReflectionMethod->invokeArgs() phar:///usr/local/bin/phpunit/phpunit/Framework/TestCase.php:905
+   12.2478   42150464  11. Fd\OfertaEducativaBundle\Tests\Controller\CarreraControllerTest->testAsignar_establecimientoAction() phar:///usr/local/bin/phpunit/phpunit/Framework/TestCase.php:905
+   12.2655   42298792  12. Symfony\Component\BrowserKit\Client->request() /home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Tests/Controller/CarreraControllerTest.php:264
+   12.2659   42304352  13. Symfony\Bundle\FrameworkBundle\Client->doRequest() /home/marcelo/proyectos/fd.local/vendor/symfony/symfony/src/Symfony/Component/BrowserKit/Client.php:264
+   12.2660   42304600  14. Symfony\Component\HttpKernel\Client->doRequest() /home/marcelo/proyectos/fd.local/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Client.php:81
+   12.2660   42304600  15. Symfony\Component\HttpKernel\Kernel->handle() /home/marcelo/proyectos/fd.local/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/Client.php:61
+   12.3083   42405796  16. Symfony\Bundle\FrameworkBundle\HttpKernel->handle() /home/marcelo/proyectos/fd.local/app/bootstrap.php.cache:619
+   12.3084   42406432  17. Symfony\Component\HttpKernel\HttpKernel->handle() /home/marcelo/proyectos/fd.local/app/bootstrap.php.cache:1568
+   12.3084   42406432  18. Symfony\Component\HttpKernel\HttpKernel->handleRaw() /home/marcelo/proyectos/fd.local/app/bootstrap.php.cache:1392
+   12.3625   42805880  19. call_user_func_array() /home/marcelo/proyectos/fd.local/app/bootstrap.php.cache:1428
+   12.3625   42806136  20. Fd\OfertaEducativaBundle\Controller\CarreraController->asignar_establecimientoAction() /home/marcelo/proyectos/fd.local/app/bootstrap.php.cache:1428
+   12.3626   42806184  21. Fd\OfertaEducativaBundle\Controller\CarreraController->getEstablecimientosForms() /home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Controller/CarreraController.php:406
+   12.4143   43898328  22. Fd\OfertaEducativaBundle\Controller\CarreraController->crearAsignarForm() /home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Controller/CarreraController.php:437
+   12.4143   43898628  23. Fd\EstablecimientoBundle\Entity\Establecimiento->hasCarrera() /home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Controller/CarreraController.php:459
+
+PHPUnit 4.3.4 by Sebastian Bergmann.
+
+Configuration read from /home/marcelo/proyectos/fd.local/app/phpunit.xml
+
+...
+
+Time: 1.78 seconds, Memory: 22.25Mb
+
+[30;42mOK (3 tests, 2 assertions)[0m
+PHPUnit 4.3.4 by Sebastian Bergmann.
+
+Configuration read from /home/marcelo/proyectos/fd.local/app/phpunit.xml
+
+...
+
+Time: 251 ms, Memory: 6.50Mb
+
+[30;42mOK (3 tests, 0 assertions)[0m
+PHPUnit 4.3.4 by Sebastian Bergmann.
+
+Configuration read from /home/marcelo/proyectos/fd.local/app/phpunit.xml
+
+.[31;1mE[0m....[41;37mF[0m.
+
+Time: 1.03 seconds, Memory: 12.75Mb
+
+There was 1 error:
+
+1) Fd\OfertaEducativaBundle\Tests\Model\CarreraManagerTest::testAsignarEstablecimiento
+Doctrine\ORM\Query\QueryException: [Semantical Error] line 0, col 146 near 'ue
+         ': Error: Class Fd\EstablecimientoBundle\Entity\UnidadOferta has no association named unidades
+
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/QueryException.php:63
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:483
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1042
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1688
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1628
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1558
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1286
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:874
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:843
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:268
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:351
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query.php:255
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query.php:267
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/AbstractQuery.php:794
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/AbstractQuery.php:574
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Repository/CarreraRepository.php:42
+/home/marcelo/proyectos/fd.local/src/Fd/EstablecimientoBundle/Repository/EstablecimientoRepository.php:97
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Tests/Model/CarreraManagerTest.php:80
+
+Caused by
+Doctrine\ORM\Query\QueryException: select c
+            from OfertaEducativaBundle:Carrera c 
+            join c.oferta o 
+            join o.unidades u
+            join u.unidades ue
+            join ue.establecimiento e 
+            where e.id = :establecimiento
+
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/QueryException.php:41
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:483
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1042
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1688
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1628
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1558
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1286
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:874
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:843
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:268
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:351
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query.php:255
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query.php:267
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/AbstractQuery.php:794
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/AbstractQuery.php:574
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Repository/CarreraRepository.php:42
+/home/marcelo/proyectos/fd.local/src/Fd/EstablecimientoBundle/Repository/EstablecimientoRepository.php:97
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Tests/Model/CarreraManagerTest.php:80
+
+--
+
+There was 1 failure:
+
+1) Fd\OfertaEducativaBundle\Tests\Model\CarreraManagerTest::testGenerar_combo_json
+Failed asserting that actual size 100 matches expected size 56.
+
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Tests/Model/CarreraManagerTest.php:217
+[37;41m                                                [0m
+[37;41mFAILURES!                                       [0m
+[37;41mTests: 8, Assertions: 9, Failures: 1, Errors: 1.[0m
+PHPUnit 4.3.4 by Sebastian Bergmann.
+
+Configuration read from /home/marcelo/proyectos/fd.local/app/phpunit.xml
+
+........
+
+Time: 859 ms, Memory: 12.50Mb
+
+[30;42mOK (8 tests, 11 assertions)[0m
+PHPUnit 4.3.4 by Sebastian Bergmann.
+
+Configuration read from /home/marcelo/proyectos/fd.local/app/phpunit.xml
+
+[31;1mE[0m.[41;37mF[0m[41;37mF[0m[41;37mF[0m[41;37mF[0m[41;37mF[0m[41;37mF[0m
+
+Time: 842 ms, Memory: 12.75Mb
+
+There was 1 error:
+
+1) Fd\OfertaEducativaBundle\Tests\Repository\CarreraRepositoryTest::testFindCarrerasPorEstablecimiento
+Doctrine\ORM\Query\QueryException: [Semantical Error] line 0, col 146 near 'ue
+         ': Error: Class Fd\EstablecimientoBundle\Entity\UnidadOferta has no association named unidades
+
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/QueryException.php:63
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:483
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1042
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1688
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1628
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1558
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1286
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:874
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:843
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:268
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:351
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query.php:255
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query.php:267
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/AbstractQuery.php:794
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/AbstractQuery.php:574
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Repository/CarreraRepository.php:42
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Tests/Repository/CarreraRepositoryTest.php:36
+
+Caused by
+Doctrine\ORM\Query\QueryException: select c
+            from OfertaEducativaBundle:Carrera c 
+            join c.oferta o 
+            join o.unidades u
+            join u.unidades ue
+            join ue.establecimiento e 
+            where e.id = :establecimiento
+
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/QueryException.php:41
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:483
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1042
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1688
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1628
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1558
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:1286
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:874
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:843
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:268
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query/Parser.php:351
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query.php:255
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/Query.php:267
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/AbstractQuery.php:794
+/home/marcelo/proyectos/fd.local/vendor/doctrine/orm/lib/Doctrine/ORM/AbstractQuery.php:574
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Repository/CarreraRepository.php:42
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Tests/Repository/CarreraRepositoryTest.php:36
+
+--
+
+There were 6 failures:
+
+1) Fd\OfertaEducativaBundle\Tests\Repository\CarreraRepositoryTest::testQyResumido
+Failed asserting that actual size 38 matches expected size 2.
+
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Tests/Repository/CarreraRepositoryTest.php:69
+
+2) Fd\OfertaEducativaBundle\Tests\Repository\CarreraRepositoryTest::testDqlActivas
+Failed asserting that actual size 41 matches expected size 2.
+
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Tests/Repository/CarreraRepositoryTest.php:78
+
+3) Fd\OfertaEducativaBundle\Tests\Repository\CarreraRepositoryTest::testDqlActivasOrdenadas
+Failed asserting that actual size 41 matches expected size 2.
+
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Tests/Repository/CarreraRepositoryTest.php:87
+
+4) Fd\OfertaEducativaBundle\Tests\Repository\CarreraRepositoryTest::testQyActivasOrdenadas
+Failed asserting that actual size 41 matches expected size 2.
+
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Tests/Repository/CarreraRepositoryTest.php:99
+
+5) Fd\OfertaEducativaBundle\Tests\Repository\CarreraRepositoryTest::testFindActivasOrdenadas
+Failed asserting that actual size 41 matches expected size 2.
+
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Tests/Repository/CarreraRepositoryTest.php:107
+
+6) Fd\OfertaEducativaBundle\Tests\Repository\CarreraRepositoryTest::testFindAllOrdenado
+Failed asserting that actual size 100 matches expected size 56.
+
+/home/marcelo/proyectos/fd.local/src/Fd/OfertaEducativaBundle/Tests/Repository/CarreraRepositoryTest.php:115
+[37;41m                                                [0m
+[37;41mFAILURES!                                       [0m
+[37;41mTests: 8, Assertions: 7, Failures: 6, Errors: 1.[0m

@@ -1,0 +1,69 @@
+<html>
+
+    <body>
+            primero armar la segunda relacion       LISTO
+            impactar en la bd                       LISTO
+            cargar en produccion todas las localizaciones de los anexos ISPEE, ENS 3 y JRF
+
+            MIGRACION
+            copiar datos: para cada unidadoferta se debe tomar la unidad_educativa, 
+                ver todas sus localizaciones en produccion               LISTO
+                limpiar cache en  produccion                            LISTO
+                verificar el branch en producción: es el master y tiene un stash con 2 archivos modificados     LISTO
+                hacer merge en el local
+                hacer el merge en producción
+                correr las migraciones en producción
+                volver para atrás el stash
+                limpiar cache en el remoto
+                reubicar carreras a mano copiando la localizacion en el lugar de la unidad_educativa (tal vez se deban crear registros de unidad_oferta)
+                
+            eliminar primera relacion               LISTO
+            
+            revisar el diseño de la ficha y luego
+                armar el controlador que genera todos los datos en array y en la ficha se maneja todo array     LISTO
+                falta turnos del edificio   LISTO
+                falta cuadro carreras   LISTO
+                falta roi       LISTO
+                falta ram       LISTO
+                falta reglamento de practicas   LISTO
+                falta edificio con que se comparte      LISTO
+                falta OTROS DATOS                   LISTO
+                falta docente en el edificio    LISTO
+<==============
+                falta niveles del edificio  FALTA LA MATRICULA TOTAL y las +info
+                falta postitulo FALTA LOCALIZAR
+                
+            ficha de carrera            LISTO
+            asignacion de carrera a establecimento              LISTO
+            cuadro de matricula de carreras por establecimiento     LISTO
+            cuadro de matricula de establecimentos por carreras     LISTO
+            
+            carga de matricula de una carrera localizada en backend
+                modificar rutas "carrera_combo". el combo tiene que identificar a la carrera por normativa      LISTO
+                modificar rutas "backend_cohorte_listar"                LISTO
+                arreglar el edit de cohorte                     LISTO
+                arreglar el new de cohorte                      LISTO
+<==============
+                    HAY QUE VER BIEN EL COHORTE TYPE POR QUE TIENE un 88 FORZADO
+                    LA QBUNIDADOFERTA TIENEN QUE RECIBIR UN NUMERO, NO UN OBJETO
+            
+            matricula de carreras por año           LISTO
+            
+            se elimina NOMINA CARRERA DE NOMBRE UNICO porque no tiene sentido           LISTO
+            
+            salida a planilla de calculo de las carreras                        LISTO     
+                la planilla de carreras sale con el mismo query que la busqueda     LISTO
+                
+            listado matricula por año de las carreras                   LISTO
+            
+            en la busqueda de carrera "donde se dicta" tira error       LISTO - ELIMINADO
+            
+            abm del backend de unidad oferta tira error
+                arreglando el index                             LISTO
+                edit de unidad oferta                           LISTO
+            
+            listado de docente por nivel: localizarlo    LISTO
+            
+            revisar el backend                  LISTO
+    </body>
+</html>

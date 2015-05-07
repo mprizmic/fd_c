@@ -4,18 +4,19 @@
 {% block main_content %}
 {{ parent() }}
 
-<div class="titulo float_izquierda">Indicadores de cohorte por establecimiento por carrera</div>
+<div class="titulo float_izquierda">Martícula por establecimiento por carrera</div>
 
 <div class="limpiar_float"></div>
 <br />
 
-{% for establecimiento in establecimientos %} 
-<div>
-    <hr>
-    <a href="{{path('establecimiento_ficha', {'establecimiento_id': establecimiento.id})}}">{{ establecimiento }}</a>
-    <br />
-    {% render "OfertaEducativaBundle:Carrera:indicadores_cohorte_establecimiento" with {'establecimiento_id': establecimiento.id} %} 
-</div>
+{% for localizacion in localizaciones %} 
+    {% set establecimiento_edificio = localizacion.establecimientoEdificio %}
+    <div>
+        <hr>
+        <a href="{{path('establecimiento_ficha', {'establecimiento_id': establecimiento_edificio.establecimientos.id})}}">{{ establecimiento_edificio }}</a>
+        <br />
+        {% render "OfertaEducativaBundle:Carrera:indicadores_cohorte_establecimiento" with {'localizacion_id': localizacion.id} %} 
+    </div>
 {% endfor %} 
     
 {% include 'EstablecimientoBundle:Default:includes/fuente.html.twig' %}

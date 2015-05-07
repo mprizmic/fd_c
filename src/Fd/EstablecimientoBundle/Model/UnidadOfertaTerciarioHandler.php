@@ -3,9 +3,10 @@
 namespace Fd\EstablecimientoBundle\Model;
 
 use Doctrine\ORM\EntityManager;
+use Fd\EstablecimientoBundle\Entity\Localizacion;
+use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
-use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
 use Fd\TablaBundle\Entity\Nivel;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
@@ -74,20 +75,20 @@ class UnidadOfertaTerciarioHandler {
      * @param type $oferta
      * @param type $unidad
      */
-    public function crear($unidad_educativa = null, $oferta_educativa = null) {
+    public function crear($localizacion = null, $oferta_educativa = null) {
 
         $respuesta = new Respuesta();
 
         $entity = new UnidadOferta();
         $entity->setOfertas($oferta_educativa);
-        $entity->setUnidades($unidad_educativa);
+        $entity->setLocalizacion($localizacion);
 
         try {
             $this->getEm()->persist($entity);
             $this->getEm()->flush();
 
             $respuesta->setCodigo(1);
-            $respuesta->setMensaje('Se generó la oferta educativa para el establecimiento seleccionado.');
+            $respuesta->setMensaje('Se generó la oferta educativa para la sede/anexo del establecimiento seleccionado.');
             $respuesta->setClaveNueva($entity->getId());
         } catch (Exception $e) {
             $respuesta->setCodigo(2);

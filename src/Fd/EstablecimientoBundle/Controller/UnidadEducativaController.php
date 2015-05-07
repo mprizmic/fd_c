@@ -15,34 +15,21 @@ use Symfony\Component\HttpFoundation\Response;
 class UnidadEducativaController extends Controller
 {
     /**
-     * @Route("/unidad_educativa_de_un_cue/{establecimiento_id}", name="unidad_educativa_de_un_cue")
-     */
-    public function de_un_cueAction($establecimiento_id) {
-        $em = $this->getDoctrine()->getEntityManager();
-        
-        
-        $unidades_educativas = $em->getRepository('EstablecimientoBundle:UnidadEducativa')->findDeUnCue($establecimiento_id);
-        
-        $establecimiento = $unidades_educativas[0]->getEstablecimiento();
-                
-        return $this->render('EstablecimientoBundle:Default:unidad_educativa_de_un_cue.html.twig', array(
-            'unidades_educativas'=>$unidades_educativas,
-            'establecimiento'=>$establecimiento,
-            ));
-    }
-    /**
      * Lista de unidades_educativas para un combo formateados en json
-     * Se puede filtrar por establecimiento
+     * 
+     * Dado un establecimiento_edificio, devuelve la lista de unidades educativas del establecimiento que ahi funcionan
      * 
      * @Route("/combo/{establecimiento_id}", name="unidad_educativa_combo")
-     * @ParamConverter("establecimiento", class="EstablecimientoBundle:Establecimiento", options={"id"="establecimiento_id"} )
+     * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:EstablecimientoEdificio", options={"id":"establecimiento_id"} )
      */
-    public function comboAction($establecimiento) {
+    public function comboAction($establecimiento_edificio) {
 
-        $unidades_educativas = $establecimiento->getUnidadesEducativas();
+        $localizaciones = $establecimiento_edificio->getLocalizacion();
 
-        foreach ($unidades_educativas as $unidad_educativa) {
-            $resultado[] = $unidad_educativa->aJson();
+        foreach ($localizaciones as $localizacion) {
+            $elemento['value'] = $localizacion->getId();
+            $elemento['text'] = $localizacion->getUnidadEducativa()->getNivel()->getNombre();
+            $resultado[] = $elemento;
         }
 
         $response = new Response();

@@ -1,0 +1,8 @@
+<div class="tarjeta1">
+    {% set establecimiento = establecimiento_edificio.establecimientos %}
+<a href="{{ path( 'establecimiento_ficha', {'establecimiento_id': establecimiento.id } ) }}">
+    {{establecimiento.nombre ~ ' - D.E.: ' ~ establecimiento.distritoEscolar ~ ' - CUE: ' ~ establecimiento.cue 
+    ~ '/' ~ establecimiento_edificio.cueAnexo ~ ' - ' ~ establecimiento_edificio.nombre 
+    }}
+</a>
+</div>

@@ -35,7 +35,7 @@ class DefaultController extends Controller {
         $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_mediano'));
 
         $edificios = $paginador->paginate(
-                        $this->getDoctrine()->getEntityManager()->getRepository('EdificioBundle:Edificio')->qyAll())
+                        $this->getDoctrine()->getEntityManager()->getRepository('EdificioBundle:Edificio')->qyAllOrdenado())
                 ->getResult();
 
         return $this->render('EdificioBundle:Default:nomina.html.twig', array(

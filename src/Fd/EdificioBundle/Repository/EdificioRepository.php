@@ -48,6 +48,9 @@ class EdificioRepository extends EntityRepository {
                 ->orderBy('d.calle');
         
     }
+    public function qyAllOrdenado(){
+        return $this->qbAllOrdenado()->getQuery();
+    }
     public function findAllOrdenado(){
         return $this->qbAllOrdenado()
                 ->getQuery()
