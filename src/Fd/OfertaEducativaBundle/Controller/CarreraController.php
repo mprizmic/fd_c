@@ -797,8 +797,8 @@ class CarreraController extends Controller {
 
         //se prepara un array para el formato del cuadro de salida
         //se filtran los últimos 4 años
-        $salida = [];
-        $un_establecimiento = [];
+        $salida = array();
+        $un_establecimiento = array();
         $hoy = date("Y");
         $anio_desde = $hoy - 2;
 
