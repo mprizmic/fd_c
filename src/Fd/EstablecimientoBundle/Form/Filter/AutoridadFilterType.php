@@ -27,7 +27,7 @@ class AutoridadFilterType extends AbstractType {
                 'class' => 'input_talle_4',
             ),
         ));
-        $builder->add('apodo', 'filter_choice', array(
+        $builder->add('establecimiento', 'filter_choice', array(
             'label' => 'Establecimiento',
             'choices' => $this->establecimientos,
             'empty_value' => 'Seleccione...',
