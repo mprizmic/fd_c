@@ -15,7 +15,6 @@ use Symfony\Component\Form\FormValidatorInterface;
 class HelpTypeExtension extends AbstractTypeExtension
 {
     /**
-     * {@inheritdoc}
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
@@ -23,7 +22,6 @@ class HelpTypeExtension extends AbstractTypeExtension
     }
  
     /**
-     * {@inheritdoc}
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
@@ -31,7 +29,6 @@ class HelpTypeExtension extends AbstractTypeExtension
     }
  
     /**
-     * {@inheritdoc}
      */
     public function getExtendedType()
     {
