@@ -125,12 +125,23 @@ class AutoridadController extends Controller {
      */
     public function crearFormBusqueda($datos_sesion = null) {
 
-        $form = $this->createForm(new AutoridadFilterType());
+        $form = $this->createForm(new AutoridadFilterType($this->getCmbEstablecimientos()));
 
         if ($datos_sesion)
             $form->setData($datos_sesion);
 
         return $form;
+    }
+
+    public function getCmbEstablecimientos() {
+        $establecimientos = $this->getEm()
+                ->getRepository('EstablecimientoBundle:Establecimiento')
+                ->combo();
+        
+        foreach ($establecimientos as $key => $value) {
+            $resultado[$value->getId()] = $value->getApodo();
+        };
+        return $resultado;
     }
 
     /**
