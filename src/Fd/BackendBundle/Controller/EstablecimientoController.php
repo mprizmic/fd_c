@@ -11,11 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
-//use Fd\EstablecimientoBundle\Model\DocentesNivelClass;
-//use Fd\EstablecimientoBundle\Model\DocentesNivelManager;
 use Fd\BackendBundle\Form\EstablecimientoType;
-//use Fd\BackendBundle\Form\Model\DocentesNivelType;
-//use Fd\BackendBundle\Form\Handler\DocentesNivelFormHandler;
 
 /**
  * Establecimiento controller.
@@ -156,18 +152,12 @@ class EstablecimientoController extends Controller {
      *
      * @Route("/{id}/edit", name="backend_establecimiento_edit")
      * @Template("BackendBundle:Establecimiento:edit.html.twig")
+     * @ParamConverter("entity", class="EstablecimientoBundle:Establecimiento")
      */
-    public function editAction($id) {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('EstablecimientoBundle:Establecimiento')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Establecimiento entity.');
-        }
+    public function editAction($entity) {
 
         $editForm = $this->createForm(new EstablecimientoType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         return array(
             'entity' => $entity,
@@ -182,30 +172,28 @@ class EstablecimientoController extends Controller {
      * @Route("/{id}/update", name="backend_establecimiento_update")
      * @Method("post")
      * @Template("BackendBundle:Establecimiento:edit.html.twig")
+     * @ParamConverter("entity", class="EstablecimientoBundle:Establecimiento", options={"id":"establecimiento_id"})
      */
-    public function updateAction($id) {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('EstablecimientoBundle:Establecimiento')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Establecimiento entity.');
-        }
+    public function updateAction($entity) {
 
         $editForm = $this->createForm(new EstablecimientoType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         $request = $this->getRequest();
 
-        $editForm->bindRequest($request);
+        $editForm->bind($request);
 
         if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
+            $this->getEm()->persist($entity);
+            $this->getEm()->flush();
 
-            return $this->redirect($this->generateUrl('backend_establecimiento_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('exito', 'El establecimiento se actualizó exitosamente');
+            
+            return $this->redirect($this->generateUrl('backend_establecimiento_edit', array('id' => $entity->getId())));
         }
 
+        $this->get('session')->getFlashBag()->add('error', 'Problemas al cargar el establecimiento. Verifique y reintente.');
+        
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
