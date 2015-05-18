@@ -76,6 +76,10 @@ class Carrera {
      * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\EstadoCarrera")
      */
     private $estado;
+    /**
+     * @ORM\Column(type="string", length=250, nullable=true)
+     */
+    private $comentario;
 
     /**
      * @ORM\Column(type="datetime")
@@ -419,4 +423,27 @@ class Carrera {
         $this->orientaciones->removeElement($orientaciones);
     }
 
+
+    /**
+     * Set comentario
+     *
+     * @param string $comentario
+     * @return Carrera
+     */
+    public function setComentario($comentario)
+    {
+        $this->comentario = $comentario;
+
+        return $this;
+    }
+
+    /**
+     * Get comentario
+     *
+     * @return string 
+     */
+    public function getComentario()
+    {
+        return $this->comentario;
+    }
 }
