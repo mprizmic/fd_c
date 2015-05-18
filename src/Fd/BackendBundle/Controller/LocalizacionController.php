@@ -359,7 +359,7 @@ class LocalizacionController extends Controller {
             $this->getEm()->persist($entity);
             $this->getEm()->flush();
 
-            $this->get('session')->getFlashBag()->add('notice', 'Se guardó la localización');
+            $this->get('session')->getFlashBag()->add('exito', 'Se guardó la localización');
 
             return $this->redirect($this->generateUrl('backend_localizacion_edit', array('id' => $id)));
         }

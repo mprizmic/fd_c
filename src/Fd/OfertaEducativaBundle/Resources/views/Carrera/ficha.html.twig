@@ -32,6 +32,7 @@
     <div>Año de inicio del dictado: {{ carrera.anioInicio | default('Sin datos') }}</div>
     <div class="rojo">Estado: {{ carrera.estado }}</div>
     <div>Duración: {{ carrera.duracion }}</div>
+    <div>Comentarios: {{ carrera.comentario }}</div>
 </fieldset>
 <div class="float_derecha"><a href="{{ path( 'carrera_editar', { 'id': carrera.id }) }}">Editar</a></div>
 
