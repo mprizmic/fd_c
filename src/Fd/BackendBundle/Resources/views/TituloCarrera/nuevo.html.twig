@@ -4,8 +4,8 @@
 
 <h1>Crear registro de Título</h1>
 
-<form action="{{ path('backend_titulo_create') }}" method="post" {{ form_enctype(form) }}>
-    <div class="ancho_15">
+<form action="{{ path('backend_titulocarrera_create') }}" method="post" {{ form_enctype(form) }}>
+    <div class="ancho_10">
         {{ form_widget(form) }}
     </div>
     <p>
@@ -15,7 +15,7 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('backend_titulo_buscar') }}">
+        <a href="{{ path('backend_titulocarrera_buscar') }}">
             Volver
         </a>
     </li>

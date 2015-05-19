@@ -12,4 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class EstadoCarreraRepository extends EntityRepository
 {
+//    public function qbAll(){
+//        return $this->_em->createQueryBuilder('ec');
+//    }
 }

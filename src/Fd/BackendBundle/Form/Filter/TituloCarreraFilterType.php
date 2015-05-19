@@ -6,18 +6,17 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
-use Fd\OfertaEducativaBundle\Entity\Titulo;
+use Fd\OfertaEducativaBundle\Entity\TituloCarrera;
 use Fd\TablaBundle\Entity\TipoFormacion;
 
-class TituloFilterType extends AbstractType {
+class TituloCarreraFilterType extends AbstractType {
 
-//    private $estados;
+    private $estados;
 //    private $tipos;
-
-//    public function __construct($estados = array(), $tipos=array()) {
-//        $this->estados = $estados;
+    public function __construct($estados = array(), $tipos=array()) {
+        $this->estados = $estados;
 //        $this->tipos = $tipos;
-//    }
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('nombre', 'filter_text', array(
@@ -37,15 +36,15 @@ class TituloFilterType extends AbstractType {
 //            'choices' => $this->tipos,
 //            'empty_value' => 'Seleccione...',
 //        ));
-//        $builder->add('estado', 'filter_choice', array(
-//            'empty_value' => 'Seleccione...',
-//            'label' => 'Estado de la carrera',
-//            'choices' => $this->estados,
-//        ));
+        $builder->add('estado', 'filter_choice', array(
+            'empty_value' => 'Seleccione...',
+            'label' => 'Estado del título',
+            'choices' => $this->estados,
+        ));
     }
 
     public function getName() {
-        return 'titulo_filter';
+        return 'titulocarrera_filter';
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {

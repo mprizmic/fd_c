@@ -13,11 +13,11 @@ use Fd\TablaBundle\Entity\EstadoValidez;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 
 /**
- * @ORM\Table(name="titulo")
- * @ORM\Entity(repositoryClass="Fd\OfertaEducativaBundle\Repository\TituloRepository")
+ * @ORM\Table(name="titulo_carrera")
+ * @ORM\Entity(repositoryClass="Fd\OfertaEducativaBundle\Repository\TituloCarreraRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Titulo {
+class TituloCarrera {
 
     /**
      * 
@@ -60,27 +60,25 @@ class Titulo {
     {
         $this->setActualizado(new \DateTime());
     }     
-    /**
-     * @Assert\True(message="Si tiene cargado un estado, debe cargar la fecha correspondiente")
-     */
-    public function isValidezCargada(){
-        if (count($this->estados_validez)>0) {
-            if (empty($this->fecha_estado_validez)){
-                return false;
-            };
-        };
-        return true;
-    }
+//    /**
+//     * @Assert\True(message="Si tiene cargado un estado, debe cargar la fecha correspondiente")
+//     */
+//    public function isValidezCargada(){
+//        if (count($this->estados_validez)>0) {
+//            if (empty($this->fecha_estado_validez)){
+//                return false;
+//            };
+//        };
+//        return true;
+//    }
 
     public function __toString() {
         return $this->nombre;
     }
     public function __construct() {
-        $this->estados_validez = new \Doctrine\Common\Collections\ArrayCollection();
         $this->creado = new \DateTime();
         $this->actualizado = new \DateTime();        
     }
-
 
     /**
      * Get id
@@ -96,12 +94,12 @@ class Titulo {
      * Set nombre
      *
      * @param string $nombre
-     * @return Titulo
+     * @return TituloCarrera
      */
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
-    
+
         return $this;
     }
 
@@ -116,84 +114,15 @@ class Titulo {
     }
 
     /**
-     * Set fecha_estado_validez
-     *
-     * @param \DateTime $fechaEstadoValidez
-     * @return Titulo
-     */
-    public function setFechaEstadoValidez($fechaEstadoValidez)
-    {
-        $this->fecha_estado_validez = $fechaEstadoValidez;
-    
-        return $this;
-    }
-
-    /**
-     * Get fecha_estado_validez
-     *
-     * @return \DateTime 
-     */
-    public function getFechaEstadoValidez()
-    {
-        return $this->fecha_estado_validez;
-    }
-
-    /**
-     * Set validez_desde
-     *
-     * @param \DateTime $validezDesde
-     * @return Titulo
-     */
-    public function setValidezDesde($validezDesde)
-    {
-        $this->validez_desde = $validezDesde;
-    
-        return $this;
-    }
-
-    /**
-     * Get validez_desde
-     *
-     * @return \DateTime 
-     */
-    public function getValidezDesde()
-    {
-        return $this->validez_desde;
-    }
-
-    /**
-     * Set validez_hasta
-     *
-     * @param \DateTime $validezHasta
-     * @return Titulo
-     */
-    public function setValidezHasta($validezHasta)
-    {
-        $this->validez_hasta = $validezHasta;
-    
-        return $this;
-    }
-
-    /**
-     * Get validez_hasta
-     *
-     * @return \DateTime 
-     */
-    public function getValidezHasta()
-    {
-        return $this->validez_hasta;
-    }
-
-    /**
      * Set actualizado
      *
      * @param \DateTime $actualizado
-     * @return Titulo
+     * @return TituloCarrera
      */
     public function setActualizado($actualizado)
     {
         $this->actualizado = $actualizado;
-    
+
         return $this;
     }
 
@@ -211,12 +140,12 @@ class Titulo {
      * Set creado
      *
      * @param \DateTime $creado
-     * @return Titulo
+     * @return TituloCarrera
      */
     public function setCreado($creado)
     {
         $this->creado = $creado;
-    
+
         return $this;
     }
 
@@ -234,12 +163,12 @@ class Titulo {
      * Set carrera
      *
      * @param \Fd\OfertaEducativaBundle\Entity\Carrera $carrera
-     * @return Titulo
+     * @return TituloCarrera
      */
     public function setCarrera(\Fd\OfertaEducativaBundle\Entity\Carrera $carrera = null)
     {
         $this->carrera = $carrera;
-    
+
         return $this;
     }
 
@@ -257,12 +186,12 @@ class Titulo {
      * Set estado
      *
      * @param \Fd\TablaBundle\Entity\EstadoCarrera $estado
-     * @return Titulo
+     * @return TituloCarrera
      */
     public function setEstado(\Fd\TablaBundle\Entity\EstadoCarrera $estado = null)
     {
         $this->estado = $estado;
-    
+
         return $this;
     }
 
@@ -274,61 +203,5 @@ class Titulo {
     public function getEstado()
     {
         return $this->estado;
-    }
-
-    /**
-     * Set estado_validez
-     *
-     * @param \Fd\TablaBundle\Entity\EstadoValidez $estadoValidez
-     * @return Titulo
-     */
-    public function setEstadoValidez(\Fd\TablaBundle\Entity\EstadoValidez $estadoValidez = null)
-    {
-        $this->estado_validez = $estadoValidez;
-    
-        return $this;
-    }
-
-    /**
-     * Get estado_validez
-     *
-     * @return \Fd\TablaBundle\Entity\EstadoValidez 
-     */
-    public function getEstadoValidez()
-    {
-        return $this->estado_validez;
-    }
-
-    /**
-     * Add estados_validez
-     *
-     * @param \Fd\OfertaEducativaBundle\Entity\TituloEstadoValidez $estadosValidez
-     * @return Titulo
-     */
-    public function addEstadosValidez(\Fd\OfertaEducativaBundle\Entity\TituloEstadoValidez $estadosValidez)
-    {
-        $this->estados_validez[] = $estadosValidez;
-    
-        return $this;
-    }
-
-    /**
-     * Remove estados_validez
-     *
-     * @param \Fd\OfertaEducativaBundle\Entity\TituloEstadoValidez $estadosValidez
-     */
-    public function removeEstadosValidez(\Fd\OfertaEducativaBundle\Entity\TituloEstadoValidez $estadosValidez)
-    {
-        $this->estados_validez->removeElement($estadosValidez);
-    }
-
-    /**
-     * Get estados_validez
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getEstadosValidez()
-    {
-        return $this->estados_validez;
     }
 }

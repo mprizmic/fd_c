@@ -5,7 +5,7 @@ namespace Fd\OfertaEducativaBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Fd\OfertaEducativaBundle\Entity\Titulo;
+use Fd\OfertaEducativaBundle\Entity\TituloCarrera;
 use Fd\TablaBundle\Entity\EstadoCarrera;
 
 class UnTituloType extends AbstractType {
@@ -37,12 +37,12 @@ class UnTituloType extends AbstractType {
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Fd\OfertaEducativaBundle\Entity\Titulo',
+            'data_class' => 'Fd\OfertaEducativaBundle\Entity\TituloCarrera',
         ));
     }
 
     public function getName() {
-        return 'un_titulo_type';
+        return 'un_titulocarrera_type';
     }
 
 }

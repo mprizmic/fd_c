@@ -8,14 +8,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-use Fd\OfertaEducativaBundle\Entity\Titulo;
-use Fd\OfertaEducativaBundle\Form\TituloType;
+use Fd\OfertaEducativaBundle\Entity\TituloCarrera;
+use Fd\OfertaEducativaBundle\Form\TituloCarreraType;
 
 /**
  * Titulo controller.
  *
- * @Route("/titulo")
+ * @Route("/titulocarrera")
  */
-class TituloController extends Controller
+class TituloCarreraController extends Controller
 {
 }

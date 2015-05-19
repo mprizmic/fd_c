@@ -25,12 +25,12 @@ class CarreraFilterType extends AbstractType {
                 'class' => 'input_talle_4',
             ),
         ));
-        $builder->add('titulo', 'filter_text', array(
-            'label' => 'Título que otorga',
-            'attr' => array(
-                'class' => 'input_talle_4',
-            )
-        ));
+//        $builder->add('titulos', 'filter_text', array(
+//            'label' => 'Título que otorga',
+//            'attr' => array(
+//                'class' => 'input_talle_4',
+//            )
+//        ));
         $builder->add('formacion', 'filter_choice', array(
             'label' => 'Tipo de formación',
             'choices' => $this->tipos,

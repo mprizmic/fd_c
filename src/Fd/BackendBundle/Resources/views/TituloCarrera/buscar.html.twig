@@ -6,13 +6,13 @@
 <div class="titulo float_izquierda">Búsqueda de títulos</div>
 <div class="limpiar_float"></div>
 
-<div><a class="float_derecha boton_verde" href="{{ path('backend_titulo_nuevo') }}">Nuevo titulo</a></div>
+<div><a class="float_derecha boton_verde" href="{{ path('backend_titulocarrera_nuevo') }}">Nuevo titulo de carrera</a></div>
 <div class="limpiar_float"></div>
 
 <fieldset>
 <legend class="resaltado">Filtros</legend>
-<form method="post" action="{{ path('backend_titulo_buscar') }}">
-    <div class="ancho_5">
+<form method="post" action="{{ path('backend_titulocarrera_buscar') }}">
+    <div class="ancho_10">
     {{ form_rest(form) }}
     </div>
     <br />
@@ -20,7 +20,7 @@
          
         <input type="submit" name="submit-filter" value="Buscar" />
         <span class="separador"></span>
-        <a href="{{ path( "backend_titulo_buscar" ) }}">Limpiar</a>
+        <a href="{{ path( "backend_titulocarrera_buscar" ) }}">Limpiar</a>
 
     </div>
 </form>
@@ -34,22 +34,20 @@
             <tr>
                 <th>Nombre</th>
                 <th>Estado</th>
-                <th>Estado validez</th>
                 <th>Acciones</th>
             </tr>
 
             {% for titulo in titulos %}
             <tr>
                 {% set el_titulo = titulo.nombre %}
-                <td><a href="{{path('backend_titulo_editar', {'id': titulo.id})}}">{{ el_titulo }} </a></td>
+                <td><a href="{{path('backend_titulocarrera_editar', {'id': titulo.id})}}">{{ el_titulo }} </a></td>
                 <td>{{ titulo.estado }}</td>
-                <td>{{ titulo.estadoValidez }}</td>
-                <td><a href="{{path('backend_titulo_editar', {'id': titulo.id})}}">Editar</a></td>
+                <td><a href="{{path('backend_titulocarrera_editar', {'id': titulo.id})}}">Editar</a></td>
             </tr>
             {% endfor %}
         </table>
 
-        {{ simple_paginator_render('backend_titulo_buscar', null, {
+        {{ simple_paginator_render('backend_titulocarrrera_buscar', null, {
             'container_class':'simple_paginator',
             'previousPageText':'Anterior',
             'nextPageText':'Siguiente',
