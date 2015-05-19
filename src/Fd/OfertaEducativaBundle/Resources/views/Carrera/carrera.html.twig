@@ -24,8 +24,9 @@
 
     <a class="float_derecha boton_verde" href="{{ path('carrera_nuevo') }}">Nueva carrera</a>
     <div class="limpiar_float"></div>
-
+    <div class="en_bloque">
         <form action="{{ path( 'carrera_' ~ accion  , { 'id': entity.id }) }}" method="post" {{ form_enctype(formulario) }}>
+            <div>
             <fieldset>
                 <legend class="resaltado">Datos generales</legend>
                 <div class="ancho_15">
@@ -37,28 +38,10 @@
                     {{ form_row(formulario.comentario) }}
                 </div>
             </fieldset>
-            <!-- recuadro con los titulos -->    
-{#            <fieldset>
-                <legend class="resaltado">
-                    Titulos
-                </legend> 
-
-                <div id="titulos" data-prototype="{{ collection_macro.widget_prototype(formulario.titulos, 'Eliminar')|escape }}">
-                    {% for widget in formulario.titulos.children %}
-                        {% if loop.first %}
-                            <div class="linea resaltado">
-                                {% for campo in widget.children %}
-                                    <div style="margin-right: {{ campo.vars.attr.ancho }}em;">{{ campo.vars.attr.descripcion }}</div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                        {{ collection_macro.widget_prototype(widget, 'Eliminar', true) }}
-                    {% endfor %}
-                </div>
-                <a class="btn-add" data-target="titulos">Agregar</a>
-            </fieldset>#}
+                
             <!-- recuadro con las orientaciones -->    
-            <fieldset>
+            <br />
+{#            <fieldset>
                 <legend class="resaltado">
                     Orientaciones
                 </legend> 
@@ -76,38 +59,74 @@
                     {% endfor %}
                 </div>
                 <a class="btn-add" data-target="orientaciones">Agregar</a>
-            </fieldset>
+            </fieldset>#}
+                
+                
             {{ form_widget(formulario._token) }}
             <!-- botones de acciones -->
-            <br />
-            <div class="float_izquierda separador">
+            </div>
+            <div class="float_izquierda">
                 <input type="submit" value="{{ accion | capitalize }}" />
             </div>
 
         </form>
 
-        <!--     <div style="display : block"> -->
         {% if accion == 'actualizar' %}
             <form action="{{ path('carrera_eliminar', { 'id': entity.id }) }}" method="post" onsubmit="return confirm('Se eliminará toda la matrícula que estuviese cargada. Está seguro?')">
+                <div class="invisible">
                 {{ form_widget(delete_form) }}
-                <span class="float_izquierda separador">
-                    <input type="submit" class="boton_rojo" value="Eliminar" />
-                </span>
+                </div>
+                <input type="submit" class="boton_rojo" value="Eliminar" />
             </form>
-
+        {% endif %}
+    </div>
+    <div></div>
+    <div class="float_derecha">
+        {% if accion == 'actualizar' %}
             <a  href="{{ path('carrera_buscar') }}">Cancelar</a>
         {% endif %}
-
         {% if accion == 'crear' %}
             <a  href="{{ path('carrera_buscar') }}">Cancelar</a>
         {% endif %}
-
-        <!--</div>-->
-        <br />
+    </div>
+    <br />
     <span class="limpiar_float"></span>
 
+                
+    <!-- recuadro con los titulos -->    
     <br />
+    <fieldset>
 
+        {% set titulos = entity.titulos %}    
+
+
+        <table class="grilla_fit">
+            <tr>
+                <th>Título/s de la carrera</th>
+                <th></th>
+            </tr>
+
+            {% for titulo in titulos %}
+            <tr>
+                <td>
+
+                    <a href="#">{{ titulo }}</a>
+                </td>
+                <td>
+                    <span class="separador"></span>
+                    <a href="#">Desvincular título de carrera</a>
+                </td>
+            </tr>
+            {% endfor %}  
+        </table>
+        <br />
+        {% if accion == 'actualizar' %}
+            <a href="#">Asignar título existente</a>
+        {% endif %}                
+    </fieldset>
+    <br />
+                    
+                    
     <!-- grilla de normas -->
     <fieldset>
         <table class="grilla_fit">
