@@ -43,33 +43,6 @@ class Titulo {
     private $estado;
 
     /**
-     * lado propietario
-     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\EstadoValidez")
-     */
-    private $estado_validez;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $fecha_estado_validez;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $validez_desde;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $validez_hasta;
-
-    /**
-     * registro historico de los estados por los que fue pasando la validez del titulo
-     * bidireccional lado inverso
-     * @ORM\OneToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\TituloEstadoValidez", mappedBy="el_titulo")
-     */
-    private $estados_validez;
-    /**
      * @ORM\Column(type="datetime")
      * 
      */
