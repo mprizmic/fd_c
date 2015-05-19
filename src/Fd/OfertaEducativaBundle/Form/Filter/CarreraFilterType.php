@@ -10,15 +10,18 @@ use Fd\TablaBundle\Entity\TipoFormacion;
 
 class CarreraFilterType extends AbstractType {
 
-    private $estados;
-    private $tipos;
-
-    public function __construct($estados = array(), $tipos=array()) {
-        $this->estados = $estados;
-        $this->tipos = $tipos;
-    }
+//    private $estados;
+//    private $tipos;
+//
+//    public function __construct($estados = array(), $tipos=array()) {
+//        $this->estados = $estados;
+//        $this->tipos = $tipos;
+//    }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        $tipos = $options['tipos'];
+        $estados = $options['estados'];
+
         $builder->add('nombre', 'filter_text', array(
             'condition_pattern' => 4,
             'attr' => array(
@@ -33,13 +36,13 @@ class CarreraFilterType extends AbstractType {
 //        ));
         $builder->add('formacion', 'filter_choice', array(
             'label' => 'Tipo de formación',
-            'choices' => $this->tipos,
+            'choices' => $tipos,
             'empty_value' => 'Seleccione...',
         ));
         $builder->add('estado', 'filter_choice', array(
             'empty_value' => 'Seleccione...',
             'label' => 'Estado de la carrera',
-            'choices' => $this->estados,
+            'choices' => $estados,
         ));
     }
 
@@ -50,7 +53,9 @@ class CarreraFilterType extends AbstractType {
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'csrf_protection' => false,
-            'validation_groups' => array('filtering') // avoid NotBlank() constraint-related message
+            'validation_groups' => array('filtering'), // avoid NotBlank() constraint-related message
+            'tipos' => array(),
+            'estados' => array(),
         ));
         //para probar
 //        $resolver->setDefaults(array(

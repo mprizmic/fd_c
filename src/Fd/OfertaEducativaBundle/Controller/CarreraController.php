@@ -18,7 +18,6 @@ use Fd\OfertaEducativaBundle\Form\Handler\CarreraFormHandler;
 use Fd\OfertaEducativaBundle\Form\Filter\CarreraFilterType;
 use Fd\OfertaEducativaBundle\Model\CarreraManager;
 use Fd\OfertaEducativaBundle\Repository\CarreraRepository;
-use Fd\OfertaEducativaBundle\Repository\CarreraEstadoValidezRepository;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
@@ -112,7 +111,7 @@ class CarreraController extends Controller {
     public function generarDatosBusquedaPaginada($form) {
         //se crear la consulta
         $filterBuilder = $this->getRepo()->qbAllOrdenado('nombre');
-        
+
         // build the query from the given form object
         $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
 
@@ -137,11 +136,15 @@ class CarreraController extends Controller {
      */
     public function crearFormBusqueda($datos_sesion = null) {
 
-        $form = $this->createForm(new CarreraFilterType($this->getComboEstados(), $this->getComboFormaciones()));
+        $form = $this->createForm(new CarreraFilterType(), null, array(
+            'estados' => $this->getComboEstados(),
+            'tipos' => $this->getComboFormaciones(),
+        ));
 
         if ($datos_sesion)
             $form->setData($datos_sesion);
 
+        
         return $form;
     }
 
@@ -369,7 +372,7 @@ class CarreraController extends Controller {
 
         //establecimientos en los que se dicta la carrera, según sede y anexo
         $localizaciones_temporario = $this->getRepo()->findLocalizaciones($carrera);
-        
+
         $localizaciones = array();
 
         foreach ($localizaciones_temporario as $key => $localizacion) {
@@ -627,7 +630,7 @@ class CarreraController extends Controller {
      */
     public function buscar_planilla_de_calculoAction() {
         //en la sesión puede ser que esté giardado el filtro de busqueda
-        
+
         $filename = "Carreras.xls";
 
         // ask the service for a Excel5
@@ -641,21 +644,21 @@ class CarreraController extends Controller {
                 ->getRepo()
                 ->qbAllOrdenado('nombre');
 
-         // si en la sesiòn hay datos del filtro, los tomo para construir el querybuilder
+        // si en la sesiòn hay datos del filtro, los tomo para construir el querybuilder
         $session = $this->getRequest()->getSession();
-        
+
         if ($session->has('datos')) {
             //si existen ls datos en la sesion se los toma
-            $filterData = $session->get('datos');       
-            
+            $filterData = $session->get('datos');
+
             //se crea el oformulario con los datos de la sesion
             $form = $this->crearFormBusqueda($filterData);
-            
+
             $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
-            
+
             $carreras = $filterBuilder->getQuery()->getResult();
-        }            
-        
+        }
+
         $active_sheet_index->setCellValue('A1', 'Dirección de Formación Docente');
         $active_sheet_index->setCellValue('A2', 'Listado de carreras activas');
 
@@ -696,7 +699,6 @@ class CarreraController extends Controller {
         return $response;
     }
 
-
     /**
      * Muestra un listado con la matricula por carrera de todos los establecimeintos
      * 
@@ -707,7 +709,7 @@ class CarreraController extends Controller {
                 ->qbTerciariosCompleto()
                 ->getQuery()
                 ->getResult();
-        
+
         return $this->render('OfertaEducativaBundle:Carrera:indicadores_cohorte.html.twig', array(
                     'localizaciones' => $localizaciones,
         ));
@@ -718,9 +720,9 @@ class CarreraController extends Controller {
      * @ParamConverter("localizacion", class="EstablecimientoBundle:Localizacion", options={"id":"localizacion_id"} )
      */
     public function indicadores_cohorte_establecimientoAction($localizacion) {
-        
+
         $repo = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta');
-        
+
         //recupera las ofertas de carreras de la localizacion en cuestion
         $unidad_ofertas = $repo->findCarreras($localizacion);
 
