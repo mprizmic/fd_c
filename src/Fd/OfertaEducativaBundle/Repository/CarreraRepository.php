@@ -7,7 +7,6 @@ use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Repository\LocalizacionRepository;
-use Fd\OfertaEducativaBundle\Entity\CarreraEstadoValidez;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 use Fd\TablaBundle\Entity\EstadoCarrera;
 
