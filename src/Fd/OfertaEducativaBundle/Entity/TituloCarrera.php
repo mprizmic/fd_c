@@ -9,7 +9,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Fd\TablaBundle\Entity\EstadoValidez;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 
 /**
@@ -28,7 +27,7 @@ class TituloCarrera {
     private $id;
 
     /**
-     * @ORM\Column(length=150, nullable=false)
+     * @ORM\Column(length=150, nullable=false, unique=true)
      */
     private $nombre;
     /**
