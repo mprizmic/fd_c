@@ -36,6 +36,7 @@
                     <th>Nombre</th>
                     <th>Año inicio</th>
                     <th>Norma</th>
+                    <th>Tipo</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
@@ -50,6 +51,7 @@
                         {% else %}
                             <td></td>
                         {% endif %}
+                        <td>{{ carrera.formacion.codigo }}</td>
                         <td>{{ carrera.estado }}</td>
                         <td><a href="{{path('carrera_editar', {'id': carrera.id})}}">Editar</a></td>
                     </tr>
