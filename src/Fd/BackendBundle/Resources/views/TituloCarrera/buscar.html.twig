@@ -1,3 +1,5 @@
+{# buscar titulo_carrera #}
+
 {% extends 'BackendBundle::layout.html.twig' %}
 
 {% block main_content %}
@@ -9,8 +11,22 @@
 <div><a class="float_derecha boton_verde" href="{{ path('backend_titulocarrera_nuevo') }}">Nuevo titulo de carrera</a></div>
 <div class="limpiar_float"></div>
 
-{% include 'BackendBundle:TituloCarrera:includes/buscar_form.html.twig' with {'searchForm':form, 'accion_form_titulo': accion_form_titulo} %}
+<fieldset>
+    <legend class="resaltado">Filtros</legend>
+    <form method="post" action="{{ path('backend_titulocarrera_buscar') }}">
+        <div class="ancho_10">
+            {{ form_rest(form) }}
+        </div>
+        <br />
+        <div style="display: block">
 
+            <input type="submit" name="submit-filter" value="Buscar" />
+            <span class="separador"></span>
+            <a href="{{ path('backend_titulocarrera_buscar') }}">Limpiar</a>
+
+        </div>
+    </form>
+</fieldset>
 {% if titulos is not null %}
     {% if titulos | length > 0 %}
         <br />

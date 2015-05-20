@@ -86,7 +86,6 @@ class TituloCarreraController extends Controller {
         return $this->render('BackendBundle:TituloCarrera:buscar.html.twig', array(
                     'titulos' => $titulos,
                     'form' => $form->createView(),
-                    'accion_form_titulo' => 'backend_titulocarrera_buscar',
                         )
         );
     }
