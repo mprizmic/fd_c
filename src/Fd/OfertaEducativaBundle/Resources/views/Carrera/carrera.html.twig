@@ -93,12 +93,20 @@
     <span class="limpiar_float"></span>
 
                 
+    <!-- ------------------------- -->    
+    <!-- ------------------------- -->    
+    <!-- ------------------------- -->    
     <!-- recuadro con los titulos -->    
+    <!-- ------------------------- -->    
+    <!-- ------------------------- -->    
+    <!-- ------------------------- -->    
+    <!-- ------------------------- -->    
+    <!-- ------------------------- -->    
+    <!-- ------------------------- -->    
     <br />
     <fieldset>
 
         {% set titulos = entity.titulos %}    
-
 
         <table class="grilla_fit">
             <tr>
@@ -109,7 +117,6 @@
             {% for titulo in titulos %}
             <tr>
                 <td>
-
                     <a href="#">{{ titulo }}</a>
                 </td>
                 <td>
@@ -121,8 +128,44 @@
         </table>
         <br />
         {% if accion == 'actualizar' %}
-            <a href="#">Asignar título existente</a>
-        {% endif %}                
+            <a href="{{ path('carrera_editar' , {'id':entity.id, 'buscar_titulo':'si' } ) }}">Asignar título existente</a>
+        {% endif %}    
+       
+        
+<!-- ---------------------------------------------->
+<!-- ---------------------------------------------->
+<!-- ---------------------------------------------->
+<!-- ---------------------------------------------->
+<!-- ---------------------------------------------->
+<!-- se inserta los campos de busqueda de título -->  
+<!-- ---------------------------------------------->
+<!-- ---------------------------------------------->
+<!-- ---------------------------------------------->
+<!-- ---------------------------------------------->
+        {% if buscar_titulo == 'si' %}
+            
+            {# muestra el formulario de busqueda de titulos #}
+
+            {% include 'BackendBundle:TituloCarrera:includes/buscar_form.html.twig' with {
+                                'searchTituloForm':searchTituloForm, 
+                                'entity':entity,
+                        } %}
+
+
+            {# hay resultado de la busqueda #}
+
+            {% if resultado_busqueda_titulo %}
+                <br />
+                {% include 'BackendBundle:TituloCarrera:includes/tabla_titulos.html.twig' with { 'titulos': resultado_busqueda_titulo  } %}
+                <br />
+                <br />
+            {% else %}
+                <br />
+                <div class="descriptivo">No hay datos para los filtros especificados</div>
+            {% endif %}
+
+        {% endif %}
+            
     </fieldset>
     <br />
                     

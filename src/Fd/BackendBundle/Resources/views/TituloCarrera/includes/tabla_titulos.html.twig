@@ -1,0 +1,20 @@
+{# muestra una tabla con resultados de una busqueta de titulo_Carrera #}
+{# se usa dentro de la edición de carrera #}
+    
+
+        <table class="grilla">
+            <tr>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+
+            {% for titulo in titulos %}
+            <tr>
+                <td>{{ titulo.nombre }}</td>
+                <td>{{ titulo.estado }}</td>
+                <td><a href="#">Vincular</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+

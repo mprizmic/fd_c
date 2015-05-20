@@ -10,6 +10,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method; //permite la annotation method
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Fd\BackendBundle\Form\Filter\TituloCarreraFilterType;
+use Fd\EstablecimientoBundle\Entity\Localizacion;
+use Fd\EstablecimientoBundle\Entity\UnidadOferta;
+use Fd\EstablecimientoBundle\Entity\Establecimiento;
+use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
+use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Repository\UnidadOfertaRepository;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\OfertaEducativaBundle\Entity\Norma;
 use Fd\OfertaEducativaBundle\Form\CarreraType;
@@ -18,12 +25,6 @@ use Fd\OfertaEducativaBundle\Form\Handler\CarreraFormHandler;
 use Fd\OfertaEducativaBundle\Form\Filter\CarreraFilterType;
 use Fd\OfertaEducativaBundle\Model\CarreraManager;
 use Fd\OfertaEducativaBundle\Repository\CarreraRepository;
-use Fd\EstablecimientoBundle\Entity\Localizacion;
-use Fd\EstablecimientoBundle\Entity\UnidadOferta;
-use Fd\EstablecimientoBundle\Entity\Establecimiento;
-use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
-use Fd\EstablecimientoBundle\Entity\Respuesta;
-use Fd\EstablecimientoBundle\Repository\UnidadOfertaRepository;
 
 /**
  * @Route("/carrera")
@@ -144,7 +145,7 @@ class CarreraController extends Controller {
         if ($datos_sesion)
             $form->setData($datos_sesion);
 
-        
+
         return $form;
     }
 
@@ -268,17 +269,36 @@ class CarreraController extends Controller {
     /**
      * Despliega una pagina con un registro preexistente
      * 
-     * @Route("/editar/{id}", name="carrera_editar")
+     * @Route("/editar/{id}/{buscar_titulo}", name="carrera_editar", defaults={ "buscar_titulo" = "" })
      * @ParamConverter("entity", class="OfertaEducativaBundle:Carrera")
      */
-    public function editarAction($entity) {
+    public function editarAction($entity, $buscar_titulo, Request $request) {
 
         //el registro existe. Creo el formulario para mostrarlo
         $formulario = $this->createForm(new CarreraType(), $entity);
 
         //creo el boton de eliminar, que es un formulario
         $deleteForm = $this->createDeleteForm($entity->getId());
+        
+        $searchTituloForm = $this->searchFormTitulo();
 
+        $resultado_busqueda_titulo = array();
+
+        if ($request->request->get($searchTituloForm->getName())) {
+
+            //viene de presionar BUSCAR
+            $searchTituloForm->bind($request);
+
+            if ($searchTituloForm->isValid()) {
+                $datos = $searchTituloForm->getData();
+
+                $this->get('session')->set('datos', $datos);
+
+                $resultado_busqueda_titulo = $this->generarDatosTitulos($searchTituloForm);
+            } else {
+                $resultado_busqueda_titulo = array();
+            }
+        };        
         //renderizo en la plantilla correpondiente
         $engine = $this->container->get('templating');
         $content = $engine->render('OfertaEducativaBundle:Carrera:carrera.html.twig', array(
@@ -287,11 +307,43 @@ class CarreraController extends Controller {
             'entity' => $entity,
             'accion' => 'actualizar',
             'delete_form' => $deleteForm->createView(),
+            'buscar_titulo' => $buscar_titulo,
+            'searchTituloForm'=> $searchTituloForm->createView(),
+            'resultado_busqueda_titulo' => $resultado_busqueda_titulo,
         ));
 
         return new Response($content);
     }
 
+    private function generarDatosTitulos($searchTituloForm){
+        
+        $filterBuilder = $this->getEm()
+                ->getRepository('OfertaEducativaBundle:TituloCarrera')
+                ->createQueryBuilder('tc')->orderBy('tc.nombre');
+
+        // build the query from the given form object
+        $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($searchTituloForm, $filterBuilder);
+
+        //hay por lo menos un campo con algo
+        return $filterBuilder->getQuery()->getResult();
+    }
+    /**
+     * genera el formulario para buscar un titulo para la carrera
+     * @param type $datos_sesion
+     * @return typea
+     */
+    private function searchFormTitulo($datos_sesion = null){
+
+        $carrera_manager = new CarreraManager($this->getEm());
+
+        $form = $this->createForm(new TituloCarreraFilterType($carrera_manager->getComboEstados()));
+
+        if ($datos_sesion)
+            $form->setData($datos_sesion);
+
+        return $form; 
+        
+    }
     private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
                         ->add('id', 'hidden')

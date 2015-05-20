@@ -1,0 +1,16 @@
+<fieldset>
+    <legend class="resaltado">Filtros</legend>
+    <form method="post" action="{{ path('carrera_editar', {'id':entity.id, 'buscar_titulo':'si' }) }}">
+        <div class="ancho_10">
+            {{ form_rest(searchTituloForm) }}
+        </div>
+        <br />
+        <div style="display: block">
+
+            <input type="submit" name="submit-filter" value="Buscar" />
+            <span class="separador"></span>
+            <a href="{{ path('carrera_editar', {'id':entity.id, 'buscar_titulo':'si' }) }}">Limpiar</a>
+
+        </div>
+    </form>
+</fieldset>
