@@ -9,28 +9,13 @@
     <div><a class="float_derecha boton_verde" href="{{ path('carrera_nuevo') }}">Nueva carrera</a></div>
     <div class="limpiar_float"></div>
 
-    <fieldset>
-        <legend class="resaltado">Filtros</legend>
-        <form method="post" action="{{ path('carrera_buscar') }}">
-            <div class="ancho_10">
-                {{ form_rest(form) }}
-            </div>
-            <br />
-            <div style="display: block">
-
-                <input type="submit" name="submit-filter" value="Buscar" />
-                <span class="separador"></span>
-                <a href="{{ path( "carrera_buscar" ) }}">Limpiar</a>
-
-            </div>
-        </form>
-    </fieldset>
+    {% include 'OfertaEducativaBundle:Carrera:includes/buscar_form.html.twig' with {"searchForm" : form, "ruta_de_la_accion":"carrera_buscar" } %}
 
     {# muestra la grilla dependiendo de si vino un array o null #}
     {% if carreras is not null %}
         {% if carreras|length > 0 %}
             <br />
-
+            
             <table class="grilla">
                 <tr>
                     <th>Nombre</th>
@@ -44,7 +29,9 @@
                 {% for carrera in carreras %}
                     <tr>
                         {% set la_carrera = carrera.nombre %}
-                        <td><a href="{{path('carrera_ficha', {'carrera_id': carrera.id})}}">{{ la_carrera }} </a></td>
+                        <td><a href="{{ path('carrera_ficha', {'carrera_id': carrera.id})}}">{{ la_carrera }}</a></td>
+
+
                         <td>{{ carrera.anioInicio }}</td>
                         {% if carrera.oferta.normas[0] is defined %}
                             <td>{{ carrera.oferta.normas[0] }}</a></td>
@@ -57,6 +44,7 @@
                     </tr>
                 {% endfor %}
             </table>
+
 
             {{ simple_paginator_render('carrera_buscar', null, {
             'container_class':'simple_paginator',
