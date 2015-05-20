@@ -1,0 +1,16 @@
+<fieldset>
+    <legend class="resaltado">Filtros</legend>
+    <form method="post" action="{{ path( accion_form_titulo ) }}">
+        <div class="ancho_10">
+            {{ form_rest(searchForm) }}
+        </div>
+        <br />
+        <div style="display: block">
+
+            <input type="submit" name="submit-filter" value="Buscar" />
+            <span class="separador"></span>
+            <a href="{{ path( accion_form_titulo ) }}">Limpiar</a>
+
+        </div>
+    </form>
+</fieldset>

@@ -86,6 +86,7 @@ class TituloCarreraController extends Controller {
         return $this->render('BackendBundle:TituloCarrera:buscar.html.twig', array(
                     'titulos' => $titulos,
                     'form' => $form->createView(),
+                    'accion_form_titulo' => 'backend_titulocarrera_buscar',
                         )
         );
     }
@@ -125,7 +126,7 @@ class TituloCarreraController extends Controller {
      * @return type 
      */
     public function crearFormBusqueda($datos_sesion = null) {
-        
+
         $carrera_manager = $this->get('ofertaeducativa.carrera.manager');
 
         $form = $this->createForm(new TituloCarreraFilterType($carrera_manager->getComboEstados()));
