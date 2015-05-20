@@ -19,8 +19,6 @@ class CarreraFilterType extends AbstractType {
 //    }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $tipos = $options['tipos'];
-        $estados = $options['estados'];
 
         $builder->add('nombre', 'filter_text', array(
             'condition_pattern' => 4,
@@ -36,13 +34,13 @@ class CarreraFilterType extends AbstractType {
 //        ));
         $builder->add('formacion', 'filter_choice', array(
             'label' => 'Tipo de formación',
-            'choices' => $tipos,
+            'choices' => $options['tipos'],
             'empty_value' => 'Seleccione...',
         ));
         $builder->add('estado', 'filter_choice', array(
             'empty_value' => 'Seleccione...',
             'label' => 'Estado de la carrera',
-            'choices' => $estados,
+            'choices' => $options['estados'],
         ));
     }
 
