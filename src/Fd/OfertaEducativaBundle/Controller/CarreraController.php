@@ -10,6 +10,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method; //permite la annotation method
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Fd\BackendBundle\Form\Filter\TituloCarreraFilterType;
+use Fd\EstablecimientoBundle\Entity\Localizacion;
+use Fd\EstablecimientoBundle\Entity\UnidadOferta;
+use Fd\EstablecimientoBundle\Entity\Establecimiento;
+use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
+use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Repository\UnidadOfertaRepository;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\OfertaEducativaBundle\Entity\Norma;
 use Fd\OfertaEducativaBundle\Form\CarreraType;
@@ -17,14 +24,8 @@ use Fd\OfertaEducativaBundle\Form\EstablecimientosType;
 use Fd\OfertaEducativaBundle\Form\Handler\CarreraFormHandler;
 use Fd\OfertaEducativaBundle\Form\Filter\CarreraFilterType;
 use Fd\OfertaEducativaBundle\Model\CarreraManager;
+use Fd\OfertaEducativaBundle\Model\TituloCarreraManager;
 use Fd\OfertaEducativaBundle\Repository\CarreraRepository;
-use Fd\OfertaEducativaBundle\Repository\CarreraEstadoValidezRepository;
-use Fd\EstablecimientoBundle\Entity\Localizacion;
-use Fd\EstablecimientoBundle\Entity\UnidadOferta;
-use Fd\EstablecimientoBundle\Entity\Establecimiento;
-use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
-use Fd\EstablecimientoBundle\Entity\Respuesta;
-use Fd\EstablecimientoBundle\Repository\UnidadOfertaRepository;
 
 /**
  * @Route("/carrera")
@@ -112,7 +113,7 @@ class CarreraController extends Controller {
     public function generarDatosBusquedaPaginada($form) {
         //se crear la consulta
         $filterBuilder = $this->getRepo()->qbAllOrdenado('nombre');
-        
+
         // build the query from the given form object
         $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
 
@@ -137,10 +138,14 @@ class CarreraController extends Controller {
      */
     public function crearFormBusqueda($datos_sesion = null) {
 
-        $form = $this->createForm(new CarreraFilterType($this->getComboEstados(), $this->getComboFormaciones()));
+        $form = $this->createForm(new CarreraFilterType(), null, array(
+            'estados' => $this->getComboEstados(),
+            'tipos' => $this->getComboFormaciones(),
+        ));
 
         if ($datos_sesion)
             $form->setData($datos_sesion);
+
 
         return $form;
     }
@@ -265,17 +270,36 @@ class CarreraController extends Controller {
     /**
      * Despliega una pagina con un registro preexistente
      * 
-     * @Route("/editar/{id}", name="carrera_editar")
+     * @Route("/editar/{id}/{buscar_titulo}", name="carrera_editar", defaults={ "buscar_titulo" = "" })
      * @ParamConverter("entity", class="OfertaEducativaBundle:Carrera")
      */
-    public function editarAction($entity) {
+    public function editarAction($entity, $buscar_titulo, Request $request) {
 
         //el registro existe. Creo el formulario para mostrarlo
         $formulario = $this->createForm(new CarreraType(), $entity);
 
         //creo el boton de eliminar, que es un formulario
         $deleteForm = $this->createDeleteForm($entity->getId());
+        
+        $searchTituloForm = $this->searchFormTitulo();
 
+        $resultado_busqueda_titulo = array();
+
+        if ($request->request->get($searchTituloForm->getName())) {
+
+            //viene de presionar BUSCAR
+            $searchTituloForm->bind($request);
+
+            if ($searchTituloForm->isValid()) {
+                $datos = $searchTituloForm->getData();
+
+                $this->get('session')->set('datos', $datos);
+
+                $resultado_busqueda_titulo = $this->generarDatosTitulos($searchTituloForm);
+            } else {
+                $resultado_busqueda_titulo = array();
+            }
+        };        
         //renderizo en la plantilla correpondiente
         $engine = $this->container->get('templating');
         $content = $engine->render('OfertaEducativaBundle:Carrera:carrera.html.twig', array(
@@ -284,11 +308,43 @@ class CarreraController extends Controller {
             'entity' => $entity,
             'accion' => 'actualizar',
             'delete_form' => $deleteForm->createView(),
+            'buscar_titulo' => $buscar_titulo,
+            'searchTituloForm'=> $searchTituloForm->createView(),
+            'resultado_busqueda_titulo' => $resultado_busqueda_titulo,
         ));
 
         return new Response($content);
     }
 
+    private function generarDatosTitulos($searchTituloForm){
+        
+        $filterBuilder = $this->getEm()
+                ->getRepository('OfertaEducativaBundle:TituloCarrera')
+                ->createQueryBuilder('tc')->orderBy('tc.nombre');
+
+        // build the query from the given form object
+        $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($searchTituloForm, $filterBuilder);
+
+        //hay por lo menos un campo con algo
+        return $filterBuilder->getQuery()->getResult();
+    }
+    /**
+     * genera el formulario para buscar un titulo para la carrera
+     * @param type $datos_sesion
+     * @return typea
+     */
+    private function searchFormTitulo($datos_sesion = null){
+
+        $carrera_manager = new CarreraManager($this->getEm());
+
+        $form = $this->createForm(new TituloCarreraFilterType($carrera_manager->getComboEstados()));
+
+        if ($datos_sesion)
+            $form->setData($datos_sesion);
+
+        return $form; 
+        
+    }
     private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
                         ->add('id', 'hidden')
@@ -369,7 +425,7 @@ class CarreraController extends Controller {
 
         //establecimientos en los que se dicta la carrera, según sede y anexo
         $localizaciones_temporario = $this->getRepo()->findLocalizaciones($carrera);
-        
+
         $localizaciones = array();
 
         foreach ($localizaciones_temporario as $key => $localizacion) {
@@ -627,7 +683,7 @@ class CarreraController extends Controller {
      */
     public function buscar_planilla_de_calculoAction() {
         //en la sesión puede ser que esté giardado el filtro de busqueda
-        
+
         $filename = "Carreras.xls";
 
         // ask the service for a Excel5
@@ -641,21 +697,21 @@ class CarreraController extends Controller {
                 ->getRepo()
                 ->qbAllOrdenado('nombre');
 
-         // si en la sesiòn hay datos del filtro, los tomo para construir el querybuilder
+        // si en la sesiòn hay datos del filtro, los tomo para construir el querybuilder
         $session = $this->getRequest()->getSession();
-        
+
         if ($session->has('datos')) {
             //si existen ls datos en la sesion se los toma
-            $filterData = $session->get('datos');       
-            
+            $filterData = $session->get('datos');
+
             //se crea el oformulario con los datos de la sesion
             $form = $this->crearFormBusqueda($filterData);
-            
+
             $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
-            
+
             $carreras = $filterBuilder->getQuery()->getResult();
-        }            
-        
+        }
+
         $active_sheet_index->setCellValue('A1', 'Dirección de Formación Docente');
         $active_sheet_index->setCellValue('A2', 'Listado de carreras activas');
 
@@ -696,7 +752,6 @@ class CarreraController extends Controller {
         return $response;
     }
 
-
     /**
      * Muestra un listado con la matricula por carrera de todos los establecimeintos
      * 
@@ -707,7 +762,7 @@ class CarreraController extends Controller {
                 ->qbTerciariosCompleto()
                 ->getQuery()
                 ->getResult();
-        
+
         return $this->render('OfertaEducativaBundle:Carrera:indicadores_cohorte.html.twig', array(
                     'localizaciones' => $localizaciones,
         ));
@@ -718,9 +773,9 @@ class CarreraController extends Controller {
      * @ParamConverter("localizacion", class="EstablecimientoBundle:Localizacion", options={"id":"localizacion_id"} )
      */
     public function indicadores_cohorte_establecimientoAction($localizacion) {
-        
+
         $repo = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta');
-        
+
         //recupera las ofertas de carreras de la localizacion en cuestion
         $unidad_ofertas = $repo->findCarreras($localizacion);
 
@@ -852,6 +907,25 @@ class CarreraController extends Controller {
         return $this->render('OfertaEducativaBundle:Carrera:tarjeta_carrera.html.twig', array(
                     'carrera' => $carrera,
         ));
+    }
+
+    /**
+     * Vincula o desvincula un titulocarrera a una carrera.
+     * La accion puede ser 'vincular' o 'desvincular'
+     * 
+     * @Route("/vincular_titulocarrera/{carrera_id}/{titulocarrera_id}/{accion}", name="carrera_vincular_titulo", defaults={"accion"="vincular"})
+     * @ParamConverter("carrera", class="OfertaEducativaBundle:Carrera", options={ "id"="carrera_id"} )
+     * @ParamConverter("titulocarrera", class="OfertaEducativaBundle:TituloCarrera", options={ "id"="titulocarrera_id"} )
+     */
+    public function vincularTituloAction($carrera, $titulocarrera, $accion) {
+        
+        $tc_manager = new TituloCarreraManager($this->getEm());
+        
+        $respuesta = $tc_manager->vincular_a_carrera($carrera, $titulocarrera, $accion, true);
+
+        $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+       
+        return $this->redirect($this->generateUrl('carrera_editar', array('id' => $carrera->getId())));
     }
 
     /**

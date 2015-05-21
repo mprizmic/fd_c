@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 use Fd\OfertaEducativaBundle\Entity\Orientacion;
-use Fd\OfertaEducativaBundle\Entity\Titulo;
+use Fd\OfertaEducativaBundle\Entity\TituloCarrera;
 use Fd\OfertaEducativaBundle\Listener\CarreraListener;
 
 /**
@@ -44,7 +44,7 @@ class Carrera {
 
     /**
      * bidireccional lado inverso
-     * @ORM\OneToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\Titulo", mappedBy="carrera", cascade={"persist", "remove"} )
+     * @ORM\OneToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\TituloCarrera", mappedBy="carrera", cascade={"persist", "remove"} )
      * @Assert\Valid()
      */
     private $titulos;
@@ -150,7 +150,7 @@ class Carrera {
      * @param \Fd\OfertaEducativaBundle\Entity\Titulo $titulos
      * @return Carrera
      */
-    public function addTitulos(Titulo $titulo) {
+    public function addTitulos(TituloCarrera $titulo) {
         $titulo->setCarrera($this);
         $this->titulos[] = $titulo;
     }
@@ -160,7 +160,7 @@ class Carrera {
      *
      * @param \Fd\OfertaEducativaBundle\Entity\Titulo $titulos
      */
-    public function removeTitulos(Titulo $titulo) {
+    public function removeTitulos(TituloCarrera $titulo) {
         $this->titulos->removeElement($titulo);
     }
 
@@ -173,25 +173,27 @@ class Carrera {
         };
         $this->titulos = $titulos;
     }
+    public function etiqueta() {
+        return 'Carrera';
+    }
 
     public function __construct() {
         $this->orientaciones = new ArrayCollection();
+        $this->titulos = new ArrayCollection();
         $this->creado = new \DateTime();
         $this->actualizado = new \DateTime('now');
         $this->anio_inicio = date("Y");
         $this->oferta = null;
     }
 
-    public function etiqueta() {
-        return 'Carrera';
-    }
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -201,7 +203,8 @@ class Carrera {
      * @param string $nombre
      * @return Carrera
      */
-    public function setNombre($nombre) {
+    public function setNombre($nombre)
+    {
         $this->nombre = $nombre;
 
         return $this;
@@ -212,7 +215,8 @@ class Carrera {
      *
      * @return string 
      */
-    public function getNombre() {
+    public function getNombre()
+    {
         return $this->nombre;
     }
 
@@ -222,7 +226,8 @@ class Carrera {
      * @param string $duracion
      * @return Carrera
      */
-    public function setDuracion($duracion) {
+    public function setDuracion($duracion)
+    {
         $this->duracion = $duracion;
 
         return $this;
@@ -233,140 +238,19 @@ class Carrera {
      *
      * @return string 
      */
-    public function getDuracion() {
+    public function getDuracion()
+    {
         return $this->duracion;
-    }
-
-    /**
-     * Set oferta
-     *
-     * @param \Fd\OfertaEducativaBundle\Entity\OfertaEducativa $oferta
-     * @return Carrera
-     */
-    public function setOferta(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $oferta = null) {
-        $this->oferta = $oferta;
-
-        return $this;
-    }
-
-    /**
-     * Get oferta
-     *
-     * @return \Fd\OfertaEducativaBundle\Entity\OfertaEducativa 
-     */
-    public function getOferta() {
-        return $this->oferta;
-    }
-
-    /**
-     * Set formacion
-     *
-     * @param \Fd\TablaBundle\Entity\TipoFormacion $formacion
-     * @return Carrera
-     */
-    public function setFormacion(\Fd\TablaBundle\Entity\TipoFormacion $formacion = null) {
-        $this->formacion = $formacion;
-
-        return $this;
-    }
-
-    /**
-     * Get formacion
-     *
-     * @return \Fd\TablaBundle\Entity\TipoFormacion 
-     */
-    public function getFormacion() {
-        return $this->formacion;
-    }
-
-    /**
-     * Get orientaciones
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getOrientaciones() {
-        return $this->orientaciones;
-    }
-
-    /**
-     * Set estado
-     *
-     * @param \Fd\TablaBundle\Entity\EstadoCarrera $estado
-     * @return Carrera
-     */
-    public function setEstado(\Fd\TablaBundle\Entity\EstadoCarrera $estado = null) {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
-    /**
-     * Get estado
-     *
-     * @return \Fd\TablaBundle\Entity\EstadoCarrera 
-     */
-    public function getEstado() {
-        return $this->estado;
-    }
-
-    /**
-     * Set actualizado
-     *
-     * @param \DateTime $actualizado
-     * @return Carrera
-     */
-    public function setActualizado($actualizado) {
-        $this->actualizado = $actualizado;
-
-        return $this;
-    }
-
-    /**
-     * Get actualizado
-     *
-     * @return \DateTime 
-     */
-    public function getActualizado() {
-        return $this->actualizado;
-    }
-
-    /**
-     * Set creado
-     *
-     * @param \DateTime $creado
-     * @return Carrera
-     */
-    public function setCreado($creado) {
-        $this->creado = $creado;
-
-        return $this;
-    }
-
-    /**
-     * Get creado
-     *
-     * @return \DateTime 
-     */
-    public function getCreado() {
-        return $this->creado;
-    }
-
-    /**
-     * Get titulos
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTitulos() {
-        return $this->titulos;
     }
 
     /**
      * Set anio_inicio
      *
-     * @param \DateTime $anioInicio
+     * @param integer $anioInicio
      * @return Carrera
      */
-    public function setAnioInicio($anioInicio) {
+    public function setAnioInicio($anioInicio)
+    {
         $this->anio_inicio = $anioInicio;
 
         return $this;
@@ -375,54 +259,12 @@ class Carrera {
     /**
      * Get anio_inicio
      *
-     * @return \DateTime 
+     * @return integer 
      */
-    public function getAnioInicio() {
+    public function getAnioInicio()
+    {
         return $this->anio_inicio;
     }
-
-    /**
-     * Add titulos
-     *
-     * @param \Fd\OfertaEducativaBundle\Entity\Titulo $titulos
-     * @return Carrera
-     */
-    public function addTitulo(\Fd\OfertaEducativaBundle\Entity\Titulo $titulos) {
-        $this->titulos[] = $titulos;
-
-        return $this;
-    }
-
-    /**
-     * Remove titulos
-     *
-     * @param \Fd\OfertaEducativaBundle\Entity\Titulo $titulos
-     */
-    public function removeTitulo(\Fd\OfertaEducativaBundle\Entity\Titulo $titulos) {
-        $this->titulos->removeElement($titulos);
-    }
-
-    /**
-     * Add orientaciones
-     *
-     * @param \Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones
-     * @return Carrera
-     */
-    public function addOrientacione(\Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones) {
-        $this->orientaciones[] = $orientaciones;
-
-        return $this;
-    }
-
-    /**
-     * Remove orientaciones
-     *
-     * @param \Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones
-     */
-    public function removeOrientacione(\Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones) {
-        $this->orientaciones->removeElement($orientaciones);
-    }
-
 
     /**
      * Set comentario
@@ -445,5 +287,186 @@ class Carrera {
     public function getComentario()
     {
         return $this->comentario;
+    }
+
+    /**
+     * Set actualizado
+     *
+     * @param \DateTime $actualizado
+     * @return Carrera
+     */
+    public function setActualizado($actualizado)
+    {
+        $this->actualizado = $actualizado;
+
+        return $this;
+    }
+
+    /**
+     * Get actualizado
+     *
+     * @return \DateTime 
+     */
+    public function getActualizado()
+    {
+        return $this->actualizado;
+    }
+
+    /**
+     * Set creado
+     *
+     * @param \DateTime $creado
+     * @return Carrera
+     */
+    public function setCreado($creado)
+    {
+        $this->creado = $creado;
+
+        return $this;
+    }
+
+    /**
+     * Get creado
+     *
+     * @return \DateTime 
+     */
+    public function getCreado()
+    {
+        return $this->creado;
+    }
+
+    /**
+     * Set oferta
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\OfertaEducativa $oferta
+     * @return Carrera
+     */
+    public function setOferta(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $oferta = null)
+    {
+        $this->oferta = $oferta;
+
+        return $this;
+    }
+
+    /**
+     * Get oferta
+     *
+     * @return \Fd\OfertaEducativaBundle\Entity\OfertaEducativa 
+     */
+    public function getOferta()
+    {
+        return $this->oferta;
+    }
+
+    /**
+     * Set formacion
+     *
+     * @param \Fd\TablaBundle\Entity\TipoFormacion $formacion
+     * @return Carrera
+     */
+    public function setFormacion(\Fd\TablaBundle\Entity\TipoFormacion $formacion = null)
+    {
+        $this->formacion = $formacion;
+
+        return $this;
+    }
+
+    /**
+     * Get formacion
+     *
+     * @return \Fd\TablaBundle\Entity\TipoFormacion 
+     */
+    public function getFormacion()
+    {
+        return $this->formacion;
+    }
+
+    /**
+     * Add titulos
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\TituloCarrera $titulos
+     * @return Carrera
+     */
+    public function addTitulo(\Fd\OfertaEducativaBundle\Entity\TituloCarrera $titulos)
+    {
+        $this->titulos[] = $titulos;
+
+        return $this;
+    }
+
+    /**
+     * Remove titulos
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\TituloCarrera $titulos
+     */
+    public function removeTitulo(\Fd\OfertaEducativaBundle\Entity\TituloCarrera $titulos)
+    {
+        $this->titulos->removeElement($titulos);
+    }
+
+    /**
+     * Get titulos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTitulos()
+    {
+        return $this->titulos;
+    }
+
+    /**
+     * Add orientaciones
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones
+     * @return Carrera
+     */
+    public function addOrientacione(\Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones)
+    {
+        $this->orientaciones[] = $orientaciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove orientaciones
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones
+     */
+    public function removeOrientacione(\Fd\OfertaEducativaBundle\Entity\Orientacion $orientaciones)
+    {
+        $this->orientaciones->removeElement($orientaciones);
+    }
+
+    /**
+     * Get orientaciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrientaciones()
+    {
+        return $this->orientaciones;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param \Fd\TablaBundle\Entity\EstadoCarrera $estado
+     * @return Carrera
+     */
+    public function setEstado(\Fd\TablaBundle\Entity\EstadoCarrera $estado = null)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return \Fd\TablaBundle\Entity\EstadoCarrera 
+     */
+    public function getEstado()
+    {
+        return $this->estado;
     }
 }

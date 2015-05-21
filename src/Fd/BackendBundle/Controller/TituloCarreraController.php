@@ -8,16 +8,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Fd\BackendBundle\Form\Filter\TituloFilterType;
-use Fd\OfertaEducativaBundle\Entity\Titulo;
-use Fd\OfertaEducativaBundle\Form\TituloType;
+use Fd\BackendBundle\Form\Filter\TituloCarreraFilterType;
+use Fd\OfertaEducativaBundle\Entity\TituloCarrera;
+use Fd\OfertaEducativaBundle\Form\TituloCarreraType;
 
 /**
- * Titulo controller.
+ * TituloCarrera controller.
  *
- * @Route("/titulo")
+ * @Route("/titulocarrera")
  */
-class TituloController extends Controller {
+class TituloCarreraController extends Controller {
 
     private $em;
 
@@ -29,7 +29,7 @@ class TituloController extends Controller {
     }
 
     private function getRepositorio() {
-        return $this->getEm()->getRepository('OfertaEducativaBundle:Titulo');
+        return $this->getEm()->getRepository('OfertaEducativaBundle:TituloCarrera');
     }
 
     /**
@@ -37,7 +37,7 @@ class TituloController extends Controller {
      * 
      * FALTA testear
      * 
-     * @Route("/buscar", name="backend_titulo_buscar")
+     * @Route("/buscar", name="backend_titulocarrera_buscar")
      */
     public function buscarAction(Request $request) {
 
@@ -83,7 +83,7 @@ class TituloController extends Controller {
             }
         };
 
-        return $this->render('BackendBundle:Titulo:buscar.html.twig', array(
+        return $this->render('BackendBundle:TituloCarrera:buscar.html.twig', array(
                     'titulos' => $titulos,
                     'form' => $form->createView(),
                         )
@@ -126,7 +126,9 @@ class TituloController extends Controller {
      */
     public function crearFormBusqueda($datos_sesion = null) {
 
-        $form = $this->createForm(new TituloFilterType());
+        $carrera_manager = $this->get('ofertaeducativa.carrera.manager');
+
+        $form = $this->createForm(new TituloCarreraFilterType($carrera_manager->getComboEstados()));
 
         if ($datos_sesion)
             $form->setData($datos_sesion);
@@ -137,12 +139,12 @@ class TituloController extends Controller {
     /**
      * Displays a form to create a new Titulo entity.
      *
-     * @Route("/nuevo", name="backend_titulo_nuevo")
+     * @Route("/nuevo", name="backend_titulocarrera_nuevo")
      * @Template()
      */
     public function nuevoAction() {
-        $entity = new Titulo();
-        $form = $this->createForm(new TituloType(), $entity);
+        $entity = new TituloCarrera();
+        $form = $this->createForm(new TituloCarreraType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -155,13 +157,13 @@ class TituloController extends Controller {
      * 
      * FALTA testear
      *
-     * @Route("/create", name="backend_titulo_create")
+     * @Route("/create", name="backend_titulocarrera_create")
      * @Method("POST")
-     * @Template("BackendBundle:Titulo:nuevo.html.twig")
+     * @Template("BackendBundle:TituloCarrera:nuevo.html.twig")
      */
     public function createAction(Request $request) {
-        $entity = new Titulo();
-        $form = $this->createForm(new TituloType(), $entity);
+        $entity = new TituloCarrera();
+        $form = $this->createForm(new TituloCarreraType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -169,7 +171,7 @@ class TituloController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('backend_titulo_editar', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('backend_titulocarrera_editar', array('id' => $entity->getId())));
         }
 
         return array(
@@ -181,14 +183,14 @@ class TituloController extends Controller {
     /**
      * Displays a form to edit an existing Titulo entity.
      *
-     * @Route("/{id}/editar", name="backend_titulo_editar")
-     * @ParamConverter("entity", class="OfertaEducativaBundle:Titulo", options={"id"="titulo_id"})
+     * @Route("/{id}/editar", name="backend_titulocarrera_editar")
+     * @ParamConverter("entity", class="OfertaEducativaBundle:TituloCarrera")
      * @Template()
      */
     public function editarAction($entity) {
         $em = $this->getEm();
 
-        $editForm = $this->createForm(new TituloType(), $entity);
+        $editForm = $this->createForm(new TituloCarreraType(), $entity);
         $deleteForm = $this->createDeleteForm($entity->getId());
 
         return array(
@@ -201,21 +203,21 @@ class TituloController extends Controller {
     /**
      * Edits an existing Titulo entity.
      *
-     * @Route("/{id}/update", name="backend_titulo_update")
-     * @ParamConverter("entity", class="OfertaEducativaBundle:Titulo", options={"id"="titulo_id"})
+     * @Route("/{id}/update", name="backend_titulocarrera_update")
+     * @ParamConverter("entity", class="OfertaEducativaBundle:TituloCarrera")
      * @Method("POST")
-     * @Template("BackendBundle:Titulo:editar.html.twig")
+     * @Template("BackendBundle:TituloCarrera:editar.html.twig")
      */
     public function updateAction(Request $request, $entity) {
         $deleteForm = $this->createDeleteForm($entity->getId());
-        $editForm = $this->createForm(new TituloType(), $entity);
+        $editForm = $this->createForm(new TituloCarreraType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $this->getEm()->persist($entity);
             $this->getEm()->flush();
 
-            return $this->redirect($this->generateUrl('backend_titulo_editar', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('backend_titulocarrera_editar', array('id' => $entity->getId())));
         }
 
         return array(
@@ -228,8 +230,8 @@ class TituloController extends Controller {
     /**
      * Deletes a Titulo entity.
      *
-     * @Route("/{id}/delete", name="backend_titulo_delete")
-     * @ParamConverter("entity", class="OfertaEducativaBundle:Titulo", options={"id"="titulo_id"})
+     * @Route("/{id}/delete", name="backend_titulocarrera_delete")
+     * @ParamConverter("entity", class="OfertaEducativaBundle:TituloCarrera")
      * @Method("POST")
      */
     public function deleteAction(Request $request, $entity) {
@@ -242,7 +244,7 @@ class TituloController extends Controller {
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('backend_titulo_buscar'));
+        return $this->redirect($this->generateUrl('backend_titulocarrera_buscar'));
     }
 
     private function createDeleteForm($id) {

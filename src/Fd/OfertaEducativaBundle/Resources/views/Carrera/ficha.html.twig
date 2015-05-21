@@ -15,7 +15,7 @@
     <legend class="resaltado">Título/s que otorga</legend>
     {% for titulo in carrera.titulos %}
         <div>
-            <a href="{{ path('backend_titulo_editar', {'id':titulo.id } ) }}">{{ titulo.nombre }}</a>
+            <a href="{{ path('backend_titulocarrera_editar', {'id':titulo.id } ) }}">{{ titulo.nombre }}</a>
         </div>
         
     {% else %}
