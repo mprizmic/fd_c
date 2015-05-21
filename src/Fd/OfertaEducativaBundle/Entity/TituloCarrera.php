@@ -71,6 +71,14 @@ class TituloCarrera {
 //        return true;
 //    }
 
+    public function vincularCarrera($carrera, $accion = true){
+        if ($accion){
+            $this->setCarrera($carrera);
+        }else {
+            $this->setCarrera(null);
+        };
+    }
+    
     public function __toString() {
         return $this->nombre;
     }

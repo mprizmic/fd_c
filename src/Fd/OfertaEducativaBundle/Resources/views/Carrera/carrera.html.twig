@@ -121,7 +121,7 @@
                 </td>
                 <td>
                     <span class="separador"></span>
-                    <a href="#">Desvincular título de carrera</a>
+                    <a href="{{ path('carrera_vincular_titulo', {'carrera_id':entity.id, 'titulocarrera_id':titulo.id, 'accion':'desvincular' } ) }}">Desvincular título de carrera</a>
                 </td>
             </tr>
             {% endfor %}  
@@ -156,7 +156,7 @@
 
             {% if resultado_busqueda_titulo %}
                 <br />
-                {% include 'BackendBundle:TituloCarrera:includes/tabla_titulos.html.twig' with { 'titulos': resultado_busqueda_titulo  } %}
+                {% include 'BackendBundle:TituloCarrera:includes/tabla_titulos.html.twig' with { 'titulos': resultado_busqueda_titulo, 'carrera':entity  } %}
                 <br />
                 <br />
             {% else %}

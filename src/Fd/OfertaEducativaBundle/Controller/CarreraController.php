@@ -24,6 +24,7 @@ use Fd\OfertaEducativaBundle\Form\EstablecimientosType;
 use Fd\OfertaEducativaBundle\Form\Handler\CarreraFormHandler;
 use Fd\OfertaEducativaBundle\Form\Filter\CarreraFilterType;
 use Fd\OfertaEducativaBundle\Model\CarreraManager;
+use Fd\OfertaEducativaBundle\Model\TituloCarreraManager;
 use Fd\OfertaEducativaBundle\Repository\CarreraRepository;
 
 /**
@@ -906,6 +907,25 @@ class CarreraController extends Controller {
         return $this->render('OfertaEducativaBundle:Carrera:tarjeta_carrera.html.twig', array(
                     'carrera' => $carrera,
         ));
+    }
+
+    /**
+     * Vincula o desvincula un titulocarrera a una carrera.
+     * La accion puede ser 'vincular' o 'desvincular'
+     * 
+     * @Route("/vincular_titulocarrera/{carrera_id}/{titulocarrera_id}/{accion}", name="carrera_vincular_titulo", defaults={"accion"="vincular"})
+     * @ParamConverter("carrera", class="OfertaEducativaBundle:Carrera", options={ "id"="carrera_id"} )
+     * @ParamConverter("titulocarrera", class="OfertaEducativaBundle:TituloCarrera", options={ "id"="titulocarrera_id"} )
+     */
+    public function vincularTituloAction($carrera, $titulocarrera, $accion) {
+        
+        $tc_manager = new TituloCarreraManager($this->getEm());
+        
+        $respuesta = $tc_manager->vincular_a_carrera($carrera, $titulocarrera, $accion, true);
+
+        $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+       
+        return $this->redirect($this->generateUrl('carrera_editar', array('id' => $carrera->getId())));
     }
 
     /**

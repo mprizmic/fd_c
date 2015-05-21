@@ -13,7 +13,8 @@
             <tr>
                 <td>{{ titulo.nombre }}</td>
                 <td>{{ titulo.estado }}</td>
-                <td><a href="#">Vincular</a></td>
+{# vincula el titulo a una carrera  #}
+                <td><a href="{{ path('carrera_vincular_titulo', {'carrera_id':entity.id, 'titulocarrera_id':titulo.id, 'accion':'vincular' } ) }}">Vincular</a></td>
             </tr>
             {% endfor %}
         </table>
