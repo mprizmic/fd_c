@@ -10,9 +10,6 @@ use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
 use Fd\TablaBundle\Entity\Nivel;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
-use Fd\OfertaEducativaBundle\Entity\InicialX;
-use Fd\OfertaEducativaBundle\Model\InicialXHandler;
-use Fd\OfertaEducativaBundle\Repository\InicialXRepository;
 
 class UnidadOfertaTerciarioHandler {
 
@@ -28,6 +25,7 @@ class UnidadOfertaTerciarioHandler {
 
     /**
      * Por ahora es para actualizar los turnos de las unidades_oferta referidas a carreras
+     * @param UnidadOferta $entity un objeto de la clase UnidadOFerta
      */
     public function actualizar($entity, $originalTurnos) {
 
