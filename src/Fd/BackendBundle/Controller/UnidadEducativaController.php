@@ -162,6 +162,12 @@ class UnidadEducativaController extends Controller {
         return $inicial_x;
     }
 
+    /**
+     * Formulario de edición de unidad educativa genérica
+     * 
+     * @param type $unidad_educativa
+     * @return type
+     */
     private function getEditForm($unidad_educativa) {
         $editForm = $this->get('form.factory')
                 ->createNamedBuilder('form_ue', new UnidadEducativaType(), $unidad_educativa)

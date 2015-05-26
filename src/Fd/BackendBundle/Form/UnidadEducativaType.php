@@ -62,8 +62,9 @@ class UnidadEducativaType extends AbstractType {
                 ->add('descripcion', 'text', array(
                     'label' => 'Descripción',
                 ))
-                ->add('nombre_autoridad')
-                ->add('cargo_autoridad')
+                //por el momento no se usan. Se agrega la tabla autoridades y se le asocia un establecimiento
+//                ->add('nombre_autoridad')
+//                ->add('cargo_autoridad')
         ;
     }
 

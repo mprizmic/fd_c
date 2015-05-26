@@ -16,7 +16,7 @@
 
 
 {% block title %}
- {{ parent() }} - Editar Localizacion
+ {{ parent() }} - Editar Unidad Educativa
 {% endblock %}
 
 {% block main_content %}
@@ -32,8 +32,9 @@
         {{ form_row(edit_form.nivel) }}
         {{ form_row(edit_form.establecimiento) }}
         {{ form_row(edit_form.descripcion) }}
-        {{ form_row(edit_form.nombre_autoridad) }}
-        {{ form_row(edit_form.cargo_autoridad) }}
+{# por ahora no se usan       #}
+{#        {{ form_row(edit_form.nombre_autoridad) }}#}
+{#        {{ form_row(edit_form.cargo_autoridad) }}#}
     </div> 
 
     {% if entity.isInicial %}
