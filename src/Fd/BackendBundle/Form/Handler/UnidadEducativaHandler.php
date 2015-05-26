@@ -52,6 +52,9 @@ class UnidadEducativaHandler {
             $this->entity_manager->flush();
 
             //creo el evento
+            //
+            //Por el momento se lo anula por que el evento no crea la información localizada 
+            //
             $event = new UnidadEducativaNuevaEvent($entity);
 
             $this->dispatcher->addListener(BackendEvents::UNIDAD_EDUCATIVA_NUEVA, array($this->listener_crear, 'onUnidadEducativaNueva'));
@@ -75,6 +78,9 @@ class UnidadEducativaHandler {
         try {
             
             //creo el evento
+            //
+            //por el momento se desconecta por que no esta localizado
+            //
             $event = new UnidadEducativaBajaEvent($entity);
 
             $this->dispatcher->addListener(BackendEvents::UNIDAD_EDUCATIVA_BAJA, array($this->listener_eliminar, 'onUnidadEducativaBaja'));
