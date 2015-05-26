@@ -31,6 +31,7 @@ class UnidadEducativaType extends AbstractType {
                         'class' => 'TablaBundle:Nivel',
                         'empty_value' => 'Seleccione...',
                         'multiple' => false,
+                        'property'=>'nombre',
                         'expanded' => false,
                         'query_builder' => function(EntityRepository $er) {
                             return $er->createQueryBuilder('n')->orderBy('n.orden', 'ASC');
