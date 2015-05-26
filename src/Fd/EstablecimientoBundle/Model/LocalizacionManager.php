@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormInterface;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\TablaBundle\Entity\Nivel;
 use Fd\TablaBundle\Model\NivelManager;
 

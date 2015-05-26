@@ -376,7 +376,7 @@ class LocalizacionController extends Controller {
      * Deletes a Localizacion entity.
      *
      * @Route("/{id}/delete", name="backend_localizacion_delete")
-     * @ParamConverter("localizacion", class="EstablecimientoBundle:Localizacion")
+     * @ParamConverter("localizacion", class="EstablecimientoBundle:Localizacion", options={"id"="id"})
      */
     public function deleteAction($localizacion) {
         $localizacion_manager = $this->get('fd.establecimiento.model.localizacion');
@@ -389,7 +389,7 @@ class LocalizacionController extends Controller {
 
         $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
-        return $this->redirect($this->generateUrl('backend_establecimiento_edificio_edit', array('id' => $establecimiento_edificio_id)));
+        return $this->redirect($this->generateUrl('backend_localizacion'));
     }
 
     private function createDeleteForm($id) {
