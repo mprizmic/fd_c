@@ -24,6 +24,6 @@ class EstablecimientoExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-        $loader->load('localizacion_handler.yml');
+        $loader->load('localizacion_manager.yml');
     }
 }

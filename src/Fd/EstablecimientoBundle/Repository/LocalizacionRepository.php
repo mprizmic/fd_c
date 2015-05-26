@@ -231,32 +231,4 @@ class LocalizacionRepository extends EntityRepository {
         $q->setParameter('establecimiento', $establecimiento_id);
         return $q->getResult();
     }
-
-    /**
-     * elimina un registro 
-     */
-    public function eliminar($id) {
-        $respuesta = new Respuesta();
-
-        $entity = $this->find($id);
-
-        if (!$entity) {
-            $respuesta->setCodigo(2);
-            $respuesta->setMensaje('No se encontró el código que se desea eliminar');
-        } else {
-            try {
-                $em = $this->getEntityManager();
-                $em->remove($entity);
-                $em->flush();
-
-                $respuesta->setCodigo(1);
-                $respuesta->setMensaje('Se eliminó la relación de la unidad educativa y el edificio en que se imparte.');
-            } catch (Exception $e) {
-                $respuesta->setCodigo(3);
-                $respuesta->setMensaje('No se pudo eliminar la relación de la unidad educativa y el edificio en que se imparte. Verifíquelo y reintente.');
-            };
-        }
-        return $respuesta;
-    }
-
 }
