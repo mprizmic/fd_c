@@ -1,7 +1,8 @@
 <?php
 
 /**
- * unidad_oferta representa en que unidad educativa de que establecimiento se imparte una oferta educativa en particular
+ * unidad_oferta representa en que lugar esa ubicada la unidad educativa de que establecimiento 
+ * en la que se imparte una oferta educativa en particular
  */
 
 namespace Fd\EstablecimientoBundle\Controller;

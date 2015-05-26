@@ -111,6 +111,10 @@ class UnidadOferta {
     public function combo() {
         return $this->getOfertas()->getCarrera()->getNombre();
     }
+    /**
+     * FALTA hacerlo como un decorator o un visitor para todos los niveles
+     * @return type
+     */
     public function getCarreraIdentificacion() {
         return $this->getOfertas()->getCarrera()->getIdentificacion();
     }
