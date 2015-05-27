@@ -136,11 +136,10 @@ class UnidadOfertaController extends Controller {
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
+            $this->getEm()->persist($entity);
+            $this->getEm()->flush();
 
-            $this->get('session')->getFlashbag()->add('notice', 'Guardado exitosamente');
+            $this->get('session')->getFlashbag()->add('exito', 'Guardado exitosamente');
 
             return $this->redirect($this->generateUrl('backend_unidadoferta_edit', array('id' => $entity->getId())));
         }
@@ -217,6 +216,7 @@ class UnidadOfertaController extends Controller {
      * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta", options={"id":"id"})
      */
     public function deleteAction($unidad_oferta) {
+        
         $handler = new UnidadOfertaHandler($this->getEm(), $unidad_oferta
                         ->getLocalizacion()
                         ->getUnidadEducativa()
