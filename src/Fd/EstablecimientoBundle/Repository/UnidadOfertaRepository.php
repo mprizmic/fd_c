@@ -80,7 +80,7 @@ class UnidadOfertaRepository extends EntityRepository {
     }
 
     /**
-     * devuelve el array de turnos de una unidad_oferta
+     * devuelve el array de turnos de una unidad_oferta agregándole la descripción del turno
      */
     public function findTurnosArray(UnidadOferta $unidad_oferta) {
         $parcial = $unidad_oferta->getTurnos();
@@ -97,6 +97,8 @@ class UnidadOfertaRepository extends EntityRepository {
     }
 
     /**
+     * FALTA Se usa en varios lados. Revisado por arriba
+     * 
      * devuelve un obj inicial_x con la cabecera de las salas de inicial de una unidad_oferta en particular
      */
     public function findSalas(UnidadOferta $unidad_oferta) {
@@ -107,127 +109,4 @@ class UnidadOfertaRepository extends EntityRepository {
 
         return $inicial_x;
     }
-
-    /**
-     * FALTA ver si no queda DEPRECATED
-     * devuelve las ofertas carrera de un establecimiento que tienen cohortes
-     */
-    public function findCarrerasConCohortes($establecimiento_id) {
-
-        $dql = "
-            select uo
-            from EstablecimientoBundle:UnidadOferta uo
-            join uo.ofertas oe 
-            join oe.carrera car 
-            join uo.cohortes co
-            join uo.unidades u
-            join u.establecimiento e
-            where e.id=:establecimiento
-            order by car.nombre";
-        $q = $this->_em->createQuery($dql);
-        $q->setParameter('establecimiento', $establecimiento_id);
-        return $q->getResult();
-    }
-
-    /**
-     * PASO AL HANDLER TANTO PARA INICIAL COMO PARA TERCIARIO
-     * 
-     * crea un registro de unidad_oferta
-     * tiene funcionamiento diferente al create del Backend.
-     * Aquí recibe los parámetros para su creación
-     * 
-     * @param type $oferta
-     * @param type $unidad
-     */
-    public function crear($unidad, $oferta) {
-//        $respuesta = new Respuesta();
-//
-//        $em = $this->getEntityManager();
-//
-//        $entity = new UnidadOferta();
-//        $entity->setOfertas($oferta);
-//        $entity->setUnidades($unidad);
-//
-//        try {
-//            $em->persist($entity);
-//            $em->flush();
-//
-//            $respuesta->setCodigo(1);
-//            $respuesta->setMensaje('Se generó la oferta educativa para el establecimiento seleccionado.');
-//        } catch (Exception $e) {
-//            $respuesta->setCodigo(2);
-//            $respuesta->setMensaje('No se pudo generar la oferta educativa. Verifíquelo y reintente.');
-//        };
-//        return $respuesta;
-    }
-
-    /**
-     * PASO AL HANDLER TANTO PARA INICIAL COMO PARA TERCIARIO
-     * 
-     * elimina un registro de unidad_oferta
-     * tiene funcionamiento diferente al create del Backend.
-     * Aquí recibe los parámetros para su creación
-     * 
-     */
-    public function eliminar($entity) {
-//        $respuesta = new Respuesta();
-//
-//        $em = $this->getEntityManager();
-//
-//        try {
-//            $em->remove($entity);
-//            $em->flush();
-//
-//            $respuesta->setCodigo(1);
-//            $respuesta->setMensaje('Se eliminó la oferta educativa para el establecimiento seleccionado.');
-//        } catch (Exception $e) {
-//            $respuesta->setCodigo(2);
-//            $respuesta->setMensaje('No se pudo eliminar la oferta educativa. Verifíquelo y reintente.');
-//        };
-//        return $respuesta;
-    }
-
-    /*
-     * FALTA terminar DEPRECATED?
-     * 
-     * Devuelve un array con los ingresantes, matriculados y egresador de un año en particular de todas las carreras de un terciario localizado.
-     * Si no encontró resultados el array se carga con ceros en todas las posiciones
-     */
-
-//    public function findMatriculaCarrera($unidad_oferta, $anio) {
-//        
-//        //vector de claves del array de resultado. Se usa si el resultado es un array vacio
-//        $keys = array('anio', 'matricula', 'matricula_ingresantes', 'egreso');
-//        
-//        foreach ($unidad_oferta->getCohortes() as $key => $un_anio) {
-//            if ($un_anio->getAnio)
-//            
-//        }
-//
-//        $qb = $this->_em->createQueryBuilder()
-//                ->select('co.anio, co.matricula, co.matricula_ingresantes, co.egreso')
-//                ->from('EstablecimientoBundle:UnidadOferta', 'uo')
-//                ->innerJoin('uo.localizacion', 'l')
-//                ->leftJoin('uo.cohortes', 'co')
-//                ->where('l.')
-//                ->where('co.anio = :anio');
-//                ->
-//        $qb->setParameter('anio', $anio);
-//
-//        $dql = $qb->getDQL();
-//
-//        $unidades_ofertas = $qb->getQuery()->getArrayResult();
-//
-//        if (count($unidades_ofertas) == 0) {
-//            $unidades_ofertas[] = $this->limpiar_array($keys, 0);
-//        };
-//
-//        //se pasan los datos a un array
-//
-//        return $unidades_ofertas;
-//    }
-//
-//    public function limpiar_array($keys, $valor) {
-//        return array_fill_keys($keys, $valor);
-//    }
 }

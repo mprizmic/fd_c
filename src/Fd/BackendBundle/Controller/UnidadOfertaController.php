@@ -12,6 +12,7 @@ use Fd\BackendBundle\Form\UnidadOfertaType;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
+use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\TablaBundle\Entity\Nivel;
 
@@ -37,8 +38,15 @@ class UnidadOfertaController extends Controller {
         $this->get('session')->set('ruta_completa', $request->get('_route'));
         $this->get('session')->set('parametros', $request->get('_route_params'));
 
-        $establecimiento_edificios = $this->getEm()->getRepository('EstablecimientoBundle:EstablecimientoEdificio')->findAllOrdenado();
-        $niveles = $this->getEm()->getRepository('TablaBundle:Nivel')->findBy(array(), array('orden' => 'asc'));
+        // combo de edificios de establecimientos
+        $establecimiento_edificios = $this->getEm()
+                ->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
+                ->findAllOrdenado();
+
+        // combo de niveles
+        $niveles = $this->getEm()
+                ->getRepository('TablaBundle:Nivel')
+                ->findBy(array(), array('orden' => 'asc'));
 
         return $this->render('BackendBundle:UnidadOferta:index.html.twig', array(
                     'establecimiento_edificios' => $establecimiento_edificios,
@@ -47,23 +55,7 @@ class UnidadOfertaController extends Controller {
     }
 
     /**
-     * DEPRECATED
-     * 
-     * Lists all UnidadOferta entities.
-     *
-     * @Route("/", name="backend_unidadoferta")
-     * @Template()
-     */
-//    public function indexAction() {
-//        $em = $this->getDoctrine()->getEntityManager();
-//
-//        $entities = $em->getRepository('EstablecimientoBundle:UnidadOferta')->findAll();
-//
-//        return array('entities' => $entities);
-//    }
-
-    /**
-     * ACA TENDRIA QUE ENTRAR UNA LOCALIZACION
+     * Llamada AJAX que devuelve una array con una lista de unidad_ofertas de una localizacion
      * 
      * @Route("/listar/{localizacion_id}", name="backend_unidadoferta_listar")
      * @ParamConverter("localizacion", class="EstablecimientoBundle:Localizacion", options={"id"="localizacion_id"} )
@@ -76,10 +68,10 @@ class UnidadOfertaController extends Controller {
         foreach ($localizacion->getOfertas() as $oferta) {
             $elemento['value'] = $oferta->getId();
             $entity = $oferta->getOfertas()->getObjetoOferta();
-            if ($entity instanceof Carrera){
+            if ($entity instanceof Carrera) {
                 $elemento['text'] = $entity->getIdentificacion();
-            }else{
-                $elemento['text']=$entity->__toString();
+            } else {
+                $elemento['text'] = $entity->__toString();
             };
             $entities[] = $elemento;
         }
@@ -114,28 +106,6 @@ class UnidadOfertaController extends Controller {
         };
         return $this->em;
     }
-// DEPRECATED
-//    /**
-//     * Finds and displays a UnidadOferta entity.
-//     *
-//     * @Route("/{id}/show", name="backend_unidadoferta_show")
-//     * @Template()
-//     */
-//    public function showAction($id) {
-//        $em = $this->getDoctrine()->getEntityManager();
-//
-//        $entity = $em->getRepository('EstablecimientoBundle:UnidadOferta')->find($id);
-//
-//        if (!$entity) {
-//            throw $this->createNotFoundException('Unable to find UnidadOferta entity.');
-//        }
-//
-//        $deleteForm = $this->createDeleteForm($id);
-//
-//        return array(
-//            'entity' => $entity,
-//            'delete_form' => $deleteForm->createView(),);
-//    }
 
     /**
      * Displays a form to create a new UnidadOferta entity.
@@ -166,11 +136,10 @@ class UnidadOfertaController extends Controller {
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
+            $this->getEm()->persist($entity);
+            $this->getEm()->flush();
 
-            $this->get('session')->getFlashbag()->add('notice', 'Guardado exitosamente');
+            $this->get('session')->getFlashbag()->add('exito', 'Guardado exitosamente');
 
             return $this->redirect($this->generateUrl('backend_unidadoferta_edit', array('id' => $entity->getId())));
         }
@@ -240,32 +209,28 @@ class UnidadOfertaController extends Controller {
     }
 
     /**
-     * Deletes a UnidadOferta entity.
+     * Deletes a UnidadOferta entity. Sirve para todos los niveles. Llama al handler correspondiente
      *
      * @Route("/{id}/delete", name="backend_unidadoferta_delete")
      * @Method("post")
+     * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta", options={"id":"id"})
      */
-    public function deleteAction($id) {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
+    public function deleteAction($unidad_oferta) {
+        
+        $handler = new UnidadOfertaHandler($this->getEm(), $unidad_oferta
+                        ->getLocalizacion()
+                        ->getUnidadEducativa()
+                        ->getNivel()
+        );
 
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('EstablecimientoBundle:UnidadOferta')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find UnidadOferta entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-
-            $this->get('session')->setFlash('notice', 'Guardado exitosamente');
-        }
+        $respuesta = $handler->eliminar($unidad_oferta, true);
+        
+        $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
+        
+        $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
         return $this->redirect($this->generateUrl('backend_unidadoferta'));
+
     }
 
     private function createDeleteForm($id) {

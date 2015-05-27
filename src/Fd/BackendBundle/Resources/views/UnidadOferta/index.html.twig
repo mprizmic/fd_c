@@ -1,3 +1,6 @@
+{# index de unidad oferta 
+muestra un combo de localizaciones y un combo de niveles #}
+
 {% extends 'BackendBundle::layout.html.twig' %}
 
 {% block main_content %}
@@ -22,6 +25,12 @@
 
     </select>
 
+    <span class="limpiar_float"></span>
+    
+    <span class="float_derecha">
+
+        <a href="{{ path( 'backend_unidadoferta_new' ) }}">Crear nuevo registro</a>
+    </span>
     <span class="limpiar_float"></span>
 
     <br />

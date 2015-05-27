@@ -142,19 +142,20 @@ class UnidadEducativaController extends Controller {
             'delete_form' => $deleteForm->createView(),
         );
         
-        if ($unidad_educativa->isInicial()){
-            /*
-             * inicial_x puede no tener salas.
-             */
-            $inicial_x = $this->getInicialX($unidad_educativa);
-            $respuesta['inicial_x'] = $inicial_x;
-        };
+        // FALTA se anula por el momento hasta que se revise. Es el edit de una unidad educativa de nivel inicial
+//        if ($unidad_educativa->isInicial()){
+//            /*
+//             * inicial_x puede no tener salas.
+//             */
+//            $inicial_x = $this->getInicialX($unidad_educativa);
+//            $respuesta['inicial_x'] = $inicial_x;
+//        };
         
         return $this->render("BackendBundle:UnidadEducativa:edit.html.twig", $respuesta);
     }
     
     public function getInicialX(UnidadEducativa $unidad_educativa){
-        $array_temp = $unidad_educativa->getOfertas();
+        $array_temp = $unidad_educativa->getLocalizaciones()->getOfertas();
         $inicial_x = $this->getDoctrine()
                 ->getEntityManager()
                 ->getRepository('OfertaEducativaBundle:InicialX')
@@ -162,6 +163,12 @@ class UnidadEducativaController extends Controller {
         return $inicial_x;
     }
 
+    /**
+     * Formulario de edición de unidad educativa genérica
+     * 
+     * @param type $unidad_educativa
+     * @return type
+     */
     private function getEditForm($unidad_educativa) {
         $editForm = $this->get('form.factory')
                 ->createNamedBuilder('form_ue', new UnidadEducativaType(), $unidad_educativa)

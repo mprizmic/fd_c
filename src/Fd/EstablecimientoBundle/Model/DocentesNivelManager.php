@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormInterface;
 use Fd\EstablecimientoBundle\Entity\EstablecimientoEstablecimiento;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
-use Fd\EstablecimientoBundle\Model\LocalizacionHandler;
+use Fd\EstablecimientoBundle\Model\LocalizacionManager;
 use Fd\BackendBundle\Form\Model\DocentesNivelHandler;
 
 class DocentesNivelManager {
@@ -16,10 +16,10 @@ class DocentesNivelManager {
     private $respuesta;
     private $unidad_educativa_handler;
 
-    public function __construct(EntityManager $em, LocalizacionHandler $localizacion_handler) {
+    public function __construct(EntityManager $em, LocalizacionManager $localizacion_manager) {
         $this->em = $em;
         $this->respuesta = new Respuesta();
-        $this->localizacion_handler = $localizacion_handler;
+        $this->localizacion_manager = $localizacion_manager;
     }
 
     /**
@@ -38,7 +38,7 @@ class DocentesNivelManager {
                 $localizacion->setCantidadDocentes($formulario->getCantidad($localizacion->getUnidadEducativa()->getNivel()->getAbreviatura()));
 
                 //se persiste en el repositorio de unidad educativa
-                $this->localizacion_handler->actualizar($localizacion, true);
+                $this->localizacion_manager->actualizar($localizacion, true);
             };
 
             $respuesta->setCodigo(1);

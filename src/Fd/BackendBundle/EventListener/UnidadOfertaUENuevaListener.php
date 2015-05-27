@@ -17,20 +17,23 @@ class UnidadOfertaUENuevaListener {
     }
 
     /**
+     * FALTA no tienen lista la localizacion. Por el momento se los anula hasta que se revise
+     * 
+     * 
      * Cuando se crea una unidad educativa se crea la unidad_oferta
      * Se presupone que ya está creada la oferta_educativa
      */
     public function onUnidadEducativaNueva(UnidadEducativaNuevaEvent $event) {
         
-        $unidad_educativa = $event->getUnidadEducativa();
+//        $unidad_educativa = $event->getUnidadEducativa();
+//        
+//        $uo_handler = new UnidadOfertaHandler($this->em, $unidad_educativa->getNivel() );
+//        
+//        $unidad_oferta = $uo_handler->crear($unidad_educativa);
+//        
+//        $event->setUnidadOferta($unidad_oferta);
         
-        $uo_handler = new UnidadOfertaHandler($this->em, $unidad_educativa->getNivel() );
-        
-        $unidad_oferta = $uo_handler->crear($unidad_educativa);
-        
-        $event->setUnidadOferta($unidad_oferta);
-        
-        return $event;
+//        return $event;
     }
 
 }

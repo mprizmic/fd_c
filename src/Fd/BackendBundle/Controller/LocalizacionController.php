@@ -6,13 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\BackendBundle\Form\LocalizacionType;
+use Fd\EstablecimientoBundle\Entity\Localizacion;
+use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Model\LocalizacionManager;
 use Fd\EdificioBundle\Form\Type\DomiciliosType;
 use Fd\EdificioBundle\Form\Type\UnDomicilioType;
-use Fd\EstablecimientoBundle\Entity\Respuesta;
 
 /**
  * Localizacion controller.
@@ -312,13 +314,15 @@ class LocalizacionController extends Controller {
 
         if ($form->isValid()) {
             //se marcó al menos un domicilio
-            $respuesta = $repositorio->asignar_domicilios($entity, $form->getData());
+            $localizacion_manager = new LocalizacionManager($this->getEm());
+                    
+            $respuesta = $localizacion_manager->asignar_domicilios($entity, $form->getData());
 
-            $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+            $this->get('session')->getFlashBag()->add('exito', $respuesta->getMensaje());
 
             return $this->redirect($this->generateUrl('backend_localizacion_edit', array('id' => $id)));
         };
-        $this->get('session')->getFlashBag()->add('notice', 'Problemas en la asignación de domicilios');
+        $this->get('session')->getFlashBag()->add('error', 'Problemas en la asignación de domicilios');
 
         //si hay problemas renderiza la misma pagina; necesita los formularios
         $editForm = $this->createForm(new LocalizacionType(), $entity);
@@ -375,24 +379,20 @@ class LocalizacionController extends Controller {
      * Deletes a Localizacion entity.
      *
      * @Route("/{id}/delete", name="backend_localizacion_delete")
+     * @ParamConverter("localizacion", class="EstablecimientoBundle:Localizacion", options={"id"="id"})
      */
-    public function deleteAction($id) {
-        $repositorio = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion');
+    public function deleteAction($localizacion) {
+        $localizacion_manager = $this->get('fd.establecimiento.model.localizacion');
+        
+        $establecimiento_edificio_id = $localizacion->getEstablecimientoEdificio()->getId();
 
-        $entity = $repositorio->find($id);
+        $respuesta = $localizacion_manager->eliminar($localizacion, true);
+        
+        $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
 
-        $establecimiento_edificio_id = $entity->getEstablecimientoEdificio()->getId();
+        $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
-        if (!$entity) {
-            $this->get('session')->getFlashBag()->add('notice', 'No existe la localización');
-            return new RedirectResponse($this->generateUrl('backend_localizacion'));
-        }
-
-        $respuesta = $repositorio->eliminar($id);
-
-        $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
-
-        return $this->redirect($this->generateUrl('backend_establecimiento_edificio_edit', array('id' => $establecimiento_edificio_id)));
+        return $this->redirect($this->generateUrl('backend_localizacion'));
     }
 
     private function createDeleteForm($id) {

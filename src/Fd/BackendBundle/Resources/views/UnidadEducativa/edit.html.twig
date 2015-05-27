@@ -1,3 +1,5 @@
+{# editar unidad educativa del backend #}
+
 {% extends 'BackendBundle::layout.html.twig' %}
      
 {% import ':Form:macro_twig.html.twig' as collection_macro %}
@@ -14,7 +16,7 @@
 
 
 {% block title %}
- {{ parent() }} - Editar Localizacion
+ {{ parent() }} - Editar Unidad Educativa
 {% endblock %}
 
 {% block main_content %}
@@ -30,11 +32,13 @@
         {{ form_row(edit_form.nivel) }}
         {{ form_row(edit_form.establecimiento) }}
         {{ form_row(edit_form.descripcion) }}
-        {{ form_row(edit_form.nombre_autoridad) }}
-        {{ form_row(edit_form.cargo_autoridad) }}
+{# por ahora no se usan       #}
+{#        {{ form_row(edit_form.nombre_autoridad) }}#}
+{#        {{ form_row(edit_form.cargo_autoridad) }}#}
     </div> 
 
-    {% if entity.isInicial %}
+{# FALTA por ahora se anula hasta la revision #}
+{#    {% if entity.isInicial %}
         <div class="float_derecha">
             <span>
                 <a href="{{ path('backend_inicial_x_edit', {'inicial_x_id': inicial_x.id, 'unidad_educativa_id': entity.id} ) }}">
@@ -42,7 +46,7 @@
                 </a>
             </span>
         </div>
-    {% endif %}
+    {% endif %}#}
     <br />
      
     {{ form_rest(edit_form) }}    

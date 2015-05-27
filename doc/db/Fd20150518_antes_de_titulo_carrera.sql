@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 18-05-2015 a las 13:55:46
+-- Tiempo de generación: 22-05-2015 a las 14:36:56
 -- Versión del servidor: 5.1.66
 -- Versión de PHP: 5.3.3-7+squeeze16
 
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `aviso` (
   `fecha` date NOT NULL,
   `activo` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Volcar la base de datos para la tabla `aviso`
@@ -125,7 +125,8 @@ INSERT INTO `aviso` (`id`, `descripcion`, `fecha`, `activo`) VALUES
 (4, 'Los nombres de las carreras de la oferta 2015 tienen que ser revisados a partir de las nuevas resoluciones jurisdiccionales', '2015-05-08', 1),
 (5, 'Cargué la oferta del IES 1', '2015-05-13', 1),
 (6, 'Terminé de cargar la oferta de las carreras nuevas (oferta 2015). Son las activas. Sobre las residuales habría que hacer un estudio.', '2015-05-14', 1),
-(7, 'Se le agrega el campo "comentarios" a las carreras para poner información como por ejemplo la incumbencia (o lo que sea).', '2015-05-18', 1);
+(7, 'Se le agrega el campo "comentarios" a las carreras para poner información como por ejemplo la incumbencia (o lo que sea).', '2015-05-18', 1),
+(8, 'Ya se pueden cargar los títulos de las carreras y asignárselos a las carreras.', '2015-05-22', 1);
 
 -- --------------------------------------------------------
 
@@ -1439,7 +1440,9 @@ INSERT INTO `migration_versions` (`version`) VALUES
 ('20150319164949'),
 ('20150422184427'),
 ('20150517214010'),
-('20150518133800');
+('20150518133800'),
+('20150519150003'),
+('20150519170929');
 
 -- --------------------------------------------------------
 
@@ -2173,7 +2176,7 @@ INSERT INTO `portada` (`id`, `tabla`, `descripcion`, `actualizado`, `creado`, `u
 (31, 'Unidad Educativa', 'Queda determinada por el nivel y la modalidad de enseñanza (en nuestros casos siempre modalidad común. ', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'backend_unidad_educativa'),
 (32, 'Unidad Oferta', '', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'backend_unidadoferta'),
 (33, 'Vecino', 'Con quien se comparte edificio', '2014-02-27 17:03:24', '2014-02-27 17:03:24', 'vecino'),
-(35, 'Título', 'De la carrera', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'backend_titulo_buscar'),
+(35, 'Título de una Carrera', 'Título asociado a una carrera', '2015-05-21 00:00:00', '2015-05-21 00:00:00', 'backend_titulocarrera_buscar'),
 (36, 'Recursos', 'Laboratorios, bibiotecas, etc', '2014-04-22 00:00:00', '2014-04-22 00:00:00', 'recurso'),
 (37, 'EstablecimientoRecurso', 'Relación entre establecimiento y los recursos que tiene', '2014-04-22 00:00:00', '2014-04-22 00:00:00', 'establecimiento_recurso'),
 (39, 'OrigenHora', 'Si un lab/centro se financia por POF u horas cátedra', '2014-05-23 10:10:10', '2014-05-23 10:10:10', 'en_desarrollo');
@@ -2533,55 +2536,29 @@ INSERT INTO `tipo_trayecto` (`id`, `codigo`, `descripcion`, `orden`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `titulo`
+-- Estructura de tabla para la tabla `titulo_carrera`
 --
 
-CREATE TABLE IF NOT EXISTS `titulo` (
+CREATE TABLE IF NOT EXISTS `titulo_carrera` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `carrera_id` int(11) DEFAULT NULL,
   `estado_id` int(11) DEFAULT NULL,
-  `estado_validez_id` int(11) DEFAULT NULL,
   `nombre` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `fecha_estado_validez` date DEFAULT NULL,
-  `validez_desde` date DEFAULT NULL,
-  `validez_hasta` date DEFAULT NULL,
   `actualizado` datetime NOT NULL,
   `creado` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `IDX_17713E5AC671B40F` (`carrera_id`),
-  KEY `IDX_17713E5A9F5A440B` (`estado_id`),
-  KEY `IDX_17713E5A2C22C346` (`estado_validez_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+  UNIQUE KEY `UNIQ_955288BA3A909126` (`nombre`),
+  KEY `IDX_955288BAC671B40F` (`carrera_id`),
+  KEY `IDX_955288BA9F5A440B` (`estado_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
--- Volcar la base de datos para la tabla `titulo`
+-- Volcar la base de datos para la tabla `titulo_carrera`
 --
 
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `titulo_estado_validez`
---
-
-CREATE TABLE IF NOT EXISTS `titulo_estado_validez` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `titulo_id` int(11) DEFAULT NULL,
-  `estado_validez_id` int(11) DEFAULT NULL,
-  `fecha_estado_validez` date DEFAULT NULL,
-  `validez_desde` date DEFAULT NULL,
-  `validez_hasta` date DEFAULT NULL,
-  `actualizado` datetime NOT NULL,
-  `creado` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_44057B5561AD3496` (`titulo_id`),
-  KEY `IDX_44057B552C22C346` (`estado_validez_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-
---
--- Volcar la base de datos para la tabla `titulo_estado_validez`
---
-
+INSERT INTO `titulo_carrera` (`id`, `carrera_id`, `estado_id`, `nombre`, `actualizado`, `creado`) VALUES
+(1, 71, 1, 'Profesor/a de Educación Inicial', '2015-05-21 15:26:03', '2015-05-21 15:24:57'),
+(2, 86, 1, 'Profesor/a de Educación Superior en Educación Física', '2015-05-21 15:26:36', '2015-05-21 15:25:18');
 
 -- --------------------------------------------------------
 
@@ -2608,26 +2585,6 @@ INSERT INTO `turno` (`id`, `codigo`, `descripcion`, `orden`) VALUES
 (32, 'NA', 'No aplica', 6),
 (33, 'JC', 'Jornada completa', 4),
 (34, 'VS', 'Viernes noche y sábado', 5);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `turno_unidad_educativa`
---
-
-CREATE TABLE IF NOT EXISTS `turno_unidad_educativa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `unidad_educativa_id` int(11) DEFAULT NULL,
-  `turno_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_167633EABF20CF2F` (`unidad_educativa_id`),
-  KEY `IDX_167633EA69C5211E` (`turno_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-
---
--- Volcar la base de datos para la tabla `turno_unidad_educativa`
---
-
 
 -- --------------------------------------------------------
 
@@ -3562,7 +3519,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 
 INSERT INTO `usuario` (`id`, `nombre`, `apellido`, `email`, `password`, `salt`, `direccion`, `permite_mail`, `fecha_alta`, `fecha_nacimiento`, `dni`, `nombre_usuario`, `conexion_anterior`, `actualizado`, `creado`, `conexion_actual`, `rol`) VALUES
 (11, 'Juan', 'Perez', 'jp@jp.com.ar', 'H3eY4UnHdXuNfkHdqX5B0Chm7WIRMNGxevv3Ojgu8IVaLFNEDHxlJ4HEhUU3Zg1w+mtLoVjY/xf6EWG/0M4jnw==', 'cca869da65d0697abf2b9c683ab020ab', NULL, 0, '2012-10-29 14:55:14', NULL, NULL, 'juan', '2014-02-21 17:16:16', '2014-09-25 10:00:49', '0000-00-00 00:00:00', '2014-09-25 10:00:49', 'ROLE_USER'),
-(12, 'Marcelo', 'Prizmic', 'mp@mp.com.ar', 'H2M3+bRrxaeJRi6w06qugs5H1e08SxW+G1IcXBh5rVDMM3BygrwKrntJ+H9kc19DLcUASYmZ/gUzubWnWeNa+A==', '85d9a3e715c90058f0cd91d51b62de9a', NULL, 0, '2012-10-29 14:55:14', '1963-02-23 00:00:00', NULL, 'marcelo', '2015-05-14 16:22:47', '2015-05-18 11:09:13', '0000-00-00 00:00:00', '2015-05-18 11:09:13', 'ROLE_SUPER_ADMIN'),
+(12, 'Marcelo', 'Prizmic', 'mp@mp.com.ar', 'H2M3+bRrxaeJRi6w06qugs5H1e08SxW+G1IcXBh5rVDMM3BygrwKrntJ+H9kc19DLcUASYmZ/gUzubWnWeNa+A==', '85d9a3e715c90058f0cd91d51b62de9a', NULL, 0, '2012-10-29 14:55:14', '1963-02-23 00:00:00', NULL, 'marcelo', '2015-05-22 09:35:08', '2015-05-22 09:38:09', '0000-00-00 00:00:00', '2015-05-22 09:38:09', 'ROLE_SUPER_ADMIN'),
 (13, 'secreataria', 'dfd', 'xx@cc.com', 'zSUjLyUFmW2HYrAROe4sNnX6QCj+wLvUIlOce54aRlCTqY7pC/OKhWh0Ma6uEEdFyUZZ/uiXpiPXmkJruCxW5A==', '2404f39d0f051dab2c13ac5700ce2b32', NULL, 0, '2014-02-20 18:30:16', '1903-04-03 00:00:00', NULL, 'secretaria', '2014-09-25 10:37:08', '2014-10-27 12:30:42', '2014-02-20 18:30:16', '2014-10-27 12:30:41', 'ROLE_ADMIN'),
 (14, 'lili', 'garcia dominguez', 'g@g.com', 'zSUjLyUFmW2HYrAROe4sNnX6QCj+wLvUIlOce54aRlCTqY7pC/OKhWh0Ma6uEEdFyUZZ/uiXpiPXmkJruCxW5A==', '2404f39d0f051dab2c13ac5700ce2b32', NULL, 0, '2014-02-20 18:46:03', NULL, NULL, 'lili', '2014-09-25 10:06:13', '2014-09-26 14:19:15', '2014-02-20 18:46:03', '2014-09-26 14:19:15', 'ROLE_ADMIN'),
 (15, 'andres', 'zetko', 'a@a.com', 'zSUjLyUFmW2HYrAROe4sNnX6QCj+wLvUIlOce54aRlCTqY7pC/OKhWh0Ma6uEEdFyUZZ/uiXpiPXmkJruCxW5A==', '2404f39d0f051dab2c13ac5700ce2b32', NULL, 0, '2014-02-20 19:12:58', NULL, NULL, 'andres', '2015-05-12 14:48:36', '2015-05-14 10:32:08', '2014-02-20 19:12:58', '2015-05-14 10:32:08', 'ROLE_USUARIO'),
@@ -3784,26 +3741,11 @@ ALTER TABLE `sala`
   ADD CONSTRAINT `FK_E226041C940B40B8` FOREIGN KEY (`inicial_x_id`) REFERENCES `inicial_x` (`id`);
 
 --
--- Filtros para la tabla `titulo`
+-- Filtros para la tabla `titulo_carrera`
 --
-ALTER TABLE `titulo`
-  ADD CONSTRAINT `FK_17713E5A2C22C346` FOREIGN KEY (`estado_validez_id`) REFERENCES `estado_validez` (`id`),
-  ADD CONSTRAINT `FK_17713E5A9F5A440B` FOREIGN KEY (`estado_id`) REFERENCES `estado_carrera` (`id`),
-  ADD CONSTRAINT `FK_17713E5AC671B40F` FOREIGN KEY (`carrera_id`) REFERENCES `carrera` (`id`);
-
---
--- Filtros para la tabla `titulo_estado_validez`
---
-ALTER TABLE `titulo_estado_validez`
-  ADD CONSTRAINT `FK_44057B552C22C346` FOREIGN KEY (`estado_validez_id`) REFERENCES `estado_validez` (`id`),
-  ADD CONSTRAINT `FK_44057B5561AD3496` FOREIGN KEY (`titulo_id`) REFERENCES `titulo` (`id`);
-
---
--- Filtros para la tabla `turno_unidad_educativa`
---
-ALTER TABLE `turno_unidad_educativa`
-  ADD CONSTRAINT `FK_167633EA69C5211E` FOREIGN KEY (`turno_id`) REFERENCES `turno` (`id`),
-  ADD CONSTRAINT `FK_167633EABF20CF2F` FOREIGN KEY (`unidad_educativa_id`) REFERENCES `unidad_educativa` (`id`);
+ALTER TABLE `titulo_carrera`
+  ADD CONSTRAINT `FK_955288BA9F5A440B` FOREIGN KEY (`estado_id`) REFERENCES `estado_carrera` (`id`),
+  ADD CONSTRAINT `FK_955288BAC671B40F` FOREIGN KEY (`carrera_id`) REFERENCES `carrera` (`id`);
 
 --
 -- Filtros para la tabla `unidadoferta_turno`

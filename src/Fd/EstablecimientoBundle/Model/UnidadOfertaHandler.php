@@ -38,7 +38,7 @@ class UnidadOfertaHandler {
     /**
      * Por ahora es para actualizar los turnos de los terciarios
      */
-    public function actualizar($entity, $turnos){
+    public function actualizar(UnidadOferta $entity, $turnos){
         return $this->strategy_instance->actualizar( $entity, $turnos);
     }
     
@@ -47,10 +47,6 @@ class UnidadOfertaHandler {
         return $this->strategy_instance->crear( $localizacion, $oferta_educativa);
     }
 
-//    public function getUnidadEducativa() {
-//        
-//        return $this->unidad_educativa;
-//    }
     /**
      * Elimina 1 unidad_oferta determinada
      * 
@@ -60,13 +56,13 @@ class UnidadOfertaHandler {
         return $this->strategy_instance->eliminar( $unidad_oferta, $flush );
     }
     /**
-     * Elimina todas las unidad_oferta de una unidad educativa
+     * Elimina todas las unidad_oferta de una localizacion de una unidad educativa
      * 
      * @param type $unidad_educativa
      * @return type
      */
-    public function eliminarAll( $unidad_educativa, $flush = true ){
-        return $this->strategy_instance->eliminarAll( $unidad_educativa, $flush);
+    public function eliminarAll( Localizacion $localizacion, $flush = true ){
+        return $this->strategy_instance->eliminarAll( $localizacion, $flush);
     }
 
 }
