@@ -58,19 +58,6 @@ class CarreraManager implements AsignarVisitadoInterface {
                 $this->em->remove($orientacion);
             }
 
-            // filter $originalTags to contain tags no longer present
-            foreach ($entity->getTitulos() as $titulo) {
-                foreach ($originalTitulos as $key => $toDel) {
-                    if ($toDel->getId() === $titulo->getId()) {
-                        unset($originalTitulos[$key]);
-                    }
-                }
-            }
-            // remove the relationship between the tag and the Task
-            foreach ($originalTitulos as $titulo) {
-                $this->em->remove($titulo);
-            }
-
             $this->em->persist($entity);
 
             $this->em->flush();
