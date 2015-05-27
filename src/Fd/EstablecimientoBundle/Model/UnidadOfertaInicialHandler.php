@@ -93,5 +93,31 @@ class UnidadOfertaInicialHandler {
 
         return $respuesta;
     }
+    /**
+     * Elimina un registro de unidad_oferta para inicial.
+     * 
+     * Al borrar la unidad_oferta hay que eliminar los turnos de unidadoferta_turnos porque 
+     * unidad_oferta es el lado inverso de la relacion.
+     * 
+     * Además falta borrar las salas, si existen
+     * 
+     */
+    public function eliminar($unidad_oferta, $flush = true) {
+        $respuesta = new Respuesta();
 
+        try {
+            $this->getEm()->remove($unidad_oferta);
+            
+            if ($flush) {
+                $this->getEm()->flush();
+            };
+
+            $respuesta->setCodigo(1);
+            $respuesta->setMensaje('Se eliminó la oferta educativa para el establecimiento seleccionado.');
+        } catch (Exception $e) {
+            $respuesta->setCodigo(2);
+            $respuesta->setMensaje('No se pudo eliminar. Verifíquelo y reintente.');
+        };
+        return $respuesta;
+    }
 }
