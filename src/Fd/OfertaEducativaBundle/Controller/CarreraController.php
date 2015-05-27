@@ -213,6 +213,7 @@ class CarreraController extends Controller {
             'titulo' => 'Nueva',
             'entity' => $entity,
             'accion' => 'crear',
+            'buscar_titulo'=>'no',
         ));
 
         return new Response($content);
@@ -244,6 +245,7 @@ class CarreraController extends Controller {
                     'formulario' => $form->createView(),
                     'titulo' => 'Nueva',
                     'accion' => 'crear',
+                    'buscar_titulo' => 'no',
         ));
     }
 
@@ -280,7 +282,7 @@ class CarreraController extends Controller {
 
         //creo el boton de eliminar, que es un formulario
         $deleteForm = $this->createDeleteForm($entity->getId());
-        
+
         $searchTituloForm = $this->searchFormTitulo();
 
         $resultado_busqueda_titulo = array();
@@ -299,7 +301,7 @@ class CarreraController extends Controller {
             } else {
                 $resultado_busqueda_titulo = array();
             }
-        };        
+        };
         //renderizo en la plantilla correpondiente
         $engine = $this->container->get('templating');
         $content = $engine->render('OfertaEducativaBundle:Carrera:carrera.html.twig', array(
@@ -309,18 +311,18 @@ class CarreraController extends Controller {
             'accion' => 'actualizar',
             'delete_form' => $deleteForm->createView(),
             'buscar_titulo' => $buscar_titulo,
-            'searchTituloForm'=> $searchTituloForm->createView(),
+            'searchTituloForm' => $searchTituloForm->createView(),
             'resultado_busqueda_titulo' => $resultado_busqueda_titulo,
         ));
 
         return new Response($content);
     }
 
-    private function generarDatosTitulos($searchTituloForm){
-        
+    private function generarDatosTitulos($searchTituloForm) {
+
         $filterBuilder = $this->getEm()
-                ->getRepository('OfertaEducativaBundle:TituloCarrera')
-                ->createQueryBuilder('tc')->orderBy('tc.nombre');
+                        ->getRepository('OfertaEducativaBundle:TituloCarrera')
+                        ->createQueryBuilder('tc')->orderBy('tc.nombre');
 
         // build the query from the given form object
         $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($searchTituloForm, $filterBuilder);
@@ -328,12 +330,13 @@ class CarreraController extends Controller {
         //hay por lo menos un campo con algo
         return $filterBuilder->getQuery()->getResult();
     }
+
     /**
      * genera el formulario para buscar un titulo para la carrera
      * @param type $datos_sesion
      * @return typea
      */
-    private function searchFormTitulo($datos_sesion = null){
+    private function searchFormTitulo($datos_sesion = null) {
 
         $carrera_manager = new CarreraManager($this->getEm());
 
@@ -342,9 +345,9 @@ class CarreraController extends Controller {
         if ($datos_sesion)
             $form->setData($datos_sesion);
 
-        return $form; 
-        
+        return $form;
     }
+
     private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
                         ->add('id', 'hidden')
@@ -407,6 +410,7 @@ class CarreraController extends Controller {
                     'entity' => $entity,
                     'accion' => 'actualizar',
                     'delete_form' => $delete_form->createView(),
+                    'buscar_titulo' => 'no',
         ));
     }
 
@@ -918,13 +922,13 @@ class CarreraController extends Controller {
      * @ParamConverter("titulocarrera", class="OfertaEducativaBundle:TituloCarrera", options={ "id"="titulocarrera_id"} )
      */
     public function vincularTituloAction($carrera, $titulocarrera, $accion) {
-        
+
         $tc_manager = new TituloCarreraManager($this->getEm());
-        
+
         $respuesta = $tc_manager->vincular_a_carrera($carrera, $titulocarrera, $accion, true);
 
         $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
-       
+
         return $this->redirect($this->generateUrl('carrera_editar', array('id' => $carrera->getId())));
     }
 
