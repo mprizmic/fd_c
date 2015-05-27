@@ -4,6 +4,7 @@ namespace Fd\EstablecimientoBundle\Model;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormInterface;
+use Fd\EdificioBundle\Model\DomicilioLocalizacionManager;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
@@ -144,6 +145,8 @@ class LocalizacionManager  {
 
         //repositorio de la tabla que se actualiza
         $repo_dl = $this->em->getRepository('EdificioBundle:DomicilioLocalizacion');
+        
+        $domicilio_localizacion_manager = new DomicilioLocalizacionManager($this->em);
 
         /**
          * Si es principal no se toca.
@@ -168,10 +171,10 @@ class LocalizacionManager  {
 
                     if (!$domicilio_localizacion) {
                         //no existe y se crea
-                        $domicilio_bd = $em->getRepository('EdificioBundle:Domicilio')
+                        $domicilio_bd = $this->em->getRepository('EdificioBundle:Domicilio')
                                 ->find($domicilio['domicilio_id']);
 
-                        $respuesta = $repo_dl->crear($entity, $domicilio_bd);
+                        $respuesta = $domicilio_localizacion_manager->crear($entity, $domicilio_bd);
                         //ante la primera falla en la grabación se corta el proceso
                         if ($respuesta->getCodigo() != 1) {
                             //se corta el proceso porque hubo un error al grabar algún dato
@@ -183,7 +186,7 @@ class LocalizacionManager  {
                         $domicilio_bd = $this->em->getRepository('EdificioBundle:Domicilio')
                                 ->find($domicilio['domicilio_id']);
 
-                        $respuesta = $repo_dl->eliminar($domicilio_localizacion);
+                        $respuesta = $domicilio_localizacion_manager->eliminar($domicilio_localizacion);
                         //ante la primera falla en la grabación se corta el proceso
                         if ($respuesta->getCodigo() != 1) {
                             //se corta el proceso porque hubo un error al grabar algún dato
