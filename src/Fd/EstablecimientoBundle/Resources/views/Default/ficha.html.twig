@@ -56,6 +56,9 @@
             {% endfor %}
 
             <br />
+            <span>
+                Fecha de creación del establecimiento: {{ establecimiento.fechaCreacion|default('s/d') }}
+            </span><br />
             <span>Fecha de las elecciones:
                 {% if establecimiento.fechaElecciones %}
                     {{ establecimiento.fechaElecciones|date('d-m-Y') }}
