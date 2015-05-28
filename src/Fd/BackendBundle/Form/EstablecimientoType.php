@@ -42,7 +42,7 @@ class EstablecimientoType extends AbstractType {
                     'help' => 'Es un número del establecimiento',
                     'attr' => array(
                         'class' => 'input_talle_05',
-                        )))
+            )))
                 ->add('email')
                 ->add('url', 'text', array(
                     'required' => false,
@@ -52,14 +52,13 @@ class EstablecimientoType extends AbstractType {
                 ))
                 ->add('cargo_autoridad')
                 ->add('nombre_autoridad')
-//                ->add('fecha_creacion', 'date', array(
-//                    'label' => 'Fecha de creación',
-//                ))
                 ->add('fecha_elecciones', 'date', array(
+                    'years' => range(2000, 2037),
                     'label' => 'Fecha de las próximas elecciones',
                     'required' => false,
                 ))
                 ->add('fin_mandato', 'date', array(
+                    'years' => range(2000, 2037),
                     'label' => 'Fin del mandato',
                     'required' => false,
                 ))
@@ -67,13 +66,18 @@ class EstablecimientoType extends AbstractType {
 //                    'label' => 'Comparte edificio',
 //                    'required' => false,
 //                ))
-                ->add('fecha_creacion', 'date', array(
+                //no se puede usar un campo date porque php en 32 bits no calcula fechas anteriores a 1902
+                ->add('fecha_creacion', 'text', array(
                     'label' => 'Fecha de creación',
                     'required' => false,
+                    'attr' => array(
+                        'class' => 'input_talle_05',
+                    ),
+                    'help'=>'Formato dd-mm-aaa',
                 ))
                 ->add('tiene_cooperadora', 'si_no_sd', array(
                     'required' => false,
-                    'label'=>'Tiene cooperadora',
+                    'label' => 'Tiene cooperadora',
                     'required' => true,
                 ))
                 ->add('distrito_escolar')

@@ -83,7 +83,12 @@ class Establecimiento {
 
     /**
      *
-     * @ORM\Column(type="date", nullable=true)        hacer que se puedan guardar los temas de infraestructura y guardar adjuntos
+     * @ORM\Column(type="string", length=10, nullable=true)        hacer que se puedan guardar los temas de infraestructura y guardar adjuntos
+     * @Assert\Regex(pattern="/([0-9]{2})\-([0-9]{2})-([0-9]{4})/i",
+     *     message="La fecha no tiene formato correcto. Debe ser dd-mm-aaaa"
+     * )
+     * @Assert\MaxLength(10)
+     * @Assert\MinLength(10)
      */
     private $fecha_creacion;
 
