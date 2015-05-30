@@ -32,6 +32,66 @@ class EstablecimientoController extends Controller {
         return $this->getEm()
                         ->getRepository('EstablecimientoBundle:Establecimiento');
     }
+
+    /**
+     * Emite un listado con los establecimientos que cumplen aniversarios significativos en los próximos años
+     * @Route("/aniversarios_significativos", name="establecimiento_aniversarios_significativos")
+     */
+    public function aniversarios_significativosAction() {
+
+        // intervalos de interes
+        $intervalos = array(10, 20, 30, 40, 50, 75, 100, 110, 120, 130, 140, 150, 175, 200);
+
+        $establecimientos = $this->getRepositorio()
+                ->createQueryBuilder('e')
+                ->select('e.apodo')
+                ->addSelect('e.fecha_creacion')
+                ->where('e.fecha_creacion is not NULL')
+                ->andWhere('LENGTH(e.fecha_creacion) > 0')
+                ->getQuery()
+                ->getArrayResult();
+
+        foreach ($establecimientos as $key => $establecimiento) {
+            $this->proximo_aniversario($establecimiento, $intervalos);
+            $aniversarios[] = $this->proximo_aniversario($establecimiento, $intervalos);
+        }
+        
+        //ordenar el vector por el campo anio_calendario
+        function build_sorter($clave) {
+            return function ($a, $b) use ($clave) {
+                return strnatcmp($a[$clave], $b[$clave]);
+            };
+        }
+
+        usort($aniversarios, build_sorter('anio_calendario'));
+
+        return $this->render('EstablecimientoBundle:Default:aniversarios_significativos.html.twig', array(
+                    'aniversarios' => $aniversarios,
+                ))
+        ;
+    }
+
+    private function proximo_aniversario($establecimiento, $intervalos) {
+        
+        // le calculo la edad al establecimiento
+        $anio_creacion = substr($establecimiento['fecha_creacion'], 6,4);
+        $edad = date('Y') - $anio_creacion;
+        
+        //veo cual es el aniversario que está por cumplir
+        $aniversario = 0;
+        foreach ($intervalos as $value) {
+            if ($edad <= $value ){ 
+                $aniversario = $value; 
+                break;
+            };
+        }
+        
+        $establecimiento['aniversario'] = $aniversario;
+        $establecimiento['anio_calendario'] = $anio_creacion + $aniversario;
+        
+        return $establecimiento;
+    }
+
     /**
      * Listado de docentes por nivel de cada establecimiento
      *
@@ -48,8 +108,6 @@ class EstablecimientoController extends Controller {
                 ))
         ;
     }
-
-
 
     /**
      * @Route("/damero", name="establecimiento_damero")
@@ -88,37 +146,37 @@ class EstablecimientoController extends Controller {
      */
     public function fichaAction($establecimiento) {
         $request = $this->getRequest();
-        
+
         // establezco la ruta para la pagina que tenga que volver aca
         $this->get('session')->set('ruta_completa', $request->get('_route'));
         $this->get('session')->set('parametros', $request->get('_route_params'));
-        
+
         //repositorio de establecimiento
         $repo = $this->getDoctrine()->getRepository('EstablecimientoBundle:Establecimiento');
-        
+
         $establecimientos = $repo->qyAllOrdenado('orden')->getResult();
-        
+
         //son obj establecimiento_edificio
         $establecimiento_edificios = $repo->findEdificios($establecimiento);
-        
-        foreach($establecimiento_edificios as $key => $establecimiento_edificio){
-            
+
+        foreach ($establecimiento_edificios as $key => $establecimiento_edificio) {
+
             $domicilio = $establecimiento_edificio->getEdificios()->getDomicilioPrincipal();
-            
+
             $establecimiento_edificio_array[$key]['id'] = $establecimiento_edificio->getId();
             $establecimiento_edificio_array[$key]['cue_anexo'] = $establecimiento_edificio->getCueAnexo();
-            
+
             $establecimiento_edificio_array[$key]['domicilio']['calle'] = $domicilio->getCalle();
             $establecimiento_edificio_array[$key]['domicilio']['altura'] = $domicilio->getAltura();
-            
-                $datos_grales['te'] = $establecimiento_edificio->getTe1();
-                $datos_grales['barrio'] = $establecimiento_edificio->getEdificios()->getBarrio();
-                $datos_grales['cp'] = $domicilio->getCPostal();
-                $datos_grales['email'] = $establecimiento_edificio->getEmail1();
-            
-            
+
+            $datos_grales['te'] = $establecimiento_edificio->getTe1();
+            $datos_grales['barrio'] = $establecimiento_edificio->getEdificios()->getBarrio();
+            $datos_grales['cp'] = $domicilio->getCPostal();
+            $datos_grales['email'] = $establecimiento_edificio->getEmail1();
+
+
             $establecimiento_edificio_array[$key]['datos_grales'] = $datos_grales;
-            
+
             /**
              * establecimiento_edificio_array[][id]
              * establecimiento_edificio_array[][cue_anexo]
@@ -142,7 +200,7 @@ class EstablecimientoController extends Controller {
              */
             $unidad_educativas = array();
             foreach ($establecimiento_edificio->getLocalizacion() as $key2 => $localizacion) {
-                
+
                 $nivel = $localizacion->getUnidadEducativa()->getNivel();
 
                 $unidad_educativas[$key2] = array();
@@ -152,7 +210,7 @@ class EstablecimientoController extends Controller {
                 $unidad_educativas[$key2]['cantidad_docentes'] = $localizacion->getCantidadDocentes();
                 $unidad_educativas[$key2]['localizacion_id'] = $localizacion->getId();
 
-            
+
                 /**
                  * de cada localizacion se toman todas sus unidades ofertas asociadas al nivel
                  */
@@ -163,31 +221,28 @@ class EstablecimientoController extends Controller {
                     $unidad_ofertas[$key_uo]['turnos'] = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')->findTurnosArray($unidad_oferta);
                     $tipo = $unidad_oferta->getOfertas()->esTipo();
                     $unidad_ofertas[$key_uo]['tipo'] = $tipo;
-                    if ($tipo == 'Carrera'){
-                        $carrera = $unidad_oferta->getOfertas()->getCarrera(); 
+                    if ($tipo == 'Carrera') {
+                        $carrera = $unidad_oferta->getOfertas()->getCarrera();
                         $unidad_ofertas[$key_uo]['carrera'] = $carrera->getIdentificacion();
                         $unidad_ofertas[$key_uo]['carrera_id'] = $carrera->getId();
                     }
-                    
                 }
                 /**
                  * guardo todas las ofertas de un nivel
                  */
                 $unidad_educativas[$key2]['ofertas'] = $unidad_ofertas;
-                
+
                 $unidad_educativas[$key2]['turnos_nivel'] = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')->findTurnos($localizacion);
-                
             }
-            
+
             $establecimiento_edificio_array[$key]['unidad_educativas'] = $unidad_educativas;
-            
+
             /**
              * turnos en que funciona la oferta de cada nivel de cada sede
              * se calcula por el nivel de la unidad_oferta
              * puede haber unidad_oferta con turno distinto de nivel repetido y hay que considerarlo
              * ej: carrrera 1 TM y TV, carrera 2 TV y TT. El resultado es que Terciario tiene TM. TT y TV
              */
-                    
         }
 
         return array(
@@ -254,6 +309,7 @@ class EstablecimientoController extends Controller {
                     'establecimiento' => $establecimiento,
         ));
     }
+
     /**
      * @Route("/tarjeta_establecimiento_edificio/{establecimiento_edificio_id}", name="tarjeta_establecimiento_edificio")
      * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:EstablecimientoEdificio", options={"id", "establecimiento_edificio_id"})

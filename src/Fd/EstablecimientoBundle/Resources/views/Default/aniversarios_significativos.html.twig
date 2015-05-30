@@ -1,0 +1,31 @@
+{# listado de establecimientos que cumplen aniversarios #}
+
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Aniversarios significativos</div>
+
+<div class="limpiar_float"></div>
+<br />
+
+<table class="grilla">
+    <tr>
+        <th>Año</th>
+        <th>Aniversario</th>
+        <th>Establecimiento</th>
+        <th>Fecha de creación</th>
+    </tr>
+
+    {% for aniversario in aniversarios %}
+    <tr>
+        <td>{{ aniversario['anio_calendario'] }}</td>
+        <td>{{ aniversario['aniversario'] ~ ' años'}}</td>
+        <td>{{ aniversario['apodo'] }}</td>
+        <td>{{ aniversario['fecha_creacion'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
