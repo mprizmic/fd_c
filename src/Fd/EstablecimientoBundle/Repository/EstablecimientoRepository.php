@@ -12,7 +12,8 @@ class EstablecimientoRepository extends EntityRepository {
     public function qbAll() {
         return $this->createQueryBuilder('e');
     }
-    public function qbAllOrdenado(){
+
+    public function qbAllOrdenado() {
         return $this->qbAll()->orderBy('e.orden', 'ASC');
     }
 
@@ -75,12 +76,13 @@ class EstablecimientoRepository extends EntityRepository {
         };
         return $edificio;
     }
+
     /**
      * devuelve los edificios de un establecimiento
      * 
      * @return arraycollection de EstablecimientoEdificio
      */
-    public function findEdificios($establecimiento){
+    public function findEdificios($establecimiento) {
         return $this->_em->getRepository('EstablecimientoBundle:EstablecimientoEdificio')->findEdificios($establecimiento);
     }
 
@@ -136,7 +138,6 @@ class EstablecimientoRepository extends EntityRepository {
         return $q->getResult();
     }
 
-
     /**
      * FALTA se modifica suponiendo que puede existir unidad_oferta de primario pero no primario_x
      * Devuelve la oferta de primario , si tiene
@@ -184,6 +185,7 @@ class EstablecimientoRepository extends EntityRepository {
     public function combo() {
         return $this->findAllOrdenado('orden');
     }
+
     /*
      * FALTA cambia a partir del cambio de localizacion de la oferta
      * 
@@ -191,8 +193,28 @@ class EstablecimientoRepository extends EntityRepository {
      * 
      * Devuelve un array con los ingresantes, matriculados y egresador de un año en particular de carreras del terciario
      */
+
 //    public function findMatriculaCarrera($anio, $carrera = null, $establecimiento=null){
 //        return $this->_em->getRepository('EstablecimientoBundle:UnidadOferta')
 //                ->findMatriculaCarrera($anio, $carrera, $establecimiento);
 //    }
+    /**
+     * establecimientos con fecha de creación
+     */
+    public function findFechasCreacion($tienen_fecha_creacion = true) {
+        $qb = $this->createQueryBuilder('e')
+                ->select('e.apodo')
+                ->addSelect('e.fecha_creacion');
+
+        if ($tienen_fecha_creacion) {
+            $qb->where('e.fecha_creacion is not NULL')
+                    ->andWhere('LENGTH(e.fecha_creacion) > 0');
+        } else {
+            $qb->where('e.fecha_creacion is NULL')
+                    ->orWhere('LENGTH(e.fecha_creacion) = 0');
+        }
+        return $qb->getQuery()
+                ->getArrayResult();
+    }
+
 }

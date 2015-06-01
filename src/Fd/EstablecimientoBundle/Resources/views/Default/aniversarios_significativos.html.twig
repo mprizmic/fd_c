@@ -47,4 +47,18 @@
 
 <br /><br />
 
+{% if establecimientos_sin_fecha | length > 0 %}
+    <div class="resaltado">
+        Establecimientos que no tienen la fecha de creación cargada:
+    </div>
+    <div>
+        {% for sin_fecha in establecimientos_sin_fecha %}
+            {{ sin_fecha['apodo'] }}
+            <br />
+        {% endfor %}
+    </div>
+{% endif %}
+
+<br /><br />
+
 {% endblock %}

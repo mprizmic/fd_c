@@ -43,13 +43,7 @@ class EstablecimientoController extends Controller {
         $intervalos = array(10, 20, 30, 40, 50, 75, 100, 110, 120, 130, 140, 150, 175, 200);
 
         $establecimientos = $this->getRepositorio()
-                ->createQueryBuilder('e')
-                ->select('e.apodo')
-                ->addSelect('e.fecha_creacion')
-                ->where('e.fecha_creacion is not NULL')
-                ->andWhere('LENGTH(e.fecha_creacion) > 0')
-                ->getQuery()
-                ->getArrayResult();
+                ->findFechasCreacion();
 
         foreach ($establecimientos as $key => $establecimiento) {
             $this->proximo_aniversario($establecimiento, $intervalos);
@@ -64,10 +58,14 @@ class EstablecimientoController extends Controller {
         }
 
         usort($aniversarios, build_sorter('anio_calendario'));
+        
+        //se buscan los establecimientos que no tienen cargada la fecha de creación para imformarlos en el listado
+        $establecimientos_sin_fecha = $this->getRepositorio()->findFechasCreacion(false);
 
         return $this->render('EstablecimientoBundle:Default:aniversarios_significativos.html.twig', array(
                     'aniversarios' => $aniversarios,
                     'intervalos' => $intervalos,
+                    'establecimientos_sin_fecha'=> $establecimientos_sin_fecha,
                 ))
         ;
     }
