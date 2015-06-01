@@ -55,7 +55,7 @@ class EstablecimientoController extends Controller {
             $this->proximo_aniversario($establecimiento, $intervalos);
             $aniversarios[] = $this->proximo_aniversario($establecimiento, $intervalos);
         }
-        
+
         //ordenar el vector por el campo anio_calendario
         function build_sorter($clave) {
             return function ($a, $b) use ($clave) {
@@ -67,28 +67,29 @@ class EstablecimientoController extends Controller {
 
         return $this->render('EstablecimientoBundle:Default:aniversarios_significativos.html.twig', array(
                     'aniversarios' => $aniversarios,
+                    'intervalos' => $intervalos,
                 ))
         ;
     }
 
     private function proximo_aniversario($establecimiento, $intervalos) {
-        
+
         // le calculo la edad al establecimiento
-        $anio_creacion = substr($establecimiento['fecha_creacion'], 6,4);
+        $anio_creacion = substr($establecimiento['fecha_creacion'], 6, 4);
         $edad = date('Y') - $anio_creacion;
-        
+
         //veo cual es el aniversario que está por cumplir
         $aniversario = 0;
         foreach ($intervalos as $value) {
-            if ($edad <= $value ){ 
-                $aniversario = $value; 
+            if ($edad <= $value) {
+                $aniversario = $value;
                 break;
             };
         }
-        
+
         $establecimiento['aniversario'] = $aniversario;
         $establecimiento['anio_calendario'] = $anio_creacion + $aniversario;
-        
+
         return $establecimiento;
     }
 

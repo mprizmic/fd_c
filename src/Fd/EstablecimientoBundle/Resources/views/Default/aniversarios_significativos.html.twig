@@ -7,8 +7,25 @@
 
 <div class="titulo float_izquierda">Aniversarios significativos</div>
 
-<div class="limpiar_float"></div>
 <br />
+<br />
+
+<div class="float_izquierda instrucciones">
+    {{ 'Los aniversarios que se tienen en cuenta son: '}}
+    {% for anio in intervalos %}
+        {{ anio }}
+        {% if not loop.last %}
+            {{ ', ' }}
+        {% else %}
+            {{ ' años' }}
+        {% endif %}
+    {% endfor %}
+        
+</div>
+    
+<div class="limpiar_float">
+    
+<br /><br />
 
 <table class="grilla">
     <tr>
@@ -27,5 +44,7 @@
     </tr>
     {% endfor %}
 </table>
+
+<br /><br />
 
 {% endblock %}
