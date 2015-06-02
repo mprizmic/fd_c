@@ -6,3 +6,5 @@ services:
     fd.establecimiento.model.localizacion:
         class: Fd\EstablecimientoBundle\Model\LocalizacionHandler
         arguments: ["@doctrine.orm.entity_manager"]
+parameters:
+    fd.aniversarios.significativos: [10, 20, 30, 40, 50, 75, 100, 110, 120, 130, 140, 150, 175, 200]

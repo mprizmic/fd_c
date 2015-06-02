@@ -40,7 +40,7 @@ class EstablecimientoController extends Controller {
     public function aniversarios_significativosAction() {
 
         // intervalos de interes
-        $intervalos = array(10, 20, 30, 40, 50, 75, 100, 110, 120, 130, 140, 150, 175, 200);
+        $intervalos=$this->container->getParameter('fd.aniversarios.significativos');
 
         $establecimientos = $this->getRepositorio()
                 ->findFechasCreacion();
@@ -58,14 +58,14 @@ class EstablecimientoController extends Controller {
         }
 
         usort($aniversarios, build_sorter('anio_calendario'));
-        
+
         //se buscan los establecimientos que no tienen cargada la fecha de creación para imformarlos en el listado
         $establecimientos_sin_fecha = $this->getRepositorio()->findFechasCreacion(false);
 
         return $this->render('EstablecimientoBundle:Default:aniversarios_significativos.html.twig', array(
                     'aniversarios' => $aniversarios,
                     'intervalos' => $intervalos,
-                    'establecimientos_sin_fecha'=> $establecimientos_sin_fecha,
+                    'establecimientos_sin_fecha' => $establecimientos_sin_fecha,
                 ))
         ;
     }
