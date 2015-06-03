@@ -175,30 +175,37 @@ class UnidadOfertaController extends Controller {
      * @Route("/{id}/update", name="backend_unidadoferta_update")
      * @Method("post")
      * @Template("EstablecimientoBundle:UnidadOferta:edit.html.twig")
+     * @ParamConverter("entity", class="EstablecimientoBundle:UnidadOferta"))
      */
-    public function updateAction($id) {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('EstablecimientoBundle:UnidadOferta')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find UnidadOferta entity.');
-        }
+    public function updateAction($entity) {
 
         $editForm = $this->createForm(new UnidadOfertaType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
+
+        $originalTurnos = array();
+        foreach ($entity->getTurnos() as $turno) {
+            $originalTurnos[] = $turno;
+        }
 
         $request = $this->getRequest();
 
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
 
-            $this->get('session')->setFlash('notice', 'Guardado exitosamente');
+            $handler = new UnidadOfertaHandler($this->getEm(), $entity
+                            ->getLocalizacion()
+                            ->getUnidadEducativa()
+                            ->getNivel()
+            );
 
-            return $this->redirect($this->generateUrl('backend_unidadoferta_edit', array('id' => $id)));
+            $respuesta = $handler->actualizar($entity, $originalTurnos);
+
+            $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
+
+            $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
+
+            return $this->redirect($this->generateUrl('backend_unidadoferta_edit', array('id' => $entity->getId())));
         }
 
         return array(
@@ -216,7 +223,7 @@ class UnidadOfertaController extends Controller {
      * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta", options={"id":"id"})
      */
     public function deleteAction($unidad_oferta) {
-        
+
         $handler = new UnidadOfertaHandler($this->getEm(), $unidad_oferta
                         ->getLocalizacion()
                         ->getUnidadEducativa()
@@ -224,13 +231,12 @@ class UnidadOfertaController extends Controller {
         );
 
         $respuesta = $handler->eliminar($unidad_oferta, true);
-        
+
         $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
-        
+
         $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
         return $this->redirect($this->generateUrl('backend_unidadoferta'));
-
     }
 
     private function createDeleteForm($id) {
