@@ -89,7 +89,9 @@ class DefaultController extends Controller {
             $respuesta->setMensaje('El formulario tiene problemas. Verifique y reintente');
         };
 
-        $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+        $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
+        
+        $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
         if ($respuesta->getCodigo() == 1) {
             return $this->redirect($this->generateUrl('usuario_editar', array(
@@ -166,8 +168,10 @@ class DefaultController extends Controller {
 
             $respuesta = $usuario_manager->actualizar($form->getData(), $encoder_factory);
         };
-
-        $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+        
+        $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
+        
+        $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
         if ($respuesta->getCodigo() == 1) {
             return $this->redirect($this->generateUrl('usuario_editar', array('id' => $entity->getId())));

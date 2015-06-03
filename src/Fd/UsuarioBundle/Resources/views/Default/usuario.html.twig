@@ -15,9 +15,11 @@
 <br />
 
 <form action="{{ path( 'usuario_' ~ accion  , { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+    <div class="ancho_10">
       {{ form_errors(form) }}
       {{ form_widget(form) }}
       {{ form_rest(form) }}
+    </div>
       <!-- botones de acciones -->
       <br />
     <div class="float_izquierda separador">

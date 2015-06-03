@@ -19,6 +19,8 @@
             <th>Id</th>
             <th>Usuario</th>
             <th>Nombre y apellido</th>
+            <th>Rol</th>
+            <th>Cumple</th>
         </tr>
     </thead>
     <tbody>
@@ -27,6 +29,8 @@
             <td>{{ entity.id }}</td>
             <td><a href="{{ path( 'usuario_editar' , { 'id':entity.id} ) }}">{{ entity.nombreUsuario }}</a></td>
             <td>{{ entity }}</td>
+            <td>{{ entity.rol }}</td>
+            <td>{{ entity.fechaNacimiento|date('d-m-Y')  }}</td>
         </tr>
     {% endfor %}
     </tbody>
