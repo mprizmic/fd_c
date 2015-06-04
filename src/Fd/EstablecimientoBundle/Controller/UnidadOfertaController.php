@@ -65,7 +65,9 @@ class UnidadOfertaController extends Controller {
             $mensaje = 'Problemas al actualizar. Verifique y reintente';
         };
 
-        $this->get('session')->getFlashBag()->add('error', $mensaje);
+        $tipo = ($respuesta->getCodigo() == 1 ) ?'exito' :'error';
+        
+        $this->get('session')->getFlashBag()->add($tipo, $mensaje);
         
         //recupero la ruta a la cual hay que volver
         $ruta = $this->get('session')->get('ruta_completa');
