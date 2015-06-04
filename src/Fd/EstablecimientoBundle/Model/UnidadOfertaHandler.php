@@ -20,26 +20,61 @@ class UnidadOfertaHandler {
     protected $strategy_instance;
     protected $nivel;
 
-    public function __construct(EntityManager $em, $nivel ) {
+    public function __construct(EntityManager $em ) {
 
         $this->em = $em;
-        if ($nivel instanceof Nivel) {
-            
-        }else{
-            $nivel_manager = new NivelManager($this->em);
-            $nivel = $nivel_manager->crearLleno('Ter');
-        };
-        $strategy = $nivel->getCrearUOClass();
-        $strategy_instance = new $strategy($em);
-        $this->strategy_instance = $strategy_instance;
-        $this->nivel = $nivel;
+//        if ($nivel instanceof Nivel) {
+//            
+//        }else{
+//            $nivel_manager = new NivelManager($this->em);
+//            $nivel = $nivel_manager->crearLleno('Ter');
+//        };
+//        $strategy = $nivel->getCrearUOClass();
+//        $strategy_instance = new $strategy($em);
+//        $this->strategy_instance = $strategy_instance;
+//        $this->nivel = $nivel;
     }
 
     /**
-     * Por ahora es para actualizar los turnos de los terciarios
+     * Por ahora es para actualizar los turnos de todos los tipos de unidad oferta
+     * @param UnidadOferta $entity un objeto de la clase UnidadOFerta
      */
-    public function actualizar(UnidadOferta $entity, $turnos){
-        return $this->strategy_instance->actualizar( $entity, $turnos);
+    public function actualizar($entity, $originalTurnos){
+
+        $em = $this->getEm();
+
+        $respuesta = new Respuesta();
+
+        if ($originalTurnos) {
+            // filtro $originalTurnos para que queden los turnos que ya no están presentes en lo que vino del request
+            foreach ($entity->getTurnos() as $turno) {
+                foreach ($originalTurnos as $key => $toDel) {
+                    if ($toDel->getId() === $turno->getId()) {
+                        unset($originalTurnos[$key]);
+                    }
+                }
+            }
+            //los que quedaron son los que hay que eliminar
+            //el turno del array de unidad_educativa ya fue eliminado al bindear con el request
+
+            foreach ($originalTurnos as $unidad_oferta_turno) {
+                //elimino la entrada en la tabla unidad_oferta_turno
+                $this->getEm()->remove($unidad_oferta_turno);
+            }
+        }
+        try {
+            $em->persist($entity);
+            $em->flush();
+            $respuesta->setClaveNueva($entity->getId());
+
+            $respuesta->setCodigo(1);
+            $respuesta->setMensaje('Se guardó exitosamente');
+        } catch (Exception $e) {
+            $respuesta->setCodigo(2);
+            $respuesta->setMensaje('No se pudo guardar. Verifique los datos y reintente');
+        }
+
+        return $respuesta;
     }
     
     public function crear(Localizacion $localizacion = null, $oferta_educativa = null) {
@@ -50,10 +85,31 @@ class UnidadOfertaHandler {
     /**
      * Elimina 1 unidad_oferta determinada
      * 
+     * Al borrar la unidad_oferta hay que eliminar los turnos de unidadoferta_turnos porque 
+     * unidad_oferta es el lado inverso de la relacion.
+     * 
+     * FALTA controlar que se eliminen las cohortes de las carreras, y lo de los otros tipos
+     * 
      * @return type
      */
     public function eliminar( $unidad_oferta, $flush = true ){
-        return $this->strategy_instance->eliminar( $unidad_oferta, $flush );
+//        return $this->strategy_instance->eliminar( $unidad_oferta, $flush );
+        $respuesta = new Respuesta();
+
+        try {
+            $this->getEm()->remove($entity);
+            
+            if ($flush) {
+                $this->getEm()->flush();
+            };
+
+            $respuesta->setCodigo(1);
+            $respuesta->setMensaje('Se eliminó la oferta educativa para el establecimiento seleccionado.');
+        } catch (Exception $e) {
+            $respuesta->setCodigo(2);
+            $respuesta->setMensaje('No se pudo eliminar la oferta educativa. Verifíquelo y reintente.');
+        };
+        return $respuesta;
     }
     /**
      * Elimina todas las unidad_oferta de una localizacion de una unidad educativa
@@ -62,7 +118,6 @@ class UnidadOfertaHandler {
      * @return type
      */
     public function eliminarAll( Localizacion $localizacion, $flush = true ){
-        return $this->strategy_instance->eliminarAll( $localizacion, $flush);
     }
 
 }

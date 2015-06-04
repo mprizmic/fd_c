@@ -13,6 +13,7 @@ use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
+use Fd\EstablecimientoBundle\Model\UnidadOfertaFactory;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\TablaBundle\Entity\Nivel;
 
@@ -192,12 +193,15 @@ class UnidadOfertaController extends Controller {
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
+            
+            //uso un factory para crear un handler de acuerdo al tipo de unidad oferta. en este caso 'carrera'
+            $handler = UnidadOfertaFactory::createHandler($entity->getTipo(), $this->getEm());
 
-            $handler = new UnidadOfertaHandler($this->getEm(), $entity
-                            ->getLocalizacion()
-                            ->getUnidadEducativa()
-                            ->getNivel()
-            );
+//            $handler = new UnidadOfertaHandler($this->getEm(), $entity
+//                            ->getLocalizacion()
+//                            ->getUnidadEducativa()
+//                            ->getNivel()
+//            );
 
             $respuesta = $handler->actualizar($entity, $originalTurnos);
 
