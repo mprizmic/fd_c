@@ -338,8 +338,9 @@ class EstablecimientoController extends Controller {
 
         $active_sheet_index->setCellValue('A1', 'Dirección de Formación Docente');
         $active_sheet_index->setCellValue('A2', 'Listado de establecimientos');
+        $active_sheet_index->setCellValue('A3', 'Impreso: ' . date('d-m-Y'));
 
-        $fila = 5;
+        $fila = 6;
 
         //titulos
         $titulos = $fila - 1;
