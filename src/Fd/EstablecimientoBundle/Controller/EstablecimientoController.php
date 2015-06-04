@@ -40,7 +40,7 @@ class EstablecimientoController extends Controller {
     public function aniversarios_significativosAction() {
 
         // intervalos de interes
-        $intervalos=$this->container->getParameter('fd.aniversarios.significativos');
+        $intervalos = $this->container->getParameter('fd.aniversarios.significativos');
 
         $establecimientos = $this->getRepositorio()
                 ->findFechasCreacion();
@@ -320,4 +320,65 @@ class EstablecimientoController extends Controller {
         ));
     }
 
+    /**
+     * @Route("/salida_planilla", name="establecimiento_salida_planilla")
+     */
+    public function establecimiento_salida_planillaAction() {
+
+        $filename = "Establecimientos.xls";
+
+        // ask the service for a Excel5
+        $excelService = $this->get('phpexcel');
+
+        $excelObj = $excelService->createPHPExcelObject();
+
+        $active_sheet_index = $excelObj->setActiveSheetIndex(0);
+
+        $establecimientos = $this->getRepositorio()->findAllOrdenado('orden');
+
+        $active_sheet_index->setCellValue('A1', 'Dirección de Formación Docente');
+        $active_sheet_index->setCellValue('A2', 'Listado de establecimientos');
+
+        $fila = 5;
+
+        //titulos
+        $titulos = $fila - 1;
+        $active_sheet_index->setCellValue('A' . $titulos, "#");
+        $active_sheet_index->setCellValue('B' . $titulos, "Nombre");
+        $active_sheet_index->setCellValue('C' . $titulos, "Domicilio");
+        $active_sheet_index->setCellValue('D' . $titulos, "Barrio");
+        $active_sheet_index->setCellValue('E' . $titulos, "Email");
+        $active_sheet_index->setCellValue('F' . $titulos, "URL");
+        $active_sheet_index->setCellValue('G' . $titulos, "TE");
+
+        foreach ($establecimientos as $establecimiento) {
+            
+            $edificio_principal = $establecimiento->getEdificioPrincipal();
+            
+            $active_sheet_index->setCellValue('A' . $fila, $fila - 4);
+            $active_sheet_index->setCellValue('B' . $fila, $establecimiento->getNombre());
+            $active_sheet_index->setCellValue('C' . $fila, $edificio_principal->getEdificios()->getDomicilioPrincipal()->__toString());
+            $active_sheet_index->setCellValue('D' . $fila, $edificio_principal->getEdificios()->getBarrio()->__toString() );
+            $active_sheet_index->setCellValue('E' . $fila, $establecimiento->getEmail() );
+            $active_sheet_index->setCellValue('F' . $fila, $establecimiento->getUrl() );
+            $active_sheet_index->setCellValue('G' . $fila, $edificio_principal->getTe1() );
+            $fila += 1;
+        }
+        $excelObj->getActiveSheet()->setTitle('Establecimientos');
+        // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+        $excelObj->setActiveSheetIndex(0);
+
+        // create the writer
+        $writer = $excelService->createWriter($excelObj, 'Excel5');
+        // create the response
+        $response = $excelService->createStreamedResponse($writer);
+        //create the response
+        $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment;filename=' . $filename);
+
+        // If you are using a https connection, you have to set those two headers for compatibility with IE <9
+        $response->headers->set('Pragma', 'public');
+        $response->headers->set('Cache-Control', 'maxage=1');
+        return $response;
+    }
 }
