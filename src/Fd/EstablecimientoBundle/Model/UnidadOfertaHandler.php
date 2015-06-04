@@ -8,7 +8,7 @@ use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaInicialHandler;
-use Fd\EstablecimientoBundle\Model\UnidadOfertaTerciarioHandler;
+use Fd\EstablecimientoBundle\Model\CarreraUnidadOfertaHandler;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 use Fd\TablaBundle\Entity\Nivel;
 use Fd\TablaBundle\Model\NivelManager;
@@ -20,7 +20,7 @@ class UnidadOfertaHandler {
     protected $strategy_instance;
     protected $nivel;
 
-    public function __construct(EntityManager $em ) {
+    public function __construct(EntityManager $em) {
 
         $this->em = $em;
 //        if ($nivel instanceof Nivel) {
@@ -35,11 +35,15 @@ class UnidadOfertaHandler {
 //        $this->nivel = $nivel;
     }
 
+    private function getEm() {
+        return $this->em;
+    }
+
     /**
      * Por ahora es para actualizar los turnos de todos los tipos de unidad oferta
      * @param UnidadOferta $entity un objeto de la clase UnidadOFerta
      */
-    public function actualizar($entity, $originalTurnos){
+    public function actualizar($entity, $originalTurnos) {
 
         $em = $this->getEm();
 
@@ -76,10 +80,36 @@ class UnidadOfertaHandler {
 
         return $respuesta;
     }
-    
-    public function crear(Localizacion $localizacion = null, $oferta_educativa = null) {
 
-        return $this->strategy_instance->crear( $localizacion, $oferta_educativa);
+    /**
+     * crea un registro de unidad_oferta
+     * tiene funcionamiento diferente al create del Backend.
+     * Aquí recibe los parámetros para su creación
+     * 
+     * @param type $oferta
+     * @param type $unidad
+     */
+    public function crear($localizacion, $oferta_educativa, $tipo) {
+
+        $respuesta = new Respuesta();
+
+        $entity = new UnidadOferta();
+        $entity->setOfertas($oferta_educativa);
+        $entity->setLocalizacion($localizacion);
+        $entity->setTipo($tipo);
+
+        try {
+            $this->getEm()->persist($entity);
+            $this->getEm()->flush();
+
+            $respuesta->setCodigo(1);
+            $respuesta->setMensaje('Se generó la oferta educativa para la sede/anexo del establecimiento seleccionado.');
+            $respuesta->setClaveNueva($entity->getId());
+        } catch (Exception $e) {
+            $respuesta->setCodigo(2);
+            $respuesta->setMensaje('No se pudo generar la oferta educativa. Verifíquelo y reintente.');
+        };
+        return $respuesta;
     }
 
     /**
@@ -92,13 +122,13 @@ class UnidadOfertaHandler {
      * 
      * @return type
      */
-    public function eliminar( $unidad_oferta, $flush = true ){
+    public function eliminar($unidad_oferta, $flush = true) {
 //        return $this->strategy_instance->eliminar( $unidad_oferta, $flush );
         $respuesta = new Respuesta();
 
         try {
             $this->getEm()->remove($entity);
-            
+
             if ($flush) {
                 $this->getEm()->flush();
             };
@@ -111,13 +141,32 @@ class UnidadOfertaHandler {
         };
         return $respuesta;
     }
+
     /**
-     * Elimina todas las unidad_oferta de una localizacion de una unidad educativa
+     * Elimina todas las unidad_oferta de una localizacion
      * 
      * @param type $unidad_educativa
      * @return type
      */
-    public function eliminarAll( Localizacion $localizacion, $flush = true ){
+    public function eliminarAll(Localizacion $localizacion, $flush = true) {
+        //recupero todas las carreras y las especializaciones
+        $ofertas = $localizacion->getOfertas();
+
+        try {
+
+            foreach ($ofertas as $key => $value) {
+                $this->getEm()->remove($entity);
+            }
+            if ($flush) {
+                $this->getEm()->flush();
+            };
+            $respuesta->setCodigo(1);
+            $respuesta->setMensaje('Se eliminaron las ofertas para el edificio seleccionado.');
+        } catch (Exception $ex) {
+            $respuesta->setCodigo(2);
+            $respuesta->setMensaje('No se pudieron eliminar las ofertas. Verifíquelo y reintente.');
+        };
+        return $respuesta;
     }
 
 }
