@@ -480,8 +480,9 @@ class CarreraController extends Controller {
 
             $respuesta = $manager->asignarEstablecimiento($form['carrera_id'], $form['localizacion_id'], $form['accion_del_form']);
 
+            $tipo = ($respuesta->getCodigo()==1) ? 'exito':'error' ;
             //se trata el response segùn el resutado
-            $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+            $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
             return $this->redirect($this->generateUrl('carrera_asignar_establecimiento', array('id' => $form['carrera_id'])));
         }
