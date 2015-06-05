@@ -40,7 +40,7 @@ class CarreraUnidadOfertaHandler extends UnidadOfertaHandler {
         try {
 
             foreach ($ofertas as $key => $value) {
-                if ($oferta->getTipo() == 'carrera') {
+                if ($oferta->getTipo() == 'Carrera') {
                     $this->getEm()->remove($entity);
                 }
             }
