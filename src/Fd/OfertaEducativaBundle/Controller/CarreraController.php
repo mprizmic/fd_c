@@ -232,8 +232,10 @@ class CarreraController extends Controller {
         $formHandler = new CarreraFormHandler(new CarreraManager($this->getEm()));
 
         $respuesta = $formHandler->crear($form, $request);
+        
+        $tipo = ($respuesta->getCodigo()==1) ? 'exito':'error' ;
 
-        $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+        $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
         if ($respuesta->getCodigo() == 1) {
             //ver si esto muestr el registro con la clave nueva o hay que sacarlo de $respuesta->getClaveNueva()
