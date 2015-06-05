@@ -13,6 +13,11 @@ use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 use Fd\TablaBundle\Entity\Nivel;
 use Fd\TablaBundle\Model\NivelManager;
 
+/**
+ * Handler genérico para los unidad_oferta
+ * De este handler heredan los handler de cada tipo de unidad_oferta
+ * 
+ */
 class UnidadOfertaHandler {
 
     protected $em;
@@ -23,6 +28,7 @@ class UnidadOfertaHandler {
     public function __construct(EntityManager $em) {
 
         $this->em = $em;
+        
 //        if ($nivel instanceof Nivel) {
 //            
 //        }else{
@@ -127,7 +133,7 @@ class UnidadOfertaHandler {
         $respuesta = new Respuesta();
 
         try {
-            $this->getEm()->remove($entity);
+            $this->getEm()->remove($unidad_oferta);
 
             if ($flush) {
                 $this->getEm()->flush();
