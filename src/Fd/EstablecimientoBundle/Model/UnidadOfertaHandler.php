@@ -7,7 +7,7 @@ use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
-use Fd\EstablecimientoBundle\Model\UnidadOfertaInicialHandler;
+use Fd\EstablecimientoBundle\Model\InicialUnidadOfertaHandler;
 use Fd\EstablecimientoBundle\Model\CarreraUnidadOfertaHandler;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 use Fd\TablaBundle\Entity\Nivel;
