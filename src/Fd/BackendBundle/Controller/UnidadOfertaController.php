@@ -15,6 +15,7 @@ use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaFactory;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
+use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 use Fd\TablaBundle\Entity\Nivel;
 
 /**
@@ -137,12 +138,24 @@ class UnidadOfertaController extends Controller {
         $form->bind($request);
 
         if ($form->isValid()) {
-            $this->getEm()->persist($entity);
-            $this->getEm()->flush();
+            
+            //este es el registro recién generado que va a ir a grabarse en la base de datos pero falta el datos del 'tipo'
+            $unidad_oferta = $form->getData();
+            
+            $oferta_educativa = $unidad_oferta->getOfertas();
+            $tipo = $oferta_educativa->esTipo();
+            $localizacion = $unidad_oferta->getLocalizacion();
+            
+            $handler = UnidadOfertaFactory::createHandler($tipo, $this->getEm());
+            
+            //de donde salen los parametros
+            $respuesta = $handler->crear($localizacion, $oferta_educativa, $tipo);
 
-            $this->get('session')->getFlashbag()->add('exito', 'Guardado exitosamente');
+            $tipo_mensaje = ($respuesta->getCodigo()==1)?'exito':'error';
+            
+            $this->get('session')->getFlashbag()->add($tipo_mensaje, 'Guardado exitosamente');
 
-            return $this->redirect($this->generateUrl('backend_unidadoferta_edit', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('backend_unidadoferta_edit', array('id' => $respuesta->getClaveNueva())));
         }
 
         return array(
