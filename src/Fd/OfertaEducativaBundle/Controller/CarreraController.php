@@ -265,8 +265,10 @@ class CarreraController extends Controller {
         $formHandler = new CarreraFormHandler(new CarreraManager($this->getEm()));
 
         $respuesta = $formHandler->eliminar($form, $request, $carrera_anterior);
+        
+        $tipo = ($respuesta->getCodigo()==1)?'exito':'error';
 
-        $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+        $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
         return $this->redirect($this->generateUrl('carrera_nomina'));
     }
