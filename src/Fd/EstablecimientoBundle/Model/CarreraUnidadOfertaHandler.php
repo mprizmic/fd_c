@@ -22,7 +22,7 @@ class CarreraUnidadOfertaHandler extends UnidadOfertaHandler {
      * @param type $unidad
      */
     public function crear($localizacion, $oferta_educativa, $tipo) {
-        return parent::crear($localizacion, $oferta_educativa, 'carrera');
+        return parent::crear($localizacion, $oferta_educativa, 'Carrera');
     }
 
     /**
