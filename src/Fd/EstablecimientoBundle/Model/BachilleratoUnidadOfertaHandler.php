@@ -10,10 +10,11 @@ use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
 use Fd\TablaBundle\Entity\Nivel;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
+use Fd\EstablecimientoBundle\Utilities\TipoUnidadOferta;
 
 class BachilleratoUnidadOfertaHandler extends UnidadOfertaHandler {
 
-    const TIPO_UNIDAD_OFERTA = "Bachillerato";
+//    const TIPO_UNIDAD_OFERTA = "Bachillerato";
     /**
      * Crea un registro de unidad_oferta
      * tiene funcionamiento diferente al create del Backend.
@@ -41,7 +42,7 @@ class BachilleratoUnidadOfertaHandler extends UnidadOfertaHandler {
         try {
 
             foreach ($ofertas as $key => $value) {
-                if ($oferta->getTipo() == self::TIPO_UNIDAD_OFERTA) {
+                if ($oferta->getTipo() == TipoUnidadOferta::TUO_BACHILLERATO) {
                     $this->getEm()->remove($entity);
                 }
             }

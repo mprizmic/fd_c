@@ -8,6 +8,7 @@ use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
+use Fd\EstablecimientoBundle\Utilities\TipoUnidadOferta;
 use Fd\TablaBundle\Entity\Nivel;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 use Fd\OfertaEducativaBundle\Entity\InicialX;

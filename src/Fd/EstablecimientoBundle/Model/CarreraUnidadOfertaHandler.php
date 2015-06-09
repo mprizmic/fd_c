@@ -8,6 +8,7 @@ use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
+use Fd\EstablecimientoBundle\Utilities\TipoUnidadOferta;
 use Fd\TablaBundle\Entity\Nivel;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 
@@ -40,7 +41,7 @@ class CarreraUnidadOfertaHandler extends UnidadOfertaHandler {
         try {
 
             foreach ($ofertas as $key => $value) {
-                if ($oferta->getTipo() == 'Carrera') {
+                if ($oferta->getTipo() == TipoUnidadOferta::TUO_CARRERA) {
                     $this->getEm()->remove($entity);
                 }
             }
