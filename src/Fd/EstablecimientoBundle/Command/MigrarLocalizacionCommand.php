@@ -2,7 +2,7 @@
 
 /**
  * 
- * OJO está para correr sólo para la ENS 3
+ * Poner a cada unidad_oferta el tipo
  * 
  * Copiar datos de unidad_educativa a localizacion:
  * Para cada unidad_oferta se debe tomar la unidad_educativa, ver las localizaciones 00
@@ -23,6 +23,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
+use Fd\EstablecimientoBundle\Utilities\TipoUnidadOferta;
 
 class MigrarLocalizacionCommand extends ContainerAwareCommand {
 
