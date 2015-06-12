@@ -232,8 +232,10 @@ class CarreraController extends Controller {
         $formHandler = new CarreraFormHandler(new CarreraManager($this->getEm()));
 
         $respuesta = $formHandler->crear($form, $request);
+        
+        $tipo = ($respuesta->getCodigo()==1) ? 'exito':'error' ;
 
-        $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+        $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
         if ($respuesta->getCodigo() == 1) {
             //ver si esto muestr el registro con la clave nueva o hay que sacarlo de $respuesta->getClaveNueva()
@@ -263,8 +265,10 @@ class CarreraController extends Controller {
         $formHandler = new CarreraFormHandler(new CarreraManager($this->getEm()));
 
         $respuesta = $formHandler->eliminar($form, $request, $carrera_anterior);
+        
+        $tipo = ($respuesta->getCodigo()==1)?'exito':'error';
 
-        $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+        $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
         return $this->redirect($this->generateUrl('carrera_nomina'));
     }
@@ -478,8 +482,9 @@ class CarreraController extends Controller {
 
             $respuesta = $manager->asignarEstablecimiento($form['carrera_id'], $form['localizacion_id'], $form['accion_del_form']);
 
+            $tipo = ($respuesta->getCodigo()==1) ? 'exito':'error' ;
             //se trata el response segùn el resutado
-            $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+            $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
             return $this->redirect($this->generateUrl('carrera_asignar_establecimiento', array('id' => $form['carrera_id'])));
         }

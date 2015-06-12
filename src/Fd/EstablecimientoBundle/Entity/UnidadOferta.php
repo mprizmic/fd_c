@@ -44,7 +44,10 @@ class UnidadOferta {
      * @ORM\JoinColumn(name="oferta_educativa_id", referencedColumnName="id")
      */
     private $ofertas;
-    
+    /**
+     * @ORM\Column(type="string", length=20, nullable=false)
+     */
+     private $tipo;
 
     /**
      * bidireccional lado inverso
@@ -305,5 +308,28 @@ class UnidadOferta {
     public function getSalasInicial()
     {
         return $this->salas_inicial;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     * @return UnidadOferta
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string 
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
     }
 }

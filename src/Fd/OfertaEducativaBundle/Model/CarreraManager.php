@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormInterface;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
-use Fd\EstablecimientoBundle\Model\UnidadOfertaTerciarioHandler;
+use Fd\EstablecimientoBundle\Model\CarreraUnidadOfertaHandler;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 use Fd\OfertaEducativaBundle\Model\OfertaEducativaManager;
@@ -203,7 +203,7 @@ class CarreraManager implements AsignarVisitadoInterface {
             $oferta_educativa = $carrera->getOferta();
 
             //se elimina la unidad_oferta y todas sus asociaciones (turnos y cohortes)
-            $unidad_oferta_manager = new UnidadOfertaHandler($this->getEm(), $oferta_educativa->getNivel());
+            $unidad_oferta_manager = new CarreraUnidadOfertaHandler($this->getEm());
 
             foreach ($oferta_educativa->getUnidades() as $unidad_oferta) {
                 //se elimina desde el manager

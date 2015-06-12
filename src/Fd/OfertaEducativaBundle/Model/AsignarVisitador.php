@@ -13,6 +13,7 @@ use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\OfertaEducativaBundle\Model\AsignarVisitadoInterface;
 use Fd\OfertaEducativaBundle\Model\AsignarVisitadorInterface;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
+use Fd\EstablecimientoBundle\Model\CarreraUnidadOfertaHandler;
 
 class AsignarVisitador implements AsignarVisitadorInterface {
 
@@ -52,14 +53,14 @@ class AsignarVisitador implements AsignarVisitadorInterface {
                 ->findSeImparte( $localizacion, $carrera, false);
 
         //se crea el manejador de unidad_oferta
-        $handler = new UnidadOfertaHandler($visitado->getEm(), $localizacion->getUnidadEducativa()->getNivel());
+        $handler = new CarreraUnidadOfertaHandler($visitado->getEm());
         
         //accion asignar carrera
         if (!$unidad_oferta) {
             if ($this->data['accion'] == 'Asignar') {
                 
                 //no existe la asignacion y hay que crearla
-                $respuesta = $handler->crear($localizacion, $carrera->getOferta());
+                $respuesta = $handler->crear($localizacion, $carrera->getOferta(), 'Carrera');
             }
         };
 

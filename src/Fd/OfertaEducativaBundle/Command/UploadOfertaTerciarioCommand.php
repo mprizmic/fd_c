@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
-use Fd\EstablecimientoBundle\Model\UnidadOfertaTerciarioHandler;
+use Fd\EstablecimientoBundle\Model\CarreraUnidadOfertaHandler;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\OfertaEducativaBundle\Model\CarreraManager;
 use Fd\TablaBundle\Model\EstadoCarreraManager;

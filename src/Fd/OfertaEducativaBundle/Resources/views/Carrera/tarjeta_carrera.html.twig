@@ -4,7 +4,14 @@
     </span>
     
     <span>
-    <a class="muychica" href="{{ path( 'carrera_ficha', {'carrera_id': carrera.id } ) }}">{{ '(' ~ carrera.oferta.normas[0] ~ ')' }}</a>
+        <!-- puede no tener cargada la norma -->
+        {% if carrera.oferta.normas | length > 0 %}
+           {% set una_norma = carrera.oferta.normas[0] %}
+        {% else %}
+            {% set una_norma = 'sin/datos' %}
+        {% endif %}
+            
+    <a class="muychica" href="{{ path( 'carrera_ficha', {'carrera_id': carrera.id } ) }}">{{ '(' ~ una_norma ~ ')' }}</a>
     </span>
     <span class="limpiar_float"></span>
         

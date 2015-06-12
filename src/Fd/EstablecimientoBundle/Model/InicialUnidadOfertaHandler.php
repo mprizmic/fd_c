@@ -8,55 +8,32 @@ use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
+use Fd\EstablecimientoBundle\Utilities\TipoUnidadOferta;
 use Fd\TablaBundle\Entity\Nivel;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 use Fd\OfertaEducativaBundle\Entity\InicialX;
 use Fd\OfertaEducativaBundle\Model\InicialXHandler;
 use Fd\OfertaEducativaBundle\Repository\InicialXRepository;
 
-class UnidadOfertaInicialHandler {
+class InicialUnidadOfertaHandler extends UnidadOfertaHandler {
 
-//    private $ue;
-    private $em;
-
-    public function __construct($em) {
-        $this->em = $em;
-    }
-
-    private function getEm() {
-        return $this->em;
-    }
-
-    /*
-     * FALTA testear
-     * se crea el registro en Unidad_oferta para el nivel inicial
+    /**
+     * Crea un registro de unidad_oferta para el nivel inicial
      * 
-     * Se llama al handler que crea el registro en Inicial_x
+     * FALTA (Se llama al handler que crea el registro en Inicial_x)
+     * 
+     * @param type $oferta
+     * @param type $unidad
      */
-
-    public function crear(Localizacion $localizacion = null, OfertaEducativa $oferta_educativa = null) {
-
-        if (!$oferta_educativa) {
-            // si la oferta_educativa no se informa se recupera la de nivel inicial
-            $dql = "select oe from OfertaEducativaBundle:OfertaEducativa oe join oe.nivel n where n.abreviatura = :nivel";
-            $q = $this->getEm()->createQuery($dql);
-            $q->setParameter('nivel', 'Ini');
-            $oferta_educativa = $q->getSingleResult();
-        }
-
-        //creo la unidad_oferta
-        $uo = new UnidadOferta();
-        $uo->setOfertas($oferta_educativa);
-        $uo->setLocalizacion($localizacion);
-        
-        $this->getEm()->persist($uo);
-
-        $inicial_x_handler = new InicialXHandler($this->getEm());
-        $inicial_x = $inicial_x_handler->crear($uo, 0);
-
-        $this->getEm()->flush();
-
-        return $uo;
+    public function crear($localizacion, $oferta_educativa, $tipo) {
+        return parent::crear($localizacion, $oferta_educativa, $tipo);
+//FALTA ver mas adelante
+//        $inicial_x_handler = new InicialXHandler($this->getEm());
+//        $inicial_x = $inicial_x_handler->crear($uo, 0);
+//
+//        $this->getEm()->flush();
+//
+//        return $uo;
     }
 
     /**
@@ -65,7 +42,7 @@ class UnidadOfertaInicialHandler {
      * @param Localizacion $localizacion
      * @return type
      */
-    public function eliminarAll(Localizacion $localizacion) {
+    public function eliminarAll(Localizacion $localizacion, $flush = false) {
         $respuesta = new Respuesta();
         try {
             /*

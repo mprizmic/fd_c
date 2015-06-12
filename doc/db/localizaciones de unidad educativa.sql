@@ -10,7 +10,6 @@ inner join Fd.nivel n on ue.nivel_id=n.id
 inner join Fd.localizacion l on l.unidad_educativa_id=ue.id
 inner join Fd.domicilio_localizacion dl on dl.localizacion_id=l.id
 inner join Fd.domicilio d on d.id=dl.domicilio_id
-where e.id=18
-and ue.id=100
+where e.apodo="Romero"
 order by e.apodo
 
