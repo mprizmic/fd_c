@@ -48,15 +48,16 @@ class CargarTipoUnidadOfertaCommand extends ContainerAwareCommand {
                 ->findAll();
         
         foreach ($unidad_ofertas as $unidad_oferta) {
-//            $output->writeln('**********************************************');
-//            $output->writeln('Unidad_oferta_id: ' . $unidad_oferta->getId());
-//            $output->writeln( $unidad_oferta->__toString() );
+            $output->writeln('**********************************************');
+            $output->writeln('Unidad_oferta_id: ' . $unidad_oferta->getId());
+            $output->writeln( $unidad_oferta->__toString() );
 
             $tipo = $unidad_oferta->getOfertas()->esTipo();
             
-//            $output->writeln('Tipo: ' . $tipo);
+            $output->writeln('Tipo: ' . $tipo);
             
-            if ( empty($unidad_oferta->getTipo())){
+            $error_de_php = $unidad_oferta->getTipo();
+            if ( empty($error_de_php)){
                 
                 $unidad_oferta->setTipo($tipo);
                 $this->em->persist($unidad_oferta);
@@ -64,9 +65,9 @@ class CargarTipoUnidadOfertaCommand extends ContainerAwareCommand {
             
         }
         $this->em->flush();
-//        //salida de pantalla
-//        $output->writeln('//////////////////////////////////////////////');
-//        $output->writeln('//////////////////////////////////////////////');
-//        $output->writeln('Proceso todo');
+        //salida de pantalla
+        $output->writeln('//////////////////////////////////////////////');
+        $output->writeln('//////////////////////////////////////////////');
+        $output->writeln('Proceso todo');
     }
 }
