@@ -83,8 +83,7 @@ class Establecimiento {
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)        
-     * @Assert\MaxLength(10)
-     * @Assert\MinLength(10)
+     * La longitud se la chequea en isFecha
      */
     private $fecha_creacion;
 
@@ -240,6 +239,7 @@ class Establecimiento {
         };
         return $el_principal;
     }
+
     /**
      * DEPRECATED en la localizacion de la oferta
      * 
@@ -247,7 +247,6 @@ class Establecimiento {
      * @param type $carrera
      * @return boolean
      */
-
 //    public function hasCarrera($carrera) {
 //        $unidad_ofertas = $this->getUnidadEducativa('Ter')->getOfertas();
 //        $oferta_educativa = $carrera->getOferta();
@@ -355,15 +354,29 @@ class Establecimiento {
     public function __toString() {
         return $this->getApodo();
     }
+
     /**
      * Chequea si la fecha de creación tiene formato de fecha
      * @Assert\True(message="La fecha de creación no tiene formato válido")
      */
-    public function isFecha(){
-        return  ( preg_match("/([0-9]{2})\-([0-9]{2})-([0-9]{4})/i", $this->fecha_creacion) ) ?
-            checkdate(substr($this->fecha_creacion,3,2), substr($this->fecha_creacion,0,2), substr($this->fecha_creacion,6,4) ) 
-                :
-            false;
+    public function isFecha() {
+
+        //esta asignacion se hace por un problema del empty de php
+        $la_fecha = $this->fecha_creacion;
+
+        if (empty($la_fecha)) {
+
+            //si está vacía no se chequea el formato nila longitud
+            return true;
+        } else {
+            if (strlen($la_fecha) > 0 and strlen($la_fecha) == 10) {
+                return ( preg_match("/([0-9]{2})\-([0-9]{2})-([0-9]{4})/i", $this->fecha_creacion) ) ?
+                        checkdate(substr($this->fecha_creacion, 3, 2), substr($this->fecha_creacion, 0, 2), substr($this->fecha_creacion, 6, 4)) :
+                        false;
+            } else {
+                return false;
+            }
+        }
     }
 
     /**
