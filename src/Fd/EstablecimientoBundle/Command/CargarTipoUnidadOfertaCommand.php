@@ -48,13 +48,13 @@ class CargarTipoUnidadOfertaCommand extends ContainerAwareCommand {
                 ->findAll();
         
         foreach ($unidad_ofertas as $unidad_oferta) {
-            $output->writeln('**********************************************');
-            $output->writeln('Unidad_oferta_id: ' . $unidad_oferta->getId());
-            $output->writeln( $unidad_oferta->__toString() );
+//            $output->writeln('**********************************************');
+//            $output->writeln('Unidad_oferta_id: ' . $unidad_oferta->getId());
+//            $output->writeln( $unidad_oferta->__toString() );
 
             $tipo = $unidad_oferta->getOfertas()->esTipo();
             
-            $output->writeln('Tipo: ' . $tipo);
+//            $output->writeln('Tipo: ' . $tipo);
             
             if ( empty($unidad_oferta->getTipo())){
                 
@@ -65,16 +65,8 @@ class CargarTipoUnidadOfertaCommand extends ContainerAwareCommand {
         }
         $this->em->flush();
 //        //salida de pantalla
-        $output->writeln('//////////////////////////////////////////////');
-        $output->writeln('//////////////////////////////////////////////');
-        $output->writeln('Proceso todo');
+//        $output->writeln('//////////////////////////////////////////////');
+//        $output->writeln('//////////////////////////////////////////////');
+//        $output->writeln('Proceso todo');
     }
-
-    public function asignar_tipo($unidad_oferta, Localizacion $localizacion, $output) {
-//        $unidad_oferta->setLocalizacion($localizacion);
-//        $this->em->persist($unidad_oferta);
-//        $this->em->flush();
-//        $output->writeln('GRABO: ' . $unidad_oferta . ' - ' . $localizacion);
-    }
-
 }
