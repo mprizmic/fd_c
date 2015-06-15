@@ -341,6 +341,8 @@ class EstablecimientoController extends Controller {
         $active_sheet_index->setCellValue('A3', 'Impreso: ' . date('d-m-Y'));
 
         $fila = 6;
+        $numeracion = 1;
+        $desplazamiento = $fila - $numeracion;
 
         //titulos
         $titulos = $fila - 1;
@@ -356,7 +358,7 @@ class EstablecimientoController extends Controller {
             
             $edificio_principal = $establecimiento->getEdificioPrincipal();
             
-            $active_sheet_index->setCellValue('A' . $fila, $fila - 4);
+            $active_sheet_index->setCellValue('A' . $fila, $numeracion);
             $active_sheet_index->setCellValue('B' . $fila, $establecimiento->getNombre());
             $active_sheet_index->setCellValue('C' . $fila, $edificio_principal->getEdificios()->getDomicilioPrincipal()->__toString());
             $active_sheet_index->setCellValue('D' . $fila, $edificio_principal->getEdificios()->getBarrio()->__toString() );
@@ -364,6 +366,7 @@ class EstablecimientoController extends Controller {
             $active_sheet_index->setCellValue('F' . $fila, $establecimiento->getUrl() );
             $active_sheet_index->setCellValue('G' . $fila, $edificio_principal->getTe1() );
             $fila += 1;
+            $numeracion = $fila - $desplazamiento;
         }
         $excelObj->getActiveSheet()->setTitle('Establecimientos');
         // Set active sheet index to the first sheet, so Excel opens this as the first sheet
