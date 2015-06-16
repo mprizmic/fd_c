@@ -1,0 +1,28 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+ 
+{% block title %}
+{{ parent() }} - Crear Inspector
+{% endblock %}
+ 
+{% block main_content %}
+
+<h1>Crear registro de nuevo Inspector de infraestructura</h1>
+
+<form action="{{ path('backend_inspector_create') }}" method="post" {{ form_enctype(form) }}>
+    <div class="ancho_10">
+    {{ form_widget(form) }}
+    </div>
+    <p>
+        <button type="submit">Crear</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('backend_inspector') }}">
+            Volver a la lista
+        </a>
+    </li>
+</ul>
+
+{% endblock %}

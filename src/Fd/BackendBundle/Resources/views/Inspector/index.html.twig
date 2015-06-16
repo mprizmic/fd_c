@@ -1,0 +1,47 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - Lista de Inspectores
+{% endblock %}
+
+{% block main_content %}
+
+    <h1>Lista de Inspectores</h1>
+
+
+    <div>
+        <a href="{{ path('backend_inspector_new') }}">
+            Crear nuevo registro
+        </a>
+    </div>
+    <br />
+
+    <table class="grilla">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Apellido</th>
+                <th>TE</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td><a href="{{ path('backend_inspector_edit', {'id':entity.id}) }}">{{ entity.apellido ~ ', ' ~ entity.nombre }}</a></td>
+                    <td>{{ entity.te }}</td>
+                    <td>{{ entity.email }}</td>
+                    <td>
+                        <a href="{{ path('backend_inspector_edit', { 'id': entity.id }) }}">
+                            Editar
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br />
+
+
+{% endblock %}
