@@ -94,6 +94,8 @@
                     <div>Email: <a href="{{ establecimiento_edificio['datos_grales']['email'] }}">{{ establecimiento_edificio['datos_grales']['email'] | default('sin datos') }}</a></div>
 {#                    <div><a href="{{ path('edificio_de_un_cue', {'establecimiento_id': establecimiento.id } ) }}">Edificio(s) (con quien se comparte)</a></div> #}
                     <div><a href="{{ path('edificio_de_un_cue', {'establecimiento_id': establecimiento.id } ) }}">Edificio(s) (con quien se comparte)</a></div>
+                    <div>{{ 'Inspector/a de infraestructura: ' ~ establecimiento_edificio['datos_grales']['inspector']  }}</div>
+                    
                     <br />
                     
                     {# carreras  #}

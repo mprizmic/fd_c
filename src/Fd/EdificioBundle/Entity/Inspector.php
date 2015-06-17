@@ -48,6 +48,11 @@ class Inspector {
      * @Assert\NotBlank(message="No puede dejar el TE vacío")
      */
     private $te;
+    /**
+     * bidireccional lado inverso
+     * @ORM\OneToMany(targetEntity="Fd\EdificioBundle\Entity\Edificio", mappedBy="inspector")
+     */
+    private $edificios;
 
     /**
      * @ORM\Column(type="datetime")
@@ -64,6 +69,13 @@ class Inspector {
     public function ultimaModificacion()
     {
         $this->setActualizado(new \DateTime());
+    }
+    public function datosCompletos(){
+        return $this->__toString()
+                . ' - TE: ' .
+                $this->te
+                . ' - email: ' .
+                $this->email;
     }
    
 
@@ -223,5 +235,38 @@ class Inspector {
     public function getCreado()
     {
         return $this->creado;
+    }
+
+    /**
+     * Add edificios
+     *
+     * @param \Fd\EdificioBundle\Entity\Edificio $edificios
+     * @return Inspector
+     */
+    public function addEdificio(\Fd\EdificioBundle\Entity\Edificio $edificios)
+    {
+        $this->edificios[] = $edificios;
+
+        return $this;
+    }
+
+    /**
+     * Remove edificios
+     *
+     * @param \Fd\EdificioBundle\Entity\Edificio $edificios
+     */
+    public function removeEdificio(\Fd\EdificioBundle\Entity\Edificio $edificios)
+    {
+        $this->edificios->removeElement($edificios);
+    }
+
+    /**
+     * Get edificios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEdificios()
+    {
+        return $this->edificios;
     }
 }

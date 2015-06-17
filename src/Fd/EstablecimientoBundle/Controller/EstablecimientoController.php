@@ -172,8 +172,15 @@ class EstablecimientoController extends Controller {
             $datos_grales['barrio'] = $establecimiento_edificio->getEdificios()->getBarrio();
             $datos_grales['cp'] = $domicilio->getCPostal();
             $datos_grales['email'] = $establecimiento_edificio->getEmail1();
-
-
+            
+        $inspector = $establecimiento_edificio->getEdificios()->getInspector();
+            
+            if ($inspector){
+            $datos_grales['inspector'] = $inspector->datosCompletos();
+            }else{
+                $datos_grales['inspector'] = 'sin datos';
+            }
+            
             $establecimiento_edificio_array[$key]['datos_grales'] = $datos_grales;
 
             /**

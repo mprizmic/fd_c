@@ -25,6 +25,7 @@ class EdificioType extends AbstractType {
                     'class' => 'TablaBundle:DistritoEscolar',
                     'empty_value' => 'Seleccione...',
                 ))
+                ->add('inspector')
         ;
     }
 

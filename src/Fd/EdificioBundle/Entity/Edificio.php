@@ -95,6 +95,11 @@ class Edificio {
      */
     private $vecinos;
     /**
+     * bidireccional lado propietario
+     * @ORM\ManyToOne(targetEntity="Fd\EdificioBundle\Entity\Inspector", inversedBy="edificios")
+     */
+    private $inspector;
+    /**
      * @var TipoDominio
      *
      * @ORM\ManyToOne(targetEntity="TipoDominio")
@@ -464,5 +469,28 @@ class Edificio {
     public function getVecinos()
     {
         return $this->vecinos;
+    }
+
+    /**
+     * Set inspector
+     *
+     * @param \Fd\EdificioBundle\Entity\Inspector $inspector
+     * @return Edificio
+     */
+    public function setInspector(\Fd\EdificioBundle\Entity\Inspector $inspector = null)
+    {
+        $this->inspector = $inspector;
+
+        return $this;
+    }
+
+    /**
+     * Get inspector
+     *
+     * @return \Fd\EdificioBundle\Entity\Inspector 
+     */
+    public function getInspector()
+    {
+        return $this->inspector;
     }
 }
