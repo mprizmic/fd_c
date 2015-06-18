@@ -1,17 +1,50 @@
 {% extends 'BackendBundle::layout.html.twig' %}
  
+{% import ':Form:macro_twig.html.twig' as collection_macro %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset( 'bundles/establecimiento/css/macro_twig.css') }}" rel="stylesheet" type="text/css" />      
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/establecimiento/js/macro_twig.js') }}" charset="utf-8"></script>
+{% endblock %}
+
 {% block title %}
 {{ parent() }} - Editar Inspector
 {% endblock %}
  
 {% block main_content %}
+    {{ parent() }}
 
 <h1>Editar Inspector</h1>
 
 <form action="{{ path('backend_inspector_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     <div class="ancho_10">
-    {{ form_widget(edit_form) }}
+{#    {{ form_widget(edit_form) }}#}
+    {{ form_row(edit_form.nombre) }}
+    {{ form_row(edit_form.apellido) }}
+    {{ form_row(edit_form.email) }}
+    {{ form_row(edit_form.te) }}
     </div>
+    
+    <fieldset>
+        <legend class="resaltado">
+            Edificios
+        </legend>
+
+        <div id="edificios" data-prototype="{{ collection_macro.widget_prototype(edit_form.edificios, 'Eliminar')|escape }}">
+            {% for widget in edit_form.edificios.children %}
+                {{ collection_macro.widget_prototype(widget, 'Eliminar') }}
+            {% endfor %}
+        </div>
+        <a class="btn-add" data-target="edificios">Agregar un edificio</a>
+    </fieldset>
+
+    {{ form_widget(edit_form._token) }}    
+
     <p>
         <button type="submit">Guardar</button>
     </p>

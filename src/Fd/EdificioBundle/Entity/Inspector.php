@@ -50,7 +50,7 @@ class Inspector {
     private $te;
     /**
      * bidireccional lado inverso
-     * @ORM\OneToMany(targetEntity="Fd\EdificioBundle\Entity\Edificio", mappedBy="inspector")
+     * @ORM\OneToMany(targetEntity="Fd\EdificioBundle\Entity\Edificio", mappedBy="inspector", cascade={"persist", "remove"})
      */
     private $edificios;
 
