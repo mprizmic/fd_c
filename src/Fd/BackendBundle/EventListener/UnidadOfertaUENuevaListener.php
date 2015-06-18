@@ -27,7 +27,7 @@ class UnidadOfertaUENuevaListener {
         
 //        $unidad_educativa = $event->getUnidadEducativa();
 //        
-//        $uo_handler = new UnidadOfertaHandler($this->em, $unidad_educativa->getNivel() );
+//        $uo_handler = new UnidadOfertaHandler($this->em );
 //        
 //        $unidad_oferta = $uo_handler->crear($unidad_educativa);
 //        

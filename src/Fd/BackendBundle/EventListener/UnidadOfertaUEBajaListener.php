@@ -28,7 +28,7 @@ class UnidadOfertaUEBajaListener {
 //        //recupero la unidad_oferta
 //        $ofertas = $unidad_educativa->getOfertas();
 //        
-//        $uo_handler = new UnidadOfertaHandler($this->em, $unidad_educativa->getNivel() );
+//        $uo_handler = new UnidadOfertaHandler($this->em );
 //        
 //        $respuesta = $uo_handler->eliminarAll($unidad_educativa);
 //        

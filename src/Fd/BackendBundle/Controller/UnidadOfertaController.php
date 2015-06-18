@@ -241,11 +241,7 @@ class UnidadOfertaController extends Controller {
      */
     public function deleteAction($unidad_oferta) {
 
-        $handler = new UnidadOfertaHandler($this->getEm(), $unidad_oferta
-                        ->getLocalizacion()
-                        ->getUnidadEducativa()
-                        ->getNivel()
-        );
+        $handler = new UnidadOfertaHandler($this->getEm());
 
         $respuesta = $handler->eliminar($unidad_oferta, true);
 
