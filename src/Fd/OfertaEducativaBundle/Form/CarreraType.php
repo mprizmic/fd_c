@@ -23,7 +23,7 @@ class CarreraType extends AbstractType {
                 ))
                 ->add('duracion', NULL, array(
                     'label' => 'Duración',
-                    'help' => 'Debe expresarse en cuatrimestres',
+                    'help' => 'Debe expresarse en horas cátedra',
                     'attr' => array(
                         'size' => 50,
                     ),
