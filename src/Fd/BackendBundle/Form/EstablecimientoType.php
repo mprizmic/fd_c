@@ -28,9 +28,9 @@ class EstablecimientoType extends AbstractType {
                     'help' => 'Es el nombre con que se lo conoce o con que se lo nombra diariamente',
                 ))
                 ->add('tipo_establecimiento')
-                ->add('te', 'text', array(
-                    'required' => false,
-                ))
+//                ->add('te', 'text', array(
+//                    'required' => false,
+//                ))
                 ->add('orden', 'number', array(
                     'help' => 'Es un número de orden en que se quiere que éste establecimiento aparezca en los listados',
                     'attr' => array(
@@ -43,7 +43,7 @@ class EstablecimientoType extends AbstractType {
                     'attr' => array(
                         'class' => 'input_talle_05',
             )))
-                ->add('email')
+//                ->add('email')
                 ->add('url', 'text', array(
                     'required' => false,
                     'attr' => array(
