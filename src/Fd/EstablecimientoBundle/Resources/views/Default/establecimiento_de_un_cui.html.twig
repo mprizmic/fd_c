@@ -16,7 +16,9 @@
 
 <span class="mediana"><a href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento_edificio.establecimientos.id }) }}">{{ establecimiento_edificio.identificacion }}</a></span><br />
     CUE: {{ establecimiento_edificio.establecimientos.cue }}/{{ establecimiento_edificio.cueAnexo}}<br />
-    Distrito escolar: {{ establecimiento_edificio.establecimientos.distritoEscolar }}
+    Distrito escolar: {{ establecimiento_edificio.establecimientos.distritoEscolar }}<br />
+    Comuna: {{ establecimiento_edificio.establecimientos.comuna }}<br />
+    CGP: {{ establecimiento_edificio.establecimientos.cgp }}
     <br/><br/>
     <span class="resaltado">Niveles:</span><br/>
         {% for localizacion in establecimiento_edificio.localizacion %}
