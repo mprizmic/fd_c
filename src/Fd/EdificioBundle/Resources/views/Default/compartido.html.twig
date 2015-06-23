@@ -12,14 +12,14 @@
     <tr spancol="2">
         <td>
             <br />
-            <span><a href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento.id })}}">{{ establecimiento.apodo }}</a></span>
+            <span class="mediana"><a href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento.id })}}">{{ establecimiento.apodo }}</a></span>
         </td>
     </tr>
     {% for sede in establecimiento.edificio %}
         <tr VALIGN="top">
             <td>
                 {% set edificio = sede.edificios %}
-                {{ edificio }}
+                <span class="italico"><a href="{{ path('edificio_ficha', {'id':edificio.id} ) }}">{{ edificio }}</a></span>
             </td>
             <td>
                 {% for vecino in edificio.vecinos %}
