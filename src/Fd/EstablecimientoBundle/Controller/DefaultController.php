@@ -11,6 +11,13 @@ use Goutte\Client;
 
 class DefaultController extends Controller {
 
+    
+    /**
+     * @Route("/listados",  name="listados")
+     */
+    public function listadosAction(){
+        return $this->render("EstablecimientoBundle:Default:listados.html.twig");
+    }
     /**
      * avisos de los avances del sistema o de la carga pendiente
      * @Route("/avisos", name="avisos")

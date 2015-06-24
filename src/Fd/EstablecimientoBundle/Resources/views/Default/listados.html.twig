@@ -1,0 +1,28 @@
+{% extends '::layout.html.twig' %}
+
+
+{% block main_content %}
+    {{ parent() }}
+    <br />
+    <div class="sub_titulo">Seleccione el listado que desea emitir</div>
+    <br />
+
+    <table border="0" >
+        <tbody>
+
+
+            {# este es el acceso sólo para el super_admin #}
+
+            <tr >
+                <td><a href="{{ path('establecimiento.autoridad.listado_rectores') }}">Listado de rectores</a></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <br />
+    <br />
+
+{% endblock %}
