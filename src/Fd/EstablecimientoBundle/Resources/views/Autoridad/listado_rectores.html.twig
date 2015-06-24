@@ -1,0 +1,35 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo">Rectores de los establecimientos</div>
+
+<br />
+
+<table CELLSPACING="5" border="0">
+{% for rector in rectores %}
+    <tr>
+        <td>
+            <span>{{ rector.apellido ~ ', ' ~ rector.nombre }}</span>
+        </td>
+        <td>
+            <span>{{ rector.establecimiento }}</span>
+        </td>
+        <td>
+            <span>{{ rector.teParticular }}</span>
+        </td>
+        <td>
+            <span>{{ rector.celular }}</span>
+        </td>
+        <td>
+            <span>{{ rector.email }}</span>
+        </td>
+    </tr>
+{% endfor %}
+
+</table>
+
+{% include '::includes/volver.html.twig' %}
+    
+{% endblock %}

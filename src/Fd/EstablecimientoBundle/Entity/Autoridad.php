@@ -8,7 +8,7 @@ use Fd\TablaBundle\Entity\CargoAutoridad;
 use Fd\EstablecimientoBundle\Validator\Constraints as ApellidoAssert;
 /**
  * @ORM\Table(name="autoridad")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fd\EstablecimientoBundle\Repository\AutoridadRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Autoridad
