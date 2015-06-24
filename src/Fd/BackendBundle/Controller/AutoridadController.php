@@ -199,12 +199,14 @@ class AutoridadController extends Controller {
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
-
-            $this->get('session')->getFlashBag()->add('notice', 'La autoridad fue creada exitosamente');
+            
+            $this->get('session')->getFlashBag()->add('exito', 'La autoridad fue creada exitosamente');
 
             return $this->redirect($this->generateUrl('backend_autoridad_edit', array('id' => $entity->getId())));
         }
 
+        $this->get('session')->getFlashBag()->add('error', 'Problemas en el registro de la nueva autoridad. Verifique y reintente');
+        
         return array(
             'entity' => $entity,
             'form' => $form->createView()

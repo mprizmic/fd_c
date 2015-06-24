@@ -9,7 +9,9 @@
 <h1>Crear registro de Autoridad </h1>
 
 <form action="{{ path('backend_autoridad_create') }}" method="post" {{ form_enctype(form) }}>
+    <div class="ancho_10">
     {{ form_widget(form) }}
+    </div>
     <p>
         <button type="submit">Crear</button>
     </p>
