@@ -10,7 +10,30 @@ use Fd\OfertaEducativaBundle\Entity\InicialX;
 
 class EstablecimientoEdificioRepository extends EntityRepository {
 
-        /**
+    /**
+     * Devuelve la lista de edificio_establecimiento con el inspector de infraestructura indicado
+     */
+    public function qbInspectores() {
+        $qb = $this->createQueryBuilder('ee')
+                ->select('e.apodo as apodo')
+                ->addSelect('ee.cue_anexo as anexo')
+                ->addSelect('ins.nombre as nombre')
+                ->addSelect('ins.apellido as apellido')
+                ->addSelect('ins.te as te')
+                ->addSelect('ins.email as email')
+                ->addSelect('d.calle as calle')
+                ->addSelect('d.altura as altura')
+                ->join('ee.establecimientos', 'e')
+                ->join('ee.edificios', 'ed')
+                ->join('ed.inspector', 'ins')
+                ->join('ed.domicilios', 'd')
+                ->where('d.principal = ?1')
+                ->orderBy('e.apodo')
+                ->addOrderBy('ee.cue_anexo');
+        return $qb->setParameter('1', true);
+    }
+
+    /**
      * devuelve la query para preguntar por todos los alumnos ordenados alfabeticamente por apellido y nombre
      */
     public function queryDeUnCui($edificio) {
@@ -32,13 +55,13 @@ class EstablecimientoEdificioRepository extends EntityRepository {
     public function findDeUnCui($edificio) {
         return $this->queryDeUnCui($edificio)->getResult();
     }
-    
+
     public function findAllOrdenado() {
         $qb = $this->createQueryBuilder('ee')
                 ->innerJoin('ee.establecimientos', 'e')
                 ->orderBy('e.orden', 'ASC')
                 ->addOrderBy('ee.cue_anexo', 'ASC');
-        
+
         return $qb->getQuery()->getResult();
     }
 
