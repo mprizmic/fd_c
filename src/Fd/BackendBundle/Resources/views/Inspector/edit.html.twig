@@ -35,8 +35,8 @@
             Edificios
         </legend>
 
-        <div id="edificios" data-prototype="{{ collection_macro.widget_prototype(edit_form.edificios, 'Eliminar')|escape }}">
-            {% for widget in edit_form.edificios.children %}
+        <div id="edificios" data-prototype="{{ collection_macro.widget_prototype(edit_form.combo_edificios, 'Eliminar')|escape }}">
+            {% for widget in edit_form.combo_edificios.children %}
                 {{ collection_macro.widget_prototype(widget, 'Eliminar') }}
             {% endfor %}
         </div>

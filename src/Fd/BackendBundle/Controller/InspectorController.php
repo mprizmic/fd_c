@@ -4,6 +4,7 @@ namespace Fd\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fd\EdificioBundle\Entity\Inspector;
@@ -104,23 +105,21 @@ class InspectorController extends Controller
      * Displays a form to edit an existing Inspector entity.
      *
      * @Route("/{id}/edit", name="backend_inspector_edit")
+     * @ParamConverter("inspector", class="EdificioBundle:Inspector")
      * @Template()
      */
-    public function editAction($id)
+    public function editAction($inspector)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('EdificioBundle:Inspector')->find($id);
+        $combo_edificios = $em->getRepository("EdificioBundle:Edificio")->findComboEdificios();
+        
+        $editForm = $this->createForm(new InspectorType($combo_edificios), $inspector);
+        $deleteForm = $this->createDeleteForm($inspector->getId());
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Inspector entity.');
-        }
-
-        $editForm = $this->createForm(new InspectorType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
+//        $editForm = $this->createForm(new \Fd\BackendBundle\Form\UnEdificioType($combo_edificios));
         return array(
-            'entity'      => $entity,
+            'entity'      => $inspector,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -132,19 +131,14 @@ class InspectorController extends Controller
      * @Route("/{id}/update", name="backend_inspector_update")
      * @Method("post")
      * @Template("BackendBundle:Inspector:edit.html.twig")
+     * @ParamConverter("entity", class="EdificioBundle:Edificio")
      */
-    public function updateAction($id)
+    public function updateAction($entity)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('EdificioBundle:Inspector')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Inspector entity.');
-        }
-
         $editForm   = $this->createForm(new InspectorType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         $request = $this->getRequest();
 
@@ -154,7 +148,7 @@ class InspectorController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('backend_inspector_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('backend_inspector_edit', array('id' => $entity->getId())));
         }
 
         return array(

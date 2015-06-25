@@ -8,6 +8,11 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Fd\BackendBundle\Form\UnEdificioType;
 
 class InspectorType extends AbstractType {
+    
+    private $combo_edificios;
+    public function __construct($combo_edificios) {
+        $this->combo_edificios = $combo_edificios;
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
@@ -15,11 +20,12 @@ class InspectorType extends AbstractType {
                 ->add('apellido')
                 ->add('email')
                 ->add('te')
-                ->add('edificios', 'collection', array(
-                    'type' => new UnEdificioType(),
+                ->add('combo_edificios', 'collection', array(
+                    'type' => new UnEdificioType($this->combo_edificios),
                     'by_reference' => FALSE,
                     'allow_delete' => TRUE,
                     'allow_add' => TRUE,
+                    'mapped'=>false,
                 ))
         ;
     }

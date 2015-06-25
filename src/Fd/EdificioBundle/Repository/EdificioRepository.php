@@ -7,6 +7,15 @@ use Fd\EdificioBundle\lib\Respuesta;
 
 class EdificioRepository extends EntityRepository {
 
+    public function findComboEdificios(){
+        
+        $edificios = $this->findAllOrdenado();
+        
+        foreach ($edificios as $key => $value) {
+            $respuesta[$value->getId()] = $value->__toString();
+        }
+        return $respuesta;
+    }
     /**
      * para el paginador ideup no funciona el findAll por que necesita que se le pase un query y no un result
      */
