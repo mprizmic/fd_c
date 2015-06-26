@@ -8,7 +8,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Fd\EdificioBundle\Model\PlanillaInspectoresInfraestructura;
+use Fd\EstablecimientoBundle\Annotation\DownloadAs;
 use Fd\EstablecimientoBundle\Entity\Autoridad;
+use Fd\EstablecimientoBundle\EventListener\DownloadListener;
+use Fd\EstablecimientoBundle\Utilities\PlanillaDeCalculo;
 
 /**
  * Inspector controller.
@@ -32,18 +36,28 @@ class InspectorController extends Controller {
 
     /**
      * @Route("/listado_inspectores", name="edificio.inspector.listado_inspectores")
-     * @Template()
+     * @DownloadAs(filename="inspectores.xls")
      */
     public function listado_inspectoresAction() {
+        
         $edificio_establecimientos = $this->getEm()
                 ->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
                 ->qbInspectores()
                 ->getQuery()
                 ->getResult();
+        
+        //se crea el servicio para crear planillas
+        $excelService = $this->get('phpexcel');
 
-        return array(
-            'establecimiento_edificios' => $edificio_establecimientos,
-        );
+        // defino la planilla
+        $planilla = new PlanillaInspectoresInfraestructura($excelService, 'Listado de inspectores de infraestructura', $edificio_establecimientos );
+        
+//        $planilla->setTitulo('Listado de supervisores de infraestructura');
+
+        //genero la planilla y devuelve un response
+        $response = $planilla->generarPlanillaResponse();
+
+        return $response;        
     }
 
 }
