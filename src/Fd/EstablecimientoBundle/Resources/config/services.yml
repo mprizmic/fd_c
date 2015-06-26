@@ -6,5 +6,20 @@ services:
     fd.establecimiento.model.localizacion:
         class: Fd\EstablecimientoBundle\Model\LocalizacionHandler
         arguments: ["@doctrine.orm.entity_manager"]
+        
+# estos servicios son para que las Action tiren un doenload en planilla de cálculo        
+    fd.establecimiento.downloadAs.listener:
+        class: Fd\EstablecimientoBundle\EventListener\DownloadListener
+        arguments: ["@annotation_reader"]
+        tags: 
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+    fd.establecimiento.downloadable.listener:
+        class: Fd\EstablecimientoBundle\EventListener\DownloadListener
+        arguments: ["@annotation_reader"]
+        tags: 
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 parameters:
+    # Este vector se usa para el listado de aniversarios significativos
     fd.aniversarios.significativos: [10, 20, 30, 40, 50, 75, 100, 110, 120, 130, 140, 150, 175, 200]
+    # se usa en el servicio de la annotation de downloadAs
+    annotation_reader: Doctrine\Common\Annotations\Reader
