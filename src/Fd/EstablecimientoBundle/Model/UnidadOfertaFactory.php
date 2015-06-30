@@ -20,5 +20,9 @@ class UnidadOfertaFactory {
             throw new \Exception("No existe la clase '$type' .");
         }
     }
+    public static function createRutaEdit($type, $unidad_oferta, $router){
+        return $router->generateUrl( $nombre, $params);
+        
+    }
 
 }

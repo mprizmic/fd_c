@@ -179,17 +179,20 @@ class UnidadOfertaController extends Controller {
 
         $tipo = $unidad_oferta->getTipo();
 
-        if ($tipo == strtolower(TipoUnidadOferta::TUO_CARRERA)) {
-            $ruta = "carrera_buscar";
-            $params = null;
-        }
+        //se crea la ruta que se publica en la plantilla a donde derivar para cada tipo de unidadoferta
+        $a_donde = UnidadOfertaFactory::createRutaEdit($tipo, $unidad_oferta, $this->get('router'));
 
-        if ($tipo == strtolower( TipoUnidadOferta::TUO_INICIAL ) ) {
-            $ruta = "inicial_nomina";
-            $params= null;
-        }
-
-        $a_donde = $this->generateUrl($ruta);
+//        if ($tipo == strtolower(TipoUnidadOferta::TUO_CARRERA)) {
+//            $ruta = "carrera_buscar";
+//            $params = null;
+//        }
+//
+//        if ($tipo == strtolower( TipoUnidadOferta::TUO_INICIAL ) ) {
+//            $ruta = "inicial_nomina";
+//            $params= null;
+//        }
+//
+//        $a_donde = $this->generateUrl($ruta);
 
         return array(
             'entity' => $unidad_oferta,
