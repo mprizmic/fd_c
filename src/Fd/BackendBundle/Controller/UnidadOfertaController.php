@@ -177,10 +177,10 @@ class UnidadOfertaController extends Controller {
         $editForm = $this->createForm(new UnidadOfertaType(), $unidad_oferta);
         $deleteForm = $this->createDeleteForm($unidad_oferta->getId());
 
-        $tipo = $unidad_oferta->getTipo();
-
+        $ruteador = $this->container->get('router');
+        
         //se crea la ruta que se publica en la plantilla a donde derivar para cada tipo de unidadoferta
-        $a_donde = UnidadOfertaFactory::createRutaEdit($tipo, $unidad_oferta, $this->get('router'));
+        $a_donde = UnidadOfertaFactory::createRutaEdit($unidad_oferta, $ruteador);
 
 //        if ($tipo == strtolower(TipoUnidadOferta::TUO_CARRERA)) {
 //            $ruta = "carrera_buscar";

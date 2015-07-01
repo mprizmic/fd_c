@@ -370,28 +370,6 @@ class OfertaEducativa {
     public function getNormas() {
         return $this->normas;
     }
-
-    /**
-     * Set j
-     *
-     * @param string $j
-     * @return OfertaEducativa
-     */
-    public function setJ($j) {
-        $this->j = $j;
-
-        return $this;
-    }
-
-    /**
-     * Get j
-     *
-     * @return string 
-     */
-    public function getJ() {
-        return $this->j;
-    }
-
     /**
      * Set creado
      *
