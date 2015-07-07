@@ -123,11 +123,11 @@
                     {# localizaciones de las unidades educativas de un establecimiento  #}
                     <br />
                     <fieldset class="float_izquierda">
-                        <span class="resaltado">Niveles en el edificio:</span><br/>
+                        <span class="resaltado">Niveles y matrícula en el edificio:</span><br/>
 
                         {% for ue in establecimiento_edificio['unidad_educativas'] %}
                             <div name="mostrable">
-                                {{ 'Nivel ' ~ ue['nivel'] }}
+                                {{ 'Nivel ' ~ ue['nivel'] }}<span class="chica italico">{{ ' (Matrícula: ' ~ ue['matricula'] ~ ')' }}</span>
     
                                 {% if ue['nivel_abreviatura'] == 'Ini' %}
                                 {% endif %}

@@ -215,6 +215,7 @@ class EstablecimientoController extends Controller {
                 $unidad_educativas[$key2]['nivel_abreviatura'] = $nivel->getAbreviatura();
                 $unidad_educativas[$key2]['cantidad_docentes'] = $localizacion->getCantidadDocentes();
                 $unidad_educativas[$key2]['localizacion_id'] = $localizacion->getId();
+                $unidad_educativas[$key2]['matricula'] = $localizacion->getMatricula();
 
 
                 /**

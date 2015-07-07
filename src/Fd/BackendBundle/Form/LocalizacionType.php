@@ -28,7 +28,7 @@ class LocalizacionType extends AbstractType {
 
             $optionsUnidadEducativa = array(
                 'required' => true,
-                'label' => 'Nivel o unidad educativa del establecimiento',
+                'label' => 'Unidad educativa del establecimiento',
                 'class' => 'EstablecimientoBundle:UnidadEducativa',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('ue');
@@ -47,7 +47,13 @@ class LocalizacionType extends AbstractType {
                     'required' => true,
                     'label' => 'Edificio del establecimiento (sede o anexo)',
                 ))
-//            ->add('domicilio')
+                ->add('matricula', 'number', array(
+                    'label' => 'Matrícula',
+                    'required' => false,
+                    'attr' => array(
+                        'class' => 'input_talle_05',
+                    ),
+                ))
         ;
     }
 

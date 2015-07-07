@@ -60,6 +60,10 @@ class Localizacion {
      * @ORM\Column(type="integer", nullable=true)
      */
     private $cantidad_docentes;
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $matricula;
 
     /**
      * @ORM\Column(type="datetime")
@@ -130,7 +134,8 @@ class Localizacion {
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -140,7 +145,8 @@ class Localizacion {
      * @param integer $cantidadDocentes
      * @return Localizacion
      */
-    public function setCantidadDocentes($cantidadDocentes) {
+    public function setCantidadDocentes($cantidadDocentes)
+    {
         $this->cantidad_docentes = $cantidadDocentes;
 
         return $this;
@@ -151,8 +157,32 @@ class Localizacion {
      *
      * @return integer 
      */
-    public function getCantidadDocentes() {
+    public function getCantidadDocentes()
+    {
         return $this->cantidad_docentes;
+    }
+
+    /**
+     * Set matricula
+     *
+     * @param integer $matricula
+     * @return Localizacion
+     */
+    public function setMatricula($matricula)
+    {
+        $this->matricula = $matricula;
+
+        return $this;
+    }
+
+    /**
+     * Get matricula
+     *
+     * @return integer 
+     */
+    public function getMatricula()
+    {
+        return $this->matricula;
     }
 
     /**
@@ -161,7 +191,8 @@ class Localizacion {
      * @param \DateTime $actualizado
      * @return Localizacion
      */
-    public function setActualizado($actualizado) {
+    public function setActualizado($actualizado)
+    {
         $this->actualizado = $actualizado;
 
         return $this;
@@ -172,7 +203,8 @@ class Localizacion {
      *
      * @return \DateTime 
      */
-    public function getActualizado() {
+    public function getActualizado()
+    {
         return $this->actualizado;
     }
 
@@ -182,7 +214,8 @@ class Localizacion {
      * @param \DateTime $creado
      * @return Localizacion
      */
-    public function setCreado($creado) {
+    public function setCreado($creado)
+    {
         $this->creado = $creado;
 
         return $this;
@@ -193,7 +226,8 @@ class Localizacion {
      *
      * @return \DateTime 
      */
-    public function getCreado() {
+    public function getCreado()
+    {
         return $this->creado;
     }
 
@@ -203,7 +237,8 @@ class Localizacion {
      * @param \Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidadEducativa
      * @return Localizacion
      */
-    public function setUnidadEducativa(\Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidadEducativa = null) {
+    public function setUnidadEducativa(\Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidadEducativa = null)
+    {
         $this->unidad_educativa = $unidadEducativa;
 
         return $this;
@@ -214,7 +249,8 @@ class Localizacion {
      *
      * @return \Fd\EstablecimientoBundle\Entity\UnidadEducativa 
      */
-    public function getUnidadEducativa() {
+    public function getUnidadEducativa()
+    {
         return $this->unidad_educativa;
     }
 
@@ -224,7 +260,8 @@ class Localizacion {
      * @param \Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $establecimientoEdificio
      * @return Localizacion
      */
-    public function setEstablecimientoEdificio(\Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $establecimientoEdificio = null) {
+    public function setEstablecimientoEdificio(\Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $establecimientoEdificio = null)
+    {
         $this->establecimiento_edificio = $establecimientoEdificio;
 
         return $this;
@@ -235,7 +272,8 @@ class Localizacion {
      *
      * @return \Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio 
      */
-    public function getEstablecimientoEdificio() {
+    public function getEstablecimientoEdificio()
+    {
         return $this->establecimiento_edificio;
     }
 
@@ -245,7 +283,8 @@ class Localizacion {
      * @param \Fd\EdificioBundle\Entity\DomicilioLocalizacion $domicilio
      * @return Localizacion
      */
-    public function addDomicilio(\Fd\EdificioBundle\Entity\DomicilioLocalizacion $domicilio) {
+    public function addDomicilio(\Fd\EdificioBundle\Entity\DomicilioLocalizacion $domicilio)
+    {
         $this->domicilio[] = $domicilio;
 
         return $this;
@@ -256,7 +295,8 @@ class Localizacion {
      *
      * @param \Fd\EdificioBundle\Entity\DomicilioLocalizacion $domicilio
      */
-    public function removeDomicilio(\Fd\EdificioBundle\Entity\DomicilioLocalizacion $domicilio) {
+    public function removeDomicilio(\Fd\EdificioBundle\Entity\DomicilioLocalizacion $domicilio)
+    {
         $this->domicilio->removeElement($domicilio);
     }
 
@@ -265,7 +305,8 @@ class Localizacion {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getDomicilio() {
+    public function getDomicilio()
+    {
         return $this->domicilio;
     }
 
@@ -275,7 +316,8 @@ class Localizacion {
      * @param \Fd\EstablecimientoBundle\Entity\UnidadOferta $ofertas
      * @return Localizacion
      */
-    public function addOferta(\Fd\EstablecimientoBundle\Entity\UnidadOferta $ofertas) {
+    public function addOferta(\Fd\EstablecimientoBundle\Entity\UnidadOferta $ofertas)
+    {
         $this->ofertas[] = $ofertas;
 
         return $this;
@@ -286,7 +328,8 @@ class Localizacion {
      *
      * @param \Fd\EstablecimientoBundle\Entity\UnidadOferta $ofertas
      */
-    public function removeOferta(\Fd\EstablecimientoBundle\Entity\UnidadOferta $ofertas) {
+    public function removeOferta(\Fd\EstablecimientoBundle\Entity\UnidadOferta $ofertas)
+    {
         $this->ofertas->removeElement($ofertas);
     }
 
@@ -295,8 +338,8 @@ class Localizacion {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getOfertas() {
+    public function getOfertas()
+    {
         return $this->ofertas;
     }
-
 }
