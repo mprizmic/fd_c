@@ -14,9 +14,12 @@ use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Model\DocentesNivelClass;
 use Fd\EstablecimientoBundle\Model\DocentesNivelManager;
+use Fd\EstablecimientoBundle\Model\MatriculaNivelClass;
+use Fd\EstablecimientoBundle\Model\MatriculaNivelManager;
 //use Fd\EstablecimientoBundle\Model\LocalizacionHandler;
 use Fd\BackendBundle\Form\EstablecimientoEdificioType;
 use Fd\BackendBundle\Form\Model\DocentesNivelType;
+use Fd\BackendBundle\Form\Model\MatriculaNivelType;
 use Fd\BackendBundle\Form\Handler\DocentesNivelFormHandler;
 
 /**
@@ -277,11 +280,50 @@ class EstablecimientoEdificioController extends Controller {
     }
 
     /**
-     * @Route("/matricula/edit/{establecimiento_edificio_id}", name="backend.establecimiento_edificio.edit_matricula")
-     * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:EstablecimientoEdificio")
+     * @Route("/matricula_nivel/edit/{establecimiento_edificio_id}", name="backend.establecimiento_edificio.matricula_nivel.edit")
+     * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:EstablecimientoEdificio", options={"id":"establecimiento_edificio_id"})
      */
-    public function edit_matriculaAction(Request $request, EstablecimientoEdificio $establecimiento_edificio) {
+    public function matricula_nivel_editAction(Request $request, EstablecimientoEdificio $establecimiento_edificio) {
         
-    }
+        $niveles = $this->getEm()->getRepository('TablaBundle:Nivel')->descripciones_niveles();
 
+        $matricula_nivel = new MatriculaNivelClass($establecimiento_edificio);
+
+        $editForm = $this->createForm(new MatriculaNivelType($establecimiento_edificio, $niveles), $matricula_nivel);
+
+        return $this->render('BackendBundle:Matricula:edit.html.twig', array(
+                    'entity' => $matricula_nivel,
+                    'edit_form' => $editForm->createView(),
+        ));
+    }
+    /**
+     * @Route("/matricula_nivel/actualizar/{establecimiento_edificio_id}",  name="backend.establecimiento_edificio.matricula_nivel.actualizar")
+     * @Method("post")
+     * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:EstablecimientoEdificio", options={"id"="establecimiento_edificio_id"})
+     */
+    public function matriculaNivelActualizarAction(EstablecimientoEdificio $establecimiento_edificio, Request $request) {
+
+        $respuesta = new Respuesta();
+
+        $niveles = $this->getEm()->getRepository('TablaBundle:Nivel')->descripciones_niveles();
+
+        $matricula_nivel_anterior = new MatriculaNivelClass($establecimiento_edificio);
+
+        $formulario = $this->createForm(new MatriculaNivelType($establecimiento_edificio, $niveles), $matricula_nivel_anterior);
+
+//        $form_handler = new DocentesNivelFormHandler(new DocentesNivelManager($this->getEm(), $this->get('fd.establecimiento.model.localizacion')));
+//
+//        $respuesta = $form_handler->actualizar($formulario, $request);
+//
+//        if ($respuesta->getCodigo() == 1) {
+//            $this->get('session')->getFlashBag()->add('exito', $respuesta->getMensaje());
+//            return $this->redirect($this->generateUrl('backend_establecimiento_edificio_docentes_nivel_editar', array('establecimiento_edificio_id' => $establecimiento_edificio->getId())));
+//        };
+//
+//        $this->get('session')->getFlashBag()->add('aviso', $respuesta->getMensaje());
+//        return $this->render('BackendBundle:Docentes:edit.html.twig', array(
+//                    'entity' => $matricula_nivel,
+//                    'edit_form' => $formulario->createView(),
+//        ));
+    }
 }
