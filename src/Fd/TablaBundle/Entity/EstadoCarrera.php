@@ -28,6 +28,10 @@ class EstadoCarrera
      * @ORM\Column(type="string", length=50)
      */
     protected $descripcion;
+    /**
+     * @ORM\Column(type="string", length=250, nullable=true)
+     */
+    protected $comentario;
     
     /**
      * @ORM\Column(type="integer")
@@ -107,5 +111,28 @@ class EstadoCarrera
     public function getOrden()
     {
         return $this->orden;
+    }
+
+    /**
+     * Set comentario
+     *
+     * @param string $comentario
+     * @return EstadoCarrera
+     */
+    public function setComentario($comentario)
+    {
+        $this->comentario = $comentario;
+
+        return $this;
+    }
+
+    /**
+     * Get comentario
+     *
+     * @return string 
+     */
+    public function getComentario()
+    {
+        return $this->comentario;
     }
 }
