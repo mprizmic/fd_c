@@ -8,13 +8,13 @@ use Fd\EstablecimientoBundle\Entity\EstablecimientoEstablecimiento;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Model\LocalizacionManager;
-//use Fd\BackendBundle\Form\Model\DocentesNivelHandler;
+//use Fd\BackendBundle\Form\Model\MatriculaNivelHandler;
 
-class DocentesNivelManager {
+class MatriculaNivelManager {
 
     private $em;
     private $respuesta;
-    private $unidad_educativa_handler;
+//    private $unidad_educativa_handler;
 
     public function __construct(EntityManager $em, LocalizacionManager $localizacion_manager) {
         $this->em = $em;
@@ -35,9 +35,8 @@ class DocentesNivelManager {
             $localizaciones = $establecimiento_edificio->getLocalizacion();
 
             foreach ($localizaciones as $localizacion) {
-                $localizacion->setCantidadDocentes($formulario->getCantidad($localizacion->getUnidadEducativa()->getNivel()->getAbreviatura()));
+                $localizacion->setMatricula($formulario->getMatricula($localizacion->getUnidadEducativa()->getNivel()->getAbreviatura()));
 
-                //se persiste en el repositorio de unidad educativa
                 $this->localizacion_manager->actualizar($localizacion, true);
             };
 

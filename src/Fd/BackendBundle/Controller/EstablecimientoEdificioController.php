@@ -21,6 +21,7 @@ use Fd\BackendBundle\Form\EstablecimientoEdificioType;
 use Fd\BackendBundle\Form\Model\DocentesNivelType;
 use Fd\BackendBundle\Form\Model\MatriculaNivelType;
 use Fd\BackendBundle\Form\Handler\DocentesNivelFormHandler;
+use Fd\BackendBundle\Form\Handler\MatriculaNivelFormHandler;
 
 /**
  * EstablecimientoEdificio controller.
@@ -311,19 +312,20 @@ class EstablecimientoEdificioController extends Controller {
 
         $formulario = $this->createForm(new MatriculaNivelType($establecimiento_edificio, $niveles), $matricula_nivel_anterior);
 
-//        $form_handler = new DocentesNivelFormHandler(new DocentesNivelManager($this->getEm(), $this->get('fd.establecimiento.model.localizacion')));
-//
-//        $respuesta = $form_handler->actualizar($formulario, $request);
-//
-//        if ($respuesta->getCodigo() == 1) {
-//            $this->get('session')->getFlashBag()->add('exito', $respuesta->getMensaje());
-//            return $this->redirect($this->generateUrl('backend_establecimiento_edificio_docentes_nivel_editar', array('establecimiento_edificio_id' => $establecimiento_edificio->getId())));
-//        };
-//
-//        $this->get('session')->getFlashBag()->add('aviso', $respuesta->getMensaje());
-//        return $this->render('BackendBundle:Docentes:edit.html.twig', array(
-//                    'entity' => $matricula_nivel,
-//                    'edit_form' => $formulario->createView(),
-//        ));
+        $form_handler = new MatriculaNivelFormHandler(new MatriculaNivelManager($this->getEm(), $this->get('fd.establecimiento.model.localizacion')));
+
+        $respuesta = $form_handler->actualizar($formulario, $request);
+
+        if ($respuesta->getCodigo() == 1) {
+            $this->get('session')->getFlashBag()->add('exito', $respuesta->getMensaje());
+            return $this->redirect($this->generateUrl('backend.establecimiento_edificio.matricula_nivel.edit',
+                    array('establecimiento_edificio_id' => $establecimiento_edificio->getId())));
+        };
+
+        $this->get('session')->getFlashBag()->add('aviso', $respuesta->getMensaje());
+        return $this->render('BackendBundle:Matricula:edit.html.twig', array(
+                    'entity' => $matricula_nivel,
+                    'edit_form' => $formulario->createView(),
+        ));
     }
 }
