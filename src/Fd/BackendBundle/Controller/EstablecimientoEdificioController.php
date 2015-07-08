@@ -25,7 +25,7 @@ use Fd\BackendBundle\Form\Handler\DocentesNivelFormHandler;
  * @Route("/establecimiento_edificio")
  */
 class EstablecimientoEdificioController extends Controller {
-    
+
     private $em;
 
     private function getEm() {
@@ -34,24 +34,25 @@ class EstablecimientoEdificioController extends Controller {
         };
         return $this->em;
     }
+
     /**
      * @Route("/docentes_nivel/editar/{establecimiento_edificio_id}",  name="backend_establecimiento_edificio_docentes_nivel_editar")
      * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:EstablecimientoEdificio", options={"id"="establecimiento_edificio_id"})
      */
     public function docentesNivelEditarAction(EstablecimientoEdificio $establecimiento_edificio) {
-        
+
         $em = $this->getDoctrine()->getEntityManager();
         $niveles = $em->getRepository('TablaBundle:Nivel')->descripciones_niveles();
-        
+
         $docentes_nivel = new DocentesNivelClass($establecimiento_edificio);
 
-        $editForm = $this->createForm(new DocentesNivelType($establecimiento_edificio, $niveles ), $docentes_nivel);
+        $editForm = $this->createForm(new DocentesNivelType($establecimiento_edificio, $niveles), $docentes_nivel);
 
         return $this->render('BackendBundle:Docentes:edit.html.twig', array(
                     'entity' => $docentes_nivel,
                     'edit_form' => $editForm->createView(),
-                ));
-    }    
+        ));
+    }
 
     /**
      * @Route("/docentes_nivel/actualizar/{establecimiento_edificio_id}",  name="backend_establecimiento_edificio_docentes_nivel_actualizar")
@@ -61,9 +62,9 @@ class EstablecimientoEdificioController extends Controller {
     public function docentesNivelActualizarAction(EstablecimientoEdificio $establecimiento_edificio, Request $request) {
 
         $respuesta = new Respuesta();
-        
+
         $niveles = $this->getEm()->getRepository('TablaBundle:Nivel')->descripciones_niveles();
-        
+
         $docentes_nivel_anterior = new DocentesNivelClass($establecimiento_edificio);
 
         $formulario = $this->createForm(new DocentesNivelType($establecimiento_edificio, $niveles), $docentes_nivel_anterior);
@@ -81,8 +82,9 @@ class EstablecimientoEdificioController extends Controller {
         return $this->render('BackendBundle:Docentes:edit.html.twig', array(
                     'entity' => $docentes_nivel,
                     'edit_form' => $formulario->createView(),
-                ));
+        ));
     }
+
     /**
      * @Route("/listar/{id}", name="backend_establecimiento_edificio_listar")
      * @Template("BackendBundle:EstablecimientoEdificio:listar.html.twig")
@@ -95,7 +97,7 @@ class EstablecimientoEdificioController extends Controller {
         $entities = $em->getRepository("EstablecimientoBundle:EstablecimientoEdificio")
                 ->findBy(array(
             'establecimientos' => $establecimiento->getId(),
-                ));
+        ));
         return array(
             'entities' => $entities,
         );
@@ -154,6 +156,7 @@ class EstablecimientoEdificioController extends Controller {
             'form' => $form->createView()
         );
     }
+
     /**
      * Creates a new EstablecimientoEdificio entity.
      *
@@ -218,12 +221,12 @@ class EstablecimientoEdificioController extends Controller {
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
-            
+
             //no funciona
-            if ($entity->getEstablecimientos()->esAnexo( $entity->getCueAnexo() )){
+            if ($entity->getEstablecimientos()->esAnexo($entity->getCueAnexo())) {
                 $this->get('session')->getFlashBag()->add('notice', 'Ya existe el nro de anexo. Verifíquelo');
             };
-            
+
             $em->persist($entity);
             $em->flush();
 
@@ -271,6 +274,14 @@ class EstablecimientoEdificioController extends Controller {
                         ->add('id', 'hidden')
                         ->getForm()
         ;
+    }
+
+    /**
+     * @Route("/matricula/edit/{establecimiento_edificio_id}", name="backend.establecimiento_edificio.edit_matricula")
+     * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:EstablecimientoEdificio")
+     */
+    public function edit_matriculaAction(Request $request, EstablecimientoEdificio $establecimiento_edificio) {
+        
     }
 
 }
