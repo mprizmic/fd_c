@@ -15,6 +15,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
  * @ORM\Entity(repositoryClass="Fd\OfertaEducativaBundle\Repository\BachilleratoRepository")
  */
 class Bachillerato  {
+
+    const TIPO="Bachilelrato";
     /**
      * 
      * @ORM\Column(name = "id", type = "integer", nullable = false)
@@ -46,9 +48,12 @@ class Bachillerato  {
      */
     private $duracion;
 
+    public function getTipo(){
+        return self::TIPO;
+    }
 
     public function __toString() {
-        return 'Bachillerato: ' .$this->duracion;
+        return $this->getTipo() .$this->duracion;
     }
 
     /**

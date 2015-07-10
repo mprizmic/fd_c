@@ -17,6 +17,8 @@ use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
  */
 class Inicial {
 
+    const TIPO = "Inicial";
+
     /**
      * 
      * @ORM\Column(name = "id", type = "integer", nullable = false)
@@ -36,10 +38,15 @@ class Inicial {
      * @ORM\Column(type="string")
      */
     private $duracion;
+
     /**
      * @ORM\Column(type="string")
      */
     private $descripcion;
+
+    public function getTipo() {
+        return self::TIPO;
+    }
 
     public function __toString() {
         return $this->descripcion;
@@ -96,17 +103,15 @@ class Inicial {
         return $this->oferta;
     }
 
-
     /**
      * Set oferta_inicial
      *
      * @param \Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertaInicial
      * @return Inicial
      */
-    public function setOfertaInicial(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertaInicial = null)
-    {
+    public function setOfertaInicial(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertaInicial = null) {
         $this->oferta_inicial = $ofertaInicial;
-    
+
         return $this;
     }
 
@@ -115,8 +120,7 @@ class Inicial {
      *
      * @return \Fd\OfertaEducativaBundle\Entity\OfertaEducativa 
      */
-    public function getOfertaInicial()
-    {
+    public function getOfertaInicial() {
         return $this->oferta_inicial;
     }
 
@@ -126,8 +130,7 @@ class Inicial {
      * @param string $descripcion
      * @return Inicial
      */
-    public function setDescripcion($descripcion)
-    {
+    public function setDescripcion($descripcion) {
         $this->descripcion = $descripcion;
 
         return $this;
@@ -138,8 +141,8 @@ class Inicial {
      *
      * @return string 
      */
-    public function getDescripcion()
-    {
+    public function getDescripcion() {
         return $this->descripcion;
     }
+
 }

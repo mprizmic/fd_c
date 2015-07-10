@@ -26,7 +26,7 @@ class InicialUnidadOfertaHandler extends UnidadOfertaHandler {
      * @param type $unidad
      */
     public function crear($localizacion, $oferta_educativa, $tipo) {
-        return parent::crear($localizacion, $oferta_educativa, $tipo);
+        return parent::crear($localizacion, $oferta_educativa, TipoUnidadOferta::TUO_INICIAL);
 //FALTA ver mas adelante
 //        $inicial_x_handler = new InicialXHandler($this->getEm());
 //        $inicial_x = $inicial_x_handler->crear($uo, 0);

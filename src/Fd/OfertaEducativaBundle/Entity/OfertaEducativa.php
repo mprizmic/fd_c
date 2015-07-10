@@ -52,6 +52,12 @@ class OfertaEducativa {
 
     /**
      * lado inverso
+     * @ORM\OneToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\Secundario", mappedBy="oferta")
+     */
+    private $secundario;
+
+    /**
+     * lado inverso
      * @ORM\OneToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\Inicial", mappedBy="oferta")
      */
     private $inicial;
@@ -97,22 +103,10 @@ class OfertaEducativa {
         $this->actualizado = new \DateTime();
         $this->carrera = null;
     }
+
     public function __toString() {
-        $entity = $this->getCarrera();
-        if (is_null($entity)) {
-            $entity = $this->getEspecializacion();
-            if (is_null($entity)) {
-                $entity = $this->getBachillerato();
-                if (is_null($entity)) {
-                    $entity = $this->getPrimario();
-                    if (is_null($entity)) {
-                        $entity = $this->getInicial();
-                    }
-                }
-            }
-        } else {
-            
-        };
+        $entity = $this->getObjetoOferta();
+
         return is_null($entity) ? 's/d' : $entity->__toString();
     }
 
@@ -131,6 +125,9 @@ class OfertaEducativa {
                     $entity = $this->getPrimario();
                     if (is_null($entity)) {
                         $entity = $this->getInicial();
+                        if (is_null($entity)) {
+                            $entity = $this->getSecundario();
+                        }
                     }
                 }
             }
@@ -139,33 +136,8 @@ class OfertaEducativa {
     }
 
     public function esTipo() {
-        $tipo = "";
-        $nombre = $this->getCarrera();
-        if (is_null($nombre)) {
-            $nombre = $this->getEspecializacion();
-            if (is_null($nombre)) {
-                $nombre = $this->getBachillerato();
-                if (is_null($nombre)) {
-                    $nombre = $this->getPrimario();
-                    if (is_null($nombre)) {
-                        $nombre = $this->getInicial();
-                        if (is_null($nombre)) {
-                            $nombre = 's/d';
-                        } else {
-                            $tipo = 'Inicial';
-                        }
-                    } else {
-                        $tipo = 'Primario';
-                    }
-                } else {
-                    $tipo = 'Bachillerato';
-                }
-            } else {
-                $tipo = 'Especializacion';
-            }
-        } else {
-            $tipo = 'Carrera';
-        };
+        $entity = $this->getObjetoOferta();
+        $tipo = $entity->getTipo();
         return $tipo;
     }
 
@@ -432,6 +404,27 @@ class OfertaEducativa {
      */
     public function getActualizado() {
         return $this->actualizado;
+    }
+
+    /**
+     * Set secundario
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\Secundario $secundario
+     * @return OfertaEducativa
+     */
+    public function setSecundario(\Fd\OfertaEducativaBundle\Entity\Secundario $secundario = null) {
+        $this->secundario = $secundario;
+
+        return $this;
+    }
+
+    /**
+     * Get secundario
+     *
+     * @return \Fd\OfertaEducativaBundle\Entity\Secundario 
+     */
+    public function getSecundario() {
+        return $this->secundario;
     }
 
 }

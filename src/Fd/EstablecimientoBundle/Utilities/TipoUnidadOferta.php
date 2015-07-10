@@ -12,6 +12,7 @@ class TipoUnidadOferta {
     const TUO_INICIAL = "Inicial";
     const TUO_PRIMARIO = "Primario";
     const TUO_BACHILLERATO = "Bachillerato";
+    const TUO_SECUNDARIO = "Secundario";
     const TUO_CARRERA = "Carrera";
     const TUO_ESPECIALIZACION = "Especializacion";
 

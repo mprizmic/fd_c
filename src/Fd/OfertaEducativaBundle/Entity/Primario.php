@@ -17,6 +17,8 @@ use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
  */
 class Primario {
 
+    const TIPO = "Primario";
+
     /**
      * 
      * @ORM\Column(name = "id", type = "integer", nullable = false)
@@ -24,28 +26,34 @@ class Primario {
      * @ORM\GeneratedValue(strategy = "AUTO")
      */
     private $id;
+
     /**
      * lado propietario
      * @ORM\OneToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\OfertaEducativa", inversedBy="primario")
      * @ORM\JoinColumn(name="oferta_educativa_id", referencedColumnName="id")
      */
     private $oferta;
+
     /**
      * @ORM\Column(type="string")
      */
     private $duracion;
+
     /**
      * @ORM\Column(type="string")
      */
     private $descripcion;
 
-
     public function __toString() {
-        return $this->descripcion . ' - ' .$this->duracion;
+        return $this->descripcion . ' - ' . $this->duracion;
     }
 
     public function __construct() {
         $this->descripcion = 'Primaria común';
+    }
+
+    public function getTipo() {
+        return self::TIPO;
     }
 
     /**
@@ -53,8 +61,7 @@ class Primario {
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -63,8 +70,7 @@ class Primario {
      *
      * @param string $duracion
      */
-    public function setDuracion($duracion)
-    {
+    public function setDuracion($duracion) {
         $this->duracion = $duracion;
     }
 
@@ -73,8 +79,7 @@ class Primario {
      *
      * @return string 
      */
-    public function getDuracion()
-    {
+    public function getDuracion() {
         return $this->duracion;
     }
 
@@ -83,8 +88,7 @@ class Primario {
      *
      * @param Fd\OfertaEducativaBundle\Entity\OfertaEducativa $oferta
      */
-    public function setOferta(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $oferta)
-    {
+    public function setOferta(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $oferta) {
         $this->oferta = $oferta;
     }
 
@@ -93,8 +97,7 @@ class Primario {
      *
      * @return Fd\OfertaEducativaBundle\Entity\OfertaEducativa 
      */
-    public function getOferta()
-    {
+    public function getOferta() {
         return $this->oferta;
     }
 
@@ -104,10 +107,9 @@ class Primario {
      * @param \Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertaPrimario
      * @return Primario
      */
-    public function setOfertaPrimario(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertaPrimario = null)
-    {
+    public function setOfertaPrimario(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertaPrimario = null) {
         $this->oferta_primario = $ofertaPrimario;
-    
+
         return $this;
     }
 
@@ -116,8 +118,7 @@ class Primario {
      *
      * @return \Fd\OfertaEducativaBundle\Entity\OfertaEducativa 
      */
-    public function getOfertaPrimario()
-    {
+    public function getOfertaPrimario() {
         return $this->oferta_primario;
     }
 
@@ -127,8 +128,7 @@ class Primario {
      * @param string $descripcion
      * @return Primario
      */
-    public function setDescripcion($descripcion)
-    {
+    public function setDescripcion($descripcion) {
         $this->descripcion = $descripcion;
 
         return $this;
@@ -139,8 +139,8 @@ class Primario {
      *
      * @return string 
      */
-    public function getDescripcion()
-    {
+    public function getDescripcion() {
         return $this->descripcion;
     }
+
 }

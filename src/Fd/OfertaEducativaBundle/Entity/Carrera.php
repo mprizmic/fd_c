@@ -20,6 +20,8 @@ use Fd\OfertaEducativaBundle\Listener\CarreraListener;
  * @ORM\HasLifecycleCallbacks
  */
 class Carrera {
+    
+    const TIPO = "Carrera";
 
     /**
      * 
@@ -173,8 +175,8 @@ class Carrera {
         };
         $this->titulos = $titulos;
     }
-    public function etiqueta() {
-        return 'Carrera';
+    public function getTipo() {
+        return self::TIPO;
     }
 
     public function __construct() {

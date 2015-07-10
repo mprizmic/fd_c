@@ -1,0 +1,68 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block title %}
+{{ parent() }} - Búsqueda de orientaciones de media
+{% endblock %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">Búsqueda de orientaciones de la NES</div>
+<div class="limpiar_float"></div>
+
+<div><a class="float_derecha boton_verde" href="{{ path('backend.mediaorientaciones.new') }}">Nueva orientación</a></div>
+<div class="limpiar_float"></div>
+
+<fieldset>
+<legend class="resaltado">Filtros</legend>
+<form method="post" action="{{ path('backend.mediaorientaciones.buscar') }}">
+    <div class="ancho_10">
+    {{ form_rest(form) }}
+    </div>
+    <br />
+    <div style="display: block">
+         
+        <input type="submit" name="submit-filter" value="Buscar" />
+        <span class="separador"></span>
+        <a href="{{ path( "backend.mediaorientaciones.buscar" ) }}">Limpiar</a>
+
+    </div>
+</form>
+</fieldset>
+
+{% if orientaciones %}
+    <br />
+
+    <table class="grilla">
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+        </tr>
+
+        {% for orientacion in orientaciones %}
+        <tr>
+            <td><a href="{{path('backend.mediaorientaciones.edit', {'id': orientacion.id})}}">{{ orientacion.codigo }}</a></td>
+            <td>{{ orientacion }}</td>
+            <td><a href="{{path('backend.mediaorientaciones.edit', {'id': orientacion.id})}}">Editar</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {{ simple_paginator_render('backend.mediaorientaciones.buscar', null, {
+        'container_class':'simple_paginator',
+        'previousPageText':'Anterior',
+        'nextPageText':'Siguiente',
+        'currentClass':'Actual',
+        'firstPageText':'Primero',
+        'lastPageText':'Último'
+    }) }}  
+
+{% endif %}
+
+<br />
+<br />
+
+
+{% include '::includes/volver.html.twig' %}
+{% endblock %}

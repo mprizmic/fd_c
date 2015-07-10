@@ -24,7 +24,7 @@ class BachilleratoUnidadOfertaHandler extends UnidadOfertaHandler {
      * @param type $unidad
      */
     public function crear($localizacion, $oferta_educativa, $tipo) {
-        return parent::crear($localizacion, $oferta_educativa, $tipo);
+        return parent::crear($localizacion, $oferta_educativa, TipoUnidadOferta::TUO_BACHILLERATO);
     }
 
     /**

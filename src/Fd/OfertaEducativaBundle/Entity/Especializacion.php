@@ -16,6 +16,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
  */
 class Especializacion {
 
+    const TIPO = "Especializacion";
+
     /**
      * 
      * @ORM\Column(name = "id", type = "integer", nullable = false)
@@ -69,13 +71,13 @@ class Especializacion {
      * @return type 
      */
     private $ultima_cohorte_valida;
-    
+
     public function __toString() {
         return $this->getNombre();
     }
 
-    public function etiqueta() {
-        return 'Especialización';
+    public function getTipo() {
+        return self::TIPO;
     }
 
     /**
@@ -234,17 +236,15 @@ class Especializacion {
         return $this->estado;
     }
 
-
     /**
      * Set oferta_especializacion
      *
      * @param \Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertaEspecializacion
      * @return Especializacion
      */
-    public function setOfertaEspecializacion(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertaEspecializacion = null)
-    {
+    public function setOfertaEspecializacion(\Fd\OfertaEducativaBundle\Entity\OfertaEducativa $ofertaEspecializacion = null) {
         $this->oferta_especializacion = $ofertaEspecializacion;
-    
+
         return $this;
     }
 
@@ -253,8 +253,7 @@ class Especializacion {
      *
      * @return \Fd\OfertaEducativaBundle\Entity\OfertaEducativa 
      */
-    public function getOfertaEspecializacion()
-    {
+    public function getOfertaEspecializacion() {
         return $this->oferta_especializacion;
     }
 
@@ -264,10 +263,9 @@ class Especializacion {
      * @param integer $ultimaCohorteValida
      * @return Especializacion
      */
-    public function setUltimaCohorteValida($ultimaCohorteValida)
-    {
+    public function setUltimaCohorteValida($ultimaCohorteValida) {
         $this->ultima_cohorte_valida = $ultimaCohorteValida;
-    
+
         return $this;
     }
 
@@ -276,8 +274,8 @@ class Especializacion {
      *
      * @return integer 
      */
-    public function getUltimaCohorteValida()
-    {
+    public function getUltimaCohorteValida() {
         return $this->ultima_cohorte_valida;
     }
+
 }

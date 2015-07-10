@@ -8,6 +8,7 @@ use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
+use Fd\EstablecimientoBundle\Utilities\TipoUnidadOferta;
 use Fd\TablaBundle\Entity\Nivel;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 
@@ -23,7 +24,7 @@ class PrimarioUnidadOfertaHandler extends UnidadOfertaHandler {
      * @param type $unidad
      */
     public function crear($localizacion, $oferta_educativa, $tipo) {
-        return parent::crear($localizacion, $oferta_educativa, $tipo);
+        return parent::crear($localizacion, $oferta_educativa, TipoUnidadOferta::TUO_PRIMARIO);
     }
 
     /**
