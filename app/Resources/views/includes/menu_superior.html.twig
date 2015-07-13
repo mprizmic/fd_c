@@ -26,7 +26,12 @@
             <ul>
                 <li><a href="{{ path('inicial_nomina') }}">Inicial</a></li>
                 <li><a href="{{ path('primario_nomina') }}">Primario</a></li>
-                <li><a href="{{ path('medio_nomina') }}">Medio</a></li>
+                <li><a href="#">Medio</a>
+                    <ul>
+                        <li><a href="{{ path('medio_nomina') }}">Establecimientos que imparten nivel medio</a></li>
+                        <li><a href="#">Orientaciones de la NES</a></li>
+                    </ul>
+                </li>
             </ul>
         </li>
         <li><a href="#">Edificios</a>
