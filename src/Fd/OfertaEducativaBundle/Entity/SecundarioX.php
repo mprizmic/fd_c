@@ -50,6 +50,15 @@ class SecundarioX {
      */
     private $anio_inicio;
     /**
+     * bidireccional lado propietario
+     * @ORM\ManyToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\MediaOrientaciones", inversedBy="secundarioxs")
+     * @ORM\JoinTable(name="secundariox_orientacion", 
+     *      joinColumns={@ORM\JoinColumn(name="secundariox_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="orientacion_id", referencedColumnName="id")}
+     * )
+     */    
+    private $orientaciones;
+    /**
      * @ORM\Column(type="datetime")
      * 
      */
@@ -180,5 +189,61 @@ class SecundarioX {
     public function getUnidadOferta()
     {
         return $this->unidad_oferta;
+    }
+
+    /**
+     * Set anio_inicio
+     *
+     * @param integer $anioInicio
+     * @return SecundarioX
+     */
+    public function setAnioInicio($anioInicio)
+    {
+        $this->anio_inicio = $anioInicio;
+
+        return $this;
+    }
+
+    /**
+     * Get anio_inicio
+     *
+     * @return integer 
+     */
+    public function getAnioInicio()
+    {
+        return $this->anio_inicio;
+    }
+
+    /**
+     * Add orientaciones
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\MediaOrientaciones $orientaciones
+     * @return SecundarioX
+     */
+    public function addOrientacione(\Fd\OfertaEducativaBundle\Entity\MediaOrientaciones $orientaciones)
+    {
+        $this->orientaciones[] = $orientaciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove orientaciones
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\MediaOrientaciones $orientaciones
+     */
+    public function removeOrientacione(\Fd\OfertaEducativaBundle\Entity\MediaOrientaciones $orientaciones)
+    {
+        $this->orientaciones->removeElement($orientaciones);
+    }
+
+    /**
+     * Get orientaciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrientaciones()
+    {
+        return $this->orientaciones;
     }
 }

@@ -35,7 +35,15 @@ class MediaOrientaciones
      * @ORM\Column(name="orden", type="integer", length=2, nullable=true)
      */
     private $orden;
-
+    /**
+     * bidireccional lado inverso
+     * @ORM\ManyToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\SecundarioX", mappedBy="orientaciones")
+     * @ORM\JoinTable(name="secundariox_orientacion", 
+     *      joinColumns={@ORM\JoinColumn(name="orientacion_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="secundariox_id", referencedColumnName="id")}
+     * )
+     */
+    private $secundarioxs;
     /**
      * @ORM\Column(type="datetime")
      * 
@@ -186,5 +194,38 @@ class MediaOrientaciones
     public function getCreado()
     {
         return $this->creado;
+    }
+
+    /**
+     * Add secundarioxs
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\SecundarioX $secundarioxs
+     * @return MediaOrientaciones
+     */
+    public function addSecundariox(\Fd\OfertaEducativaBundle\Entity\SecundarioX $secundarioxs)
+    {
+        $this->secundarioxs[] = $secundarioxs;
+
+        return $this;
+    }
+
+    /**
+     * Remove secundarioxs
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\SecundarioX $secundarioxs
+     */
+    public function removeSecundariox(\Fd\OfertaEducativaBundle\Entity\SecundarioX $secundarioxs)
+    {
+        $this->secundarioxs->removeElement($secundarioxs);
+    }
+
+    /**
+     * Get secundarioxs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSecundarioxs()
+    {
+        return $this->secundarioxs;
     }
 }
