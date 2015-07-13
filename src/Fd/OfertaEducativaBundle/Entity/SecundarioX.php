@@ -45,6 +45,11 @@ class SecundarioX {
      */
     private $matricula;
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Length(min=4, max=4, minMessage="Número muy chico", maxMessage="Número muy grande")
+     */
+    private $anio_inicio;
+    /**
      * @ORM\Column(type="datetime")
      * 
      */
