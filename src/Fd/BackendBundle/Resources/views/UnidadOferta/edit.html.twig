@@ -23,6 +23,7 @@
             {{ form_row(edit_form.ofertas) }}
         </div>
         {# turnos en que se imparte #}
+        <br />
         <fieldset>
             <legend class="resaltado">
                 Turnos
@@ -35,27 +36,33 @@
             </div>
             <a class="btn-add" data-target="turnos">Agregar un turno</a>
         </fieldset>
-        {{ form_widget(edit_form._token) }}
-        <p>
+        <br />
+        <div class="separador">
+            <a href="{{ ruta }}">Ver detalle de la oferta</a>
+        </div>
+
+        <div>
+            {{ form_widget(edit_form._token) }}
+        </div>
+
+        <br />
+        <div class="separador">
             <button type="submit">Guardar</button>
-        </p>
+        </div>
     </form>
 
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('backend_unidadoferta') }}">
-                Volver a la lista
-            </a>
-        </li>
-        <li>
-            <form action="{{ path('backend_unidadoferta_delete', { 'id': entity.id }) }}" method="post">
-                {{ form_widget(delete_form) }}
-                <button type="submit" class="boton_rojo">Eliminar</button>
-            </form>
-        </li>
-    </ul>
-    <div>
-        <a href="{{ ruta }}">la ruta </a>
-    </div>
+    <form action="{{ path('backend_unidadoferta_delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <div class="float_izquierda separador">
+            <input type="submit" class="boton_rojo" value="Eliminar" onsubmit="return confirm('Está seguro?')" />
+            <span class="separador">
+                <a href="{{ path('backend_unidadoferta') }}">
+                    Volver a la lista
+                </a>
+            </span>
+        </div>
+    </form>
+    <br />
+    <br />
 
 {% endblock %}

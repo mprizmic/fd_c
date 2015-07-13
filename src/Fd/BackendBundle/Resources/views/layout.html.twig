@@ -4,10 +4,13 @@
 
 {% block stylesheets %}
     {% include '::includes/stylesheets.html.twig' %}
+    <style type="text/css">
+        #menu_superior {background: #000;}
+    </style>
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
+    {{ parent() }}
 {% endblock %}
 
 {% block header %}
@@ -21,23 +24,23 @@
 
 {% block main_content %}
     <!-- tiene un flash y luego el contenido -->
-    
+
     {% for type, flashMessages in app.session.flashbag.all() %}
         {% if loop.first %}
             <div id="flash">
-        {% endif %}
-
-        {% for un_mensaje in flashMessages %}
-            {% if loop.first %}
-                <div class="{{ 'flash flash_' ~ type }}">
             {% endif %}
-                {{ un_mensaje }}<br />
+
+            {% for un_mensaje in flashMessages %}
+                {% if loop.first %}
+                    <div class="{{ 'flash flash_' ~ type }}">
+                    {% endif %}
+                    {{ un_mensaje }}<br />
+                    {% if loop.last %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
             {% if loop.last %}
-                </div>
-            {% endif %}
-        {% endfor %}
-
-        {% if loop.last %}
             </div>
             <script>$("#flash").fadeIn('slow').delay(1200).fadeOut('slow');</script>
         {% endif %}
