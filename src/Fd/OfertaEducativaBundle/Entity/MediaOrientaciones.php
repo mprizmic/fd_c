@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Table(name="media_orientaciones")
- * @ORM\Entity(repositoryClass="Fd\EstablecimientoBundle\Repository\MediaOrientacionesRepository")
+ * @ORM\Entity(repositoryClass="Fd\OfertaEducativaBundle\Repository\MediaOrientacionesRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class MediaOrientaciones
