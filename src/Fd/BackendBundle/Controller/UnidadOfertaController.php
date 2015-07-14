@@ -180,9 +180,10 @@ class UnidadOfertaController extends Controller {
         $tipo = $unidad_oferta->getTipo();
 
         $ruteador = $this->container->get('router');
+        $em = $this->getEm();
         
         //se crea la ruta que se publica en la plantilla a donde derivar para cada tipo de unidadoferta
-        $a_donde = UnidadOfertaFactory::createRutaEdit($unidad_oferta, $ruteador);
+        $a_donde = UnidadOfertaFactory::createRutaEdit($unidad_oferta, $ruteador, $em );
 
         return array(
             'entity' => $unidad_oferta,

@@ -31,7 +31,7 @@ class UnidadOfertaFactory {
      * @param type $unidad_oferta
      * @param type $router
      */
-    public static function createRutaEdit(UnidadOferta $unidad_oferta, $ruteador) {
+    public static function createRutaEdit(UnidadOferta $unidad_oferta, $ruteador, EntityManager $em) {
 
         // tipo de oferta al que se requiere redirigir
         $tipo = $unidad_oferta->getTipo();
@@ -45,7 +45,7 @@ class UnidadOfertaFactory {
         switch ($tipo) {
             case TipoUnidadOferta::TUO_CARRERA:
                 $nombre = 'carrera_editar';
-                $params['id'] = $entity->getId();
+//                $params['id'] = $entity->getId();
                 break;
             case TipoUnidadOferta::TUO_PRIMARIO:
                 $nombre = 'primario_nomina';
@@ -53,6 +53,12 @@ class UnidadOfertaFactory {
             case TipoUnidadOferta::TUO_INICIAL:
                 break;
             case TipoUnidadOferta::TUO_SECUNDARIO:
+                $nombre = 'backend.secundariox.edit';
+                
+                $secundariox = $em->getRepository('OfertaEducativaBundle:SecundarioX')
+                        ->findOneBy(array('unidad_oferta' => $unidad_oferta ));
+                // con la unidad_oferta hay que averiguar el ID del registro de secundario_x
+                $params['id'] = $secundariox->getId();
                 break;
             default :
         }
