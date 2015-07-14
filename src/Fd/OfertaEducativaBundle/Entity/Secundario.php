@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Correponsde la NES
+ */
 namespace Fd\OfertaEducativaBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
@@ -53,7 +56,7 @@ class Secundario {
     }
 
     public function __toString() {
-        return $this->getTipo() . $this->duracion . ' años.';
+        return 'NES ' . $this->duracion . ' años.';
     }
 
     /**

@@ -77,7 +77,7 @@ class SecundarioX {
         $this->setActualizado(new \DateTime());
     }  
     public function __toString() {
-        return 'SecundarioX';
+        return 'NES (' . $this->getId() . ')';
     }
     
     /**
