@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace Fd\EstablecimientoBundle\Model;
 
 use Doctrine\ORM\EntityManager;
@@ -39,6 +41,8 @@ class UnidadOfertaFactory {
         // recupero el objeto de la clase que corresponda según el tipo y la unidad oferta
         $entity = $unidad_oferta->getOfertas()->getObjetoOferta();
 
+        $respuesta['mensaje'] = 'Ver detalle de la oferta';
+
         $nombre = 'backend_unidadoferta';
         $params = array();
 
@@ -53,19 +57,25 @@ class UnidadOfertaFactory {
             case TipoUnidadOferta::TUO_INICIAL:
                 break;
             case TipoUnidadOferta::TUO_SECUNDARIO:
-                $nombre = 'backend.secundariox.edit';
-                
+
                 $secundariox = $em->getRepository('OfertaEducativaBundle:SecundarioX')
-                        ->findOneBy(array('unidad_oferta' => $unidad_oferta ));
+                        ->findOneBy(array('unidad_oferta' => $unidad_oferta));
+
+                if (!$secundariox) {
+                    $respuesta['mensaje'] = 'Agregar orientaciones';
+                    $nombre = 'backend.secundariox.new';
+                } else {
+                    $params['id'] = $secundariox->getId();
+                    $nombre = 'backend.secundariox.edit';
+                }
                 // con la unidad_oferta hay que averiguar el ID del registro de secundario_x
-                $params['id'] = $secundariox->getId();
                 break;
             default :
         }
 
-        $ruta_generada = $ruteador->generate($nombre, $params, false);
+        $respuesta['ruta_generada'] = $ruteador->generate($nombre, $params, false);
 
-        return $ruta_generada;
+        return $respuesta;
     }
 
 }
