@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
+use Fd\BackendBundle\Form\UnaOrientacionType;
 
 class SecundarioXType extends AbstractType {
 
@@ -27,6 +28,7 @@ class SecundarioXType extends AbstractType {
 
             $optionsUnidadOferta = array(
                 'class' => 'EstablecimientoBundle:UnidadOferta',
+                'label'=> 'Oferta Localizada',
             );
 
             if ($data->getId()) {
@@ -45,6 +47,12 @@ class SecundarioXType extends AbstractType {
                 ->add('matricula', 'integer', array(
                     'required' => false,
                     'label' => 'Matrícula',
+                ))
+                ->add('orientaciones', 'collection', array(
+                    'type' => new UnaOrientacionType(),
+                    'by_reference' => FALSE,
+                    'allow_delete' => TRUE,
+                    'allow_add' => TRUE,
                 ))
         ;
     }

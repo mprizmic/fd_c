@@ -1,5 +1,17 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
+{% import ':Form:macro_twig.html.twig' as collection_macro %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset( 'bundles/establecimiento/css/macro_twig.css') }}" rel="stylesheet" type="text/css" />      
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/establecimiento/js/macro_twig.js') }}" charset="utf-8"></script>
+{% endblock %}
+
 {% block title %}
     {{ parent() }} - Editar NES
 {% endblock %}
@@ -11,7 +23,25 @@
 
     <form action="{{ path('backend.secundariox.update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <div class="ancho_10">
-            {{ form_widget(edit_form) }}
+            {{ form_row(edit_form.unidad_oferta) }}
+            {{ form_row(edit_form.anio_inicio) }}
+            {{ form_row(edit_form.matricula) }}
+        </div>
+        <fieldset>
+            <legend class="resaltado">
+                Orientaciones
+            </legend>
+
+            <div id="orientaciones" data-prototype="{{ collection_macro.widget_prototype(edit_form.orientaciones, 'Eliminar')|escape }}">
+                {% for widget in edit_form.orientaciones.children %}
+                    {{ collection_macro.widget_prototype(widget, 'Eliminar') }}
+                {% endfor %}
+            </div>
+            <a class="btn-add" data-target="orientaciones">Agregar una orientación</a>
+        </fieldset>
+
+        <div>
+            {{ form_widget(edit_form._token) }}
         </div>
         <br />
         <div class="separador">
