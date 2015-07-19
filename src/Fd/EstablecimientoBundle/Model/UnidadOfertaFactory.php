@@ -62,8 +62,10 @@ class UnidadOfertaFactory {
                         ->findOneBy(array('unidad_oferta' => $unidad_oferta));
 
                 if (!$secundariox) {
-                    $respuesta['mensaje'] = 'Agregar orientaciones';
-                    $nombre = 'backend.secundariox.new';
+                    $respuesta['mensaje'] = 'Agregar detalles de la NES';
+                    $nombre = 'backend.secundariox.crear';
+                    $params['unidad_oferta_id'] = $unidad_oferta->getId();
+                    
                 } else {
                     $params['id'] = $secundariox->getId();
                     $nombre = 'backend.secundariox.edit';

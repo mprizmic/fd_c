@@ -174,6 +174,10 @@ class UnidadOfertaController extends Controller {
      */
     public function editAction($unidad_oferta, Request $request) {
 
+        // establezco la ruta para la pagina que tenga que volver aca
+        $this->get('session')->set('ruta_completa', $request->get('_route'));
+        $this->get('session')->set('parametros', $request->get('_route_params'));
+        
         $editForm = $this->createForm(new UnidadOfertaType(), $unidad_oferta);
         $deleteForm = $this->createDeleteForm($unidad_oferta->getId());
 
