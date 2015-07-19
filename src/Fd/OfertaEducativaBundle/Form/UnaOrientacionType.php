@@ -1,6 +1,10 @@
-<?php
+{<?php
 
 namespace Fd\OfertaEducativaBundle\Form;
+
+/**
+ * refiere a una orientacion de una carrera
+ */
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

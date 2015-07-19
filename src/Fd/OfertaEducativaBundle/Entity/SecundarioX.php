@@ -11,9 +11,9 @@
  */
 namespace Fd\OfertaEducativaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -51,11 +51,7 @@ class SecundarioX {
     private $anio_inicio;
     /**
      * bidireccional lado propietario
-     * @ORM\ManyToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\MediaOrientaciones", inversedBy="secundarioxs")
-     * @ORM\JoinTable(name="secundariox_orientacion", 
-     *      joinColumns={@ORM\JoinColumn(name="secundariox_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="orientacion_id", referencedColumnName="id")}
-     * )
+     * @ORM\OneToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion", mappedBy="secundariox", cascade={"persist", "remove"} )
      */    
     private $orientaciones;
     /**
@@ -79,13 +75,36 @@ class SecundarioX {
     public function __toString() {
         return 'NES (' . $this->getId() . ')';
     }
-    
+    /**
+     * esta la escribí yo, no es automática
+     */
+    public function setOrientaciones(ArrayCollection $orientaciones) {
+        $this->orientaciones = $orientaciones;
+        foreach ($this->orientaciones as $secundariox_orientacion) {
+            $secundariox_orientacion->setSecundariox($this);
+        }
+    }    
+
+    /**
+     * Add orientaciones
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion $orientaciones
+     * @return SecundarioX
+     */
+    public function addOrientacione(\Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion $orientacion)
+    {
+        $orientacion->setSecundariox($this);
+        $this->orientaciones[] = $orientacion;
+
+        return $this;
+    }
     /**
      * Constructor
      */
     public function __construct() {
         $this->creado = new \DateTime();
-        $this->actualizado = new \DateTime();        
+        $this->actualizado = new \DateTime();   
+        $this->orientaciones = new ArrayCollection();
     }
 
 
@@ -120,6 +139,29 @@ class SecundarioX {
     public function getMatricula()
     {
         return $this->matricula;
+    }
+
+    /**
+     * Set anio_inicio
+     *
+     * @param integer $anioInicio
+     * @return SecundarioX
+     */
+    public function setAnioInicio($anioInicio)
+    {
+        $this->anio_inicio = $anioInicio;
+
+        return $this;
+    }
+
+    /**
+     * Get anio_inicio
+     *
+     * @return integer 
+     */
+    public function getAnioInicio()
+    {
+        return $this->anio_inicio;
     }
 
     /**
@@ -192,49 +234,13 @@ class SecundarioX {
     }
 
     /**
-     * Set anio_inicio
-     *
-     * @param integer $anioInicio
-     * @return SecundarioX
-     */
-    public function setAnioInicio($anioInicio)
-    {
-        $this->anio_inicio = $anioInicio;
-
-        return $this;
-    }
-
-    /**
-     * Get anio_inicio
-     *
-     * @return integer 
-     */
-    public function getAnioInicio()
-    {
-        return $this->anio_inicio;
-    }
-
-    /**
-     * Add orientaciones
-     *
-     * @param \Fd\OfertaEducativaBundle\Entity\MediaOrientaciones $orientaciones
-     * @return SecundarioX
-     */
-    public function addOrientacione(\Fd\OfertaEducativaBundle\Entity\MediaOrientaciones $orientaciones)
-    {
-        $this->orientaciones[] = $orientaciones;
-
-        return $this;
-    }
-
-    /**
      * Remove orientaciones
      *
-     * @param \Fd\OfertaEducativaBundle\Entity\MediaOrientaciones $orientaciones
+     * @param \Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion $orientaciones
      */
-    public function removeOrientacione(\Fd\OfertaEducativaBundle\Entity\MediaOrientaciones $orientaciones)
+    public function removeOrientacione(\Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion $orientacion)
     {
-        $this->orientaciones->removeElement($orientaciones);
+        $this->orientaciones->removeElement($orientacion);
     }
 
     /**

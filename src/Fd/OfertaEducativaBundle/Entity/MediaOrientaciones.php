@@ -2,6 +2,7 @@
 
 namespace Fd\OfertaEducativaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 /**
@@ -37,11 +38,7 @@ class MediaOrientaciones
     private $orden;
     /**
      * bidireccional lado inverso
-     * @ORM\ManyToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\SecundarioX", mappedBy="orientaciones")
-     * @ORM\JoinTable(name="secundariox_orientacion", 
-     *      joinColumns={@ORM\JoinColumn(name="orientacion_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="secundariox_id", referencedColumnName="id")}
-     * )
+     * @ORM\OneToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion", mappedBy="orientacion", cascade={"persist", "remove"} )
      */
     private $secundarioxs;
     /**
@@ -65,6 +62,7 @@ class MediaOrientaciones
     public function __construct() {
         $this->creado = new \DateTime();
         $this->actualizado = new \DateTime();
+        $this->secundarioxs = new ArrayCollection();
     }
     public function __toString() {
         return $this->getNombre();
@@ -199,10 +197,10 @@ class MediaOrientaciones
     /**
      * Add secundarioxs
      *
-     * @param \Fd\OfertaEducativaBundle\Entity\SecundarioX $secundarioxs
+     * @param \Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion $secundarioxs
      * @return MediaOrientaciones
      */
-    public function addSecundariox(\Fd\OfertaEducativaBundle\Entity\SecundarioX $secundarioxs)
+    public function addSecundariox(\Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion $secundarioxs)
     {
         $this->secundarioxs[] = $secundarioxs;
 
@@ -212,9 +210,9 @@ class MediaOrientaciones
     /**
      * Remove secundarioxs
      *
-     * @param \Fd\OfertaEducativaBundle\Entity\SecundarioX $secundarioxs
+     * @param \Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion $secundarioxs
      */
-    public function removeSecundariox(\Fd\OfertaEducativaBundle\Entity\SecundarioX $secundarioxs)
+    public function removeSecundariox(\Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion $secundarioxs)
     {
         $this->secundarioxs->removeElement($secundarioxs);
     }

@@ -7,17 +7,17 @@ use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\OfertaEducativaBundle\Entity\SecundarioX;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 
-
 class SecundarioXHandler {
 
     protected $em;
 
     public function __construct(EntityManager $em) {
-        if (!$this->em){
+        if (!$this->em) {
             $this->em = $em;
         }
     }
-    public function crearObjeto(){
+
+    public function crearObjeto() {
         return new SecundarioX();
     }
 
@@ -26,17 +26,18 @@ class SecundarioXHandler {
 
         if ($unidad_oferta) {
             $secundario_x->setUnidadOferta($unidad_oferta);
-        }else{
+        } else {
             throwException($e);
         };
 
         $this->em->persist($secundario_x);
-        
+
         if ($flush) {
             $this->em->flush();
         };
         return $secundario_x;
     }
+
 //    public function eliminar($inicial_x, $flush = false){
 //        $respuesta = new Respuesta();
 //        try {
@@ -70,7 +71,7 @@ class SecundarioXHandler {
      * Para actualizar secundario_x hay que actualizar las orientaciones que vienen del form como una collection.
      * Para eso hace falta tener el estado anterior: como estaban las orientaciones en el response anterior.
      */
-    public function actualizar($secundario_x, $orientaciones_anteriores = null ) {
+    public function actualizar($secundario_x, $orientaciones_anteriores = null) {
         $respuesta = new Respuesta();
 
         try {
@@ -81,9 +82,9 @@ class SecundarioXHandler {
             };
 
             // filter $originalTags to contain tags no longer present
-            foreach ($secunario_x->getOrientaciones() as $orientaciones) {
+            foreach ($secundario_x->getOrientaciones() as $orientacion) {
                 foreach ($originalOrientaciones as $key => $toDel) {
-                    if ($toDel->getId() === $sala->getId()) {
+                    if ($toDel->getId() === $orientacion->getId()) {
                         unset($originalOrientaciones[$key]);
                     }
                 }
@@ -94,18 +95,19 @@ class SecundarioXHandler {
                 $this->em->remove($orientacion);
             }
 
-            $this->em->persist($secunario_x);
+            $this->em->persist($secundario_x);
             $this->em->flush();
-
+            $respuesta->setClaveNueva($secundario_x->getId());
+            
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se guardó exitosamente');
-            
         } catch (Exception $e) {
-            
+
             $respuesta->setCodigo(2);
             $respuesta->setMensaje('No se pudo guardar. Verifique los datos y reintente');
         }
 
         return $respuesta;
     }
+
 }

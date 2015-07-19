@@ -143,21 +143,26 @@ class SecundarioXController extends Controller {
         $editForm = $this->createForm(new SecundarioXType(), $entity);
 
         $deleteForm = $this->createDeleteForm($entity->getId());
+        
+        $originalOrientaciones = array();
+        foreach ($entity->getOrientaciones() as $orientacion) {
+            $originalOrientaciones[] = $orientacion;
+        }        
 
         $request = $this->getRequest();
 
-        $editForm->bind($request);
+        $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
-            $this->getEm()->persist($entity);
-            $this->getEm()->flush();
+            
+            $respuesta = $this->getHandler()->actualizar($entity, $originalOrientaciones);
 
-            $this->get('session')->getFlashBag()->add('exito', 'La secundaria fue cargada exitosamente');
+            $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
+
+            $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
             return $this->redirect($this->generateUrl('backend.secundariox.edit', array('id' => $entity->getId())));
         }
-
-        $this->get('session')->getFlashBag()->add('aviso', 'Problemas al cargar la secundaria. Verifique y reintente.');
 
         return array(
             'entity' => $entity,
