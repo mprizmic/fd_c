@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Form\Type\UnidadOfertaType;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
 
@@ -37,13 +38,17 @@ class UnidadOfertaController extends Controller {
     }
 
     /**
+     * esto genera mal el handler/manager. hay que revisarlo
+     * 
+     * Esta duplicando la funcion que esta en el controller del backend
+     * 
      * @Route("/actualizar_turnos/{id}", name="establecimiento.unidad_oferta.actualizar_turnos")
      * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta")
      */
     public function actualizarTurnosAction(Request $request, $unidad_oferta) {
 
         $editForm = $this->createForm(new UnidadOfertaType(), $unidad_oferta);
-        
+
         //guardo los turnos originales antes de bindear el request
         $originalTurnos = array();
 
@@ -55,7 +60,7 @@ class UnidadOfertaController extends Controller {
 
         if ($editForm->isValid()) {
 
-            $manager = new UnidadOfertaHandler($this->getDoctrine()->getEntityManager());
+            $manager = UnidadOfertaFactory::createHandler($unidad_oferta->getTipo(), $this->getDoctrine()->getEntityManager());
 
             $respuesta = $manager->actualizar($unidad_oferta, $originalTurnos);
 
@@ -65,15 +70,14 @@ class UnidadOfertaController extends Controller {
             $mensaje = 'Problemas al actualizar. Verifique y reintente';
         };
 
-        $tipo = ($respuesta->getCodigo() == 1 ) ?'exito' :'error';
-        
+        $tipo = ($respuesta->getCodigo() == 1 ) ? 'exito' : 'error';
+
         $this->get('session')->getFlashBag()->add($tipo, $mensaje);
-        
+
         //recupero la ruta a la cual hay que volver
         $ruta = $this->get('session')->get('ruta_completa');
         $params = $this->get('session')->get('parametros');
-        
-        return $this->redirect($this->generateUrl($ruta, $params ) );
-    }
 
+        return $this->redirect($this->generateUrl($ruta, $params));
+    }
 }

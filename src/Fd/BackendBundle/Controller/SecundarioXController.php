@@ -72,44 +72,6 @@ class SecundarioXController extends Controller {
         return $this->redirect($this->generateUrl('backend.secundariox.edit', array('id' => $entity->getId())));
     }
 
-//    /**
-//     * Creates a new orientacion entity.
-//     *
-//     * @Route("/create", name="backend.secundariox.create")
-//     * @Method("post")
-//     * @Template("BackendBundle:SecundarioX:new.html.twig")
-//     */
-//    public function createAction(Request $request) {
-//
-//        $entity = $this->handler->crearObjeto();
-//
-//        $form = $this->createForm(new SecundarioXType(), $entity);
-//
-//        $form->bindRequest($request);
-//
-//        if ($form->isValid()) {
-//            
-//            $respuesta = $handler->actualizar($form->getData());
-//
-//            $tipo = $respuesta->getCodigo() == 1 ? 'exito' : 'error';
-//            
-//            if ($tipo == 'exito'){
-//                
-//                $this->get('session')->getFlashBag()->add('exito', 'La secundaria fue creada exitosamente');
-//                
-//                return $this->redirect($this->generateUrl('backend.secundariox.edit', array('id' => $entity->getId())));
-//                
-//            }
-//        }
-//
-//        $this->get('session')->getFlashBag()->add('error', 'Problemas en el registro de la nueva secundaria. Verifique y reintente');
-//
-//        return array(
-//            'entity' => $entity,
-//            'form' => $form->createView()
-//        );
-//    }
-
     /**
      * Displays a form to edit an existing orientación entity.
      *

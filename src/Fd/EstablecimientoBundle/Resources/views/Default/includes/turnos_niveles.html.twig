@@ -7,7 +7,7 @@ recibe array 'unidad_educativas'
     <span class="resaltado">Turnos en el edificio:</span><br/>
         {% for un_nivel in unidad_educativas_array %}
 {#            <span class="separador"></span>#}
-            {{ 'Nivel ' ~ un_nivel['nivel'] ~ ': ' }}
+            {{ un_nivel['nivel'] ~ ': ' }}
             
             {% for un_turno in un_nivel['turnos_nivel'] %}
                     <span class="reforzado">{{ un_turno }}</span>

@@ -1,0 +1,32 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+{{ parent() }}
+
+<div class="titulo float_izquierda">{{ unidad_oferta }}</div>
+
+<div class="limpiar_float"></div>
+<br />
+
+{# titulos #}
+<fieldset>
+    <legend class="resaltado">Orientaciones</legend>
+    {% for orientacion in secundario_x.orientaciones %}
+        {{ orientacion.orientacion }}
+        <br />
+        {% endfor %}    
+</fieldset>
+Matrícula: {{ secundario_x.matricula }}<br />
+Año de inicio: {{ secundario_x.anioInicio }}
+<div class="float_derecha"><a href="#">Editar</a></div>
+
+<br />
+
+{# datos generales #}
+
+<br/>
+<div class="float_derecha volver"><a href="{{ path('establecimiento_ficha', {'establecimiento_id':establecimiento_id}) }}">Volver</a></div>
+<span class="limpiar_float"></span>
+<br/>
+<br/>
+{% endblock %}
