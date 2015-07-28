@@ -29,7 +29,7 @@
     {% for entity in entities %}
         <tr>
             <td><a href="{{ path('backend_ofertaeducativa_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity }}</td>
+            <td>{{ entity.__toString() }}</td>
             <td><a href="{{ path('backend_ofertaeducativa_show', { 'id': entity.id }) }}">Mostrar</a>
                 ||
                 <a href="{{ path('backend_ofertaeducativa_edit', { 'id': entity.id }) }}">Editar</a>
