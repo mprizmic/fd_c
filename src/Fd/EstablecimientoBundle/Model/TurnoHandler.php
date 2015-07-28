@@ -5,7 +5,6 @@ namespace Fd\EstablecimientoBundle\Model;
 use Doctrine\ORM\EntityManager;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimietoBundle\Entity\Respuesta;
-use Fd\EstablecimietoBundle\Entity\TurnoUnidadEducativa;
 use Fd\TablaBundle\Entity\Turno;
 
 class TurnoHandler {

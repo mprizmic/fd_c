@@ -9,9 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityRepository;
-use Fd\EstablecimientoBundle\Entity\TurnoUnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
-use Fd\BackendBundle\Form\TurnoUnidadEducativaType;
 
 class UnidadEducativaType extends AbstractType {
 

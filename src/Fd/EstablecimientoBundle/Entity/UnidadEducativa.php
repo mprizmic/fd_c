@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Fd\TablaBundle\Entity\Nivel;
-use Fd\EstablecimientoBundle\Entity\TurnoUnidadEducativa;
 
 /**
  * Fd\EstablecimientoBundle\Entity\UnidadEducativa
@@ -165,24 +164,10 @@ class UnidadEducativa {
         $this->actualizado = new \DateTime();
     }
 
-    /**
-     * Add turnos. Escrito automático y arreglado por mi
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\TurnoUnidadEducativa $turnos
-     * @return UnidadEducativa
-     */
-    public function addTurno(\Fd\EstablecimientoBundle\Entity\TurnoUnidadEducativa $turno) {
-        //se agrega la línea para que persista correctamente
-        $turno->setUnidadEducativa($this);
-
-        $this->turnos[] = $turno;
-
-        return $this;
-    }
-
     public function getAutoridad() {
         return $this->cargo_autoridad . ' ' . $this->nombre_autoridad;
     }
+
 
     /**
      * Get id
