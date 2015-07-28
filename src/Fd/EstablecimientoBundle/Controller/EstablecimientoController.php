@@ -156,7 +156,7 @@ class EstablecimientoController extends Controller {
         $establecimientos = $repo->qyAllOrdenado('orden')->getResult();
 
         //son obj establecimiento_edificio
-        $establecimiento_edificios = $repo->findEdificios($establecimiento);
+        $establecimiento_edificios = $repo->findSedeYAnexo($establecimiento);
 
         foreach ($establecimiento_edificios as $key => $establecimiento_edificio) {
 

@@ -146,11 +146,20 @@ class EstablecimientoEdificioRepository extends EntityRepository {
      * @return arraycollection de Edificio
      */
     public function findEdificios($establecimiento) {
-        return $this->createQueryBuilder('ee')
-                        ->where('ee.establecimientos = ' . $establecimiento->getId())
-                        ->orderBy('ee.cue_anexo')
+        return $this->qbEdificios($establecimiento)
                         ->getQuery()
                         ->getResult();
+    }
+    public function qbEdificios($establecimiento){
+        return $this->createQueryBuilder('ee')
+                        ->where('ee.establecimientos = ' . $establecimiento->getId())
+                        ->orderBy('ee.cue_anexo');
+    }
+    public function findSedeYAnexo($establecimiento){
+        return $this->qbEdificios($establecimiento)
+                ->andWhere("ee.cue_anexo <> '99'")
+                ->getQuery()
+                ->getResult();
     }
 
 }

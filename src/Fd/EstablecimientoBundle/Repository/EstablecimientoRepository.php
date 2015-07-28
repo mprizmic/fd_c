@@ -85,6 +85,14 @@ class EstablecimientoRepository extends EntityRepository {
     public function findEdificios($establecimiento) {
         return $this->_em->getRepository('EstablecimientoBundle:EstablecimientoEdificio')->findEdificios($establecimiento);
     }
+    /**
+     * devuelve los sedes y anexos de un establecimiento
+     * 
+     * @return arraycollection de EstablecimientoEdificio
+     */
+    public function findSedeYAnexo($establecimiento) {
+        return $this->_em->getRepository('EstablecimientoBundle:EstablecimientoEdificio')->findSedeYAnexo($establecimiento);
+    }
 
     /**
      * devuelve las carreras del establecimiento
