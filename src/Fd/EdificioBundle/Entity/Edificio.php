@@ -30,6 +30,11 @@ class Edificio {
      * @Assert\Range(min="0", max="999999", minMessage="El nro de CUI es inválido", maxMessage="CUI fuera de rango. Puede tener hasta 6 dígitos")
      */
     private $cui;
+    /**
+     * @ORM\Column(type="string", nullable=true, unique=true, length=50)
+     * 
+     */
+    private $referencia;
 
     /**
      * bidireccional lado inverso
@@ -175,11 +180,11 @@ class Edificio {
     }    
     
     public function __toString() {
-        $salida = 'CUI: ' . $this->getCui();
+        $salida = $this->referencia . ' - CUI: ' . $this->getCui();
         if (!$this->getDomicilioPrincipal()) {
             return $salida;
         } else {
-            return $this->getDomicilioPrincipal()->getCompleto() . ' - ' .$salida;
+            return $salida . ' - ' . $this->getDomicilioPrincipal()->getCompleto();
         }
     }
     public function __construct() {
@@ -195,6 +200,8 @@ class Edificio {
     public function setUpdate(){
         $this->setUpdatedAt(new \DateTime());
     }
+    
+
     /**
      * Get id
      *
@@ -209,10 +216,13 @@ class Edificio {
      * Set cui
      *
      * @param integer $cui
+     * @return Edificio
      */
     public function setCui($cui)
     {
         $this->cui = $cui;
+
+        return $this;
     }
 
     /**
@@ -226,13 +236,39 @@ class Edificio {
     }
 
     /**
+     * Set referencia
+     *
+     * @param string $referencia
+     * @return Edificio
+     */
+    public function setReferencia($referencia)
+    {
+        $this->referencia = $referencia;
+
+        return $this;
+    }
+
+    /**
+     * Get referencia
+     *
+     * @return string 
+     */
+    public function getReferencia()
+    {
+        return $this->referencia;
+    }
+
+    /**
      * Set superficie
      *
      * @param integer $superficie
+     * @return Edificio
      */
     public function setSuperficie($superficie)
     {
         $this->superficie = $superficie;
+
+        return $this;
     }
 
     /**
@@ -248,17 +284,20 @@ class Edificio {
     /**
      * Set updatedAt
      *
-     * @param datetime $updatedAt
+     * @param \DateTime $updatedAt
+     * @return Edificio
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return datetime 
+     * @return \DateTime 
      */
     public function getUpdatedAt()
     {
@@ -268,141 +307,24 @@ class Edificio {
     /**
      * Set createdAt
      *
-     * @param datetime $createdAt
+     * @param \DateTime $createdAt
+     * @return Edificio
      */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+
+        return $this;
     }
 
     /**
      * Get createdAt
      *
-     * @return datetime 
+     * @return \DateTime 
      */
     public function getCreatedAt()
     {
         return $this->createdAt;
-    }
-
-    /**
-     * Add establecimiento
-     *
-     * @param Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $establecimiento
-     */
-    public function addEstablecimientoEdificio(\Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $establecimiento)
-    {
-        $this->establecimiento[] = $establecimiento;
-    }
-
-    /**
-     * Get establecimiento
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getEstablecimiento()
-    {
-        return $this->establecimiento;
-    }
-
-    /**
-     * Set comuna
-     *
-     * @param Fd\TablaBundle\Entity\Comuna $comuna
-     */
-    public function setComuna(\Fd\TablaBundle\Entity\Comuna $comuna)
-    {
-        $this->comuna = $comuna;
-    }
-
-    /**
-     * Get comuna
-     *
-     * @return Fd\TablaBundle\Entity\Comuna 
-     */
-    public function getComuna()
-    {
-        return $this->comuna;
-    }
-
-    /**
-     * Set cgp
-     *
-     * @param Fd\TablaBundle\Entity\Cgp $cgp
-     */
-    public function setCgp(\Fd\TablaBundle\Entity\Cgp $cgp)
-    {
-        $this->cgp = $cgp;
-    }
-
-    /**
-     * Get cgp
-     *
-     * @return Fd\TablaBundle\Entity\Cgp 
-     */
-    public function getCgp()
-    {
-        return $this->cgp;
-    }
-
-    /**
-     * Set barrio
-     *
-     * @param Fd\TablaBundle\Entity\Barrio $barrio
-     */
-    public function setBarrio(\Fd\TablaBundle\Entity\Barrio $barrio)
-    {
-        $this->barrio = $barrio;
-    }
-
-    /**
-     * Get barrio
-     *
-     * @return Fd\TablaBundle\Entity\Barrio 
-     */
-    public function getBarrio()
-    {
-        return $this->barrio;
-    }
-
-    /**
-     * Set distritoEscolar
-     *
-     * @param Fd\TablaBundle\Entity\DistritoEscolar $distritoEscolar
-     */
-    public function setDistritoEscolar(\Fd\TablaBundle\Entity\DistritoEscolar $distritoEscolar)
-    {
-        $this->distritoEscolar = $distritoEscolar;
-    }
-
-    /**
-     * Get distritoEscolar
-     *
-     * @return Fd\TablaBundle\Entity\DistritoEscolar 
-     */
-    public function getDistritoEscolar()
-    {
-        return $this->distritoEscolar;
-    }
-
-    /**
-     * Add domicilios
-     *
-     * @param Fd\EdificioBundle\Entity\Domicilio $domicilios
-     */
-    public function addDomicilio(\Fd\EdificioBundle\Entity\Domicilio $domicilios)
-    {
-        $this->domicilios[] = $domicilios;
-    }
-
-    /**
-     * Get domicilios
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getDomicilios()
-    {
-        return $this->domicilios;
     }
 
     /**
@@ -414,7 +336,7 @@ class Edificio {
     public function addEstablecimiento(\Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $establecimiento)
     {
         $this->establecimiento[] = $establecimiento;
-    
+
         return $this;
     }
 
@@ -429,6 +351,121 @@ class Edificio {
     }
 
     /**
+     * Get establecimiento
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEstablecimiento()
+    {
+        return $this->establecimiento;
+    }
+
+    /**
+     * Set comuna
+     *
+     * @param \Fd\TablaBundle\Entity\Comuna $comuna
+     * @return Edificio
+     */
+    public function setComuna(\Fd\TablaBundle\Entity\Comuna $comuna = null)
+    {
+        $this->comuna = $comuna;
+
+        return $this;
+    }
+
+    /**
+     * Get comuna
+     *
+     * @return \Fd\TablaBundle\Entity\Comuna 
+     */
+    public function getComuna()
+    {
+        return $this->comuna;
+    }
+
+    /**
+     * Set cgp
+     *
+     * @param \Fd\TablaBundle\Entity\Cgp $cgp
+     * @return Edificio
+     */
+    public function setCgp(\Fd\TablaBundle\Entity\Cgp $cgp = null)
+    {
+        $this->cgp = $cgp;
+
+        return $this;
+    }
+
+    /**
+     * Get cgp
+     *
+     * @return \Fd\TablaBundle\Entity\Cgp 
+     */
+    public function getCgp()
+    {
+        return $this->cgp;
+    }
+
+    /**
+     * Set barrio
+     *
+     * @param \Fd\TablaBundle\Entity\Barrio $barrio
+     * @return Edificio
+     */
+    public function setBarrio(\Fd\TablaBundle\Entity\Barrio $barrio = null)
+    {
+        $this->barrio = $barrio;
+
+        return $this;
+    }
+
+    /**
+     * Get barrio
+     *
+     * @return \Fd\TablaBundle\Entity\Barrio 
+     */
+    public function getBarrio()
+    {
+        return $this->barrio;
+    }
+
+    /**
+     * Set distritoEscolar
+     *
+     * @param \Fd\TablaBundle\Entity\DistritoEscolar $distritoEscolar
+     * @return Edificio
+     */
+    public function setDistritoEscolar(\Fd\TablaBundle\Entity\DistritoEscolar $distritoEscolar = null)
+    {
+        $this->distritoEscolar = $distritoEscolar;
+
+        return $this;
+    }
+
+    /**
+     * Get distritoEscolar
+     *
+     * @return \Fd\TablaBundle\Entity\DistritoEscolar 
+     */
+    public function getDistritoEscolar()
+    {
+        return $this->distritoEscolar;
+    }
+
+    /**
+     * Add domicilios
+     *
+     * @param \Fd\EdificioBundle\Entity\Domicilio $domicilios
+     * @return Edificio
+     */
+    public function addDomicilio(\Fd\EdificioBundle\Entity\Domicilio $domicilios)
+    {
+        $this->domicilios[] = $domicilios;
+
+        return $this;
+    }
+
+    /**
      * Remove domicilios
      *
      * @param \Fd\EdificioBundle\Entity\Domicilio $domicilios
@@ -436,6 +473,16 @@ class Edificio {
     public function removeDomicilio(\Fd\EdificioBundle\Entity\Domicilio $domicilios)
     {
         $this->domicilios->removeElement($domicilios);
+    }
+
+    /**
+     * Get domicilios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDomicilios()
+    {
+        return $this->domicilios;
     }
 
     /**
@@ -447,7 +494,7 @@ class Edificio {
     public function addVecino(\Fd\EdificioBundle\Entity\Vecino $vecinos)
     {
         $this->vecinos[] = $vecinos;
-    
+
         return $this;
     }
 

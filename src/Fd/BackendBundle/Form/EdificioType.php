@@ -11,6 +11,7 @@ class EdificioType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('cui')
+                ->add('referencia')
                 ->add('superficie')
                 ->add('comuna')
                 ->add('cgp')

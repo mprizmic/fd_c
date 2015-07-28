@@ -23,6 +23,7 @@
             <th>Id</th>
             <th>Cui</th>
             <th>Domicilio</th>
+            <th>Referencia</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -32,6 +33,7 @@
                 <td><a href="{{ path('backend_edificio_edit', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.cui }}</td>
                 <td>{{ entity.domicilioPrincipal }}</td>
+                <td>{{ entity.referencia }}</td>
                 <td>
                     <a href="{{ path('backend_edificio_edit', { 'id': entity.id }) }}">
                         Editar
