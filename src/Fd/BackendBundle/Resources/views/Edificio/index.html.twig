@@ -1,46 +1,41 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
 {% block title %}
-{{ parent() }} - Lista de Edificio
+    {{ parent() }} - Lista de Edificio
 {% endblock %}
 
 {% block main_content %}
-{{ parent() }}
+    {{ parent() }}
 
-<h1>Lista de Edificio</h1>
+    <h1>Lista de Edificio</h1>
 
-<ul>
-    <li>
-        <a href="{{ path('backend_edificio_new') }}">
-            Crear nuevo registro
-        </a>
-    </li>
-</ul>
-
-<table class="grilla">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Cui</th>
-            <th>Domicilio</th>
-            <th>Referencia</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
+    <div><a class="float_derecha boton_verde" href="{{ path('backend_edificio_new') }}">Nuevo edificio</a></div>
+    <div class="limpiar_float"></div>
+    
+    <table class="grilla">
+        <thead>
             <tr>
-                <td><a href="{{ path('backend_edificio_edit', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.cui }}</td>
-                <td>{{ entity.domicilioPrincipal }}</td>
-                <td>{{ entity.referencia }}</td>
-                <td>
-                    <a href="{{ path('backend_edificio_edit', { 'id': entity.id }) }}">
-                        Editar
-                    </a>
-                </td>
+                <th>Id</th>
+                <th>Cui</th>
+                <th>Domicilio</th>
+                <th>Referencia</th>
+                <th>Acciones</th>
             </tr>
-    {% endfor %}
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('backend_edificio_edit', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.cui }}</td>
+                    <td>{{ entity.domicilioPrincipal }}</td>
+                    <td>{{ entity.referencia }}</td>
+                    <td>
+                        <a href="{{ path('backend_edificio_edit', { 'id': entity.id }) }}">
+                            Editar
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 

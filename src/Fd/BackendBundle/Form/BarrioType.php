@@ -13,8 +13,7 @@ class BarrioType extends AbstractType {
                 ->add('abreviatura', null, array(
                     'attr' => array(
                         'class' => 'input_talle_05',
-                    ),
-                    'help' => 'este es un help desde el type',
+                    )
                 ))
         ;
     }

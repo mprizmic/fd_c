@@ -1,45 +1,44 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Lista de Domicilio
+    {{ parent() }} - Lista de Domicilio
 {% endblock %}
- 
+
 {% block main_content %}
 
-<h1>Lista de Domicilio</h1>
+    <h1>Lista de domicilios de establecimientos</h1>
 
-<ul>
-    <li>
+    <div class="boton_verde float_derecha">
         <a href="{{ path('backend_domicilio_new') }}">
-            Crear nuevo registro
+            Crear nuevo domicilio
         </a>
-    </li>
-</ul>
+    </div>
+    <span class="limpiar_float"></span>
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Calle</th>
-            <th>Altura</th>
-            <th>C. Postal</th>
-            <th>Principal</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('backend_domicilio_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.calle }}</td>
-            <td>{{ entity.altura }}</td>
-            <td>{{ entity.cPostal }}</td>
-            <td>{{ entity.principal }}</td>
-            <td><a href="{{ path('backend_domicilio_edit', { 'id': entity.id }) }}">Editar</a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Calle</th>
+                <th>Altura</th>
+                <th>C. Postal</th>
+                <th>Principal</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('backend_domicilio_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.calle }}</td>
+                    <td>{{ entity.altura }}</td>
+                    <td>{{ entity.cPostal }}</td>
+                    <td>{{ entity.principal ? 'Si' : 'No' }}</td>
+                    <td><a href="{{ path('backend_domicilio_edit', { 'id': entity.id }) }}">Editar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}

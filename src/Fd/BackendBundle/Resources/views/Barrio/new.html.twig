@@ -1,26 +1,25 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Crear Barrio
+    {{ parent() }} - Crear Barrio
 {% endblock %}
- 
+
 {% block main_content %}
 
-<h1>Crear registro de Barrio </h1>
+    <h1>Crear nuevo barrio</h1>
 
-<form action="{{ path('backend_barrio_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Crear</button>
-    </p>
-</form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend_barrio') }}">
-            Volver a la lista
-        </a>
-    </li>
-</ul>
+    <form action="{{ path('backend_barrio_create') }}" method="post" {{ form_enctype(form) }}>
+        <div class="ancho_10">
+            {{ form_widget(form) }}
+        </div>
+        <div class="separador">
+            <button type="submit">Crear</button>
+        </div>
+    </form>
+    <br />
+    <div>
+        <a  class="separador" href="{{ path('backend_barrio') }}">Volver a la lista</a>
+    </div>
+    <br />
 
 {% endblock %}
