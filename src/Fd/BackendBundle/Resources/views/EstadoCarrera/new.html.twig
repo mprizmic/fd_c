@@ -1,26 +1,29 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Crear EstadoCarrera
+    {{ parent() }} - Crear EstadoCarrera
 {% endblock %}
- 
+
 {% block main_content %}
+    {{ parent() }}
 
-<h1>Crear registro de EstadoCarrera </h1>
+    <h1>Crear nuevo estado de una carrera</h1>
 
-<form action="{{ path('backend_estadocarrera_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Crear</button>
-    </p>
-</form>
+    <form action="{{ path('backend_estadocarrera_create') }}" method="post" {{ form_enctype(form) }}>
+        <div class="ancho_10"> 
+            {{ form_widget(form) }}
+        </div>
+        <p class="separador">
+            <button type="submit">Crear</button>
+        </p>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend_estadocarrera') }}">
+        <a class="separador " href="{{ path('backend_estadocarrera') }}">
             Volver a la lista
         </a>
-    </li>
-</ul>
+    </form>
+
+            <br />
+            <br />
+            <br />
 
 {% endblock %}

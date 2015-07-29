@@ -9,8 +9,12 @@ class EstadoCarreraType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('codigo')
-                ->add('descripcion')
+                ->add('codigo', null, array(
+                    'label' => 'Código',
+                ))
+                ->add('descripcion', null, array(
+                    'label' => 'Descripción',
+                ))
                 ->add('orden')
                 ->add('comentario', 'textarea', array(
                     'required' => false,

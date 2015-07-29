@@ -1,50 +1,45 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Lista de EstadoCarrera
+    {{ parent() }} - Lista de EstadoCarrera
 {% endblock %}
- 
+
 {% block main_content %}
 
-<h1>Lista de EstadoCarrera</h1>
-
-<ul>
-    <li>
+    <h1>Lista de estados posibles de una carrera</h1>
+    <div class="boton_verde float_derecha">
         <a href="{{ path('backend_estadocarrera_new') }}">
             Crear nuevo registro
         </a>
-    </li>
-</ul>
+    </div>
+    <span class="limpiar_float"></span>
+    <br />
+    <br />
 
+    <table class="grilla">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Codigo</th>
+                <th>Descripcion</th>
+                <th>Orden</th>
+                <th>Comentario</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('backend_estadocarrera_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.codigo }}</td>
+                    <td>{{ entity.descripcion }}</td>
+                    <td>{{ entity.orden }}</td>
+                    <td>{{ entity.comentario }}</td>
+                    <td><a href="{{ path('backend_estadocarrera_edit', { 'id': entity.id }) }}">Editar</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Codigo</th>
-            <th>Descripcion</th>
-            <th>Orden</th>
-            <th>Comentario</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('backend_estadocarrera_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.codigo }}</td>
-            <td>{{ entity.descripcion }}</td>
-            <td>{{ entity.orden }}</td>
-            <td>{{ entity.comentario }}</td>
-            <td>                        <a href="{{ path('backend_estadocarrera_show', { 'id': entity.id }) }}">
-                                                    Mostrar
-                                                </a>                        <a href="{{ path('backend_estadocarrera_edit', { 'id': entity.id }) }}">
-                                                    || Editar
-                                                </a>            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-{% include '::includes/volver.html.twig' %}
+    {% include '::includes/volver.html.twig' %}
 {% endblock %}
