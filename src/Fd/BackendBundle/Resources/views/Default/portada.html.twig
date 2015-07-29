@@ -9,10 +9,10 @@
 <table border="0" width="90%" align="center">
 <tbody>
 
-{% for tabla in tablas%}
+{% for tabla in tablas %}
 
     <tr>
-        <td><a href="{{ path(tabla.url) }}">{{ tabla.tabla }}</a></td>
+        <td><a href="{{ path(tabla.url) }}"><abbr title="{{ tabla.tabla }}">{{ tabla.etiqueta }}</abbr></a></td>
         <td> : </td>
         <td>{{ tabla.descripcion }}</td>
     </tr>

@@ -24,6 +24,10 @@ class Portada
      /**
       * @ORM\Column(type="string", length=100, nullable=false)
       */
+     private $etiqueta;
+     /**
+      * @ORM\Column(type="string", length=100, nullable=false)
+      */
      private $tabla;
     /**
      * @ORM\Column(type="string", length=200, nullable=false)
@@ -70,6 +74,29 @@ class Portada
     }
 
     /**
+     * Set etiqueta
+     *
+     * @param string $etiqueta
+     * @return Portada
+     */
+    public function setEtiqueta($etiqueta)
+    {
+        $this->etiqueta = $etiqueta;
+
+        return $this;
+    }
+
+    /**
+     * Get etiqueta
+     *
+     * @return string 
+     */
+    public function getEtiqueta()
+    {
+        return $this->etiqueta;
+    }
+
+    /**
      * Set tabla
      *
      * @param string $tabla
@@ -78,7 +105,7 @@ class Portada
     public function setTabla($tabla)
     {
         $this->tabla = $tabla;
-    
+
         return $this;
     }
 
@@ -93,6 +120,29 @@ class Portada
     }
 
     /**
+     * Set url
+     *
+     * @param string $url
+     * @return Portada
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string 
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
      * Set descripcion
      *
      * @param string $descripcion
@@ -101,7 +151,7 @@ class Portada
     public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
-    
+
         return $this;
     }
 
@@ -124,7 +174,7 @@ class Portada
     public function setActualizado($actualizado)
     {
         $this->actualizado = $actualizado;
-    
+
         return $this;
     }
 
@@ -147,7 +197,7 @@ class Portada
     public function setCreado($creado)
     {
         $this->creado = $creado;
-    
+
         return $this;
     }
 
@@ -159,28 +209,5 @@ class Portada
     public function getCreado()
     {
         return $this->creado;
-    }
-
-    /**
-     * Set url
-     *
-     * @param string $url
-     * @return Portada
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    
-        return $this;
-    }
-
-    /**
-     * Get url
-     *
-     * @return string 
-     */
-    public function getUrl()
-    {
-        return $this->url;
     }
 }
