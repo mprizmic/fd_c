@@ -22,6 +22,7 @@
                 <th>Calle</th>
                 <th>Altura</th>
                 <th>C. Postal</th>
+                <th>Edificio</th>
                 <th>Principal</th>
                 <th>Acciones</th>
             </tr>
@@ -33,6 +34,7 @@
                     <td>{{ entity.calle }}</td>
                     <td>{{ entity.altura }}</td>
                     <td>{{ entity.cPostal }}</td>
+                    <td>{{ entity.edificio }}</td>
                     <td>{{ entity.principal ? 'Si' : 'No' }}</td>
                     <td><a href="{{ path('backend_domicilio_edit', { 'id': entity.id }) }}">Editar</a>
                     </td>

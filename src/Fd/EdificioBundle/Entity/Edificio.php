@@ -180,7 +180,7 @@ class Edificio {
     }    
     
     public function __toString() {
-        $salida = $this->referencia . ' - CUI: ' . $this->getCui();
+        $salida = $this->referencia;
         if (!$this->getDomicilioPrincipal()) {
             return $salida;
         } else {
