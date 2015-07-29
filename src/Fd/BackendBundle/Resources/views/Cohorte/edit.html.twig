@@ -1,22 +1,22 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Editar Matrícula
+    {{ parent() }} - Editar Matrícula
 {% endblock %}
- 
+
 {% block main_content %}
-{{ parent() }}
+    {{ parent() }}
 
-<div class="titulo">Editar Matrícula</div>
-<br />
+    <div class="titulo">Editar Matrícula</div>
+    <br />
 
-{% set unidad_oferta = entity.unidadOferta %}
+    {% set unidad_oferta = entity.unidadOferta %}
 
-<fieldset>
-    <legend>
-        {{ unidad_oferta.localizacion.establecimientoEdificio ~ ' - '}}
-        {{ unidad_oferta.ofertas.carrera.identificacion }}
-    </legend>
+    <fieldset>
+        <legend>
+            {{ unidad_oferta.localizacion.establecimientoEdificio ~ ' - '}}
+            {{ unidad_oferta.ofertas.carrera.identificacion }}
+        </legend>
         <span class="mediana resaltado">
             {{ 'Año ' ~ entity.anio }}
         </span>
@@ -51,23 +51,20 @@
                     </td>    
                 </tr>
             </table>
-        </fieldset>
+    </fieldset>
 
-            {{ form_rest(edit_form) }}        
+    {{ form_rest(edit_form) }}        
 
-            <br />
-            <button type="submit">Guardar</button>
-        </form>
-
+    <br />
+    <button type="submit">Guardar</button>
+</form>
 
 <span class="float_derecha">
-    <form class="float_izquierda" action="{{ path('backend_cohorte_delete', { 'id': entity.id }) }}" onsubmit="return confirm('Está seguro?')" method="post">
+    <form class="en_bloque" action="{{ path('backend_cohorte_delete', { 'id': entity.id }) }}" onsubmit="return confirm('Está seguro?')" method="post">
         {{ form_widget(delete_form) }}
         <button type="submit" class="boton_rojo">Eliminar</button>
+        <a class="separador" href="{{ path('backend_cohorte') }}">Volver a la lista</a>
     </form>
-    <a href="{{ path('backend_cohorte') }}">
-        Volver a la lista
-    </a>
 </span>
 
 <br />

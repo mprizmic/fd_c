@@ -480,3 +480,6 @@ a, a:visited{
 .en_bloque{
     display: inline-block;
 }
+.bloque{
+    display: block;
+}

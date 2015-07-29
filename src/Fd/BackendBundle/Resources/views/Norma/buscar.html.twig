@@ -1,41 +1,44 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
 {% block title %}
-{{ parent() }} - Lista de Norma
+    {{ parent() }} - Lista de Norma
 {% endblock %}
 
 {% block main_content %}
-{{ parent() }}
+    {{ parent() }}
 
-<div class="titulo">Búsqueda de norma</div>
+    <div class="titulo">Búsqueda de norma</div>
 
-<div><a class="float_derecha boton_verde" href="{{path('backend_norma_new')}}">Nueva norma</a></div>
-<div class="limpiar_float"></div>
+    <div><a class="float_derecha boton_verde" href="{{path('backend_norma_new')}}">Nueva norma</a></div>
+    <div class="limpiar_float"></div>
 
-<form action="{{ path('backend_norma_buscar') }}" method="POST" {{ form_enctype(formulario) }}>
-    <div class="ancho_5">
+    <fieldset>
+        <form action="{{ path('backend_norma_buscar') }}" method="POST" {{ form_enctype(formulario) }}>
+
+            <div class="ancho_5">
                 {{ form_row( formulario.numero ) }}
                 {{ form_row( formulario.anio ) }}
                 {{ form_row( formulario.tipo ) }}
-    </div>
-                    
-        {{ form_rest( formulario ) }}
+            </div>
 
-    <br />
-    <div style="display: block">
-         
-        <input type ="submit" value="Buscar">
-        <span class="separador"></span>
-        <a href="{{ path( "backend_norma_buscar" ) }}">Limpiar</a>
+            {{ form_rest( formulario ) }}
 
-    </div>
-</form>
+            <br />
+            <div style="display: block">
+
+                <input type ="submit" value="Buscar">
+                <span class="separador"></span>
+                <a href="{{ path( "backend_norma_buscar" ) }}">Limpiar</a>
+
+            </div>
+        </form>
+    </fieldset>
 
 
-{% if normas is not null %}
-    {% if normas |length > 0 %}
-        <br />
-        <table class="grilla_fit">
+    {% if normas is not null %}
+        {% if normas |length > 0 %}
+            <br />
+            <table class="grilla_fit">
                 <tr>
                     <th>Número</th>
                     <th>Año</th>
@@ -44,20 +47,20 @@
                     <th></th>
                 </tr>
                 {% for norma in normas %}
-                <tr>
-                    <td><a href="{{ path('backend_norma_edit', {'id':norma.id} )}}">{{ norma.numero }}</a></td>
-                    <td>{{ norma.anio }}</td>
-                    <td>{{ norma.tipo }}</td>
-                    <td>{{ norma.descripcion }}</td>
+                    <tr>
+                        <td><a href="{{ path('backend_norma_edit', {'id':norma.id} )}}">{{ norma.numero }}</a></td>
+                        <td>{{ norma.anio }}</td>
+                        <td>{{ norma.tipo }}</td>
+                        <td>{{ norma.descripcion }}</td>
 
-                    <td><a href="{{ path('backend_norma_edit', {'id':norma.id} )}}">Editar</a>
-                    </td>
-                </tr>
-            {% endfor %}
+                        <td><a href="{{ path('backend_norma_edit', {'id':norma.id} )}}">Editar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
 
-        </table>
+            </table>
 
-        {{ simple_paginator_render('backend_norma_buscar', null, {
+            {{ simple_paginator_render('backend_norma_buscar', null, {
             'container_class':'simple_paginator',
             'previousPageText':'Anterior',
             'nextPageText':'Siguiente',
@@ -65,13 +68,13 @@
             'firstPageText':'Primero',
             'lastPageText':'Último'
         }) }}  
-    {% else %}
-        <br />
-        <div class="descriptivo">No hay datos para los filtros especificados</div>
+        {% else %}
+            <br />
+            <div class="descriptivo">No hay datos para los filtros especificados</div>
+
+        {% endif %}
 
     {% endif %}
-
-{% endif %}
-<br />
+    <br />
 
 {% endblock %}

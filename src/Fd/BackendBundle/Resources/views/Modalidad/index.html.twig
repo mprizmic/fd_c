@@ -1,53 +1,48 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Lista de Modalidad
+    {{ parent() }} - Lista de Modalidad
 {% endblock %}
- 
+
 {% block main_content %}
+    {{ parent() }}
 
-<h1>Lista de Modalidad</h1>
+    <h1>Lista de modalidades</h1>
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Abreviatura</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('backend_modalidad_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.nombre }}</td>
-            <td>{{ entity.abreviatura }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('backend_modalidad_show', { 'id': entity.id }) }}">
-                                                    Mostrar
-                                                </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('backend_modalidad_edit', { 'id': entity.id }) }}">
-                                                    Editar
-                                                </a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+    <div class="boton_verde float_derecha">
 
-<ul>
-    <li>
         <a href="{{ path('backend_modalidad_new') }}">
-            Crear nuevo registro
+            Crear nueva modalidad
         </a>
-    </li>
-</ul>
+    </div>
+    <span class="limpiar_float"></span>
 
+    <table class="grilla">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Abreviatura</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('backend_modalidad_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.nombre }}</td>
+                    <td>{{ entity.abreviatura }}</td>
+                    <td>
+                        <a href="{{ path('backend_modalidad_edit', { 'id': entity.id }) }}">
+                            Editar
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br />
+    <br />
+    <br />
 {% endblock %}
