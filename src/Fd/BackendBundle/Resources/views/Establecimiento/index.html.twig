@@ -1,49 +1,51 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
 {% block title %}
-{{ parent() }} - Lista de Establecimiento
+    {{ parent() }} - Lista de Establecimiento
 {% endblock %}
 
 {% block main_content %}
 
-<h1>Lista de Establecimiento</h1>
+    <h1>Lista de establecimientos</h1>
 
-<ul>
-    <li>
-        <a href="{{ path('backend_establecimiento_new') }}">
-            Crear nuevo registro
-        </a>
-    </li>
-</ul>
+    <div><a class="float_derecha boton_verde" href="{{ path('backend_establecimiento_new') }}">Crear nuevo establecimiento</a></div>
+    <div class="limpiar_float"></div>
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Cue</th>
-            <th>Nombre</th>
-            <th></th>
-            <th>Email</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
+    <table class="grilla">
+        <thead>
             <tr>
-                <td>{{ entity.id }}</td>
-                <td>{{ entity.cue }}</td>
-                <td><a href="{{ path('backend_establecimiento_edit', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
-                <td>{{ entity.apodo }}</td>
-                <td>{{ entity.email }}</td>
-                <td>
-                    <a href="{{ path('backend_establecimiento_edit', { 'id': entity.id }) }}">
-                        Editar
-                    </a>
-                </td>
+                <th>Id</th>
+                <th>Cue</th>
+                <th>Nombre</th>
+                <th></th>
+                <th>Email</th>
+                <th>Acciones</th>
             </tr>
-    {% endfor %}
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td>{{ entity.cue }}</td>
+                    <td><a href="{{ path('backend_establecimiento_edit', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
+                    <td>{{ entity.apodo }}</td>
+                    <td>{{ entity.email }}</td>
+                    <td>
+                        <a href="{{ path('backend_establecimiento_edit', { 'id': entity.id }) }}">
+                            Editar
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
+    <br />
+
+    <div class="float_derecha boton_azul">
+        <a href="{{ path('establecimiento_salida_planilla') }}">Salida a planilla de cálculo</a>
+    </div>
+    <br />
+    <br />
 
 {% endblock %}

@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Establecimiento {
 
+    const ETIQUETA = 'Establecimiento';
     /**
      * @var integer $id
      *
