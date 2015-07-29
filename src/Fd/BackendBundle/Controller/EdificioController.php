@@ -153,11 +153,15 @@ class EdificioController extends Controller {
         if ($editForm->isValid()) {
             
             $handler = $this->getHandler();
-            $handler->update($edificio);
+            $respuesta = $handler->update($edificio);
+            
+            $this->get('session')->getFlashBag()->add('exito', $respuesta->getMensaje() );
 
             return $this->redirect($this->generateUrl('backend_edificio_edit', array('id' => $edificio->getId())));
         }
 
+        $this->get('session')->getFlashBag()->add('error', $respuesta->getMensaje() );
+        
         return array(
             'entity' => $edificio,
             'edit_form' => $editForm->createView(),
