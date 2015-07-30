@@ -16,7 +16,7 @@ class DefaultController extends Controller
      */
     public function portadaAction()
     {
-        $tablas = $this->getDoctrine()->getRepository('BackendBundle:Portada')->findAllOrdenado('tabla');
+        $tablas = $this->getDoctrine()->getRepository('BackendBundle:Portada')->findAllOrdenado('etiqueta');
         return array(
             'tablas' => $tablas,
         );
