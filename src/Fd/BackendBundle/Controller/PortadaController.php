@@ -31,7 +31,7 @@ class PortadaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('BackendBundle:Portada')->findAllOrdenado('etiqueta');
+        $entities = $em->getRepository('BackendBundle:Portada')->findAllOrdenado('etiqueta' );
 
         return array(
             'entities' => $entities,
