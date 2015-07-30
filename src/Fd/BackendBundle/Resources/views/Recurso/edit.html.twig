@@ -1,37 +1,31 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block main_content %}
-{{ parent() }}
+    {{ parent() }}
 
-<h1>Editar Recurso de establecimiento</h1>
+    <h1>Editar un recurso/laboratorio</h1>
 
 
-<form action="{{ path('recurso_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    <div class="ancho_10">
-        {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Guardar</button>
-    </p>
-    </div>
-</form>
+    <form action="{{ path('recurso_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <div class="ancho_10">
+            {{ form_widget(edit_form) }}
+        </div>
+            <p>
+                <button type="submit">Guardar</button>
+            </p>
+    </form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('recurso') }}">
+    <form action="{{ path('recurso_delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <button class="boton_rojo" type="submit">Eliminar</button>
+        <a class="separador" href="{{ path('recurso') }}">
             Volver a la lista
         </a>
-    </li>
-    <li>
-        <form action="{{ path('recurso_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Eliminar</button>
-        </form>
-    </li>
-</ul>
+    </form>
 
-<span class="limpiar_float"></span>
+    <span class="limpiar_float"></span>
 
-<br />
-<br />
+    <br />
+    <br />
 
 {% endblock %}

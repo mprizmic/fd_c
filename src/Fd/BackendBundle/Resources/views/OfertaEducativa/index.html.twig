@@ -1,43 +1,41 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Lista de OfertaEducativa
+    {{ parent() }} - Lista de OfertaEducativa
 {% endblock %}
- 
+
 {% block main_content %}
 
-<h1>Lista de OfertaEducativa</h1>
+    <h1>Lista de ofertas educativas de todos los niveles</h1>
 
-<ul>
-    <li>
+    <div class="float_derecha boton_verde">
+
         <a href="{{ path('backend_ofertaeducativa_new') }}">
-            Crear nuevo registro
+            Crear nueva oferta
         </a>
-    </li>
-</ul>
+    </div>
+    <span class="limpiar_float"></span>
 
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Oferta</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('backend_ofertaeducativa_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.__toString() }}</td>
-            <td><a href="{{ path('backend_ofertaeducativa_show', { 'id': entity.id }) }}">Mostrar</a>
-                ||
-                <a href="{{ path('backend_ofertaeducativa_edit', { 'id': entity.id }) }}">Editar</a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+    <table class="grilla">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Oferta</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('backend_ofertaeducativa_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.__toString() }}</td>
+                    <td><a href="{{ path('backend_ofertaeducativa_edit', { 'id': entity.id }) }}">Editar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-{% include '::includes/volver.html.twig' %}
+    {% include '::includes/volver.html.twig' %}
 {% endblock %}
