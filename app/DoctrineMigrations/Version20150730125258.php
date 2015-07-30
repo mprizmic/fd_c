@@ -16,7 +16,7 @@ class Version20150730125258 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql", "Migration can only be executed safely on 'mysql'.");
         
         $sql = "update portada ";
-        $sql .= "set url='en_desarrollo2' ";
+        $sql .= "set url='en_desarrollo' ";
         $sql .= "where tabla='GrupoEtario' ";
         $sql .= "or tabla='Pais' ";
         $sql .= "or tabla='OrigenHora' ";
