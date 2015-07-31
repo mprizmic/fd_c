@@ -1,26 +1,27 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Crear TipoNorma
+    {{ parent() }} - Crear TipoNorma
 {% endblock %}
- 
+
 {% block main_content %}
+    {{ parent() }}
 
-<h1>Crear registro de TipoNorma </h1>
+    <h1>Crear nuevo tipo de norma </h1>
 
-<form action="{{ path('backend_tiponorma_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Crear</button>
-    </p>
-</form>
+    <form action="{{ path('backend_tiponorma_create') }}" method="post" {{ form_enctype(form) }}>
+        <div class="ancho_10">
+        {{ form_widget(form) }}
+        </div>
+        <div class="bloque">
+            <button type="submit">Crear</button>
+            <a class="separador" href="{{ path('backend_tiponorma') }}">
+                Volver a la lista
+            </a>
+        </div>
+    </form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend_tiponorma') }}">
-            Volver a la lista
-        </a>
-    </li>
-</ul>
+    <br />
+    <br />
 
 {% endblock %}

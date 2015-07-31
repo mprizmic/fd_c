@@ -7,7 +7,9 @@
 {% block main_content %}
 {{ parent() }}
 
-<h1>Crear registro de UnidadEducativa </h1>
+<div class="titulo">Crear nueva unidad educativa </div>
+<br />
+<br />
 
 <form action="{{ path('backend_unidad_educativa_create') }}" method="post" {{ form_enctype(form) }}>
     <div class="ancho_10">
@@ -15,15 +17,9 @@
     </div>
     <p>
         <button type="submit">Crear</button>
+        <a class="separador" href="{{ path('backend_unidad_educativa') }}">Volver a la lista</a>
     </p>
 </form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend_unidad_educativa') }}">
-            Volver a la lista
-        </a>
-    </li>
-</ul>
 
 {% endblock %}

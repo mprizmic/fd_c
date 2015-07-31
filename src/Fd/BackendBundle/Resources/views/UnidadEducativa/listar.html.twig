@@ -1,7 +1,6 @@
 <table class="grilla">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Nivel</th>
             <th>Establecimiento</th>
             <th>Acciones</th>
@@ -10,8 +9,7 @@
     <tbody>
     {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('backend_unidad_educativa_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.nivel }}</td>
+            <td>{{ entity.nivel.nombre }}</td>
             <td>{{ entity.establecimiento }}</td>
             <td><a href="{{ path('backend_unidad_educativa_edit', { 'id': entity.id }) }}">Editar</a>
             </td>

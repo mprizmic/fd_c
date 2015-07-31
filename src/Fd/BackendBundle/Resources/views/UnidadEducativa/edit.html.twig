@@ -1,76 +1,76 @@
 {# editar unidad educativa del backend #}
 
 {% extends 'BackendBundle::layout.html.twig' %}
-     
+
 {% import ':Form:macro_twig.html.twig' as collection_macro %}
 
 {% block stylesheets %}
-{{ parent() }}
-<link href="{{ asset( 'bundles/establecimiento/css/macro_twig.css') }}" rel="stylesheet" type="text/css" />      
+    {{ parent() }}
+    <link href="{{ asset( 'bundles/establecimiento/css/macro_twig.css') }}" rel="stylesheet" type="text/css" />      
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
-<script type="text/javascript" src="{{ asset('bundles/establecimiento/js/macro_twig.js') }}" charset="utf-8"></script>
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/establecimiento/js/macro_twig.js') }}" charset="utf-8"></script>
 {% endblock %}
 
 
 {% block title %}
- {{ parent() }} - Editar Unidad Educativa
+    {{ parent() }} - Editar Unidad Educativa
 {% endblock %}
 
 {% block main_content %}
-{{ parent() }}
+    {{ parent() }}
 
-<div class="titulo">Editar Unidad Educativa</div>
+    <div class="titulo">Editar una unidad educativa</div>
 
-<br />
-
-<form action="{{ path('backend_unidad_educativa_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-
-    <div class="ancho_10">
-        {{ form_row(edit_form.nivel) }}
-        {{ form_row(edit_form.establecimiento) }}
-        {{ form_row(edit_form.descripcion) }}
-{# por ahora no se usan       #}
-{#        {{ form_row(edit_form.nombre_autoridad) }}#}
-{#        {{ form_row(edit_form.cargo_autoridad) }}#}
-    </div> 
-
-{# FALTA por ahora se anula hasta la revision #}
-{#    {% if entity.isInicial %}
-        <div class="float_derecha">
-            <span>
-                <a href="{{ path('backend_inicial_x_edit', {'inicial_x_id': inicial_x.id, 'unidad_educativa_id': entity.id} ) }}">
-                    Editar las salas de la unidad educativa
-                </a>
-            </span>
-        </div>
-    {% endif %}#}
     <br />
-     
-    {{ form_rest(edit_form) }}    
-    
-    <br />
-    <span class="float_izquierda">
-        <button  type="submit">Guardar</button>
-    </span>
-        
-</form>
 
-<form action="{{ path('backend_unidad_educativa_delete', { 'id': entity.id }) }}" method="post">
-    {{ form_widget(delete_form) }}
-    <span class="float_izquierda separador">
-    <button type="submit" class="boton_rojo">Eliminar</button>
-    </span>
-</form>
+    <form action="{{ path('backend_unidad_educativa_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
 
-<a class="separador" href="{{ path('backend_unidad_educativa') }}">
-    Cancelar
-</a>
+        <div class="ancho_10">
+            {{ form_row(edit_form.nivel) }}
+            {{ form_row(edit_form.establecimiento) }}
+            {{ form_row(edit_form.descripcion) }}
+            {# por ahora no se usan       #}
+            {#        {{ form_row(edit_form.nombre_autoridad) }}#}
+            {#        {{ form_row(edit_form.cargo_autoridad) }}#}
+        </div> 
 
-<span class="limpiar_float"></span>
-<br/>
-<br/>
-    
+        {# FALTA por ahora se anula hasta la revision #}
+        {#    {% if entity.isInicial %}
+                <div class="float_derecha">
+                    <span>
+                        <a href="{{ path('backend_inicial_x_edit', {'inicial_x_id': inicial_x.id, 'unidad_educativa_id': entity.id} ) }}">
+                            Editar las salas de la unidad educativa
+                        </a>
+                    </span>
+                </div>
+            {% endif %}#}
+        <br />
+
+        {{ form_rest(edit_form) }}    
+
+        <br />
+        <span class="separador">
+            <button  type="submit">Guardar</button>
+        </span>
+
+    </form>
+
+    <form action="{{ path('backend_unidad_educativa_delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <span class="separador">
+            <button type="submit" class="boton_rojo">Eliminar</button>
+        </span>
+        <a class="separador" href="{{ path('backend_unidad_educativa') }}">
+            Cancelar
+        </a>
+    </form>
+
+
+    <span class="limpiar_float"></span>
+    <br/>
+    <br/>
+
 {% endblock %}
