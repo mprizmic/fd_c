@@ -1,26 +1,27 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Crear DomicilioLocalizacion
+    {{ parent() }} - Crear DomicilioLocalizacion
 {% endblock %}
- 
+
 {% block main_content %}
+    {{ parent() }}
 
-<h1>Crear registro de DomicilioLocalizacion </h1>
+    <div class="titulo">Crear un nuevo domicilio de un nivel de un establecimiento</div>
+    <br />
 
-<form action="{{ path('backend_domicilio_localizacion_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Crear</button>
-    </p>
-</form>
+    <form action="{{ path('backend_domicilio_localizacion_create') }}" method="post" {{ form_enctype(form) }}>
+        <div class="ancho_10">
+        {{ form_widget(form) }}
+        </div>
+        <p>
+            <button type="submit">Crear</button>
+            <a class="separador" href="{{ path('backend_domicilio_localizacion') }}">
+                Volver a la lista
+            </a>
+        </p>
+    </form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend_domicilio_localizacion') }}">
-            Volver a la lista
-        </a>
-    </li>
-</ul>
-
+    <br />
+    <br />
 {% endblock %}
