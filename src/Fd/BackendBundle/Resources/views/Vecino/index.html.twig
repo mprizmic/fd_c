@@ -1,43 +1,43 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
 {% block main_content %}
-{{ parent() }}
+    {{ parent() }}
 
-<div class="titulo">Lista de establecimientos con los que comparten edificio los establecimientos de la DFD</div>
-<br />
-<br />
+    <div class="titulo">Lista de establecimientos con los que comparten edificio los establecimientos de la DFD</div>
+    <br />
+    <br />
 
 
-<ul>
-    <li>
+    <div class="boton_verde float_derecha">
         <a href="{{ path('vecino_new') }}">
             Crear nuevo vecino
         </a>
-    </li>
-</ul>
+    </div>
+    <div class="limpiar_float"></div>
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th><span class="separador"></span>Nombre</th>
-            <th><span class="separador"></span>Nombre</th>
-            <th><span class="separador"></span>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('vecino_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td><span class="separador"></span>{{ entity.nombre }}</td>
-            <td><span class="separador"></span>{{ entity.edificio.establecimiento[0] }}</td>
-            <td><span class="separador"></span>
+    <table class="grilla">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th><span class="separador"></span>Nombre</th>
+                <th><span class="separador"></span>Nombre</th>
+                <th><span class="separador"></span>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('vecino_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td><span class="separador"></span>{{ entity.nombre }}</td>
+                    <td><span class="separador"></span>{{ entity.edificio.establecimiento[0] }}</td>
+                    <td><span class="separador"></span>
                         <a href="{{ path('vecino_show', { 'id': entity.id }) }}">Mostrar</a>|
                         <a href="{{ path('vecino_edit', { 'id': entity.id }) }}">Editar</a>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br />
+    <br />
 {% endblock %}

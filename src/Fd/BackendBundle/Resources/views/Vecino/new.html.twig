@@ -1,20 +1,24 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
 {% block main_content %}
+    {{ parent() }}
 
-<h1>Nuevo vecino</h1>
+    <div class="titulo">Nuevo vecino</div>
+    <br />
 
-<form action="{{ path('vecino_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Crear</button>
-    </p>
-</form>
+    <form action="{{ path('vecino_create') }}" method="post" {{ form_enctype(form) }}>
+        <div class="ancho_5">
+            {{ form_widget(form) }}
+        </div>
+        <p>
+            <button type="submit">Crear</button>
+            <a class="separador" href="{{ path('vecino') }}">Volver a la lista</a>
+        </p>
+    </form>
 
-<a class="separador" href="{{ path('vecino') }}">Volver a la lista</a>
 
-<div class="limpiar_float"></div>
-<br />
-<br />
+    <div class="limpiar_float"></div>
+    <br />
+    <br />
 
 {% endblock %}

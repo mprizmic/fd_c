@@ -12,7 +12,11 @@ class VecinoType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('nombre')
+                ->add('nombre', null, array(
+                    'attr' => array(
+                        'class' => 'input_talle_5'
+                    ),
+                ))
                 ->add('edificio', 'entity', array(
                     'class' => 'Fd\EdificioBundle\Entity\Edificio',
                     'query_builder' => function (EdificioRepository $repository) {
