@@ -7,7 +7,9 @@
 {% block main_content %}
     {{ parent() }}
 
-    <h1>Editar una orientación de la NES</h1>
+    <div class="titulo">Editar una orientación de la NES</div>
+    <br />
+    <br />
 
     <form action="{{ path('backend.mediaorientaciones.update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <div class="ancho_10">
@@ -26,13 +28,13 @@
             <a class="separador" href="{{ path('backend.mediaorientaciones.buscar') }}">
                 Volver
             </a>
-            <a class="separador boton_verde" href="{{ path('backend.mediaorientaciones.new') }}">Nueva orientación</a></div>
+            <a class="separador boton_verde" href="{{ path('backend.mediaorientaciones.new') }}">Nueva orientación</a>
         </span>
     </form>
 
 
 
-    <span class="limpiar_float"></span>
+{#    <span class="limpiar_float"></span>#}
 
     <br />
     <br />
