@@ -1,15 +1,15 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Editar orientaciones
+    {{ parent() }} - Editar orientaciones
 {% endblock %}
- 
+
 {% block main_content %}
-{{ parent() }}
+    {{ parent() }}
 
-<h1>Editar una orientación de la NES</h1>
+    <h1>Editar una orientación de la NES</h1>
 
-<form action="{{ path('backend.mediaorientaciones.update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    <form action="{{ path('backend.mediaorientaciones.update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <div class="ancho_10">
             {{ form_widget(edit_form) }}
         </div>
@@ -17,22 +17,24 @@
         <div class="separador">
             <button type="submit">Guardar</button>
         </div>
-</form>
+    </form>
 
-<form action="{{ path('backend.mediaorientaciones.delete', { 'id': entity.id }) }}" method="post">
-    {{ form_widget(delete_form) }}
-    <span class="separador bloque">
-        <input type="submit" class="boton_rojo" value="Eliminar" onsubmit="return confirm('Está seguro?')" />
-        <a class="separador" href="{{ path('backend.mediaorientaciones.buscar') }}">
-            Volver
-        </a>
-    </span>
-</form>
+    <form action="{{ path('backend.mediaorientaciones.delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <span class="separador bloque">
+            <input type="submit" class="boton_rojo" value="Eliminar" onsubmit="return confirm('Está seguro?')" />
+            <a class="separador" href="{{ path('backend.mediaorientaciones.buscar') }}">
+                Volver
+            </a>
+            <a class="separador boton_verde" href="{{ path('backend.mediaorientaciones.new') }}">Nueva orientación</a></div>
+        </span>
+    </form>
 
 
-<span class="limpiar_float"></span>
 
-<br />
-<br />
+    <span class="limpiar_float"></span>
+
+    <br />
+    <br />
 
 {% endblock %}
