@@ -1,42 +1,32 @@
 {% extends '::layout.html.twig' %}
 
 {% block main_content %}
-{{ parent() }}
+    {{ parent() }}
 
 
-<div class="titulo float_izquierda">Nómina de establecimientos que imparten nivel {{ nivel }}</div>
+    <div class="titulo float_izquierda">Nómina de establecimientos que imparten nivel {{ nivel }}</div>
 
-<div class="limpiar_float"></div>
+    <div class="limpiar_float"></div>
 
-<br />
-<table class="grilla">
-    <caption class="titulo_arriba">Establecimientos</caption>
-    <tr>
-        <th>Nombre</th>
-        <th>DE</th>
-        <th>CUE</th>
-        <th>Url</th>
-    </tr>
+    <br />
+    <table class="grilla">
+        <tr>
+            <th></th>
+            <th>Nombre</th>
+            <th>CUE</th>
+            <th>Url</th>
+        </tr>
 
-    {% for establecimiento in establecimientos %}
-    
-    <tr>
-        <td><a href="{{path('establecimiento_ficha', {'establecimiento_id':establecimiento.id})}}">{{ establecimiento.nombre }}</a></td>
-        <td>{{ establecimiento.distritoEscolar }}</td>
-        <td>{{ establecimiento.cue }}</td>
-        <td><a href="{{ establecimiento.url }}">{{ establecimiento.url }}</a></td>
-    </tr>
-    {% endfor %}
-</table>
+        {% for establecimiento in establecimientos %}
 
-
-{{ simple_paginator_render('{{ nivel }}_nomina', null, {
-    'container_class':'simple_paginator',
-    'previousPageText':'Anterior',
-    'nextPageText':'Siguiente',
-    'currentClass':'actual',
-    'firstPageText':'Primero',
-    'lastPageText':'Último'
-}) }} 
-
+            <tr>
+                <td><a href="{{path('establecimiento_ficha', {'establecimiento_id':establecimiento.id})}}">{{ establecimiento.apodo}}</a></td>
+                <td><a href="{{path('establecimiento_ficha', {'establecimiento_id':establecimiento.id})}}">{{ establecimiento.nombre }}</a></td>
+                <td>{{ establecimiento.cue }}</td>
+                <td><a href="{{ establecimiento.url }}">{{ establecimiento.url }}</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br />
+    <br />
 {% endblock %}
