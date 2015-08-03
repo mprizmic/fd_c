@@ -83,11 +83,16 @@ class SecundarioXController extends Controller {
 
         if ($secundario_x) {
 
+            $ruta = $this->get('session')->get('ruta_completa');
+            $params = $this->get('session')->get('parametros');
+
+            $volver = $this->generateUrl($ruta, $params);
 
             return $this->render('OfertaEducativaBundle:SecundarioX:show.html.twig', array(
                         'unidad_oferta' => $unidad_oferta,
                         'secundario_x' => $secundario_x,
-                        'establecimiento_id'=>$establecimiento_id,
+                        'establecimiento_id' => $establecimiento_id,
+                        'volver' => $volver,
                     ))
             ;
         } else {

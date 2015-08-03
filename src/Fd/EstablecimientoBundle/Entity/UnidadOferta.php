@@ -103,6 +103,22 @@ class UnidadOferta {
     public function __toString() {
         return $this->getLocalizacion() . ' - ' . $this->getOfertas();
     }
+    public function getIdentificacionCompleta() {
+        $l = $this->getLocalizacion();
+        $ue = $l->getUnidadEducativa();
+        $resultado = $ue->getEstablecimiento();
+        $resultado .= '/Nivel: ';
+        $resultado .= $ue->getNivel()->getNombre();
+        $resultado .= '-';
+        $cue = $l->getEstablecimientoEdificio()->getCueAnexo();
+        $resultado .= $cue == '00' ? 'Sede' : 'Anexo';
+        $resultado .= ' (';
+        $resultado .= $l->getDomicilioPrincipal();
+        $resultado .= ') ';
+        $resultado .= $this->getOfertas();
+
+        return $resultado;
+    }    
 
     public function __construct() {
         $this->cohortes = new \Doctrine\Common\Collections\ArrayCollection();
