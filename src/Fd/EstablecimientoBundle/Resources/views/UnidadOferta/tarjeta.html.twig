@@ -1,0 +1,15 @@
+<div class="tarjeta1">
+<a href="#">
+    {% set l = unidad_oferta.localizacion %}
+    {% set ue = l.unidadEducativa %}
+    {% set cue = l.establecimientoEdificio.cueAnexo %}
+    {{ ue.establecimiento ~ '/Nivel: ' ~ ue.nivel.nombre ~ ' -' }}
+    {% if cue == '00' %}
+        {{ 'Sede' }}
+    {% else %}
+        {{ 'Anexo' }}
+    {% endif %}
+    <span class="chica">{{ ' (' ~  l.domicilioPrincipal ~ ') ' }}</span>
+    {{ ' - ' ~ unidad_oferta.ofertas }}
+</a>
+</div>
