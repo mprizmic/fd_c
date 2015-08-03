@@ -270,7 +270,7 @@ class CarreraController extends Controller {
 
         $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
-        return $this->redirect($this->generateUrl('carrera_nomina'));
+        return $this->redirect($this->generateUrl('carrera_buscar'));
     }
 
     /**
