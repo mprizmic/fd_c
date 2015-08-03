@@ -80,4 +80,16 @@ class UnidadOfertaController extends Controller {
 
         return $this->redirect($this->generateUrl($ruta, $params));
     }
+    /**
+     * @Route("/tarjeta/{id}", name="establecimiento.unidad_oferta.tarjeta")
+     * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta")
+     * 
+     * @param type $unidad_oferta
+     */
+    public function tarjetaAction($unidad_oferta){
+
+        return $this->render('EstablecimientoBundle:UnidadOferta:tarjeta.html.twig', array(
+                    'unidad_oferta' => $unidad_oferta,
+        ));        
+    }
 }

@@ -3,9 +3,8 @@
 {% block main_content %}
 {{ parent() }}
 
-<div class="titulo float_izquierda">{{ unidad_oferta }}</div>
+<div class="titulo">{% render 'EstablecimientoBundle:UnidadOferta:tarjeta' with {'id': unidad_oferta.id} %}</div>
 
-<div class="limpiar_float"></div>
 <br />
 
 {# titulos #}
@@ -25,7 +24,7 @@ Año de inicio: {{ secundario_x.anioInicio }}
 {# datos generales #}
 
 <br/>
-<div class="float_derecha volver"><a href="{{ path('establecimiento_ficha', {'establecimiento_id':establecimiento_id}) }}">Volver</a></div>
+<div class="float_derecha volver"><a href="{{ volver }}">Volver</a></div>
 <span class="limpiar_float"></span>
 <br/>
 <br/>
