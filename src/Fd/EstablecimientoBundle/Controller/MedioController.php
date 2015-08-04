@@ -16,14 +16,7 @@ class MedioController extends Controller
      * @Route("/nomina", name="medio_nomina")
      */
     public function nominaAction(){
-//        $paginador = $this->get('ideup.simple_paginator');
-//        $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_largo'));
-        
-//        establecimientos paginados
-//        $establecimientos = $paginador->paginate(
-//                $this->getDoctrine()->getEntityManager()->getRepository('EstablecimientoBundle:Establecimiento')
-//                ->qyAllNivelOrdenado('Med','orden') 
-//                )->getResult();
+
         $establecimientos = $this->getDoctrine()
                 ->getEntityManager()
                 ->getRepository('EstablecimientoBundle:Establecimiento')
