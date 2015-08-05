@@ -32,12 +32,10 @@ class SecundarioX {
     private $id;
 
     /**
-     * lado propietario no bidireccional
-     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta")
-     * @ORM\JoinColumn(name="unidad_oferta_id", referencedColumnName="id")
+     * lado inverso bidireccional
+     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", mappedBy="", cascade={"remove"}))
      */
     private $unidad_oferta;
-
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Range(max=2500, maxMessage="La matrícula es muy grande. Revíselo.")
@@ -105,151 +103,5 @@ class SecundarioX {
         $this->creado = new \DateTime();
         $this->actualizado = new \DateTime();   
         $this->orientaciones = new ArrayCollection();
-    }
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set matricula
-     *
-     * @param integer $matricula
-     * @return SecundarioX
-     */
-    public function setMatricula($matricula)
-    {
-        $this->matricula = $matricula;
-
-        return $this;
-    }
-
-    /**
-     * Get matricula
-     *
-     * @return integer 
-     */
-    public function getMatricula()
-    {
-        return $this->matricula;
-    }
-
-    /**
-     * Set anio_inicio
-     *
-     * @param integer $anioInicio
-     * @return SecundarioX
-     */
-    public function setAnioInicio($anioInicio)
-    {
-        $this->anio_inicio = $anioInicio;
-
-        return $this;
-    }
-
-    /**
-     * Get anio_inicio
-     *
-     * @return integer 
-     */
-    public function getAnioInicio()
-    {
-        return $this->anio_inicio;
-    }
-
-    /**
-     * Set actualizado
-     *
-     * @param \DateTime $actualizado
-     * @return SecundarioX
-     */
-    public function setActualizado($actualizado)
-    {
-        $this->actualizado = $actualizado;
-
-        return $this;
-    }
-
-    /**
-     * Get actualizado
-     *
-     * @return \DateTime 
-     */
-    public function getActualizado()
-    {
-        return $this->actualizado;
-    }
-
-    /**
-     * Set creado
-     *
-     * @param \DateTime $creado
-     * @return SecundarioX
-     */
-    public function setCreado($creado)
-    {
-        $this->creado = $creado;
-
-        return $this;
-    }
-
-    /**
-     * Get creado
-     *
-     * @return \DateTime 
-     */
-    public function getCreado()
-    {
-        return $this->creado;
-    }
-
-    /**
-     * Set unidad_oferta
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\UnidadOferta $unidadOferta
-     * @return SecundarioX
-     */
-    public function setUnidadOferta(\Fd\EstablecimientoBundle\Entity\UnidadOferta $unidadOferta = null)
-    {
-        $this->unidad_oferta = $unidadOferta;
-
-        return $this;
-    }
-
-    /**
-     * Get unidad_oferta
-     *
-     * @return \Fd\EstablecimientoBundle\Entity\UnidadOferta 
-     */
-    public function getUnidadOferta()
-    {
-        return $this->unidad_oferta;
-    }
-
-    /**
-     * Remove orientaciones
-     *
-     * @param \Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion $orientaciones
-     */
-    public function removeOrientacione(\Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion $orientacion)
-    {
-        $this->orientaciones->removeElement($orientacion);
-    }
-
-    /**
-     * Get orientaciones
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getOrientaciones()
-    {
-        return $this->orientaciones;
     }
 }

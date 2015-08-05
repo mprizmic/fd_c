@@ -147,7 +147,6 @@ class UnidadOferta {
         $this->setActualizado(new \DateTime());
     }
 
-
     /**
      * Get id
      *
@@ -156,6 +155,29 @@ class UnidadOferta {
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     * @return UnidadOferta
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string 
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
     }
 
     /**
@@ -324,28 +346,5 @@ class UnidadOferta {
     public function getSalasInicial()
     {
         return $this->salas_inicial;
-    }
-
-    /**
-     * Set tipo
-     *
-     * @param string $tipo
-     * @return UnidadOferta
-     */
-    public function setTipo($tipo)
-    {
-        $this->tipo = $tipo;
-
-        return $this;
-    }
-
-    /**
-     * Get tipo
-     *
-     * @return string 
-     */
-    public function getTipo()
-    {
-        return $this->tipo;
     }
 }
