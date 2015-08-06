@@ -77,9 +77,9 @@ class SecundarioXController extends Controller {
      * @Route("/{id}/show/{establecimiento_id}", name="oferta_educativa.secundariox.show")
      * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta")
      */
-    public function showAction($unidad_oferta, $establecimiento_id) {
+    public function showAction(UnidadOferta $unidad_oferta, $establecimiento_id) {
 
-        $secundario_x = $this->getRepository()->findOneBy(array('unidad_oferta' => $unidad_oferta->getId()));
+        $secundario_x = $unidad_oferta->getSecundario();
 
         if ($secundario_x) {
 
@@ -91,7 +91,7 @@ class SecundarioXController extends Controller {
             return $this->render('OfertaEducativaBundle:SecundarioX:show.html.twig', array(
                         'unidad_oferta' => $unidad_oferta,
                         'secundario_x' => $secundario_x,
-                        'establecimiento_id' => $establecimiento_id,
+//                        'establecimiento_id' => $establecimiento_id,
                         'volver' => $volver,
                     ))
             ;
