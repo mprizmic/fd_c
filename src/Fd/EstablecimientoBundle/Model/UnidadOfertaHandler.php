@@ -28,7 +28,7 @@ class UnidadOfertaHandler {
     public function __construct(EntityManager $em) {
 
         $this->em = $em;
-        
+
 //        if ($nivel instanceof Nivel) {
 //            
 //        }else{
@@ -41,7 +41,7 @@ class UnidadOfertaHandler {
 //        $this->nivel = $nivel;
     }
 
-    private function getEm() {
+    protected function getEm() {
         return $this->em;
     }
 
@@ -95,22 +95,27 @@ class UnidadOfertaHandler {
      * @param type $oferta
      * @param type $unidad
      */
-    public function crear($localizacion, $oferta_educativa, $tipo) {
+    public function crear(Localizacion $localizacion, OfertaEducativa $oferta_educativa, $tipo, $flush = false) {
 
         $respuesta = new Respuesta();
 
         $entity = new UnidadOferta();
+        
         $entity->setOfertas($oferta_educativa);
         $entity->setLocalizacion($localizacion);
         $entity->setTipo($tipo);
 
         try {
             $this->getEm()->persist($entity);
-            $this->getEm()->flush();
+
+            if ($flush) {
+                $this->getEm()->flush();
+            }
 
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se generó la oferta educativa para la sede/anexo del establecimiento seleccionado.');
             $respuesta->setClaveNueva($entity->getId());
+            $respuesta->setObjNuevo($entity);
         } catch (Exception $e) {
             $respuesta->setCodigo(2);
             $respuesta->setMensaje('No se pudo generar la oferta educativa. Verifíquelo y reintente.');

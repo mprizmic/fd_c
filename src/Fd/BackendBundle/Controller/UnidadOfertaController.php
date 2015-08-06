@@ -27,6 +27,14 @@ use Fd\TablaBundle\Entity\Nivel;
 class UnidadOfertaController extends Controller {
 
     private $em;
+    private $handler;
+
+    public function getHandler() {
+        if (!$this->handler) {
+            $this->handler = new UnidadOfertaHandler($this->getEm());
+        };
+        return $this->handler;
+    }
 
     /**
      * Muestra una pagina para seleccionar de cada localizacion, alguno de sus niveles educativos.
@@ -147,16 +155,20 @@ class UnidadOfertaController extends Controller {
             $tipo = $oferta_educativa->esTipo();
             $localizacion = $unidad_oferta->getLocalizacion();
 
-            $handler = UnidadOfertaFactory::createHandler($tipo, $this->getEm());
+            $handler = $this->getHandler();
 
             //de donde salen los parametros
-            $respuesta = $handler->crear($localizacion, $oferta_educativa, $tipo);
+            $respuesta = $handler->crear($localizacion, $oferta_educativa, $tipo, true);
 
             $tipo_mensaje = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
+            
+            $this->get('session')->getFlashbag()->add($tipo_mensaje, $respuesta->getMensaje());
+            
+            if ($respuesta->getCodigo()==1){
+                
+                return $this->redirect($this->generateUrl('backend_unidadoferta_edit', array('id' => $respuesta->getClaveNueva())));
+            }
 
-            $this->get('session')->getFlashbag()->add($tipo_mensaje, 'Guardado exitosamente');
-
-            return $this->redirect($this->generateUrl('backend_unidadoferta_edit', array('id' => $respuesta->getClaveNueva())));
         }
 
         return array(
@@ -177,7 +189,7 @@ class UnidadOfertaController extends Controller {
         // establezco la ruta para la pagina que tenga que volver aca
         $this->get('session')->set('ruta_completa', $request->get('_route'));
         $this->get('session')->set('parametros', $request->get('_route_params'));
-        
+
         $editForm = $this->createForm(new UnidadOfertaType(), $unidad_oferta);
         $deleteForm = $this->createDeleteForm($unidad_oferta->getId());
 
@@ -185,9 +197,9 @@ class UnidadOfertaController extends Controller {
 
         $ruteador = $this->container->get('router');
         $em = $this->getEm();
-        
+
         //se crea la ruta que se publica en la plantilla a donde derivar para cada tipo de unidadoferta
-        $a_donde = UnidadOfertaFactory::createRutaEdit($unidad_oferta, $ruteador, $em );
+        $a_donde = UnidadOfertaFactory::createRutaEdit($unidad_oferta, $ruteador, $em);
 
         return array(
             'entity' => $unidad_oferta,
