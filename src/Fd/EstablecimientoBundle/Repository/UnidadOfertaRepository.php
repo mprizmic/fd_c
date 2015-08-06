@@ -101,12 +101,12 @@ class UnidadOfertaRepository extends EntityRepository {
      * 
      * devuelve un obj inicial_x con la cabecera de las salas de inicial de una unidad_oferta en particular
      */
-    public function findSalas(UnidadOferta $unidad_oferta) {
-        $inicial_x = $this
-                ->_em
-                ->getRepository('OfertaEducativaBundle:InicialX')
-                ->findSalas($unidad_oferta);
-
-        return $inicial_x;
-    }
+//    public function findSalas(UnidadOferta $unidad_oferta) {
+//        $inicial_x = $this
+//                ->_em
+//                ->getRepository('OfertaEducativaBundle:InicialX')
+//                ->findSalas($unidad_oferta);
+//
+//        return $inicial_x;
+//    }
 }
