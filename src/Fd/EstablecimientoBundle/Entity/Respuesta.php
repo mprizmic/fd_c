@@ -10,6 +10,7 @@ class Respuesta {
     protected $codigo;
     protected $mensaje;
     protected $clave_nueva;
+    protected $obj_nuevo;
 
     public function __construct($codigo = null, $mensaje = null) {
         if (!$codigo) {
@@ -48,6 +49,13 @@ class Respuesta {
 
     public function getClaveNueva() {
         return $this->clave_nueva;
+    }
+    public function setObjNuevo($obj_nuevo) {
+        $this->obj_nuevo = $obj_nuevo;
+    }
+
+    public function getObjNuevo() {
+        return $this->obj_nuevo;
     }
 
 }
