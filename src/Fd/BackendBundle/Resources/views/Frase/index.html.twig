@@ -1,0 +1,38 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <div class="titulo">Listado de frases célebres</div>
+
+    <div class="boton_verde float_derecha">
+        <a href="{{ path('backend_frase_new') }}">Crear nuevo registro</a>
+    </div>
+    <span class="limpiar_float"></span>
+
+    <table class="grilla">
+        <thead>
+            <tr>
+                <th>Frase</th>
+                <th>Fecha</th>
+                <th>Autor</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.frase }}</td>
+                    <td>{% if entity.fecha %}{{ entity.fecha|date('d-m-Y') }}{% endif %}</td>
+                    <td class="centrado">{{ entity.autor }}</td>
+                    <td>
+                        <a href="{{ path('backend_frase_edit', { 'id': entity.id }) }}">Editar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br />
+    <br />
+
+{% endblock %}
