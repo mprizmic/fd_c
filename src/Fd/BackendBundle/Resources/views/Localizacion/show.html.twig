@@ -1,39 +1,54 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Localizacion
+    {{ parent() }} - Localizacion
 {% endblock %}
- 
+
 {% block main_content %}
+    {{ parent() }}
 
-<h1>Localizacion</h1>
+    <div class="titulo">Ubicación de una unidad educativa en un edificio</div>
+    <div class="sub_titulo">(Localización)</div>
+    <br />
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-    </tbody>
-</table>
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id:</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Establecimiento:</th>
+                <td>{{ entity.establecimientoEdificio }}</td>
+            </tr>
+            <tr>
+                <th>Unidad educativa:</th>
+                <td>{{ entity.unidadEducativa.nivel.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Domicilio:</th>
+                <td>{{ entity.domicilioPrincipal }}</td>
+            </tr>
+            <tr>
+                <th>Martícula:</th>
+                <td>{{ entity.matricula }}</td>
+            </tr>
+            <tr>
+                <th>Cantidad de Docentes:</th>
+                <td>{{ entity.cantidadDocentes | default('s/d')}}</td>
+            </tr>
+        </tbody>
+    </table>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend_localizacion') }}">
-            Volver a la lista
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('backend_localizacion_edit', { 'id': entity.id }) }}">
-            Editar
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('backend_localizacion_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="boton_rojo">Eliminar</button>
-        </form>
-    </li>
-</ul>
+
+    <form action="{{ path('backend_localizacion_delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <button type="submit" class="boton_rojo">Eliminar</button>
+        <a class="separador" href="{{ path('backend_localizacion_edit', { 'id': entity.id }) }}">Editar</a>
+        <a class="separador" href="{{ path('backend_localizacion') }}">Volver a la lista</a>
+    </form>
+
+    <br />
+    <br />
 
 {% endblock %}

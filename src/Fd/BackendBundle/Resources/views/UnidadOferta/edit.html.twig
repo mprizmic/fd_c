@@ -15,7 +15,8 @@
 {% block main_content %}
     {{ parent() }}
 
-    <h1>Editar una oferta educativa localizada</h1>
+    <div class="titulo">Editar una oferta educativa localizada</div>
+    <br />
 
     <form action="{{ path('backend_unidadoferta_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <div class="ancho_10">
