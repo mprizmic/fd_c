@@ -33,6 +33,19 @@ class DomicilioLocalizacionRepository extends EntityRepository {
         $builder->setParameter($clave, $campo[$clave]);
         return $builder;
     }
+    
+    public function findAllOrdenado(){
+        $qb = $this->createQueryBuilder('dl')
+                ->select('dl')
+                ->join('dl.localizacion', 'l')
+                ->join('l.unidad_educativa', 'ue')
+                ->join('ue.establecimiento', 'e')
+                ->join('ue.nivel', 'n')
+                ->orderBy('e.apodo')
+                ->addOrderBy('n.orden');
+        return $qb->getQuery()->getResult();
+    
+    }
 
     /**
      * Verifica si en el grupo de domicilios de la localizacion que se esta pasando como parametro, 

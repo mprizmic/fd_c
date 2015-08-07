@@ -26,7 +26,7 @@ class DomicilioLocalizacionController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('EdificioBundle:DomicilioLocalizacion')->findAll();
+        $entities = $em->getRepository('EdificioBundle:DomicilioLocalizacion')->findAllOrdenado();
 
         return array('entities' => $entities);
     }
