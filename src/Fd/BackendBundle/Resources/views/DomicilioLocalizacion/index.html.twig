@@ -11,7 +11,7 @@
 
     <div class="float_derecha boton_verde">
         <a href="{{ path('backend_domicilio_localizacion_new') }}">
-            Crear nuevo domicilio
+            Crear nuevo domicilio de un nivel
         </a>
         <span class="limpiar_float"></span>
     </div>
@@ -19,7 +19,6 @@
     <table class="grilla">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Domicilio</th>
                 <th>Localización</th>
                 <th>Dom. principal</th>
@@ -29,7 +28,6 @@
         <tbody>
             {% for entity in entities %}
                 <tr>
-                    <td><a href="{{ path('backend_domicilio_localizacion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                     <td>{{ entity.domicilio }}</td>
                     <td>{{ entity.localizacion }}</td>
                     <td>{{ entity.principal ? 'Si' : 'No' }}</td>
