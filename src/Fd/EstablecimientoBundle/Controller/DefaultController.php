@@ -154,5 +154,19 @@ class DefaultController extends Controller {
                 ))
         ;
     }
+    /**
+     * @Route("/frase", name="frases")
+     */
+    public function frasesAction(){
+        $frases = $this->getDoctrine()->getEntityManager()->getRepository("TablaBundle:Frase")->findBy(array(), array('fecha'=>'desc'));
+
+        if (count($frases) > 0) {
+            return $this->render('EstablecimientoBundle:Default:frases.html.twig', array(
+                        'frases' => $frases,
+            ));
+        } else {
+            return $this->redirect($this->generateUrl('establecimiento_damero'));
+        }        
+    }
 
 }

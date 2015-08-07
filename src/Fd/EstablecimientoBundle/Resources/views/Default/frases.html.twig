@@ -1,0 +1,33 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <h1 class="centrado">Frases célebres</h1>
+    <div class="limpiar_float"></div>
+
+    <br />
+    <br />
+
+    {% spaceless %}
+        {% set frases_formateadas = "\n" %}
+        {% for frase in frases %}
+                {% set fecha = frase.fecha | date('d-m-Y') %}
+                {% set frases_formateadas = frases_formateadas ~ fecha ~ ': ' ~ frase.frase ~ ' (' ~ frase.autor ~ ') ' ~ "\n\n"%}
+        {% endfor %}
+
+        <div class="centrado">
+            <textarea name="avisos" rows="25" cols="130" readonly="readonly">
+                {{ frases_formateadas }}
+            </textarea>
+        </div>
+    {% endspaceless %}
+
+    <br />
+    <br />
+
+    <h2 class="centrado"><a href="{{ path('establecimiento_damero') }}">Continuar</a></h2>
+
+    <br />
+
+{% endblock %}
