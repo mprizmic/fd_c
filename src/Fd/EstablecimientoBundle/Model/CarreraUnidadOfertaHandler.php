@@ -9,8 +9,8 @@ use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
 use Fd\EstablecimientoBundle\Utilities\TipoUnidadOferta;
-use Fd\TablaBundle\Entity\Nivel;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
+use Fd\TablaBundle\Entity\Nivel;
 
 class CarreraUnidadOfertaHandler extends UnidadOfertaHandler {
 
@@ -22,7 +22,7 @@ class CarreraUnidadOfertaHandler extends UnidadOfertaHandler {
      * @param type $oferta
      * @param type $unidad
      */
-    public function crear($localizacion, $oferta_educativa, $tipo) {
+    public function crear(Localizacion $localizacion, OfertaEducativa $oferta_educativa, $tipo, $flush = false ) {
         return parent::crear($localizacion, $oferta_educativa, TipoUnidadOferta::TUO_CARRERA);
     }
 
