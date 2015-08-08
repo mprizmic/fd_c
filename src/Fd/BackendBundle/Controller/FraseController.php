@@ -16,32 +16,6 @@ use Fd\TablaBundle\Form\FraseType;
 class FraseController extends Controller {
 
     /**
-     * @Route("/filtro", name="frase_filtro")
-     */
-//    public function FraseFilterAction(){
-//       $form = $this->get('form.factory')->create(new FraseFilterType());
-//
-//        if ($this->get('request')->getMethod() == 'POST') {
-//            // bind values from the request
-//            $form->bindRequest($this->get('request'));
-//
-//            // initliaze a query builder
-//            $queryBuilder = $this->get('doctrine.orm.entity_manager')
-//                ->getRepository('TablaBundle:Frase')
-//                ->createQueryBuilder('b');
-//
-//            // build the query from the given form object
-//            $this->get('lexik_form_filter.query_builder')->buildQuery($form, $queryBuilder);
-//
-//            // now look at the DQL =)
-//            var_dump($queryBuilder->getDql());
-//        }
-//
-//        return $this->render('BackendBundle:Frase:filtro.html.twig', array(
-//            'form' => $form->createView(),
-//        ));        
-//    }
-    /**
      * Lists all Frase entities.
      *
      * @Route("/index", name="backend_frase")
