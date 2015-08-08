@@ -68,7 +68,7 @@ class SecundarioXController extends Controller {
      * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta", options={"id":"unidad_oferta_id"})
      */
     public function crearAction(Request $request, $unidad_oferta) {
-        $entity = $this->getHandler()->crear($unidad_oferta, true);
+        $entity = $this->getHandler()->crear($unidad_oferta);
         return $this->redirect($this->generateUrl('backend.secundariox.edit', array('id' => $entity->getId())));
     }
 

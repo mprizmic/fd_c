@@ -21,20 +21,24 @@ class SecundarioXHandler {
         return new SecundarioX();
     }
 
-    public function crear(UnidadOferta $unidad_oferta, $flush = false) {
+    public function crear(UnidadOferta $unidad_oferta) {
+
         $secundario_x = $this->crearObjeto();
 
-        if ($unidad_oferta) {
+        try {
+            $this->em->persist($secundario_x);
+            $this->em->flush();
+
+            $unidad_oferta->setSecundario($secundario_x);
+            $this->em->persist($unidad_oferta);
+
             $secundario_x->setUnidadOferta($unidad_oferta);
-        } else {
+            $this->em->flush();
+        } catch (Exception $ex) {
+
             throwException($e);
         };
 
-        $this->em->persist($secundario_x);
-
-        if ($flush) {
-            $this->em->flush();
-        };
         return $secundario_x;
     }
 
@@ -98,7 +102,7 @@ class SecundarioXHandler {
             $this->em->persist($secundario_x);
             $this->em->flush();
             $respuesta->setClaveNueva($secundario_x->getId());
-            
+
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se guardó exitosamente');
         } catch (Exception $e) {
