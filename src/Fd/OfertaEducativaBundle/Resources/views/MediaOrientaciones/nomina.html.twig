@@ -12,15 +12,15 @@
 
 <table class="grilla">
     <tr>
-        <th>Código</th>
         <th>Nombre</th>
+        <th>Código</th>
         <th>Acción</th>
     </tr>
 
     {% for orientacion in orientaciones %}
     <tr>
-        <td>{{ orientacion.codigo }}</td>
         <td>{{ orientacion.nombre }}</td>
+        <td>{{ orientacion.codigo }}</td>
         <td><a href="{{path('backend.mediaorientaciones.edit', {'id': orientacion.id})}}">Editar</a></td>
     </tr>
     {% endfor %}

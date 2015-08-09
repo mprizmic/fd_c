@@ -150,16 +150,40 @@ class EstablecimientoEdificioRepository extends EntityRepository {
                         ->getQuery()
                         ->getResult();
     }
-    public function qbEdificios($establecimiento){
+
+    public function qbEdificios($establecimiento) {
         return $this->createQueryBuilder('ee')
                         ->where('ee.establecimientos = ' . $establecimiento->getId())
                         ->orderBy('ee.cue_anexo');
     }
-    public function findSedeYAnexo($establecimiento){
+
+    public function findSedeYAnexo($establecimiento) {
         return $this->qbEdificios($establecimiento)
-                ->andWhere("ee.cue_anexo <> '99'")
-                ->getQuery()
-                ->getResult();
+                        ->andWhere("ee.cue_anexo <> '99'")
+                        ->getQuery()
+                        ->getResult();
+    }
+
+    /**
+     * Devuelve array de las orientaciones de la NES en el establecimiento_edificio
+     * Si no tiene devuelve array vacío
+     */
+    public function findMediaOrientaciones(EstablecimientoEdificio $establecimiento_edificio) {
+        $qb = $this->createQueryBuilder('ee')
+                ->select(array(
+                    'mo.nombre as orientacion',
+                ))
+                ->innerJoin('ee.localizacion', 'l')
+                ->innerJoin('l.ofertas', 'uo')
+                ->innerJoin('uo.secundario', 'sx')
+                ->innerJoin('sx.orientaciones', 'ori')
+                ->innerJoin('ori.orientacion', 'mo')
+                ->where('ee.id = :establecimiento_edificio')
+                ->orderBy('mo.nombre');
+
+        $qb->setParameter('establecimiento_edificio', $establecimiento_edificio);
+        $resultado = $qb->getQuery()->getArrayResult();
+        return $resultado;
     }
 
 }
