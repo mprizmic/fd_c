@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\OfertaEducativaBundle\Entity\SecundarioX;
 use Fd\OfertaEducativaBundle\Model\SecundarioXHandler;
@@ -75,11 +76,12 @@ class SecundarioXController extends Controller {
      * Displays una nes localizada en un establecimiento
      *
      * @Route("/{id}/show/{establecimiento_id}", name="oferta_educativa.secundariox.show")
-     * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta")
+     * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta", options={"id":"id"})
+     * @ParamConverter("establecimiento", class="EstablecimientoBundle:Establecimiento", options={"id":"establecimiento_id"})
      */
-    public function showAction($unidad_oferta, $establecimiento_id) {
+    public function showAction(UnidadOferta $unidad_oferta, $establecimiento) {
 
-        $secundario_x = $this->getRepository()->findOneBy(array('unidad_oferta' => $unidad_oferta->getId()));
+        $secundario_x = $unidad_oferta->getSecundario();
 
         if ($secundario_x) {
 
@@ -91,7 +93,7 @@ class SecundarioXController extends Controller {
             return $this->render('OfertaEducativaBundle:SecundarioX:show.html.twig', array(
                         'unidad_oferta' => $unidad_oferta,
                         'secundario_x' => $secundario_x,
-                        'establecimiento_id' => $establecimiento_id,
+//                        'establecimiento_id' => $establecimiento_id,
                         'volver' => $volver,
                     ))
             ;

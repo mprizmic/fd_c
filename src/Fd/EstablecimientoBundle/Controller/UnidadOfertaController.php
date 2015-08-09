@@ -60,7 +60,7 @@ class UnidadOfertaController extends Controller {
 
         if ($editForm->isValid()) {
 
-            $manager = UnidadOfertaFactory::createHandler($unidad_oferta->getTipo(), $this->getDoctrine()->getEntityManager());
+            $manager = new UnidadOfertaHandler($this->getDoctrine()->getEntityManager());
 
             $respuesta = $manager->actualizar($unidad_oferta, $originalTurnos);
 

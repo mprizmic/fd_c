@@ -7,7 +7,8 @@
 {% block main_content %}
     {{ parent() }}
 
-    <h1>Crear registro de UnidadOferta </h1>
+    <div class="titulo">Crear una oferta educativa localizada</div>
+    <br />
 
     <form action="{{ path('backend_unidadoferta_create') }}" method="post" {{ form_enctype(form) }}>
         <div class="ancho_10">

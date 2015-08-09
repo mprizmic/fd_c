@@ -28,14 +28,48 @@ class MediaOrientacionesController extends Controller {
         return $this->getEm()->getRepository('OfertaEducativaBundle:MediaOrientaciones');
     }
 
-    /** 
+    /**
      * @Route("/nomina", name="oferta_educativa.media_orientaciones.nomina")
      */
     public function nominaAction() {
-        $orientaciones = $this->getRepository()->findAll();
+
+        $orientaciones = $this->getRepository()->findBy(array(), array('nombre' => 'asc'));
 
         return $this->render('OfertaEducativaBundle:MediaOrientaciones:nomina.html.twig', array(
                     'orientaciones' => $orientaciones,
+        ));
+    }
+
+    /**
+     * @Route("/por_establecimiento", name="oferta_educativa.media_orientaciones.por_establecimiento")
+     */
+    public function por_establecimiento() {
+
+        $salida = array();
+        $establecimientos = $this->getEm()
+                ->getRepository('EstablecimientoBundle:Establecimiento')
+                ->findAllOrdenado('orden');
+
+        foreach ($establecimientos as $establecimiento) {
+
+            $repository = $this->getEm()
+                    ->getRepository('EstablecimientoBundle:EstablecimientoEdificio');
+
+            $e_edificios = $repository->findSedeYAnexo($establecimiento);
+
+            foreach ($e_edificios as $establecimiento_edificio) {
+
+                $orientaciones = $repository->findMediaOrientaciones($establecimiento_edificio);
+
+                if (count($orientaciones) > 0) {
+
+                    $clave = $establecimiento_edificio->getEdificios()->getDomicilioPrincipal()->__toString();
+                    $salida[$establecimiento->getApodo()][$clave]['orientaciones'] = $orientaciones;
+                }
+            }
+        };
+        return $this->render('OfertaEducativaBundle:MediaOrientaciones:por_establecimiento.html.twig', array(
+                    'salida' => $salida,
         ));
     }
 

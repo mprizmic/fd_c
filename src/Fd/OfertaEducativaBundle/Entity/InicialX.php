@@ -24,7 +24,7 @@ class InicialX {
 
     /**
      * lado inverso bidireccional
-     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", mappedBy="salas_inicial", cascade={"remove"}))
+     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", mappedBy="salas_inicial", cascade={"persist", "remove"}))
      */
     private $unidad_oferta;
 

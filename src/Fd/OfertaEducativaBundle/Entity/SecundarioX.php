@@ -32,12 +32,10 @@ class SecundarioX {
     private $id;
 
     /**
-     * lado propietario no bidireccional
-     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta")
-     * @ORM\JoinColumn(name="unidad_oferta_id", referencedColumnName="id")
+     * lado inverso bidireccional
+     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", mappedBy="secundario", cascade={"persist", "remove"}))
      */
     private $unidad_oferta;
-
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\Range(max=2500, maxMessage="La matrícula es muy grande. Revíselo.")
@@ -238,9 +236,9 @@ class SecundarioX {
      *
      * @param \Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion $orientaciones
      */
-    public function removeOrientacione(\Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion $orientacion)
+    public function removeOrientacione(\Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion $orientaciones)
     {
-        $this->orientaciones->removeElement($orientacion);
+        $this->orientaciones->removeElement($orientaciones);
     }
 
     /**

@@ -48,8 +48,8 @@ class UnidadOfertaFactory {
 
         switch ($tipo) {
             case TipoUnidadOferta::TUO_CARRERA:
-                $nombre = 'carrera_editar';
-//                $params['id'] = $entity->getId();
+                $nombre = 'carrera_ficha';
+                $params['carrera_id'] = $entity->getId();
                 break;
             case TipoUnidadOferta::TUO_PRIMARIO:
                 $nombre = 'primario_nomina';
@@ -58,8 +58,9 @@ class UnidadOfertaFactory {
                 break;
             case TipoUnidadOferta::TUO_SECUNDARIO:
 
-                $secundariox = $em->getRepository('OfertaEducativaBundle:SecundarioX')
-                        ->findOneBy(array('unidad_oferta' => $unidad_oferta));
+//                $secundariox = $em->getRepository('OfertaEducativaBundle:SecundarioX')
+//                        ->findOneBy(array('unidad_oferta' => $unidad_oferta));
+                $secundariox = $unidad_oferta->getSecundario();
 
                 if (!$secundariox) {
                     $respuesta['mensaje'] = 'Agregar detalles de la NES';

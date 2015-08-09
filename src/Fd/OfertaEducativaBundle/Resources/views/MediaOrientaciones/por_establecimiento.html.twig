@@ -1,0 +1,35 @@
+{# parametros: carreras #}
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <div class="titulo">Orientaciones de la NES por establecimiento</div>
+
+    <table CELLSPACING="5" border="0">
+        {% for clave_e, establecimiento in salida %}
+            <tr spancol="2">
+                <td>
+                    <br />
+                    <span class="mediana">{{ clave_e }}</span>
+                </td>
+            </tr>
+            {% for clave_ed, edificio in salida[clave_e] %}
+                <tr VALIGN="top">
+                    <td>
+                        <span class="italico">{{ clave_ed }}</span>
+                    </td>
+                    <td>
+                        {% set orientaciones = salida[clave_e][clave_ed]['orientaciones'] %}
+                        {% for orientacion in orientaciones %}
+                            <span class="separador">{{ orientacion['orientacion'] }}</span><br />
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+
+
+    </table>
+    <br />
+{% endblock %}

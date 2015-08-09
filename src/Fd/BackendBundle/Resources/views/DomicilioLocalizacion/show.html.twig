@@ -1,43 +1,44 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - DomicilioLocalizacion
+    {{ parent() }} - DomicilioLocalizacion
 {% endblock %}
- 
+
 {% block main_content %}
 
-<h1>DomicilioLocalizacion</h1>
+    <div class="titulo">Domicilio de un nivel de un establecimiento</div>
+    <br />
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Principal</th>
-            <td>{{ entity.principal }}</td>
-        </tr>
-    </tbody>
-</table>
+    <fieldset>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend_domicilio_localizacion') }}">
-            Volver a la lista
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('backend_domicilio_localizacion_edit', { 'id': entity.id }) }}">
-            Editar
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('backend_domicilio_localizacion_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="boton_rojo">Eliminar</button>
-        </form>
-    </li>
-</ul>
+        <table class="record_properties">
+            <tbody>
+                <tr>
+                    <th>Id:</th>
+                    <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th>Domicilio:</th>
+                    <td>{{ entity.domicilio }}</td>
+                </tr>
+                <tr>
+                    <th>Localización:</th>
+                    <td>{{ entity.localizacion }}</td>
+                </tr>
+                <tr>
+                    <th>Principal:</th>
+                    <td>{{ entity.principal }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
 
+    <form action="{{ path('backend_domicilio_localizacion_delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <button type="submit" class="boton_rojo">Eliminar</button>
+        <a class="separador" href="{{ path('backend_domicilio_localizacion_edit', { 'id': entity.id }) }}">Editar</a>
+        <a class="separador" href="{{ path('backend_domicilio_localizacion') }}">Volver a la lista</a>
+    </form>
+    <br />
+    <br />
 {% endblock %}

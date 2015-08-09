@@ -67,6 +67,12 @@ class UnidadOferta {
      * @ORM\JoinColumn(name="salas_inicial_id", referencedColumnName="id")
      */
     private $salas_inicial;
+    /**
+     * bidireccional lado propietario
+     * @ORM\OneToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\SecundarioX", inversedBy="unidad_oferta")
+     * @ORM\JoinColumn(name="secundario_id", referencedColumnName="id")
+     */
+    private $secundario;
     
     /**
      * @ORM\Column(type="datetime")
@@ -156,6 +162,29 @@ class UnidadOferta {
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     * @return UnidadOferta
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string 
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
     }
 
     /**
@@ -327,25 +356,25 @@ class UnidadOferta {
     }
 
     /**
-     * Set tipo
+     * Set secundario
      *
-     * @param string $tipo
+     * @param \Fd\OfertaEducativaBundle\Entity\SecundarioX $secundario
      * @return UnidadOferta
      */
-    public function setTipo($tipo)
+    public function setSecundario(\Fd\OfertaEducativaBundle\Entity\SecundarioX $secundario = null)
     {
-        $this->tipo = $tipo;
+        $this->secundario = $secundario;
 
         return $this;
     }
 
     /**
-     * Get tipo
+     * Get secundario
      *
-     * @return string 
+     * @return \Fd\OfertaEducativaBundle\Entity\SecundarioX 
      */
-    public function getTipo()
+    public function getSecundario()
     {
-        return $this->tipo;
+        return $this->secundario;
     }
 }

@@ -56,7 +56,7 @@ class Secundario {
     }
 
     public function __toString() {
-        return 'NES ' . $this->duracion . ' años.';
+        return 'NES ' . $this->duracion . ' años';
     }
 
     /**

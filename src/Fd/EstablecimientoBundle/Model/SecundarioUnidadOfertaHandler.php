@@ -9,8 +9,9 @@ use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
 use Fd\EstablecimientoBundle\Utilities\TipoUnidadOferta;
-use Fd\TablaBundle\Entity\Nivel;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
+use Fd\OfertaEducativaBundle\Entity\SecundarioX;
+use Fd\TablaBundle\Entity\Nivel;
 
 class SecundarioUnidadOfertaHandler extends UnidadOfertaHandler {
 
@@ -22,8 +23,38 @@ class SecundarioUnidadOfertaHandler extends UnidadOfertaHandler {
      * @param type $oferta
      * @param type $unidad
      */
-    public function crear($localizacion, $oferta_educativa, $tipo) {
-        return parent::crear($localizacion, $oferta_educativa, TipoUnidadOferta::TUO_SECUNDARIO);
+    public function crear(Localizacion $localizacion, OfertaEducativa $oferta_educativa, $tipo, $flush = false) {
+
+        //se llena el registro de unidad_oferta
+        $unidad_oferta = parent::crear($localizacion, $oferta_educativa, TipoUnidadOferta::TUO_SECUNDARIO, true );
+
+        //se crea el registro de secundario_x
+
+        try {
+
+            $entity = new SecundarioX();
+            $this->getEm()->persist($entity);
+            
+            if ($flush) {
+                $this->getEm()->flush();
+            }
+
+            $unidad_oferta = $respuesta->getObjNuevo();
+            $unidad_oferta->setSecundario($entity);
+            
+            $this->getEm()->persist($unidad_oferta);
+            $this->getEm()->flush();
+
+            $respuesta->setCodigo(1);
+            $respuesta->setMensaje('Se generó el registro.');
+            $respuesta->setClaveNueva($entity->getId());
+            $respuesta->setObjNuevo($entity);
+            
+        } catch (Exception $ex) {
+            $respuesta->setCodigo(2);
+            $respuesta->setMensaje('No se pudo generar el registro. Verifíquelo y reintente.');
+        }
+        return $respuesta;
     }
 
     /**
