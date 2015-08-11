@@ -103,14 +103,6 @@ class Establecimiento {
     private $url;
 
     /**
-     * @var string $url
-     *
-     * @ORM\Column(nullable=true)
-     * @Assert\Email()
-     */
-    private $email;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\CargoAutoridad")
      */
     private $cargo_autoridad;
@@ -218,12 +210,6 @@ class Establecimiento {
      * 
      */
     private $actualizado;
-
-    /**
-     * @ORM\Column(type="string", length=25, nullable=true)
-     * 
-     */
-    private $te;
 
     /**
      * recuprea el edificio principal que tiene anexo 00. Es un objeto establecimiento_edificio No se si dedería estar sólo en el repository
@@ -399,7 +385,8 @@ class Establecimiento {
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -407,9 +394,13 @@ class Establecimiento {
      * Set cue
      *
      * @param string $cue
+     * @return Establecimiento
      */
-    public function setCue($cue) {
+    public function setCue($cue)
+    {
         $this->cue = $cue;
+
+        return $this;
     }
 
     /**
@@ -417,7 +408,8 @@ class Establecimiento {
      *
      * @return string 
      */
-    public function getCue() {
+    public function getCue()
+    {
         return $this->cue;
     }
 
@@ -425,9 +417,13 @@ class Establecimiento {
      * Set codigo_previo_transferencia
      *
      * @param string $codigoPrevioTransferencia
+     * @return Establecimiento
      */
-    public function setCodigoPrevioTransferencia($codigoPrevioTransferencia) {
+    public function setCodigoPrevioTransferencia($codigoPrevioTransferencia)
+    {
         $this->codigo_previo_transferencia = $codigoPrevioTransferencia;
+
+        return $this;
     }
 
     /**
@@ -435,7 +431,8 @@ class Establecimiento {
      *
      * @return string 
      */
-    public function getCodigoPrevioTransferencia() {
+    public function getCodigoPrevioTransferencia()
+    {
         return $this->codigo_previo_transferencia;
     }
 
@@ -443,9 +440,13 @@ class Establecimiento {
      * Set nombre
      *
      * @param string $nombre
+     * @return Establecimiento
      */
-    public function setNombre($nombre) {
+    public function setNombre($nombre)
+    {
         $this->nombre = $nombre;
+
+        return $this;
     }
 
     /**
@@ -453,7 +454,8 @@ class Establecimiento {
      *
      * @return string 
      */
-    public function getNombre() {
+    public function getNombre()
+    {
         return $this->nombre;
     }
 
@@ -461,9 +463,13 @@ class Establecimiento {
      * Set apodo
      *
      * @param string $apodo
+     * @return Establecimiento
      */
-    public function setApodo($apodo) {
+    public function setApodo($apodo)
+    {
         $this->apodo = $apodo;
+
+        return $this;
     }
 
     /**
@@ -471,7 +477,8 @@ class Establecimiento {
      *
      * @return string 
      */
-    public function getApodo() {
+    public function getApodo()
+    {
         return $this->apodo;
     }
 
@@ -479,9 +486,13 @@ class Establecimiento {
      * Set numero
      *
      * @param integer $numero
+     * @return Establecimiento
      */
-    public function setNumero($numero) {
+    public function setNumero($numero)
+    {
         $this->numero = $numero;
+
+        return $this;
     }
 
     /**
@@ -489,7 +500,8 @@ class Establecimiento {
      *
      * @return integer 
      */
-    public function getNumero() {
+    public function getNumero()
+    {
         return $this->numero;
     }
 
@@ -497,9 +509,13 @@ class Establecimiento {
      * Set orden
      *
      * @param integer $orden
+     * @return Establecimiento
      */
-    public function setOrden($orden) {
+    public function setOrden($orden)
+    {
         $this->orden = $orden;
+
+        return $this;
     }
 
     /**
@@ -507,7 +523,8 @@ class Establecimiento {
      *
      * @return integer 
      */
-    public function getOrden() {
+    public function getOrden()
+    {
         return $this->orden;
     }
 
@@ -515,9 +532,13 @@ class Establecimiento {
      * Set descripcion
      *
      * @param string $descripcion
+     * @return Establecimiento
      */
-    public function setDescripcion($descripcion) {
+    public function setDescripcion($descripcion)
+    {
         $this->descripcion = $descripcion;
+
+        return $this;
     }
 
     /**
@@ -525,43 +546,54 @@ class Establecimiento {
      *
      * @return string 
      */
-    public function getDescripcion() {
+    public function getDescripcion()
+    {
         return $this->descripcion;
     }
 
     /**
      * Set fecha_creacion
      *
-     * @param date $fechaCreacion
+     * @param string $fechaCreacion
+     * @return Establecimiento
      */
-    public function setFechaCreacion($fechaCreacion) {
+    public function setFechaCreacion($fechaCreacion)
+    {
         $this->fecha_creacion = $fechaCreacion;
+
+        return $this;
     }
 
     /**
      * Get fecha_creacion
      *
-     * @return date 
+     * @return string 
      */
-    public function getFechaCreacion() {
+    public function getFechaCreacion()
+    {
         return $this->fecha_creacion;
     }
 
     /**
      * Set tiene_cooperadora
      *
-     * @param boolean $tieneCooperadora
+     * @param string $tieneCooperadora
+     * @return Establecimiento
      */
-    public function setTieneCooperadora($tieneCooperadora) {
+    public function setTieneCooperadora($tieneCooperadora)
+    {
         $this->tiene_cooperadora = $tieneCooperadora;
+
+        return $this;
     }
 
     /**
      * Get tiene_cooperadora
      *
-     * @return boolean 
+     * @return string 
      */
-    public function getTieneCooperadora() {
+    public function getTieneCooperadora()
+    {
         return $this->tiene_cooperadora;
     }
 
@@ -569,9 +601,13 @@ class Establecimiento {
      * Set url
      *
      * @param string $url
+     * @return Establecimiento
      */
-    public function setUrl($url) {
+    public function setUrl($url)
+    {
         $this->url = $url;
+
+        return $this;
     }
 
     /**
@@ -579,35 +615,22 @@ class Establecimiento {
      *
      * @return string 
      */
-    public function getUrl() {
+    public function getUrl()
+    {
         return $this->url;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     */
-    public function setEmail($email) {
-        $this->email = $email;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail() {
-        return $this->email;
     }
 
     /**
      * Set nombre_autoridad
      *
      * @param string $nombreAutoridad
+     * @return Establecimiento
      */
-    public function setNombreAutoridad($nombreAutoridad) {
+    public function setNombreAutoridad($nombreAutoridad)
+    {
         $this->nombre_autoridad = $nombreAutoridad;
+
+        return $this;
     }
 
     /**
@@ -615,134 +638,9 @@ class Establecimiento {
      *
      * @return string 
      */
-    public function getNombreAutoridad() {
+    public function getNombreAutoridad()
+    {
         return $this->nombre_autoridad;
-    }
-
-    /**
-     * Add edificio
-     *
-     * @param Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $edificio
-     */
-    public function addEstablecimientoEdificio(\Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $edificio) {
-        $this->edificio[] = $edificio;
-    }
-
-    /**
-     * Get edificio
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getEdificio() {
-        return $this->edificio;
-    }
-
-    /**
-     * Set tipo_establecimiento
-     *
-     * @param Fd\TablaBundle\Entity\TipoEstablecimiento $tipoEstablecimiento
-     */
-    public function setTipoEstablecimiento(\Fd\TablaBundle\Entity\TipoEstablecimiento $tipoEstablecimiento) {
-        $this->tipo_establecimiento = $tipoEstablecimiento;
-    }
-
-    /**
-     * Get tipo_establecimiento
-     *
-     * @return Fd\TablaBundle\Entity\TipoEstablecimiento 
-     */
-    public function getTipoEstablecimiento() {
-        return $this->tipo_establecimiento;
-    }
-
-    /**
-     * Set cargo_autoridad
-     *
-     * @param Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad
-     */
-    public function setCargoAutoridad(\Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad) {
-        $this->cargo_autoridad = $cargoAutoridad;
-    }
-
-    /**
-     * Get cargo_autoridad
-     *
-     * @return Fd\TablaBundle\Entity\CargoAutoridad 
-     */
-    public function getCargoAutoridad() {
-        return $this->cargo_autoridad;
-    }
-
-    /**
-     * Set distrito_escolar
-     *
-     * @param Fd\TablaBundle\Entity\DistritoEscolar $distritoEscolar
-     */
-    public function setDistritoEscolar(\Fd\TablaBundle\Entity\DistritoEscolar $distritoEscolar) {
-        $this->distrito_escolar = $distritoEscolar;
-    }
-
-    /**
-     * Get distrito_escolar
-     *
-     * @return Fd\TablaBundle\Entity\DistritoEscolar 
-     */
-    public function getDistritoEscolar() {
-        return $this->distrito_escolar;
-    }
-
-    /**
-     * Set sector
-     *
-     * @param Fd\TablaBundle\Entity\Sector $sector
-     */
-    public function setSector(\Fd\TablaBundle\Entity\Sector $sector) {
-        $this->sector = $sector;
-    }
-
-    /**
-     * Get sector
-     *
-     * @return Fd\TablaBundle\Entity\Sector 
-     */
-    public function getSector() {
-        return $this->sector;
-    }
-
-    /**
-     * Add unidades_educativas
-     *
-     * @param Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidadesEducativas
-     */
-    public function addUnidadEducativa(\Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidadesEducativas) {
-        $this->unidades_educativas[] = $unidadesEducativas;
-    }
-
-    /**
-     * Get unidades_educativas
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getUnidadesEducativas() {
-        return $this->unidades_educativas;
-    }
-
-    /**
-     * Add autoridades_rectorado
-     *
-     * @param Fd\EstablecimientoBundle\Entity\Autoridad $autoridadesRectorado
-     */
-    public function addAutoridad(\Fd\EstablecimientoBundle\Entity\Autoridad $autoridadesRectorado) {
-        $this->autoridades_rectorado[] = $autoridadesRectorado;
-    }
-
-    /**
-     * Get autoridades_rectorado
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getAutoridadesRectorado() {
-        return $this->autoridades_rectorado;
     }
 
     /**
@@ -751,7 +649,8 @@ class Establecimiento {
      * @param string $campoDeportes
      * @return Establecimiento
      */
-    public function setCampoDeportes($campoDeportes) {
+    public function setCampoDeportes($campoDeportes)
+    {
         $this->campo_deportes = $campoDeportes;
 
         return $this;
@@ -762,113 +661,9 @@ class Establecimiento {
      *
      * @return string 
      */
-    public function getCampoDeportes() {
+    public function getCampoDeportes()
+    {
         return $this->campo_deportes;
-    }
-
-    /**
-     * Add edificio
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $edificio
-     * @return Establecimiento
-     */
-    public function addEdificio(\Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $edificio) {
-        $this->edificio[] = $edificio;
-
-        return $this;
-    }
-
-    /**
-     * Remove edificio
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $edificio
-     */
-    public function removeEdificio(\Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $edificio) {
-        $this->edificio->removeElement($edificio);
-    }
-
-    /**
-     * Add unidades_educativas
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidadesEducativas
-     * @return Establecimiento
-     */
-    public function addUnidadesEducativa(\Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidadesEducativas) {
-        $this->unidades_educativas[] = $unidadesEducativas;
-
-        return $this;
-    }
-
-    /**
-     * Remove unidades_educativas
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidadesEducativas
-     */
-    public function removeUnidadesEducativa(\Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidadesEducativas) {
-        $this->unidades_educativas->removeElement($unidadesEducativas);
-    }
-
-    /**
-     * Add autoridades_rectorado
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\Autoridad $autoridadesRectorado
-     * @return Establecimiento
-     */
-    public function addAutoridadesRectorado(\Fd\EstablecimientoBundle\Entity\Autoridad $autoridadesRectorado) {
-        $this->autoridades_rectorado[] = $autoridadesRectorado;
-
-        return $this;
-    }
-
-    /**
-     * Remove autoridades_rectorado
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\Autoridad $autoridadesRectorado
-     */
-    public function removeAutoridadesRectorado(\Fd\EstablecimientoBundle\Entity\Autoridad $autoridadesRectorado) {
-        $this->autoridades_rectorado->removeElement($autoridadesRectorado);
-    }
-
-    /**
-     * Set actualizado
-     *
-     * @param \DateTime $actualizado
-     * @return Establecimiento
-     */
-    public function setActualizado($actualizado) {
-        $this->actualizado = $actualizado;
-
-        return $this;
-    }
-
-    /**
-     * Get actualizado
-     *
-     * @return \DateTime 
-     */
-    public function getActualizado() {
-        return $this->actualizado;
-    }
-
-    /**
-     * Set creado
-     *
-     * @param \DateTime $creado
-     * @return Establecimiento
-     */
-    public function setCreado($creado) {
-        $this->creado = $creado;
-
-        return $this;
-    }
-
-    /**
-     * Get creado
-     *
-     * @return \DateTime 
-     */
-    public function getCreado() {
-        return $this->creado;
     }
 
     /**
@@ -877,7 +672,8 @@ class Establecimiento {
      * @param \DateTime $fechaPresentacionRoi
      * @return Establecimiento
      */
-    public function setFechaPresentacionRoi($fechaPresentacionRoi) {
+    public function setFechaPresentacionRoi($fechaPresentacionRoi)
+    {
         $this->fecha_presentacion_roi = $fechaPresentacionRoi;
 
         return $this;
@@ -888,7 +684,8 @@ class Establecimiento {
      *
      * @return \DateTime 
      */
-    public function getFechaPresentacionRoi() {
+    public function getFechaPresentacionRoi()
+    {
         return $this->fecha_presentacion_roi;
     }
 
@@ -898,7 +695,8 @@ class Establecimiento {
      * @param \DateTime $fechaAprobacionRoi
      * @return Establecimiento
      */
-    public function setFechaAprobacionRoi($fechaAprobacionRoi) {
+    public function setFechaAprobacionRoi($fechaAprobacionRoi)
+    {
         $this->fecha_aprobacion_roi = $fechaAprobacionRoi;
 
         return $this;
@@ -909,112 +707,54 @@ class Establecimiento {
      *
      * @return \DateTime 
      */
-    public function getFechaAprobacionRoi() {
+    public function getFechaAprobacionRoi()
+    {
         return $this->fecha_aprobacion_roi;
     }
 
     /**
-     * Set fecha_elecciones
+     * Set fecha_presentacion_rai
      *
-     * @param \DateTime $fechaElecciones
+     * @param \DateTime $fechaPresentacionRai
      * @return Establecimiento
      */
-    public function setFechaElecciones($fechaElecciones) {
-        $this->fecha_elecciones = $fechaElecciones;
-
-        return $this;
-    }
-
-    /**
-     * Get fecha_elecciones
-     *
-     * @return \DateTime 
-     */
-    public function getFechaElecciones() {
-        return $this->fecha_elecciones;
-    }
-
-    /**
-     * Set fin_mandato
-     *
-     * @param \DateTime $finMandato
-     * @return Establecimiento
-     */
-    public function setFinMandato($finMandato) {
-        $this->fin_mandato = $finMandato;
-
-        return $this;
-    }
-
-    /**
-     * Get fin_mandato
-     *
-     * @return \DateTime 
-     */
-    public function getFinMandato() {
-        return $this->fin_mandato;
-    }
-
-    /**
-     * Set comparte_edificio
-     *
-     * @param boolean $comparteEdificio
-     * @return Establecimiento
-     */
-    public function setComparteEdificio($comparteEdificio) {
-        $this->comparte_edificio = $comparteEdificio;
-
-        return $this;
-    }
-
-    /**
-     * Get comparte_edificio
-     *
-     * @return boolean 
-     */
-    public function getComparteEdificio() {
-        return $this->comparte_edificio;
-    }
-
-    /**
-     * Set fecha_presentacion_ram
-     *
-     * @param \DateTime $fechaPresentacionRam
-     * @return Establecimiento
-     */
-    public function setFechaPresentacionRai($fechaPresentacionRai) {
+    public function setFechaPresentacionRai($fechaPresentacionRai)
+    {
         $this->fecha_presentacion_rai = $fechaPresentacionRai;
 
         return $this;
     }
 
     /**
-     * Get fecha_presentacion_ram
+     * Get fecha_presentacion_rai
      *
      * @return \DateTime 
      */
-    public function getFechaPresentacionRai() {
+    public function getFechaPresentacionRai()
+    {
         return $this->fecha_presentacion_rai;
     }
 
     /**
-     * Set fecha_aprobacion_ram
+     * Set fecha_aprobacion_rai
      *
-     * @param \DateTime $fechaAprobacionRam
+     * @param \DateTime $fechaAprobacionRai
      * @return Establecimiento
      */
-    public function setFechaAprobacionRai($fechaAprobacionRai) {
+    public function setFechaAprobacionRai($fechaAprobacionRai)
+    {
         $this->fecha_aprobacion_rai = $fechaAprobacionRai;
 
         return $this;
     }
 
     /**
-     * Get fecha_aprobacion_ram
+     * Get fecha_aprobacion_rai
      *
      * @return \DateTime 
      */
-    public function getFechaAprobacionRai() {
+    public function getFechaAprobacionRai()
+    {
         return $this->fecha_aprobacion_rai;
     }
 
@@ -1024,7 +764,8 @@ class Establecimiento {
      * @param \DateTime $fechaPresentacionRp
      * @return Establecimiento
      */
-    public function setFechaPresentacionRp($fechaPresentacionRp) {
+    public function setFechaPresentacionRp($fechaPresentacionRp)
+    {
         $this->fecha_presentacion_rp = $fechaPresentacionRp;
 
         return $this;
@@ -1035,7 +776,8 @@ class Establecimiento {
      *
      * @return \DateTime 
      */
-    public function getFechaPresentacionRp() {
+    public function getFechaPresentacionRp()
+    {
         return $this->fecha_presentacion_rp;
     }
 
@@ -1045,7 +787,8 @@ class Establecimiento {
      * @param \DateTime $fechaAprobacionRp
      * @return Establecimiento
      */
-    public function setFechaAprobacionRp($fechaAprobacionRp) {
+    public function setFechaAprobacionRp($fechaAprobacionRp)
+    {
         $this->fecha_aprobacion_rp = $fechaAprobacionRp;
 
         return $this;
@@ -1056,8 +799,55 @@ class Establecimiento {
      *
      * @return \DateTime 
      */
-    public function getFechaAprobacionRp() {
+    public function getFechaAprobacionRp()
+    {
         return $this->fecha_aprobacion_rp;
+    }
+
+    /**
+     * Set fecha_elecciones
+     *
+     * @param \DateTime $fechaElecciones
+     * @return Establecimiento
+     */
+    public function setFechaElecciones($fechaElecciones)
+    {
+        $this->fecha_elecciones = $fechaElecciones;
+
+        return $this;
+    }
+
+    /**
+     * Get fecha_elecciones
+     *
+     * @return \DateTime 
+     */
+    public function getFechaElecciones()
+    {
+        return $this->fecha_elecciones;
+    }
+
+    /**
+     * Set fin_mandato
+     *
+     * @param \DateTime $finMandato
+     * @return Establecimiento
+     */
+    public function setFinMandato($finMandato)
+    {
+        $this->fin_mandato = $finMandato;
+
+        return $this;
+    }
+
+    /**
+     * Get fin_mandato
+     *
+     * @return \DateTime 
+     */
+    public function getFinMandato()
+    {
+        return $this->fin_mandato;
     }
 
     /**
@@ -1066,7 +856,8 @@ class Establecimiento {
      * @param integer $anioInicioNes
      * @return Establecimiento
      */
-    public function setAnioInicioNes($anioInicioNes) {
+    public function setAnioInicioNes($anioInicioNes)
+    {
         $this->anio_inicio_nes = $anioInicioNes;
 
         return $this;
@@ -1077,29 +868,246 @@ class Establecimiento {
      *
      * @return integer 
      */
-    public function getAnioInicioNes() {
+    public function getAnioInicioNes()
+    {
         return $this->anio_inicio_nes;
     }
 
     /**
-     * Set te
+     * Set creado
      *
-     * @param string $te
+     * @param \DateTime $creado
      * @return Establecimiento
      */
-    public function setTe($te) {
-        $this->te = $te;
+    public function setCreado($creado)
+    {
+        $this->creado = $creado;
 
         return $this;
     }
 
     /**
-     * Get te
+     * Get creado
      *
-     * @return string 
+     * @return \DateTime 
      */
-    public function getTe() {
-        return $this->te;
+    public function getCreado()
+    {
+        return $this->creado;
+    }
+
+    /**
+     * Set actualizado
+     *
+     * @param \DateTime $actualizado
+     * @return Establecimiento
+     */
+    public function setActualizado($actualizado)
+    {
+        $this->actualizado = $actualizado;
+
+        return $this;
+    }
+
+    /**
+     * Get actualizado
+     *
+     * @return \DateTime 
+     */
+    public function getActualizado()
+    {
+        return $this->actualizado;
+    }
+
+    /**
+     * Add edificio
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $edificio
+     * @return Establecimiento
+     */
+    public function addEdificio(\Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $edificio)
+    {
+        $this->edificio[] = $edificio;
+
+        return $this;
+    }
+
+    /**
+     * Remove edificio
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $edificio
+     */
+    public function removeEdificio(\Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $edificio)
+    {
+        $this->edificio->removeElement($edificio);
+    }
+
+    /**
+     * Get edificio
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEdificio()
+    {
+        return $this->edificio;
+    }
+
+    /**
+     * Set tipo_establecimiento
+     *
+     * @param \Fd\TablaBundle\Entity\TipoEstablecimiento $tipoEstablecimiento
+     * @return Establecimiento
+     */
+    public function setTipoEstablecimiento(\Fd\TablaBundle\Entity\TipoEstablecimiento $tipoEstablecimiento = null)
+    {
+        $this->tipo_establecimiento = $tipoEstablecimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo_establecimiento
+     *
+     * @return \Fd\TablaBundle\Entity\TipoEstablecimiento 
+     */
+    public function getTipoEstablecimiento()
+    {
+        return $this->tipo_establecimiento;
+    }
+
+    /**
+     * Set cargo_autoridad
+     *
+     * @param \Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad
+     * @return Establecimiento
+     */
+    public function setCargoAutoridad(\Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad = null)
+    {
+        $this->cargo_autoridad = $cargoAutoridad;
+
+        return $this;
+    }
+
+    /**
+     * Get cargo_autoridad
+     *
+     * @return \Fd\TablaBundle\Entity\CargoAutoridad 
+     */
+    public function getCargoAutoridad()
+    {
+        return $this->cargo_autoridad;
+    }
+
+    /**
+     * Set distrito_escolar
+     *
+     * @param \Fd\TablaBundle\Entity\DistritoEscolar $distritoEscolar
+     * @return Establecimiento
+     */
+    public function setDistritoEscolar(\Fd\TablaBundle\Entity\DistritoEscolar $distritoEscolar = null)
+    {
+        $this->distrito_escolar = $distritoEscolar;
+
+        return $this;
+    }
+
+    /**
+     * Get distrito_escolar
+     *
+     * @return \Fd\TablaBundle\Entity\DistritoEscolar 
+     */
+    public function getDistritoEscolar()
+    {
+        return $this->distrito_escolar;
+    }
+
+    /**
+     * Set sector
+     *
+     * @param \Fd\TablaBundle\Entity\Sector $sector
+     * @return Establecimiento
+     */
+    public function setSector(\Fd\TablaBundle\Entity\Sector $sector = null)
+    {
+        $this->sector = $sector;
+
+        return $this;
+    }
+
+    /**
+     * Get sector
+     *
+     * @return \Fd\TablaBundle\Entity\Sector 
+     */
+    public function getSector()
+    {
+        return $this->sector;
+    }
+
+    /**
+     * Add unidades_educativas
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidadesEducativas
+     * @return Establecimiento
+     */
+    public function addUnidadesEducativa(\Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidadesEducativas)
+    {
+        $this->unidades_educativas[] = $unidadesEducativas;
+
+        return $this;
+    }
+
+    /**
+     * Remove unidades_educativas
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidadesEducativas
+     */
+    public function removeUnidadesEducativa(\Fd\EstablecimientoBundle\Entity\UnidadEducativa $unidadesEducativas)
+    {
+        $this->unidades_educativas->removeElement($unidadesEducativas);
+    }
+
+    /**
+     * Get unidades_educativas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUnidadesEducativas()
+    {
+        return $this->unidades_educativas;
+    }
+
+    /**
+     * Add autoridades_rectorado
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\Autoridad $autoridadesRectorado
+     * @return Establecimiento
+     */
+    public function addAutoridadesRectorado(\Fd\EstablecimientoBundle\Entity\Autoridad $autoridadesRectorado)
+    {
+        $this->autoridades_rectorado[] = $autoridadesRectorado;
+
+        return $this;
+    }
+
+    /**
+     * Remove autoridades_rectorado
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\Autoridad $autoridadesRectorado
+     */
+    public function removeAutoridadesRectorado(\Fd\EstablecimientoBundle\Entity\Autoridad $autoridadesRectorado)
+    {
+        $this->autoridades_rectorado->removeElement($autoridadesRectorado);
+    }
+
+    /**
+     * Get autoridades_rectorado
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAutoridadesRectorado()
+    {
+        return $this->autoridades_rectorado;
     }
 
     /**
@@ -1108,7 +1116,8 @@ class Establecimiento {
      * @param \Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $recursos
      * @return Establecimiento
      */
-    public function addRecurso(\Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $recursos) {
+    public function addRecurso(\Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $recursos)
+    {
         $this->recursos[] = $recursos;
 
         return $this;
@@ -1119,7 +1128,8 @@ class Establecimiento {
      *
      * @param \Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $recursos
      */
-    public function removeRecurso(\Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $recursos) {
+    public function removeRecurso(\Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso $recursos)
+    {
         $this->recursos->removeElement($recursos);
     }
 
@@ -1128,8 +1138,8 @@ class Establecimiento {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getRecursos() {
+    public function getRecursos()
+    {
         return $this->recursos;
     }
-
 }

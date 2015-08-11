@@ -85,11 +85,13 @@ class EstablecimientoEdificio {
 
     /**
      * @ORM\Column(nullable=true)
+     * @Assert\Email()
      */
     private $email1;
 
     /**
      * @ORM\Column(nullable=true)
+     * @Assert\Email()
      */
     private $email2;
 
@@ -131,7 +133,8 @@ class EstablecimientoEdificio {
      *
      * @return integer 
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -139,9 +142,13 @@ class EstablecimientoEdificio {
      * Set cue_anexo
      *
      * @param string $cueAnexo
+     * @return EstablecimientoEdificio
      */
-    public function setCueAnexo($cueAnexo) {
+    public function setCueAnexo($cueAnexo)
+    {
         $this->cue_anexo = $cueAnexo;
+
+        return $this;
     }
 
     /**
@@ -149,7 +156,8 @@ class EstablecimientoEdificio {
      *
      * @return string 
      */
-    public function getCueAnexo() {
+    public function getCueAnexo()
+    {
         return $this->cue_anexo;
     }
 
@@ -157,9 +165,13 @@ class EstablecimientoEdificio {
      * Set nombre
      *
      * @param string $nombre
+     * @return EstablecimientoEdificio
      */
-    public function setNombre($nombre) {
+    public function setNombre($nombre)
+    {
         $this->nombre = $nombre;
+
+        return $this;
     }
 
     /**
@@ -167,43 +179,54 @@ class EstablecimientoEdificio {
      *
      * @return string 
      */
-    public function getNombre() {
+    public function getNombre()
+    {
         return $this->nombre;
     }
 
     /**
      * Set fecha_creacion
      *
-     * @param date $fechaCreacion
+     * @param \DateTime $fechaCreacion
+     * @return EstablecimientoEdificio
      */
-    public function setFechaCreacion($fechaCreacion) {
+    public function setFechaCreacion($fechaCreacion)
+    {
         $this->fecha_creacion = $fechaCreacion;
+
+        return $this;
     }
 
     /**
      * Get fecha_creacion
      *
-     * @return date 
+     * @return \DateTime 
      */
-    public function getFechaCreacion() {
+    public function getFechaCreacion()
+    {
         return $this->fecha_creacion;
     }
 
     /**
      * Set fecha_baja
      *
-     * @param date $fechaBaja
+     * @param \DateTime $fechaBaja
+     * @return EstablecimientoEdificio
      */
-    public function setFechaBaja($fechaBaja) {
+    public function setFechaBaja($fechaBaja)
+    {
         $this->fecha_baja = $fechaBaja;
+
+        return $this;
     }
 
     /**
      * Get fecha_baja
      *
-     * @return date 
+     * @return \DateTime 
      */
-    public function getFechaBaja() {
+    public function getFechaBaja()
+    {
         return $this->fecha_baja;
     }
 
@@ -211,9 +234,13 @@ class EstablecimientoEdificio {
      * Set te1
      *
      * @param string $te1
+     * @return EstablecimientoEdificio
      */
-    public function setTe1($te1) {
+    public function setTe1($te1)
+    {
         $this->te1 = $te1;
+
+        return $this;
     }
 
     /**
@@ -221,7 +248,8 @@ class EstablecimientoEdificio {
      *
      * @return string 
      */
-    public function getTe1() {
+    public function getTe1()
+    {
         return $this->te1;
     }
 
@@ -229,9 +257,13 @@ class EstablecimientoEdificio {
      * Set te2
      *
      * @param string $te2
+     * @return EstablecimientoEdificio
      */
-    public function setTe2($te2) {
+    public function setTe2($te2)
+    {
         $this->te2 = $te2;
+
+        return $this;
     }
 
     /**
@@ -239,7 +271,8 @@ class EstablecimientoEdificio {
      *
      * @return string 
      */
-    public function getTe2() {
+    public function getTe2()
+    {
         return $this->te2;
     }
 
@@ -247,9 +280,13 @@ class EstablecimientoEdificio {
      * Set te3
      *
      * @param string $te3
+     * @return EstablecimientoEdificio
      */
-    public function setTe3($te3) {
+    public function setTe3($te3)
+    {
         $this->te3 = $te3;
+
+        return $this;
     }
 
     /**
@@ -257,7 +294,8 @@ class EstablecimientoEdificio {
      *
      * @return string 
      */
-    public function getTe3() {
+    public function getTe3()
+    {
         return $this->te3;
     }
 
@@ -265,9 +303,13 @@ class EstablecimientoEdificio {
      * Set email1
      *
      * @param string $email1
+     * @return EstablecimientoEdificio
      */
-    public function setEmail1($email1) {
+    public function setEmail1($email1)
+    {
         $this->email1 = $email1;
+
+        return $this;
     }
 
     /**
@@ -275,7 +317,8 @@ class EstablecimientoEdificio {
      *
      * @return string 
      */
-    public function getEmail1() {
+    public function getEmail1()
+    {
         return $this->email1;
     }
 
@@ -283,9 +326,13 @@ class EstablecimientoEdificio {
      * Set email2
      *
      * @param string $email2
+     * @return EstablecimientoEdificio
      */
-    public function setEmail2($email2) {
+    public function setEmail2($email2)
+    {
         $this->email2 = $email2;
+
+        return $this;
     }
 
     /**
@@ -293,62 +340,87 @@ class EstablecimientoEdificio {
      *
      * @return string 
      */
-    public function getEmail2() {
+    public function getEmail2()
+    {
         return $this->email2;
     }
 
     /**
      * Set establecimientos
      *
-     * @param Fd\EstablecimientoBundle\Entity\Establecimiento $establecimientos
+     * @param \Fd\EstablecimientoBundle\Entity\Establecimiento $establecimientos
+     * @return EstablecimientoEdificio
      */
-    public function setEstablecimientos(\Fd\EstablecimientoBundle\Entity\Establecimiento $establecimientos) {
+    public function setEstablecimientos(\Fd\EstablecimientoBundle\Entity\Establecimiento $establecimientos = null)
+    {
         $this->establecimientos = $establecimientos;
+
+        return $this;
     }
 
     /**
      * Get establecimientos
      *
-     * @return Fd\EstablecimientoBundle\Entity\Establecimiento 
+     * @return \Fd\EstablecimientoBundle\Entity\Establecimiento 
      */
-    public function getEstablecimientos() {
+    public function getEstablecimientos()
+    {
         return $this->establecimientos;
     }
 
     /**
      * Set edificios
      *
-     * @param Fd\EdificioBundle\Entity\Edificio $edificios
+     * @param \Fd\EdificioBundle\Entity\Edificio $edificios
+     * @return EstablecimientoEdificio
      */
-    public function setEdificios(\Fd\EdificioBundle\Entity\Edificio $edificios) {
+    public function setEdificios(\Fd\EdificioBundle\Entity\Edificio $edificios = null)
+    {
         $this->edificios = $edificios;
+
+        return $this;
     }
 
     /**
      * Get edificios
      *
-     * @return Fd\EdificioBundle\Entity\Edificio 
+     * @return \Fd\EdificioBundle\Entity\Edificio 
      */
-    public function getEdificios() {
+    public function getEdificios()
+    {
         return $this->edificios;
     }
 
     /**
      * Add localizacion
      *
-     * @param Fd\EstablecimientoBundle\Entity\Localizacion $localizacion
+     * @param \Fd\EstablecimientoBundle\Entity\Localizacion $localizacion
+     * @return EstablecimientoEdificio
      */
-    public function addLocalizacion(\Fd\EstablecimientoBundle\Entity\Localizacion $localizacion) {
+    public function addLocalizacion(\Fd\EstablecimientoBundle\Entity\Localizacion $localizacion)
+    {
         $this->localizacion[] = $localizacion;
+
+        return $this;
+    }
+
+    /**
+     * Remove localizacion
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\Localizacion $localizacion
+     */
+    public function removeLocalizacion(\Fd\EstablecimientoBundle\Entity\Localizacion $localizacion)
+    {
+        $this->localizacion->removeElement($localizacion);
     }
 
     /**
      * Get localizacion
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getLocalizacion() {
+    public function getLocalizacion()
+    {
         return $this->localizacion;
     }
-
 }
