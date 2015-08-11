@@ -26,7 +26,7 @@ class SecundarioXOrientacion {
 
     /**
      * bidireccional lado propietario
-     * @ORM\ManyToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\SecundarioX", inversedBy="orientaciones")
+     * @ORM\ManyToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\SecundarioX", inversedBy="orientaciones", cascade={"persist","remove"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="secundariox_id", referencedColumnName="id")
      * })
@@ -36,7 +36,7 @@ class SecundarioXOrientacion {
 
     /**
      * 
-     * @ORM\ManyToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\MediaOrientaciones", inversedBy="secundarioxs")
+     * @ORM\ManyToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\MediaOrientaciones", inversedBy="secundarioxs", cascade={"persist","remove"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="orientacion_id", referencedColumnName="id")
      * })
