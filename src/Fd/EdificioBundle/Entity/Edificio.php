@@ -184,7 +184,7 @@ class Edificio {
         if (!$this->getDomicilioPrincipal()) {
             return $salida;
         } else {
-            return $salida . ' - ' . $this->getDomicilioPrincipal()->getCompleto();
+            return $salida . ' - ' . $this->getDomicilioPrincipal()->__toString();
         }
     }
     public function __construct() {
