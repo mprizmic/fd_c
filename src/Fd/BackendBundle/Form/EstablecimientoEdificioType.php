@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Fd\EdificioBundle\Entity\Edificio;
+use Fd\EdificioBundle\Repository\EdificioRepository;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 
 class EstablecimientoEdificioType extends AbstractType {
@@ -36,22 +38,28 @@ class EstablecimientoEdificioType extends AbstractType {
                 ->add('email2', null, array(
                     'label' => 'otro email',
                 ))
-                ->add('edificios')
+                ->add('edificios', 'entity', array(
+                    'class' => 'EdificioBundle:Edificio',
+                    'query_builder' => function (EdificioRepository $repository) {
+                        $qb = $repository->qbAllOrdenado();
+                        return $qb;
+                    },
+                ))
         ;
         //se agrega establecimiento sólo si el registro ya existe.
         $factory = $builder->getFormFactory();
 
         $builder->addEventListener(
                 FormEvents::PRE_SET_DATA, function(FormEvent $event) use($factory) {
-                    $data = $event->getData();
-                    $form = $event->getForm();
-                    if (!$data->getId()) {
-                        $form->add($factory->createNamed('establecimientos', 'entity', null, array(
-                                    'class' => 'Fd\EstablecimientoBundle\Entity\Establecimiento',
-                                    'empty_value' => 'Seleccione el establecimiento que usará el edificio ...',
-                                )));
-                    };
-                }
+            $data = $event->getData();
+            $form = $event->getForm();
+            if (!$data->getId()) {
+                $form->add($factory->createNamed('establecimientos', 'entity', null, array(
+                            'class' => 'Fd\EstablecimientoBundle\Entity\Establecimiento',
+                            'empty_value' => 'Seleccione el establecimiento que usará el edificio ...',
+                )));
+            };
+        }
         );
     }
 
