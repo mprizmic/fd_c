@@ -3,7 +3,7 @@
 {% block main_content %}
 {{ parent() }}
 
-    <h1>Crear registro de Establecimiento</h1>
+    <div class="titulo">Crear registro de Establecimiento</div>
 
     <form action="{{ path('backend_establecimiento_create') }}" method="post" {{ form_enctype(form) }}>
         <div class="ancho_15">
