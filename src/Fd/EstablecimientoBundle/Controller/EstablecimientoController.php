@@ -370,7 +370,7 @@ class EstablecimientoController extends Controller {
             $active_sheet_index->setCellValue('B' . $fila, $establecimiento->getNombre());
             $active_sheet_index->setCellValue('C' . $fila, $edificio_principal->getEdificios()->getDomicilioPrincipal()->__toString());
             $active_sheet_index->setCellValue('D' . $fila, $edificio_principal->getEdificios()->getBarrio()->__toString() );
-            $active_sheet_index->setCellValue('E' . $fila, $establecimiento->getEmail() );
+            $active_sheet_index->setCellValue('E' . $fila, $edificio_principal->getEmail1() );
             $active_sheet_index->setCellValue('F' . $fila, $establecimiento->getUrl() );
             $active_sheet_index->setCellValue('G' . $fila, $edificio_principal->getTe1() );
             $fila += 1;
