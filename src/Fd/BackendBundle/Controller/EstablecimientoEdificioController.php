@@ -90,6 +90,8 @@ class EstablecimientoEdificioController extends Controller {
     }
 
     /**
+     * devuelve las localizaciones de un establecimiento dado
+     * 
      * @Route("/listar/{id}", name="backend_establecimiento_edificio_listar")
      * @Template("BackendBundle:EstablecimientoEdificio:listar.html.twig")
      */

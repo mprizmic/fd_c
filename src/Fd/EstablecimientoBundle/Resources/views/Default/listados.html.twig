@@ -14,7 +14,10 @@
             {# este es el acceso sólo para el super_admin #}
 
             <tr >
-                <td><a href="{{ path('establecimiento_salida_planilla') }}">Listado de de establecimientos</a></td>
+                <td>
+                    <a href="{{ path('establecimiento_salida_planilla') }}">Listado de de establecimientos</a>
+                    <a href="{{ path('establecimiento.establecimiento_edificio.sedes_anexos_salida_planilla') }}">Listado de de establecimientos</a>
+                </td>
             </tr>
             <tr >
                 <td><a href="{{ path('establecimiento.autoridad.listado_rectores') }}">Listado de rectores</a></td>

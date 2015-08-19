@@ -56,13 +56,41 @@ class EstablecimientoEdificioRepository extends EntityRepository {
         return $this->queryDeUnCui($edificio)->getResult();
     }
 
-    public function findAllOrdenado() {
+    /**
+     * query de las sedes y anexos 
+     * 
+     */
+    public function qbAllOrdenado() {
         $qb = $this->createQueryBuilder('ee')
                 ->innerJoin('ee.establecimientos', 'e')
                 ->orderBy('e.orden', 'ASC')
                 ->addOrderBy('ee.cue_anexo', 'ASC');
+        return $qb;
+    }
 
-        return $qb->getQuery()->getResult();
+    /**
+     * devuelve los registros de establecimiento_edificio que no sean cue 99 ordenados por orden de establecimiento y cue_anexo
+     * @return type
+     */
+    public function findSedesYAnexosOrdenados() {
+
+        $qb = $this->filtrarSedeAnexo(
+                $this->qbAllOrdenado()
+        );
+
+        return $this->findear($qb);
+    }
+
+    /**
+     * Devuelve un arraycollection con las sede y anexos ordenados por el campo orden de los establecimientos
+     * 
+     * @return type ArrayCollection
+     */
+    public function findAllOrdenado() {
+
+        return $this->findear(
+                        $this->qbAllOrdenado()
+        );
     }
 
     /**
@@ -141,14 +169,30 @@ class EstablecimientoEdificioRepository extends EntityRepository {
     }
 
     /**
+     * Recibe un querybuilder y le agregar la condicion de filtrar los codigo 99
+     * 
+     * @param \Doctrine\DBAL\Query\QueryBuilder $qb
+     * @return type
+     */
+    public function filtrarSedeAnexo($qb) {
+        return $qb->andWhere("ee.cue_anexo <> '99'");
+    }
+
+    /**
+     * dado un querybuilder devuelve los resultados de la consulta
+     */
+    public function findear($qb) {
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * devuelve los establecimiento_edificios de un establecimiento ordenados por anexo
      * 
      * @return arraycollection de Edificio
      */
     public function findEdificios($establecimiento) {
-        return $this->qbEdificios($establecimiento)
-                        ->getQuery()
-                        ->getResult();
+        return $this->findear( 
+                $this->qbEdificios($establecimiento) );
     }
 
     public function qbEdificios($establecimiento) {
@@ -158,8 +202,9 @@ class EstablecimientoEdificioRepository extends EntityRepository {
     }
 
     public function findSedeYAnexo($establecimiento) {
-        return $this->qbEdificios($establecimiento)
-                        ->andWhere("ee.cue_anexo <> '99'")
+        return $this->filtrarSedeAnexo(
+                                $this->qbEdificios($establecimiento)
+                        )
                         ->getQuery()
                         ->getResult();
     }

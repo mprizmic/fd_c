@@ -16,7 +16,7 @@ class PlanillaInspectoresInfraestructura extends PlanillaDeCalculo {
         $posicion = $this->phpExcelObject->getActiveSheet(0);
 
         foreach ($encabezado as $key => $value) {
-            $posicion->setCellValue($key . '3', $value);
+            $posicion->setCellValue($key . '4', $value);
         }
 
         $fila = 4;

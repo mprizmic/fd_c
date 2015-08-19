@@ -18,12 +18,14 @@ abstract class PlanillaDeCalculo{
     protected $datos;
     protected $response;
     protected $filename;
+    protected $fila_inicio_datos;
     
-    public function __construct($php_excel, $titulo = null, $datos = null, $filename = null) {
+    public function __construct($php_excel, $titulo = null, $datos = null, $filename = null, $fila_inicio_datos = 3) {
         $this->php_excel_service = $php_excel;
         $this->titulo = $titulo;
         $this->datos = $datos;
         $this->filename = $filename;
+        $this->fila_inicio_datos = $fila_inicio_datos;
     }
 
     /**
@@ -45,12 +47,17 @@ abstract class PlanillaDeCalculo{
     public function setFilename( $filename ){
         $this->filename = $filename;
     }
+    public function setFilaInicioDatos( $fila_inicio_datos ){
+        $this->fila_inicio_datos = $fila_inicio_datos;
+    }
     
     public function generarPlanillaResponse(){
         
         $this->crearPlanilla();
         
         $this->ponerTitulo($this->titulo);
+        
+        $this->fechar();
         
         $this->cargaDatos($this->datos);
         
@@ -68,6 +75,9 @@ abstract class PlanillaDeCalculo{
         $this->phpExcelObject->getActiveSheet()->setCellValue('A1', $titulo);
     }
 
+    protected function fechar() {
+        $this->phpExcelObject->getActiveSheet()->setCellValue('A2', date('d-m-Y'));
+    }
     abstract protected function cargaDatos($datos);
     
     protected function generarRespuesta(){
