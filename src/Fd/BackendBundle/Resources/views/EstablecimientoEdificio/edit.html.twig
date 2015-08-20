@@ -6,11 +6,8 @@
  
 {% block main_content %}
 {{ parent() }}
-<br />
 
 <div class="titulo">Editar Sede/Anexo del Establecimiento</div>
-
-<br />
 
 {% render "EstablecimientoBundle:Establecimiento:tarjeta_establecimiento" with {'establecimiento_id': entity.establecimientos.id} %}
 

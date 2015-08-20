@@ -218,27 +218,18 @@ class EstablecimientoEdificioController extends Controller {
      * @Template("BackendBundle:EstablecimientoEdificio:edit.html.twig")
      * @ParamConverter("entity", class="EstablecimientoBundle:EstablecimientoEdificio")
      */
-    public function updateAction(EstablecimientoEdificio $entity, Request $request) {
+    public function updateAction(EstablecimientoEdificio $entity) {
         $em = $this->getDoctrine()->getEntityManager();
 
         $editForm = $this->createForm(new EstablecimientoEdificioType(), $entity);
         $deleteForm = $this->createDeleteForm($entity->getId());
 
-        $editForm->bind($request);
+        $editForm->bind($this->getRequest());
 
         if ($editForm->isValid()) {
 
-            //no funciona
-            if ($entity->getEstablecimientos()->esAnexo($entity->getCueAnexo())) {
-                $this->get('session')->getFlashBag()->add('notice', 'Ya existe el nro de anexo. Verifíquelo');
-            };
-
             $em->persist($entity);
             $em->flush();
-
-//            return $this->redirect($this->generateUrl('backend_establecimiento_edificio_edit', array(
-//                                'id' => $entity->getId(),
-//                            )));
         }
 
         return array(

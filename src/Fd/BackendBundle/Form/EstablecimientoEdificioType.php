@@ -15,8 +15,32 @@ use Fd\EstablecimientoBundle\Entity\Establecimiento;
 class EstablecimientoEdificioType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
+
+        $factory = $builder->getFormFactory();
+
+        /*
+         * si el rgistro ya está creado no se puede cambiar el cue_anexo
+         */
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($factory) {
+
+            $form = $event->getForm();
+            $data = $event->getData();
+
+            $optionsCueAnexo = array(
+                'label' => 'Cue anexo',
+                'required' => true,
+            );
+
+            if ($data->getId()) {
+                //si el registro ya está creado no se pueden cambiar el cue anexo
+                $optionsCueAnexo['disabled'] = true;
+            };
+
+            $form->add(
+                    $factory->createNamed('cue_anexo', 'text', null, $optionsCueAnexo));
+        });
+
         $builder
-                ->add('cue_anexo')
                 ->add('nombre', null, array(
                     'label' => 'Nombre descriptivo',
                     'required' => TRUE,
