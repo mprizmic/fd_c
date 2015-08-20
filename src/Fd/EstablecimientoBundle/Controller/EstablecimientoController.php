@@ -8,10 +8,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Fd\EstablecimientoBundle\Annotation\DownloadAs;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno;
+use Fd\EstablecimientoBundle\EventListener\DownloadListener;
+use Fd\EstablecimientoBundle\Model\PlanillaSedesYAnexos;
 use Fd\EstablecimientoBundle\Repository\UnidadOfertaRepository;
+use Fd\EstablecimientoBundle\Utilities\PlanillaDeCalculo;
 
 /**
  * @Route("/")
@@ -172,15 +176,15 @@ class EstablecimientoController extends Controller {
             $datos_grales['barrio'] = $establecimiento_edificio->getEdificios()->getBarrio();
             $datos_grales['cp'] = $domicilio->getCPostal();
             $datos_grales['email'] = $establecimiento_edificio->getEmail1();
-            
-        $inspector = $establecimiento_edificio->getEdificios()->getInspector();
-            
-            if ($inspector){
-            $datos_grales['inspector'] = $inspector->datosCompletos();
-            }else{
+
+            $inspector = $establecimiento_edificio->getEdificios()->getInspector();
+
+            if ($inspector) {
+                $datos_grales['inspector'] = $inspector->datosCompletos();
+            } else {
                 $datos_grales['inspector'] = 'sin datos';
             }
-            
+
             $establecimiento_edificio_array[$key]['datos_grales'] = $datos_grales;
 
             /**
@@ -330,67 +334,25 @@ class EstablecimientoController extends Controller {
 
     /**
      * @Route("/salida_planilla", name="establecimiento_salida_planilla")
+     * @DownloadAs(filename="Establecimientos.xls")
      */
     public function establecimiento_salida_planillaAction() {
 
-        $filename = "Establecimientos.xls";
-
-        // ask the service for a Excel5
+        //se usa el mismo formato de listado para establecimientos y para sedes y anexos
+        $establecimientos_edificios = $this->getEm()
+                ->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
+                ->findSedesOrdenados();
+        
+        //se crea el servicio para crear planillas
         $excelService = $this->get('phpexcel');
 
-        $excelObj = $excelService->createPHPExcelObject();
+        // defino la planilla
+        $planilla = new PlanillaSedesYAnexos($excelService, 'Listado de establecimientos', $establecimientos_edificios);
 
-        $active_sheet_index = $excelObj->setActiveSheetIndex(0);
+        //genero la planilla y devuelve un response
+        $response = $planilla->generarPlanillaResponse();
 
-        $establecimientos = $this->getRepositorio()->findAllOrdenado('orden');
-
-        $active_sheet_index->setCellValue('A1', 'Dirección de Formación Docente');
-        $active_sheet_index->setCellValue('A2', 'Listado de establecimientos');
-        $active_sheet_index->setCellValue('A3', 'Impreso: ' . date('d-m-Y'));
-
-        $fila = 6;
-        $numeracion = 1;
-        $desplazamiento = $fila - $numeracion;
-
-        //titulos
-        $titulos = $fila - 1;
-        $active_sheet_index->setCellValue('A' . $titulos, "#");
-        $active_sheet_index->setCellValue('B' . $titulos, "Nombre");
-        $active_sheet_index->setCellValue('C' . $titulos, "Domicilio");
-        $active_sheet_index->setCellValue('D' . $titulos, "Barrio");
-        $active_sheet_index->setCellValue('E' . $titulos, "Email");
-        $active_sheet_index->setCellValue('F' . $titulos, "URL");
-        $active_sheet_index->setCellValue('G' . $titulos, "TE");
-
-        foreach ($establecimientos as $establecimiento) {
-            
-            $edificio_principal = $establecimiento->getEdificioPrincipal();
-            
-            $active_sheet_index->setCellValue('A' . $fila, $numeracion);
-            $active_sheet_index->setCellValue('B' . $fila, $establecimiento->getNombre());
-            $active_sheet_index->setCellValue('C' . $fila, $edificio_principal->getEdificios()->getDomicilioPrincipal()->__toString());
-            $active_sheet_index->setCellValue('D' . $fila, $edificio_principal->getEdificios()->getBarrio()->__toString() );
-            $active_sheet_index->setCellValue('E' . $fila, $edificio_principal->getEmail1() );
-            $active_sheet_index->setCellValue('F' . $fila, $establecimiento->getUrl() );
-            $active_sheet_index->setCellValue('G' . $fila, $edificio_principal->getTe1() );
-            $fila += 1;
-            $numeracion = $fila - $desplazamiento;
-        }
-        $excelObj->getActiveSheet()->setTitle('Establecimientos');
-        // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-        $excelObj->setActiveSheetIndex(0);
-
-        // create the writer
-        $writer = $excelService->createWriter($excelObj, 'Excel5');
-        // create the response
-        $response = $excelService->createStreamedResponse($writer);
-        //create the response
-        $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
-        $response->headers->set('Content-Disposition', 'attachment;filename=' . $filename);
-
-        // If you are using a https connection, you have to set those two headers for compatibility with IE <9
-        $response->headers->set('Pragma', 'public');
-        $response->headers->set('Cache-Control', 'maxage=1');
         return $response;
     }
+
 }

@@ -74,7 +74,19 @@ class EstablecimientoEdificioRepository extends EntityRepository {
      */
     public function findSedesYAnexosOrdenados() {
 
-        $qb = $this->filtrarSedeAnexo(
+        $qb = $this->filtrarSedeYAnexo(
+                $this->qbAllOrdenado()
+        );
+
+        return $this->findear($qb);
+    }
+    /**
+     * devuelve los registros de establecimiento_edificio que sean cue_anexo 00 ordenados por orden de establecimiento
+     * @return type
+     */
+    public function findSedesOrdenados() {
+
+        $qb = $this->filtrarSede(
                 $this->qbAllOrdenado()
         );
 
@@ -174,8 +186,17 @@ class EstablecimientoEdificioRepository extends EntityRepository {
      * @param \Doctrine\DBAL\Query\QueryBuilder $qb
      * @return type
      */
-    public function filtrarSedeAnexo($qb) {
+    public function filtrarSedeYAnexo($qb) {
         return $qb->andWhere("ee.cue_anexo <> '99'");
+    }
+    /**
+     * Recibe un querybuilder y le agregar la condicion de filtrar las sedes
+     * 
+     * @param \Doctrine\DBAL\Query\QueryBuilder $qb
+     * @return type
+     */
+    public function filtrarSede($qb) {
+        return $qb->andWhere("ee.cue_anexo = '00'");
     }
 
     /**
@@ -202,7 +223,7 @@ class EstablecimientoEdificioRepository extends EntityRepository {
     }
 
     public function findSedeYAnexo($establecimiento) {
-        return $this->filtrarSedeAnexo(
+        return $this->filtrarSedeYAnexo(
                                 $this->qbEdificios($establecimiento)
                         )
                         ->getQuery()

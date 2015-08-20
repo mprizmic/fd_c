@@ -33,11 +33,10 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
             $e = $ee->getEstablecimientos();
             $ed = $ee->getEdificios();
             $d = $ed->getDomicilioPrincipal()->__toString();
+            $anexo = $ee->getCueAnexo() <> '00' ? ' - ' . $ee->getNombre() : '';
             
             $posicion->setCellValue('A' . $fila, $fila - $this->fila_inicio_datos );
-            $posicion->setCellValue('B' . $fila, $e->getNombre()
-                    . ' - ' . $ee->getNombre()
-            );
+            $posicion->setCellValue('B' . $fila, $e->getNombre() . $anexo );
             $posicion->setCellValue('C' . $fila, $e->getCue() . '/' . $ee->getCueAnexo());
             $posicion->setCellValue('D' . $fila, $d);
             $posicion->setCellValue('E' . $fila, $ed->getBarrio()->__toString());
