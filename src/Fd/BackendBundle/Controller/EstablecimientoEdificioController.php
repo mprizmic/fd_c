@@ -230,6 +230,10 @@ class EstablecimientoEdificioController extends Controller {
 
             $em->persist($entity);
             $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('exito', 'La sede/anexo fue actualizado exitosamente');
+        }else{
+            $this->get('session')->getFlashBag()->add('error', 'La sede/anexo no pudo ser actualizado. Verifique y reintente.');
         }
 
         return array(
