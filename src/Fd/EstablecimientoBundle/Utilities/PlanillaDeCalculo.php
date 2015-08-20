@@ -20,7 +20,7 @@ abstract class PlanillaDeCalculo{
     protected $filename;
     protected $fila_inicio_datos;
     
-    public function __construct($php_excel, $titulo = null, $datos = null, $filename = null, $fila_inicio_datos = 3) {
+    public function __construct($php_excel, $titulo = null, $datos = null, $filename = null, $fila_inicio_datos = 5) {
         $this->php_excel_service = $php_excel;
         $this->titulo = $titulo;
         $this->datos = $datos;
@@ -72,11 +72,12 @@ abstract class PlanillaDeCalculo{
 
     }
     protected function ponerTitulo($titulo){
-        $this->phpExcelObject->getActiveSheet()->setCellValue('A1', $titulo);
+        $this->phpExcelObject->getActiveSheet()->setCellValue('A1', 'Dirección de Formación Docente');
+        $this->phpExcelObject->getActiveSheet()->setCellValue('A2', $titulo);
     }
 
     protected function fechar() {
-        $this->phpExcelObject->getActiveSheet()->setCellValue('A2', date('d-m-Y'));
+        $this->phpExcelObject->getActiveSheet()->setCellValue('A3', date('d-m-Y'));
     }
     abstract protected function cargaDatos($datos);
     

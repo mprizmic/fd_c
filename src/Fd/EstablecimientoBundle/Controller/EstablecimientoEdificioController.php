@@ -52,8 +52,6 @@ class EstablecimientoEdificioController extends Controller {
         // defino la planilla
         $planilla = new PlanillaSedesYAnexos($excelService, 'Listado de sedes y anexos', $establecimiento_edificios );
         
-        $planilla->setFilaInicioDatos(4);
-        
         //genero la planilla y devuelve un response
         $response = $planilla->generarPlanillaResponse();
 

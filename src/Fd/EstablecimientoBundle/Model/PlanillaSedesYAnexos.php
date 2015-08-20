@@ -8,20 +8,20 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
 
     protected function cargaDatos($datos) {
 
-        $columna = 'A';
-//        $columna += 1;
-        $encabezado['A'] = '#';
-        $encabezado['B'] = 'Nombre';
-        $encabezado['C'] = 'Domicilio';
-        $encabezado['D'] = 'Barrio';
-        $encabezado['E'] = 'Email';
-        $encabezado['F'] = 'URL';
-        $encabezado['G'] = 'TE';
+        $encabezado[] = '#';
+        $encabezado[] = 'Nombre';
+        $encabezado[] = 'CUE';
+        $encabezado[] = 'Domicilio';
+        $encabezado[] = 'Barrio';
+        $encabezado[] = 'Email';
+        $encabezado[] = 'URL';
+        $encabezado[] = 'TE';
 
         $posicion = $this->phpExcelObject->getActiveSheet(0);
 
         foreach ($encabezado as $key => $value) {
-            $posicion->setCellValue($key . $this->fila_inicio_datos, $value);
+            //empiezo a poner datos en la columna A
+            $posicion->setCellValue( chr($key + 65) . $this->fila_inicio_datos, $value);
         }
 
         $fila = $this->fila_inicio_datos + 1;
@@ -34,15 +34,16 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
             $ed = $ee->getEdificios();
             $d = $ed->getDomicilioPrincipal()->__toString();
             
+            $posicion->setCellValue('A' . $fila, $fila - $this->fila_inicio_datos );
             $posicion->setCellValue('B' . $fila, $e->getNombre()
-                    . '/' . $ee->getCueAnexo()
                     . ' - ' . $ee->getNombre()
             );
-            $posicion->setCellValue('C' . $fila, $d);
-            $posicion->setCellValue('D' . $fila, $ed->getBarrio()->__toString());
-            $posicion->setCellValue('E' . $fila, $ee->getEmail1());
-            $posicion->setCellValue('F' . $fila, $e->getUrl());
-            $posicion->setCellValue('G' . $fila, $ee->getTe1());
+            $posicion->setCellValue('C' . $fila, $e->getCue() . '/' . $ee->getCueAnexo());
+            $posicion->setCellValue('D' . $fila, $d);
+            $posicion->setCellValue('E' . $fila, $ed->getBarrio()->__toString());
+            $posicion->setCellValue('F' . $fila, $ee->getEmail1());
+            $posicion->setCellValue('G' . $fila, $e->getUrl());
+            $posicion->setCellValue('H' . $fila, $ee->getTe1());
             $fila += 1;
         };
     }
