@@ -40,6 +40,7 @@ class NormaController extends Controller {
         };
         return $this->em;
     }
+
     /**
      * buscar una norma con filtros y obtener una grilla 
      * 
@@ -84,7 +85,7 @@ class NormaController extends Controller {
         $content = $this->renderView('BackendBundle:Norma:buscar.html.twig', array(
             'formulario' => $formulario->createView(),
             'normas' => $normas,
-                ));
+        ));
 
         return new Response($content);
     }
@@ -163,7 +164,7 @@ class NormaController extends Controller {
 
         return $this->redirect($this->generateUrl('backend_norma_edit', array(
                             'id' => $norma_editada->getId(),
-                        )));
+        )));
     }
 
     /**
@@ -283,7 +284,9 @@ class NormaController extends Controller {
 
         $respuesta = $formHandler->actualizar($editForm, $request);
 
-        $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+        $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
+
+        $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
         if ($respuesta->getCodigo() == 1) {
             return $this->redirect($this->generateUrl('backend_norma_edit', array('id' => $entity->getId())));
@@ -335,22 +338,22 @@ class NormaController extends Controller {
      * 
      * No me anduvo el ParamConverter
      */
-    public function deleteReferenciaAction(Norma $norma_id, Norma $referencia_id, Norma $entity_volver_id, Request $request ) {
-        
+    public function deleteReferenciaAction(Norma $norma_id, Norma $referencia_id, Norma $entity_volver_id, Request $request) {
+
         $norma_editada = $this->getEm()->getRepository('OfertaEducativaBundle:Norma')->find($entity_volver_id);
 
         $norma_apuntadora = $this->getEm()->getRepository('OfertaEducativaBundle:Norma')->find($norma_id);
 
         $norma_apuntada = $this->getEm()->getRepository('OfertaEducativaBundle:Norma')->find($referencia_id);
 
-        if (!$norma_editada or !$norma_apuntada or !$norma_apuntadora) {
+        if (!$norma_editada or ! $norma_apuntada or ! $norma_apuntadora) {
             throw $this->createNotFoundException('Unable to find Norma entity.');
         };
 
         $respuesta = new Respuesta();
 
         $norma_manager = new NormaManager($this->getEm());
-        
+
         $respuesta = $norma_manager->eliminar_referencia($norma_apuntadora, $norma_apuntada, $norma_editada, $request);
 
         $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
@@ -358,7 +361,7 @@ class NormaController extends Controller {
         if ($respuesta->getCodigo() == 1) {
             return $this->redirect($this->generateUrl('backend_norma_edit', array(
                                 'id' => $norma_editada->getId(),
-                            )));
+            )));
         };
 
         $editForm = $this->createForm(new NormaType(), $norma_editada);
@@ -400,7 +403,7 @@ class NormaController extends Controller {
                     'delete_form' => $this->createDeleteForm($norma->getId())->createView(),
                     'accion' => 'actualizar',
                     'titulo' => 'Editar norma',
-                ));
+        ));
     }
 
     private function createDeleteForm($id) {
