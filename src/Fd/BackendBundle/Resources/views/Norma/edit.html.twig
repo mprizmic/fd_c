@@ -2,6 +2,7 @@
 
 {% block main_content %}
     {{ parent() }}
+    
     <div class="titulo">Editar norma</div>
 
     <!--                                     -->
@@ -22,166 +23,167 @@
             <div class="invisible">
                 {{ form_widget(delete_form) }}
             </div>
-            <input type="submit" class="boton_rojo" value="Eliminar" />
+            <input class="separador boton_rojo" type="submit" value="Eliminar" />
+            <a class="separador" href="{{ path('backend_norma_new') }}">Nueva norma</a>
         </form>
+    </div>
+</div>
+
+<div></div>
+<div class="float_derecha">
+    <a href="{{ path('backend_norma_buscar') }}">
+        Volver a la lista
+    </a>
+</div>
+
+<span class="limpiar_float"></span>
+
+<br />
+<br />
+<!--                                    -->
+<!-- grilla de referencias de normas    -->
+<!--                                    -->
+<fieldset>
+    <div class="float_izquierda">
+        <!-- -->
+        <!-- -->
+        <!-- normas a las que referencia esta norma -->
+        <!-- -->
+        <!-- -->
+        <table class="grilla_fit">
+            <tr>
+                <th colspan="2">Normas a las que referencia esta norma</th>
+            </tr>
+
+            {% set referencias_a_otras  = entity.referenciaA %}
+            {% if referencias_a_otras is null %}
+            {% else %}  
+                {% for referencia in referencias_a_otras %}
+                    <tr>
+                        <td><a href="{{ path( "backend_norma_edit", {'id':referencia.id} ) }}">{{ referencia }}</a></td>
+                        <td>
+                            <a href="{{ path( "backend_norma_delete_referencia", {'entity_volver_id': entity.id, 'norma_id': entity.id , 'referencia_id': referencia.id } ) }}">Eliminar referencia</a>
+                        </td>
+
+                    </tr>
+                {% endfor %}  
+            {% endif %}  
+        </table>
+        {% if accion == 'actualizar' %}
+            <a href="{{ path('backend_norma_edit', {'id':entity.id, 'referencia':'referencia_a'} ) }}">Agregar nueva referencia</a>
+        {% endif %}
+
+        {% if display_referencia|default('') and display_referencia == 'referencia_a' %}
+            <fieldset>
+                {# muestra el formulario de busqueda de normas #}
+                {% include 'BackendBundle:Norma:includes/buscar.html.twig' with { 'search_form':search_form, 'entity': entity } %}
+
+                {# hay resultado de la busqueda #}
+
+                {% if normas %}
+                    <br />
+                    {% include 'BackendBundle:Norma:includes/tabla_normas.html.twig' with { 'entity': entity , 'normas': normas, 'posicion': display_referencia } %}
+                    <br />
+                    <br />
+                {% endif %}
+
+            </fieldset>
+        {% endif %}
 
     </div>
+    <!-- -->
+    <!-- -->
+    <!-- normas por las que es referenciada esta norma -->
+    <!-- -->
+    <!-- -->
 
-    <div></div>
-    <div class="float_derecha">
-        <a href="{{ path('backend_norma_buscar') }}">
-            Volver a la lista
-        </a>
+    <div class="float_izquierda">
+        <table class="grilla_fit">
+            <tr>
+                <th colspan="2">Normas por las que es referenciada esta norma</th>
+            </tr>
+            {% set referenciadoras  = entity.esReferenciada %}
+            {% if referenciadoras is null %}
+            {% else %}  
+                {% for referencia in referenciadoras %}
+                    <tr>
+                        <td><a href="{{ path( "backend_norma_edit", {'id':referencia.id} ) }}">{{ referencia }}</a></td>
+                        <td>
+                            <a href="{{ path( "backend_norma_delete_referencia", {'entity_volver_id': entity.id, 'norma_id': referencia.id , 'referencia_id': entity.id } ) }}">Eliminar referencia</a>
+                        </td>
+
+                    </tr>
+                {% endfor %}  
+            {% endif %} 
+
+        </table>
+
+        {% if accion == 'actualizar' %}
+            <a href="{{ path('backend_norma_edit', {'id':entity.id, 'referencia':'es_referenciada'} ) }}">Agregar nueva referencia</a>
+        {% endif %}        
+
+        {% if display_referencia|default('') and display_referencia == 'es_referenciada' %}
+
+            <fieldset>
+                {# muestra el formulario de busqueda de normas #}
+                {% include 'BackendBundle:Norma:includes/buscar.html.twig' with { 'search_form':search_form, 'entity': entity } %}
+
+                {# hay resultado de la busqueda #}
+
+                {% if normas %}
+                    <br />
+                    {% include 'BackendBundle:Norma:includes/tabla_normas.html.twig' with { 'entity': entity , 'normas': normas, 'posicion': display_referencia } %}
+                    <br />
+                    <br />
+                {% endif %}
+
+            </fieldset>
+
+        {% endif %}
+
     </div>
+</fieldset>
 
-    <span class="limpiar_float"></span>
+<p class="limpiar_float"></p>
 
-    <br />
-    <br />
-    <!--                                    -->
-    <!-- grilla de referencias de normas    -->
-    <!--                                    -->
-    <fieldset>
-        <div class="float_izquierda">
-            <!-- -->
-            <!-- -->
-            <!-- normas a las que referencia esta norma -->
-            <!-- -->
-            <!-- -->
-            <table class="grilla_fit">
-                <tr>
-                    <th colspan="2">Normas a las que referencia esta norma</th>
-                </tr>
-
-                {% set referencias_a_otras  = entity.referenciaA %}
-                {% if referencias_a_otras is null %}
-                {% else %}  
-                    {% for referencia in referencias_a_otras %}
-                        <tr>
-                            <td><a href="{{ path( "backend_norma_edit", {'id':referencia.id} ) }}">{{ referencia }}</a></td>
-                            <td>
-                                <a href="{{ path( "backend_norma_delete_referencia", {'entity_volver_id': entity.id, 'norma_id': entity.id , 'referencia_id': referencia.id } ) }}">Eliminar referencia</a>
-                            </td>
-
-                        </tr>
-                    {% endfor %}  
-                {% endif %}  
-            </table>
-            {% if accion == 'actualizar' %}
-                <a href="{{ path('backend_norma_edit', {'id':entity.id, 'referencia':'referencia_a'} ) }}">Agregar nueva referencia</a>
-            {% endif %}
-
-            {% if display_referencia|default('') and display_referencia == 'referencia_a' %}
-                <fieldset>
-                    {# muestra el formulario de busqueda de normas #}
-                    {% include 'BackendBundle:Norma:includes/buscar.html.twig' with { 'search_form':search_form, 'entity': entity } %}
-
-                    {# hay resultado de la busqueda #}
-
-                    {% if normas %}
-                        <br />
-                        {% include 'BackendBundle:Norma:includes/tabla_normas.html.twig' with { 'entity': entity , 'normas': normas, 'posicion': display_referencia } %}
-                        <br />
-                        <br />
-                    {% endif %}
-
-                </fieldset>
-            {% endif %}
-
-        </div>
-        <!-- -->
-        <!-- -->
-        <!-- normas por las que es referenciada esta norma -->
-        <!-- -->
-        <!-- -->
-
-        <div class="float_izquierda">
-            <table class="grilla_fit">
-                <tr>
-                    <th colspan="2">Normas por las que es referenciada esta norma</th>
-                </tr>
-                {% set referenciadoras  = entity.esReferenciada %}
-                {% if referenciadoras is null %}
-                {% else %}  
-                    {% for referencia in referenciadoras %}
-                        <tr>
-                            <td><a href="{{ path( "backend_norma_edit", {'id':referencia.id} ) }}">{{ referencia }}</a></td>
-                            <td>
-                                <a href="{{ path( "backend_norma_delete_referencia", {'entity_volver_id': entity.id, 'norma_id': referencia.id , 'referencia_id': entity.id } ) }}">Eliminar referencia</a>
-                            </td>
-
-                        </tr>
-                    {% endfor %}  
-                {% endif %} 
-
-            </table>
-
-            {% if accion == 'actualizar' %}
-                <a href="{{ path('backend_norma_edit', {'id':entity.id, 'referencia':'es_referenciada'} ) }}">Agregar nueva referencia</a>
-            {% endif %}        
-
-            {% if display_referencia|default('') and display_referencia == 'es_referenciada' %}
-
-                <fieldset>
-                    {# muestra el formulario de busqueda de normas #}
-                    {% include 'BackendBundle:Norma:includes/buscar.html.twig' with { 'search_form':search_form, 'entity': entity } %}
-
-                    {# hay resultado de la busqueda #}
-
-                    {% if normas %}
-                        <br />
-                        {% include 'BackendBundle:Norma:includes/tabla_normas.html.twig' with { 'entity': entity , 'normas': normas, 'posicion': display_referencia } %}
-                        <br />
-                        <br />
-                    {% endif %}
-
-                </fieldset>
-
-            {% endif %}
-
-        </div>
-    </fieldset>
-
-    <p class="limpiar_float"></p>
-
-    <!---                                   --->
-    <!---   carreras relativas a la normas  --->
-    <!---                                   --->
-    <br />
-    <fieldset>
-        <legend class="resaltado">Carreras relativas a la norma</legend>
-        {% set ofertas  = entity.ofertas %}
-        {% if ofertas is null %}
-        {% else %}  
-            {% for oferta in ofertas %}
-                {% if oferta.carrera is not  null %}
-                    <div class="separador">
-                        <a href="{{ path('carrera_ficha', {'carrera_id': oferta.carrera.id}) }}">{{ oferta.carrera }}</a>
-                    </div>
-                {% endif %}  
-            {% endfor %}  
-        {% endif %}  
-    </fieldset>
+<!---                                   --->
+<!---   carreras relativas a la normas  --->
+<!---                                   --->
+<br />
+<fieldset>
+    <legend class="resaltado">Carreras relativas a la norma</legend>
+    {% set ofertas  = entity.ofertas %}
+    {% if ofertas is null %}
+    {% else %}  
+        {% for oferta in ofertas %}
+            {% if oferta.carrera is not  null %}
+                <div class="separador">
+                    <a href="{{ path('carrera_ficha', {'carrera_id': oferta.carrera.id}) }}">{{ oferta.carrera }}</a>
+                </div>
+            {% endif %}  
+        {% endfor %}  
+    {% endif %}  
+</fieldset>
 
 
-    <!---                                           --->
-    <!--- especializaciones relativas a la normas   --->
-    <!---                                           --->
-    <br />
-    <fieldset>
-        <legend class="resaltado">Especializaciones relativas a la norma</legend>
-        {% set ofertas  = entity.ofertas %}
-        {% if ofertas is null %}
-        {% else %}  
-            {% for oferta in ofertas %}
-                {% if oferta.especializacion is not  null %}
-                    <div class="separador">
-                        <a href="{{ path('especializacion_ficha', {'especializacion_id': oferta.especializacion.id}) }}">{{ oferta.especializacion }}</a>
-                    </div>
-                {% endif %}  
-            {% endfor %}  
-        {% endif %}  
-    </fieldset>
-    <br />
-    <br />
+<!---                                           --->
+<!--- especializaciones relativas a la normas   --->
+<!---                                           --->
+<br />
+<fieldset>
+    <legend class="resaltado">Especializaciones relativas a la norma</legend>
+    {% set ofertas  = entity.ofertas %}
+    {% if ofertas is null %}
+    {% else %}  
+        {% for oferta in ofertas %}
+            {% if oferta.especializacion is not  null %}
+                <div class="separador">
+                    <a href="{{ path('especializacion_ficha', {'especializacion_id': oferta.especializacion.id}) }}">{{ oferta.especializacion }}</a>
+                </div>
+            {% endif %}  
+        {% endfor %}  
+    {% endif %}  
+</fieldset>
+<br />
+<br />
 {% endblock %}
