@@ -108,7 +108,7 @@ class LocalizacionController extends Controller {
                 inner join Fd.nivel n on n.id=ue.nivel_id
                 inner join Fd.comuna com on com.id=ed.comuna_id
                 inner join Fd.distrito_escolar dies on dies.id=ed.distrito_escolar_id
-                    order by e.orden, ee.cue_anexo;
+                    order by e.orden, ee.cue_anexo, n.orden;
         ";
 
         $stmt = $this->getEm()->getConnection()->prepare($sql);
