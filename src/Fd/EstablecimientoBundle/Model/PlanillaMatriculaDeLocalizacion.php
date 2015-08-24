@@ -20,39 +20,39 @@ class PlanillaMatriculaDeLocalizacion extends PlanillaDeCalculo {
 
         foreach ($encabezado as $key => $value) {
             //empiezo a poner datos en la columna A
-            $posicion->setCellValue( chr($key + 65) . $this->fila_inicio_datos, $value);
+            $posicion->setCellValue(chr($key + 65) . $this->fila_inicio_datos, $value);
         }
 
         $fila = $this->fila_inicio_datos + 1;
-        
+
         /// $datos tiene objetos establecimiento_edificio
         foreach ($datos as $dato) {
-            
+
 //            //variables intermedias
 //            $e = $ee->getEstablecimientos();
 //            $ed = $ee->getEdificios();
-//            $anexo = $ee->getCueAnexo() <> '00' ? ' - ' . $ee->getNombre() : '';
-            
+            $anexo = ($dato['anexo'] <> '00') ? ' - ' . $dato['nombre_anexo'] : '';
+
             $columna = 'A';
-            $posicion->setCellValue($columna . $fila, $fila - $this->fila_inicio_datos );
-            
+            $posicion->setCellValue($columna . $fila, $fila - $this->fila_inicio_datos);
+
             ++$columna;
-            $posicion->setCellValue($columna . $fila, $dato['establecimiento'] );
-            
+            $posicion->setCellValue($columna . $fila, $dato['establecimiento'] . $anexo);
+
             ++$columna;
             $posicion->setCellValue($columna . $fila, $dato['cue'] . '/' . $dato['anexo']);   //cue anexo
-            
-            ++$columna;
-            $posicion->setCellValue($columna . $fila, $dato['nivel']); 
 
             ++$columna;
-            $posicion->setCellValue($columna . $fila, $dato['matricula']); 
+            $posicion->setCellValue($columna . $fila, $dato['nivel']);
 
             ++$columna;
-            $posicion->setCellValue($columna . $fila, $dato['comuna']); 
-            
+            $posicion->setCellValue($columna . $fila, $dato['matricula']);
+
             ++$columna;
-            $posicion->setCellValue($columna . $fila, $dato['DE']); 
+            $posicion->setCellValue($columna . $fila, $dato['comuna']);
+
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $dato['DE']);
 
             $fila += 1;
         };

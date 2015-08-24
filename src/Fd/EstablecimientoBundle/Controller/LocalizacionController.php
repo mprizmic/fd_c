@@ -96,6 +96,7 @@ class LocalizacionController extends Controller {
             e.apodo as establecimiento
             ,e.cue as cue
             ,ee.cue_anexo as anexo
+            ,ee.nombre as nombre_anexo
             ,n.nombre as nivel
             ,loc.matricula as matricula
             ,com.numero as comuna
@@ -108,6 +109,7 @@ class LocalizacionController extends Controller {
                 inner join Fd.nivel n on n.id=ue.nivel_id
                 inner join Fd.comuna com on com.id=ed.comuna_id
                 inner join Fd.distrito_escolar dies on dies.id=ed.distrito_escolar_id
+                    where ee.cue_anexo <> '99'
                     order by e.orden, ee.cue_anexo, n.orden;
         ";
 
