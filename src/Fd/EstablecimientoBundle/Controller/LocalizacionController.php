@@ -15,6 +15,11 @@ use Fd\BackendBundle\Form\LocalizacionType;
 use Fd\EdificioBundle\Form\Type\DomiciliosType;
 use Fd\EdificioBundle\Form\Type\UnDomicilioType;
 
+use Fd\EstablecimientoBundle\Annotation\DownloadAs;
+use Fd\EstablecimientoBundle\EventListener\DownloadListener;
+use Fd\EstablecimientoBundle\Model\PlanillaMatriculaDeLocalizacion;
+use Fd\EstablecimientoBundle\Utilities\PlanillaDeCalculo;
+
 /**
  * Localizacion controller.
  *
@@ -33,6 +38,7 @@ class LocalizacionController extends Controller {
         };
         return $this->em;
     }
+
     /**
      * Muestra el cuadro de matricula de cada carrera que se imparte en la localizacion.
      * La localizacion corresponde a un terciario 
@@ -57,10 +63,10 @@ class LocalizacionController extends Controller {
             $una_carrera['cohortes'] = array();
 
             $cohortes = $unidad_oferta->getCohortes();
-            
-            foreach ($cohortes  as $key => $cohorte) {
+
+            foreach ($cohortes as $key => $cohorte) {
                 $anio = $cohorte->getAnio();
-                if ($anio>= $anio_desde and $anio <= $hoy ){
+                if ($anio >= $anio_desde and $anio <= $hoy) {
                     $una_carrera['cohortes'][$anio]['ingresantes'] = $cohorte->getMatriculaIngresantes();
                     $una_carrera['cohortes'][$anio]['matricula'] = $cohorte->getMatricula();
                     $una_carrera['cohortes'][$anio]['egreso'] = $cohorte->getEgreso();
@@ -77,4 +83,51 @@ class LocalizacionController extends Controller {
             'anio_hasta' => $hoy,
         );
     }
+
+    /**
+     * Emite un cuadro de matricula de todos los niveles de todas las sedes/anexos tomado de la matricula de la tabla localizacion
+     * 
+     * @Route("/matricula_de_localizacion", name="establecimiento.localizacion.matricula_de_localizacion")
+     * @DownloadAs(filename="matricula.xls")
+     */
+    public function listado_matricula_localizacionAction() {
+        $sql = " 
+        select 
+            e.apodo as establecimiento
+            ,e.cue as cue
+            ,ee.cue_anexo as anexo
+            ,n.nombre as nivel
+            ,loc.matricula as matricula
+            ,com.numero as comuna
+            ,dies.numero as DE
+                from Fd.establecimiento e
+                inner join Fd.establecimiento_edificio ee on ee.establecimientos_id=e.id
+                inner join Fd.edificio ed on ed.id=ee.edificios_id
+                inner join Fd.localizacion loc on loc.establecimiento_edificio_id=ee.id
+                inner join Fd.unidad_educativa ue on loc.unidad_educativa_id=ue.id
+                inner join Fd.nivel n on n.id=ue.nivel_id
+                inner join Fd.comuna com on com.id=ed.comuna_id
+                inner join Fd.distrito_escolar dies on dies.id=ed.distrito_escolar_id
+                    order by e.orden, ee.cue_anexo;
+        ";
+
+        $stmt = $this->getEm()->getConnection()->prepare($sql);
+        
+        $stmt->execute();
+        
+        $resultado = $stmt->fetchAll();
+        
+        //se crea el servicio para crear planillas
+        $excelService = $this->get('phpexcel');
+
+        // defino la planilla
+        $planilla = new PlanillaMatriculaDeLocalizacion($excelService, 'Listado de matrícula', $resultado);
+
+        //genero la planilla y devuelve un response
+        $response = $planilla->generarPlanillaResponse();
+        
+        return $response;
+        
+    }
+
 }
