@@ -13,6 +13,8 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
         $encabezado[] = 'CUE';
         $encabezado[] = 'Domicilio';
         $encabezado[] = 'Barrio';
+        $encabezado[] = 'DE';
+        $encabezado[] = 'Comuna';
         $encabezado[] = 'Email';
         $encabezado[] = 'URL';
         $encabezado[] = 'TE';
@@ -35,14 +37,32 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
             $d = $ed->getDomicilioPrincipal()->__toString();
             $anexo = $ee->getCueAnexo() <> '00' ? ' - ' . $ee->getNombre() : '';
             
-            $posicion->setCellValue('A' . $fila, $fila - $this->fila_inicio_datos );
-            $posicion->setCellValue('B' . $fila, $e->getNombre() . $anexo );
-            $posicion->setCellValue('C' . $fila, $e->getCue() . '/' . $ee->getCueAnexo());
-            $posicion->setCellValue('D' . $fila, $d);
-            $posicion->setCellValue('E' . $fila, $ed->getBarrio()->__toString());
-            $posicion->setCellValue('F' . $fila, $ee->getEmail1());
-            $posicion->setCellValue('G' . $fila, $e->getUrl());
-            $posicion->setCellValue('H' . $fila, $ee->getTe1());
+            $columna = 'A';
+            $posicion->setCellValue($columna . $fila, $fila - $this->fila_inicio_datos );
+            
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $e->getNombre() . $anexo );
+            
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $e->getCue() . '/' . $ee->getCueAnexo());   //cue anexo
+            
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $d);                                      //domicilio
+            
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $ed->getBarrio()->__toString());   //barrio
+
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $ed->getComuna()->__toString());    //comuna
+            
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $ed->getDistritoEscolar()->__toString());
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $ee->getEmail1());
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $e->getUrl());
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $ee->getTe1());
             $fila += 1;
         };
     }
