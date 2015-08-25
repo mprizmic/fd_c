@@ -56,18 +56,19 @@ class LocalizacionRepository extends EntityRepository {
                 ->addOrderBy('ee.cue_anexo');
 
         $qb->setParameter(1, 'Ter');
-        
+
         return $qb;
     }
+
     /**
      * Devuelve una collection de objetos Localizacion con todas las sedes y anexos de los terciarios
      * 
      * @return type
      */
-    public function qbTerciariosCompleto(){
+    public function qbTerciariosCompleto() {
         return $this->qbTerciarios()->select('l');
-        
     }
+
     /**
      * devuelve un array de localizaciones de las sedes y anexos en los que se imparten terciarios
      * ordenados por establecimiento y cue_anexo
@@ -144,12 +145,18 @@ class LocalizacionRepository extends EntityRepository {
      */
     public function findDelEstablecimiento($establecimiento_id) {
 
-        $dql = "
-            select l from EstablecimientoBundle:Localizacion l 
-            join l.unidad_educativa ue 
-            where ue.establecimiento=:establecimiento";
-        $q = $this->_em->createQuery($dql);
-        $q->setParameter('establecimiento', $establecimiento_id);
-        return $q->getResult();
+        $qb = $this->_em->createQueryBuilder()
+                ->select('l')
+                ->from('EstablecimientoBundle:Localizacion', 'l')
+                ->join('l.unidad_educativa', 'ue')
+                ->join('ue.nivel', 'n')
+                ->where('ue.establecimiento = :establecimiento')
+                ->orderBy('n.orden')
+                ->setParameter(':establecimiento', $establecimiento_id);
+
+//        $q = $this->_em->createQuery($dql);
+
+        return $qb->getQuery()->getResult();
     }
+
 }
