@@ -58,8 +58,6 @@ class UnidadOfertaFactory {
                 break;
             case TipoUnidadOferta::TUO_SECUNDARIO:
 
-//                $secundariox = $em->getRepository('OfertaEducativaBundle:SecundarioX')
-//                        ->findOneBy(array('unidad_oferta' => $unidad_oferta));
                 $secundariox = $unidad_oferta->getSecundario();
 
                 if (!$secundariox) {
