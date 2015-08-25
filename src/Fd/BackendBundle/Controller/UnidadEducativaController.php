@@ -41,9 +41,7 @@ class UnidadEducativaController extends Controller {
 //        $establecimiento = $em->getRepository('EstablecimientoBundle:Establecimiento')->find($id);
 
         $entities = $em->getRepository("EstablecimientoBundle:UnidadEducativa")
-                ->findBy(array(
-            'establecimiento' => $establecimiento->getId(),
-                ));
+                ->findDeUnCue($establecimiento->getId());
 
         return array(
             'entities' => $entities,
@@ -135,13 +133,13 @@ class UnidadEducativaController extends Controller {
         $editForm = $this->getEditForm($unidad_educativa);
 
         $deleteForm = $this->createDeleteForm($unidad_educativa->getId());
-        
+
         $respuesta = array(
             'entity' => $unidad_educativa,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
-        
+
         // FALTA se anula por el momento hasta que se revise. Es el edit de una unidad educativa de nivel inicial
 //        if ($unidad_educativa->isInicial()){
 //            /*
@@ -150,11 +148,11 @@ class UnidadEducativaController extends Controller {
 //            $inicial_x = $this->getInicialX($unidad_educativa);
 //            $respuesta['inicial_x'] = $inicial_x;
 //        };
-        
+
         return $this->render("BackendBundle:UnidadEducativa:edit.html.twig", $respuesta);
     }
-    
-    public function getInicialX(UnidadEducativa $unidad_educativa){
+
+    public function getInicialX(UnidadEducativa $unidad_educativa) {
         $array_temp = $unidad_educativa->getLocalizaciones()->getOfertas();
         $inicial_x = $this->getDoctrine()
                 ->getEntityManager()
@@ -205,7 +203,7 @@ class UnidadEducativaController extends Controller {
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
-            
+
             $handler = $this->getHandler();
 
             $respuesta = $handler->actualizar($entity, true);
