@@ -11,11 +11,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Fd\OfertaEducativaBundle\Entity\InicialX;
 use Fd\OfertaEducativaBundle\Form\InicialXType;
 use Fd\OfertaEducativaBundle\Model\InicialXHandler;
-use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 
 /**
- * @Route("/inicial_x")
+ * @Route("/inicialx")
  */
 class InicialXController extends Controller {
 
@@ -46,32 +46,30 @@ class InicialXController extends Controller {
     /**
      * Displays los detalles de un nivel inicial localizado en un establecimiento
      *
-     * @Route("/{id}/show/{establecimiento_id}", name="oferta_educativa.inicialx.show")
+     * @Route("/{id}/show", name="oferta_educativa.inicialx.show")
      * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta", options={"id":"id"})
-     * @ParamConverter("establecimiento", class="EstablecimientoBundle:Establecimiento", options={"id":"establecimiento_id"})
      */
-    public function showAction(UnidadOferta $unidad_oferta, $establecimiento) {
+    public function showAction(UnidadOferta $unidad_oferta) {
 
-//        $secundario_x = $unidad_oferta->getSecundario();
-//
-//        if ($secundario_x) {
-//
-//            $ruta = $this->get('session')->get('ruta_completa');
-//            $params = $this->get('session')->get('parametros');
-//
-//            $volver = $this->generateUrl($ruta, $params);
-//
-//            return $this->render('OfertaEducativaBundle:SecundarioX:show.html.twig', array(
-//                        'unidad_oferta' => $unidad_oferta,
-//                        'secundario_x' => $secundario_x,
-////                        'establecimiento_id' => $establecimiento_id,
-//                        'volver' => $volver,
-//                    ))
-//            ;
-//        } else {
-//            // si no tiene el nivel medio definido por su oferta se lo deriva a la dirección para crearlo
-//            return $this->redirect($this->generateUrl('backend_unidadoferta'));
-//        }
+        $inicial_x = $unidad_oferta->getInicial();
+
+        if ($inicial_x) {
+
+            $ruta = $this->get('session')->get('ruta_completa');
+            $params = $this->get('session')->get('parametros');
+
+            $volver = $this->generateUrl($ruta, $params);
+
+            return $this->render('OfertaEducativaBundle:InicialX:show.html.twig', array(
+                        'unidad_oferta' => $unidad_oferta,
+                        'inicial_x' => $inicial_x,
+                        'volver' => $volver,
+                    ))
+            ;
+        } else {
+            // si no tiene el nivel inicial definido por su oferta se lo deriva a la dirección para crearlo
+            return $this->redirect($this->generateUrl('backend_unidadoferta'));
+        }
     }
 
 }

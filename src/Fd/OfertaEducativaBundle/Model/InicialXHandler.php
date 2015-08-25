@@ -19,35 +19,31 @@ class InicialXHandler {
             $this->em = $em;
         }
     }
+    public function crearObjeto() {
+        return new InicialX();
+    }    
 
-    public function crear(UnidadOferta $unidad_oferta, $matricula = null, $sala = null, $flush = false) {
-        $inicial_x = new InicialX();
-
-        if ($unidad_oferta) {
-            $inicial_x->setUnidadOferta($unidad_oferta);
-        };
-        if ($matricula) {
-            $inicial_x->setMatricula($matricula);
-        }else{
-            $inicial_x->setMatricula(0);
-        };
-        /*
-         * aunque inicial_x se crea con una sala dummy podría no tener ninguna. Podría existir el registro de inicial_x y no el de sala
-         */
-        if (!$sala) {
-            $sala_handler = new SalaHandler($this->em);
-            $sala = $sala_handler->crearDummy($inicial_x);
-        };
-        //si no viene informada una sala se crea una dummy de lactario
-        $inicial_x->addSala($sala);
-
-        $this->em->persist($inicial_x);
+    public function crear(UnidadOferta $unidad_oferta) {
         
-        if ($flush) {
+        $inicial_x = new crearObjeto();
+        
+        try{
+            $this->em->persist($inicial_x);
             $this->em->flush();
+            
+            $unidad_oferta->setInicial($inicial_x);
+            $this->em->persist($unidad_oferta);
+            
+            $inicial_x->setUnidadOferta($unidad_oferta);
+            $this->em->flush();
+        } catch (Exception $ex) {
+            throwException($e);
         };
+        
         return $inicial_x;
+
     }
+
     public function eliminar($inicial_x, $flush = false){
         $respuesta = new Respuesta();
         try {

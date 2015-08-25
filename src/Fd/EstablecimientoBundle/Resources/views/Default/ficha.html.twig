@@ -131,6 +131,9 @@
                                     {% if ue['nivel_abreviatura'] == 'Med' %}
                                         {% set unidad_oferta_id = ue['ofertas'][0]['unidad_oferta_id'] %}
                                         <a href="{{ path('oferta_educativa.secundariox.show', {'id': unidad_oferta_id, 'establecimiento_id':establecimiento.id }) }}">{{ ue['nivel'] }}</a>
+                                    {% elseif ue['nivel_abreviatura'] == 'Ini' %}
+                                        {% set unidad_oferta_id = ue['ofertas'][0]['unidad_oferta_id'] %}
+                                        <a href="{{ path('oferta_educativa.inicialx.show', {'id': unidad_oferta_id }) }}">{{ ue['nivel'] }}</a>
                                     {% else %}
                                         {{ ue['nivel'] }}
                                     {% endif %}

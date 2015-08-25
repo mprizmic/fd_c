@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fd\OfertaEducativaBundle\Entity\InicialX;
 use Fd\OfertaEducativaBundle\Form\InicialXType;
 use Fd\OfertaEducativaBundle\Model\InicialXHandler;
@@ -15,12 +16,44 @@ use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 
 /**
- * @Route("/inicial_x")
+ * @Route("/inicialx")
  */
 class InicialXController extends Controller {
 
     private $em;
+    private $handler;
+    /**
+     * devuelve el EntityManager
+     */
+    public function getEm() {
+        if ($this->em == null) {
+            $this->em = $this->getDoctrine()->getEntityManager();
+        };
+        return $this->em;
+    }
+    private function getHandler() {
+        if (!$this->handler) {
+            $this->handler = new InicialXHandler($this->getEm());
+        };
+        return $this->handler;
+    }
 
+    private function getRepository() {
+        return $this->getEm()->getRepository('OfertaEducativaBundle:SecundarioX');
+    }
+    /**
+     * @Route("/new", name="backend.inicialx.crear")
+     * @Template()
+     */
+    public function newAction() {
+        $entity = $this->getHandler()->crearObjeto();
+        $form = $this->createForm(new InicialXType(), $entity);
+
+        return array(
+            'entity' => $entity,
+            'form' => $form->createView()
+        );
+    }    
     /**
      * Muestra las salas de inicial de una unidad educativa.
      *
@@ -43,15 +76,6 @@ class InicialXController extends Controller {
         );
     }
 
-    /**
-     * devuelve el EntityManager
-     */
-    public function getEm() {
-        if ($this->em == null) {
-            $this->em = $this->getDoctrine()->getEntityManager();
-        };
-        return $this->em;
-    }
 
     /**
      * @Route("/{inicial_x_id}/{unidad_educativa_id}/update", name="backend_inicial_x_update")

@@ -55,6 +55,17 @@ class UnidadOfertaFactory {
                 $nombre = 'primario_nomina';
                 break;
             case TipoUnidadOferta::TUO_INICIAL:
+                $inicialx = $unidad_oferta->getInicial();
+
+                if (!$inicialx) {
+                    $respuesta['mensaje'] = 'Agregar detalles del nivel inicial';
+                    $nombre = 'backend.inicialx.crear';
+                    $params['unidad_oferta_id'] = $unidad_oferta->getId();
+                    
+                } else {
+                    $params['id'] = $inicialx->getId();
+                    $nombre = 'backend.inicialx.edit';
+                }
                 break;
             case TipoUnidadOferta::TUO_SECUNDARIO:
 
