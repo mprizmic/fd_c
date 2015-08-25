@@ -33,7 +33,7 @@ class SecundarioX {
 
     /**
      * lado inverso bidireccional
-     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", mappedBy="secundario", cascade={"persist", "remove"}))
+     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", mappedBy="secundario", cascade={"persist", "remove"} ) 
      */
     private $unidad_oferta;
     /**
