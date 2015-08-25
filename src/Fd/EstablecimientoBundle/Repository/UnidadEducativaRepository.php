@@ -21,7 +21,7 @@ class UnidadEducativaRepository extends EntityRepository {
     }
 
     /**
-     * devuelve todos los edificios de un establecimiento
+     * devuelve las unidades educativa de un establecimiento
      */
     public function findDeUnCue($establecimiento_id) {
         return $this->queryDeUnCue($establecimiento_id)->getResult();
