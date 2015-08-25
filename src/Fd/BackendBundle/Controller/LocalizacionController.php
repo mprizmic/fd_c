@@ -113,8 +113,6 @@ class LocalizacionController extends Controller {
 
         $establecimientos = $this->getEm()->getRepository('EstablecimientoBundle:Establecimiento')->findAllOrdenado('orden');
 
-        $entities = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')->findAll();
-
         return array(
             'establecimientos' => $establecimientos
         );
