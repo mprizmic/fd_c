@@ -22,6 +22,7 @@ class InicialXController extends Controller {
 
     private $em;
     private $handler;
+
     /**
      * devuelve el EntityManager
      */
@@ -31,6 +32,7 @@ class InicialXController extends Controller {
         };
         return $this->em;
     }
+
     private function getHandler() {
         if (!$this->handler) {
             $this->handler = new InicialXHandler($this->getEm());
@@ -41,8 +43,9 @@ class InicialXController extends Controller {
     private function getRepository() {
         return $this->getEm()->getRepository('OfertaEducativaBundle:SecundarioX');
     }
+
     /**
-     * @Route("/new", name="backend.inicialx.crear")
+     * @Route("/new", name="backend.inicialx.new")
      * @Template()
      */
     public function newAction() {
@@ -53,81 +56,84 @@ class InicialXController extends Controller {
             'entity' => $entity,
             'form' => $form->createView()
         );
-    }    
+    }
+
+    /**
+     * Creates a new orientacion entity a partir de un unidad_oferta_id.
+     *
+     * @Route("/crear/{unidad_oferta_id}", name="backend.inicialx.crear")
+     * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta", options={"id":"unidad_oferta_id"})
+     */
+    public function crearAction(Request $request, $unidad_oferta) {
+        $entity = $this->getHandler()->crear($unidad_oferta);
+        return $this->redirect($this->generateUrl('backend.inicialx.edit', array('id' => $entity->getId())));
+    }
+
     /**
      * Muestra las salas de inicial de una unidad educativa.
      *
-     * @Route("/{inicial_x_id}/{unidad_educativa_id}/edit", name="backend_inicial_x_edit")
-     * @ParamConverter("inicial_x", class="OfertaEducativaBundle:InicialX", options={"id" = "inicial_x_id"} )
-     * @ParamConverter("unidad_educativa", class="EstablecimientoBundle:UnidadEducativa", options={"id" = "unidad_educativa_id"} )
+     * @Route("/{id}/edit", name="backend.inicialx.edit")
+     * @ParamConverter("entity", class="OfertaEducativaBundle:InicialX")
      */
-    public function editAction(InicialX $inicial_x, UnidadEducativa $unidad_educativa) {
+    public function editAction(InicialX $entity) {
 
         //recupero las salas existentes para la unidad educativa
 //        $inicial_x = $this->getEm()->getRepository('OfertaEducativaBundle:InicialX')->findSalas($unidad_educativa->getOfertas()[0]);
 
-        $editForm = $this->createForm(new InicialXType(), $inicial_x);
+        $editForm = $this->createForm(new InicialXType(), $entity);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         return $this->render("BackendBundle:InicialX:edit.html.twig", array(
-                    'entity' => $inicial_x,
-                    'form' => $editForm->createView(),
-                    'unidad_educativa' => $unidad_educativa,
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
                         )
         );
     }
 
-
     /**
-     * @Route("/{inicial_x_id}/{unidad_educativa_id}/update", name="backend_inicial_x_update")
-     * @ParamConverter("inicial_x", class="OfertaEducativaBundle:InicialX", options={"id" = "inicial_x_id"} )
-     * @ParamConverter("unidad_educativa", class="EstablecimientoBundle:UnidadEducativa", options={"id" = "unidad_educativa_id"} )
+     * @Route("/{id}/{unidad_educativa_id}/update", name="backend_inicial_x_update")
+     * @ParamConverter("entity", class="OfertaEducativaBundle:InicialX")
+     * @Template("BackendBundle:InicialX:edit.html.twig")
      * @Method("post")
      */
-    public function updateAction(InicialX $inicial_x, UnidadEducativa $unidad_educativa) {
+    public function updateAction(InicialX $entity, Request $request) {
 
-        $respuesta = new Respuesta();
-        
+        $editForm = $this->createForm(new InicialXType(), $entity);
+
+        $deleteForm = $this->createDeleteForm($entity->getId());
+
         $salas_anteriores = array();
 
-        foreach ($inicial_x->getSalas() as $sala) {
+        foreach ($entity->getSalas() as $sala) {
             $salas_anteriores[] = $sala;
         }
 
-        $editForm = $this->createForm(new InicialXType(), $inicial_x);
-
-        $request = $this->getRequest();
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
 
-            $handler = new InicialXHandler($this->getEm());
+            $respuesta = $this->getHandler()->actualizar($entity, $salas_anteriores);
 
-            $respuesta = $handler->actualizar($inicial_x, $salas_anteriores);
+            $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
 
-            $session = $this->get('session')->
-                    getFlashBag()->
-                    add('exito', $respuesta->getMensaje())
-            ;
+            $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
-            return $this->redirect($this->generateUrl('backend_inicial_x_edit', array(
-                                'inicial_x_id' => $inicial_x->getId(),
-                                'unidad_educativa_id' => $unidad_educativa->getId(),
-                            ))
-            );
+            return $this->redirect($this->generateUrl('backend.inicialx.edit', array('id' => $entity->getId())));
         };
 
-        //si no valida el formulario se vuelve a mostrar la misma pàgina de edit
-        $session = $this->get('session')->
-                getFlashBag()->
-                add('error', $respuesta->getMensaje())
-        ;
-
-        return $this->render("BackendBundle:InicialX:edit.html.twig", array(
-                    'entity' => $inicial_x,
-                    'form' => $editForm->createView(),
-                    'unidad_educativa' => $unidad_educativa,
-                        )
+        return array(
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
         );
+    }
+
+    private function createDeleteForm($id) {
+        return $this->createFormBuilder(array('id' => $id))
+                        ->add('id', 'hidden')
+                        ->getForm()
+        ;
     }
 
 }

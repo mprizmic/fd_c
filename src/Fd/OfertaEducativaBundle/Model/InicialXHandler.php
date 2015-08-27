@@ -25,7 +25,7 @@ class InicialXHandler {
 
     public function crear(UnidadOferta $unidad_oferta) {
         
-        $inicial_x = new crearObjeto();
+        $inicial_x = $this->crearObjeto();
         
         try{
             $this->em->persist($inicial_x);

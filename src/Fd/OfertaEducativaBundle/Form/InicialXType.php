@@ -16,6 +16,7 @@ class InicialXType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('matricula', 'integer', array(
+                    'required' => false,
                     'label' => 'Matrícula total:',
                     'attr' => array(
                         'class' => 'input_talle_05'

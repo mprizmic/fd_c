@@ -4,7 +4,7 @@
 
     <div class="titulo">Crear registro de nivel inicial</div>
 
-    <form action="#" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('backend.inicialx.crear', {'unidad_oferta_id' : entity.id} ) }}" method="post" {{ form_enctype(form) }}>
         <div class="ancho_10">
             {{ form_widget(form) }}
         </div>

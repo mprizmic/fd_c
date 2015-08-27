@@ -24,7 +24,7 @@
     </span>
     <br />
 
-    <form action="{{ path('backend_inicial_x_update', { 'inicial_x_id': entity.id, 'unidad_educativa_id': unidad_educativa.id }) }}" method="post" {{ form_enctype(form) }}> 
+    <form action="{{ path('backend.inicialx.update', { 'inicial_x_id': entity.id, 'unidad_educativa_id': unidad_educativa.id }) }}" method="post" {{ form_enctype(form) }}> 
 
         <div class="ancho_10">
             {{ form_row(form.matricula) }}
