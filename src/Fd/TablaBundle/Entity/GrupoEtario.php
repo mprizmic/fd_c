@@ -13,6 +13,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class GrupoEtario {
 
+    public function etiqueta(){ return 'Grupo etario';}
+
     /**
      * 
      * @ORM\Column(name = "id", type = "integer", nullable = false)
@@ -20,6 +22,7 @@ class GrupoEtario {
      * @ORM\GeneratedValue(strategy = "AUTO")
      */
     private $id;
+
     /**
      * @var string $nombre
      *
@@ -32,11 +35,12 @@ class GrupoEtario {
      * @ORM\Column(type="string", length=35, nullable=false)
      */
     private $descripcion;
+
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
     private $orden;
-            
+
     public function __toString() {
         return $this->getDescripcion();
     }
@@ -46,8 +50,7 @@ class GrupoEtario {
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -57,10 +60,9 @@ class GrupoEtario {
      * @param string $codigo
      * @return GrupoEtario
      */
-    public function setCodigo($codigo)
-    {
+    public function setCodigo($codigo) {
         $this->codigo = $codigo;
-    
+
         return $this;
     }
 
@@ -69,8 +71,7 @@ class GrupoEtario {
      *
      * @return string 
      */
-    public function getCodigo()
-    {
+    public function getCodigo() {
         return $this->codigo;
     }
 
@@ -80,10 +81,9 @@ class GrupoEtario {
      * @param string $descripcion
      * @return GrupoEtario
      */
-    public function setDescripcion($descripcion)
-    {
+    public function setDescripcion($descripcion) {
         $this->descripcion = $descripcion;
-    
+
         return $this;
     }
 
@@ -92,8 +92,7 @@ class GrupoEtario {
      *
      * @return string 
      */
-    public function getDescripcion()
-    {
+    public function getDescripcion() {
         return $this->descripcion;
     }
 
@@ -103,10 +102,9 @@ class GrupoEtario {
      * @param integer $orden
      * @return GrupoEtario
      */
-    public function setOrden($orden)
-    {
+    public function setOrden($orden) {
         $this->orden = $orden;
-    
+
         return $this;
     }
 
@@ -115,8 +113,8 @@ class GrupoEtario {
      *
      * @return integer 
      */
-    public function getOrden()
-    {
+    public function getOrden() {
         return $this->orden;
     }
+
 }

@@ -12,21 +12,20 @@ use Fd\BackendBundle\Form\GrupoEtarioType;
 /**
  * GrupoEtario controller.
  *
- * @Route("/grupo_etario")
+ * @Route("/grupoetario")
  */
-class GrupoEtarioController extends Controller
-{
+class GrupoEtarioController extends Controller {
+
     /**
      * Lists all GrupoEtario entities.
      *
-     * @Route("/", name="backend_grupo_etario")
+     * @Route("/", name="backend.grupo_etario")
      * @Template("BackendBundle:GrupoEtario:index.html.twig")
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('TablaBundle:GrupoEtario')->findAll();
+        $entities = $em->getRepository('TablaBundle:GrupoEtario')->findBy(array(), array('orden' => 'ASC'));
 
         return array('entities' => $entities);
     }
@@ -34,11 +33,10 @@ class GrupoEtarioController extends Controller
     /**
      * Finds and displays a GrupoEtario entity.
      *
-     * @Route("/{id}/show", name="backend_grupo_etario_show")
+     * @Route("/{id}/show", name="backend.grupo_etario.show")
      * @Template("BackendBundle:GrupoEtario:show.html.twig")
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('TablaBundle:GrupoEtario')->find($id);
@@ -50,66 +48,62 @@ class GrupoEtarioController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+            'entity' => $entity,
+            'delete_form' => $deleteForm->createView(),);
     }
 
     /**
      * Displays a form to create a new GrupoEtario entity.
      *
-     * @Route("/new", name="backend_grupo_etario_new")
+     * @Route("/new", name="backend.grupo_etario.new")
      * @Template("BackendBundle:GrupoEtario:new.html.twig")
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new GrupoEtario();
-        $form   = $this->createForm(new GrupoEtarioType(), $entity);
+        $form = $this->createForm(new GrupoEtarioType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView()
+            'form' => $form->createView()
         );
     }
 
     /**
      * Creates a new GrupoEtario entity.
      *
-     * @Route("/create", name="backend_grupo_etario_create")
+     * @Route("/create", name="backend.grupo_etario.create")
      * @Method("post")
      * @Template("BackendBundle:GrupoEtario:new.html.twig")
      */
-    public function createAction()
-    {
-        $entity  = new GrupoEtario();
+    public function createAction() {
+        $entity = new GrupoEtario();
         $request = $this->getRequest();
-        $form    = $this->createForm(new GrupoEtarioType(), $entity);
+        $form = $this->createForm(new GrupoEtarioType(), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
-            
+
             $this->get('session')->setFlash('notice', 'Guardado exitosamente');
 
-            return $this->redirect($this->generateUrl('backend_grupo_etario_show', array('id' => $entity->getId())));
-            
+            return $this->redirect($this->generateUrl('backend.grupo_etario.show', array('id' => $entity->getId())));
         }
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView()
+            'form' => $form->createView()
         );
     }
 
     /**
      * Displays a form to edit an existing GrupoEtario entity.
      *
-     * @Route("/{id}/edit", name="backend_grupo_etario_edit")
+     * @Route("/{id}/edit", name="backend.grupo_etario.edit")
      * @Template("BackendBundle:GrupoEtario:edit.html.twig")
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('TablaBundle:GrupoEtario')->find($id);
@@ -122,8 +116,8 @@ class GrupoEtarioController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -131,12 +125,11 @@ class GrupoEtarioController extends Controller
     /**
      * Edits an existing GrupoEtario entity.
      *
-     * @Route("/{id}/update", name="backend_grupo_etario_update")
+     * @Route("/{id}/update", name="backend.grupo_etario.update")
      * @Method("post")
      * @Template("BackendBundle:GrupoEtario:edit.html.twig")
      */
-    public function updateAction($id)
-    {
+    public function updateAction($id) {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('TablaBundle:GrupoEtario')->find($id);
@@ -145,7 +138,7 @@ class GrupoEtarioController extends Controller
             throw $this->createNotFoundException('Unable to find GrupoEtario entity.');
         }
 
-        $editForm   = $this->createForm(new GrupoEtarioType(), $entity);
+        $editForm = $this->createForm(new GrupoEtarioType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
@@ -157,13 +150,13 @@ class GrupoEtarioController extends Controller
             $em->flush();
 
             $this->get('session')->setFlash('notice', 'Guardado exitosamente');
-            
-            return $this->redirect($this->generateUrl('backend_grupo_etario_edit', array('id' => $id)));
+
+            return $this->redirect($this->generateUrl('backend.grupo_etario.edit', array('id' => $id)));
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -171,11 +164,10 @@ class GrupoEtarioController extends Controller
     /**
      * Deletes a GrupoEtario entity.
      *
-     * @Route("/{id}/delete", name="backend_grupo_etario_delete")
+     * @Route("/{id}/delete", name="backend.grupo_etario.delete")
      * @Method("post")
      */
-    public function deleteAction($id)
-    {
+    public function deleteAction($id) {
         $form = $this->createDeleteForm($id);
         $request = $this->getRequest();
 
@@ -191,18 +183,18 @@ class GrupoEtarioController extends Controller
 
             $em->remove($entity);
             $em->flush();
-            
+
             $this->get('session')->setFlash('notice', 'Guardado exitosamente');
         }
 
-        return $this->redirect($this->generateUrl('backend_grupo_etario'));
+        return $this->redirect($this->generateUrl('backend.grupo_etario'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                        ->add('id', 'hidden')
+                        ->getForm()
         ;
     }
+
 }

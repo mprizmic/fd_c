@@ -1,27 +1,25 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Crear GrupoEtario
+    {{ parent() }} - Crear GrupoEtario
 {% endblock %}
- 
+
 {% block main_content %}
-{{ parent() }}
+    {{ parent() }}
 
-<h1>Crear registro de GrupoEtario </h1>
+    <div class="titulo">Crear nuevo grupo etario </div>
 
-<form action="{{ path('backend_grupo_etario_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Crear</button>
-    </p>
-</form>
+    <form action="{{ path('backend.grupo_etario.create') }}" method="post" {{ form_enctype(form) }}>
+        <div class="ancho_10">
+            {{ form_widget(form) }}
+        </div>
+        <div>
+            <button type="submit">Crear</button>
+            <a class="separador" href="{{ path('backend.grupo_etario') }}">
+                Volver a la lista
+            </a>
+        </div>
+    </form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend_grupo_etario') }}">
-            Volver a la lista
-        </a>
-    </li>
-</ul>
-
+    <br />
 {% endblock %}

@@ -31,17 +31,17 @@
 
 <ul class="record_actions">
     <li>
-        <a href="{{ path('backend_grupo_etario') }}">
+        <a href="{{ path('backend.grupo_etario') }}">
             Volver a la lista
         </a>
     </li>
     <li>
-        <a href="{{ path('backend_grupo_etario_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('backend.grupo_etario.edit', { 'id': entity.id }) }}">
             Editar
         </a>
     </li>
     <li>
-        <form action="{{ path('backend_grupo_etario_delete', { 'id': entity.id }) }}" method="post">
+        <form action="{{ path('backend.grupo_etario.delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit" class="boton_rojo">Eliminar</button>
         </form>

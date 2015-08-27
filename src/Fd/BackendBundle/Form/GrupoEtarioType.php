@@ -10,9 +10,17 @@ class GrupoEtarioType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('codigo')
-                ->add('descripcion')
-                ->add('orden')
+                ->add('codigo', null, array(
+                    'label' => 'Código',
+                    'required' => true,
+                ))
+                ->add('descripcion', null, array(
+                    'label' => 'Descripción',
+                    'required' => true,
+                ))
+                ->add('orden', null, array(
+                    'required' => false,
+                ))
         ;
     }
 
