@@ -30,6 +30,13 @@ class UnidadOfertaController extends Controller {
     private $em;
     private $handler;
 
+    private function getEm() {
+        if (!$this->em) {
+            $this->em = $this->getDoctrine()->getEntityManager();
+        };
+        return $this->em;
+    }
+
     public function getHandler() {
         if (!$this->handler) {
             $this->handler = new UnidadOfertaHandler($this->getEm());
@@ -97,10 +104,9 @@ class UnidadOfertaController extends Controller {
      * Filtrado por unidad_educativa
      * 
      * @Route("/combo/{localizacion_id}", name="backend_unidad_oferta_combo", options={"expose"=true})
+     * @ParamConverter("localizacion", class="EstablecimientoBundle:Localizacion", options={"id"="localizacion_id"} )
      */
-    public function comboAction($localizacion_id) {
-
-        $localizacion = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')->find($localizacion_id);
+    public function comboAction($localizacion) {
 
         $entities = $this->getEm()
                 ->getRepository('EstablecimientoBundle:UnidadOferta')
@@ -110,13 +116,6 @@ class UnidadOfertaController extends Controller {
         return $this->render('EstablecimientoBundle:UnidadOferta:combo.html.twig', array(
                     'unidad_ofertas' => $entities,
         ));
-    }
-
-    private function getEm() {
-        if (!$this->em) {
-            $this->em = $this->getDoctrine()->getEntityManager();
-        };
-        return $this->em;
     }
 
     /**
@@ -150,7 +149,7 @@ class UnidadOfertaController extends Controller {
         if ($form->isValid()) {
 
             //este es el registro recién generado que va a ir a grabarse en la base de datos pero falta el datos del 'tipo'
-            $unidad_oferta = $form->getData();
+            $unidad_oferta = $entity;
 
             $oferta_educativa = $unidad_oferta->getOfertas();
             $tipo = $oferta_educativa->esTipo();
@@ -162,14 +161,15 @@ class UnidadOfertaController extends Controller {
             $respuesta = $handler->crear($localizacion, $oferta_educativa, $tipo, true);
 
             $tipo_mensaje = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
-            
-            $this->get('session')->getFlashbag()->add($tipo_mensaje, $respuesta->getMensaje());
-            
-            if ($respuesta->getCodigo()==1){
-                
-                return $this->redirect($this->generateUrl('backend_unidadoferta_edit', array('id' => $respuesta->getClaveNueva())));
-            }
 
+            $this->get('session')->getFlashbag()->add($tipo_mensaje, $respuesta->getMensaje());
+
+            if ($respuesta->getCodigo() == 1) {
+
+                return $this->redirect($this->generateUrl('backend_unidadoferta_edit', array(
+                                    'id' => $respuesta->getObjNuevo()->getId(),
+                )));
+            }
         }
 
         return array(
@@ -182,7 +182,7 @@ class UnidadOfertaController extends Controller {
      * Displays a form to edit an existing UnidadOferta entity.
      *
      * @Route("/{id}/edit", name="backend_unidadoferta_edit")
-     * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta", options={"id":"unidad_oferta_id"})
+     * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta")
      * @Template()
      */
     public function editAction($unidad_oferta, Request $request) {
@@ -210,7 +210,10 @@ class UnidadOfertaController extends Controller {
     }
 
     /**
-     * Edits an existing UnidadOferta entity.
+     * Actualiza una UnidadOferta entity existente
+     * 
+     * En el controller del frontend también existe y se usa para actualizar sólo los turnos. En este 
+     * se crea un managet distinto por cada tipo de unidad oferta
      *
      * @Route("/{id}/update", name="backend_unidadoferta_update")
      * @Method("post")
@@ -235,12 +238,6 @@ class UnidadOfertaController extends Controller {
 
             //uso un factory para crear un handler de acuerdo al tipo de unidad oferta. en este caso 'carrera'
             $handler = UnidadOfertaFactory::createHandler($entity->getTipo(), $this->getEm());
-
-//            $handler = new UnidadOfertaHandler($this->getEm(), $entity
-//                            ->getLocalizacion()
-//                            ->getUnidadEducativa()
-//                            ->getNivel()
-//            );
 
             $respuesta = $handler->actualizar($entity, $originalTurnos);
 
