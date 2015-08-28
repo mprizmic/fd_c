@@ -11,13 +11,16 @@
     <div id="contenido">
         {# nombre del establecimiento #}
         <div class="titulo">
-            {{ establecimiento.nombre }} - D.E.: {{establecimiento.distritoEscolar}} - Comuna: {{ establecimiento.comuna }}<br />
-            CUE: {{ establecimiento.cue}}
+            {{ establecimiento.nombre }} <br />
+        <span class="chica">
+            D.E.: {{establecimiento.distritoEscolar}} 
+            - Comuna: {{ establecimiento.comuna }}
+            - CUE: {{ establecimiento.cue}}
+        </span>
         </div>
 
         <div>
             {# direcciones de los edificios #}
-
 
             {% for establecimiento_edificio in datos_localizados %}
 
