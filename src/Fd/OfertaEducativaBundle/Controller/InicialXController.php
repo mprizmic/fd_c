@@ -8,11 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Entity\UnidadOferta;
+use Fd\EstablecimientoBundle\Utilities\Destino;
 use Fd\OfertaEducativaBundle\Entity\InicialX;
 use Fd\OfertaEducativaBundle\Form\InicialXType;
 use Fd\OfertaEducativaBundle\Model\InicialXHandler;
-use Fd\EstablecimientoBundle\Entity\Respuesta;
-use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 
 /**
  * @Route("/inicialx")
@@ -55,11 +56,8 @@ class InicialXController extends Controller {
 
         if ($inicial_x) {
 
-            $ruta = $this->get('session')->get('ruta_completa');
-            $params = $this->get('session')->get('parametros');
-
-            $volver = $this->generateUrl($ruta, $params);
-
+            $volver = Destino::generateUrlDesdeSession($this->get('session'), $this->get('router'));
+            
             return $this->render('OfertaEducativaBundle:InicialX:show.html.twig', array(
                         'unidad_oferta' => $unidad_oferta,
                         'inicial_x' => $inicial_x,

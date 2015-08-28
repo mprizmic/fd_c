@@ -15,6 +15,7 @@ use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaFactory;
 use Fd\EstablecimientoBundle\Utilities\TipoUnidadOferta;
+use Fd\EstablecimientoBundle\Utilities\Destino;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
 use Fd\TablaBundle\Entity\Nivel;
@@ -187,8 +188,7 @@ class UnidadOfertaController extends Controller {
     public function editAction($unidad_oferta, Request $request) {
 
         // establezco la ruta para la pagina que tenga que volver aca
-        $this->get('session')->set('ruta_completa', $request->get('_route'));
-        $this->get('session')->set('parametros', $request->get('_route_params'));
+        Destino::guardarUrlDeRetorno($this->get('session'), $request);
 
         $editForm = $this->createForm(new UnidadOfertaType(), $unidad_oferta);
         $deleteForm = $this->createDeleteForm($unidad_oferta->getId());
