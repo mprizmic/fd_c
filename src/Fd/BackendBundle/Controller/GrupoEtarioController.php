@@ -86,10 +86,11 @@ class GrupoEtarioController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->setFlash('notice', 'Guardado exitosamente');
+            $this->get('session')->getFlashBag()->add('exito', 'Guardado exitosamente');
 
             return $this->redirect($this->generateUrl('backend.grupo_etario.show', array('id' => $entity->getId())));
         }
+        $this->get('session')->getFlashBag()->add('error', 'No se pudo guardar. Verifique y reintente.');
 
         return array(
             'entity' => $entity,
@@ -149,10 +150,11 @@ class GrupoEtarioController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            $this->get('session')->setFlash('notice', 'Guardado exitosamente');
+            $this->get('session')->getFlashBag()->add('exito', 'Guardado exitosamente');
 
             return $this->redirect($this->generateUrl('backend.grupo_etario.edit', array('id' => $id)));
         }
+        $this->get('session')->getFlashBag()->add('error', 'No se pudo guardar. Verifique y reintente.');
 
         return array(
             'entity' => $entity,
@@ -184,8 +186,9 @@ class GrupoEtarioController extends Controller {
             $em->remove($entity);
             $em->flush();
 
-            $this->get('session')->setFlash('notice', 'Guardado exitosamente');
+            $this->get('session')->getFlashBag()->add('exito', 'Guardado exitosamente');
         }
+        $this->get('session')->getFlashBag()->add('error', 'No se pudo guardar. Verifique y reintente.');
 
         return $this->redirect($this->generateUrl('backend.grupo_etario'));
     }

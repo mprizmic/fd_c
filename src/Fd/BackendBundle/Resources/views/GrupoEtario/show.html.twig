@@ -1,53 +1,53 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - GrupoEtario
+    {{ parent() }} - GrupoEtario
 {% endblock %}
- 
+
 {% block main_content %}
+    {{ parent() }}
 
-<h1>GrupoEtario</h1>
+    <div class="titulo">Grupo Etario</div>
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id: </th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Codigo: </th>
-            <td>{{ entity.codigo }}</td>
-        </tr>
-        <tr>
-            <th>Descripcion: </th>
-            <td>{{ entity.descripcion }}</td>
-        </tr>
-        <tr>
-            <th>Orden: </th>
-            <td>{{ entity.orden }}</td>
-        </tr>
-    </tbody>
-</table>
+    <fieldset>
+        <table class="record_properties">
+            <tbody>
+                <tr>
+                    <th>Id: </th>
+                    <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th>Código: </th>
+                    <td>{{ entity.codigo }}</td>
+                </tr>
+                <tr>
+                    <th>Descripción: </th>
+                    <td>{{ entity.descripcion }}</td>
+                </tr>
+                <tr>
+                    <th>Orden: </th>
+                    <td>{{ entity.orden }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend.grupo_etario') }}">
-            Volver a la lista
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('backend.grupo_etario.edit', { 'id': entity.id }) }}">
-            Editar
-        </a>
-    </li>
-    <li>
+    <br />
+
+    <div>
         <form action="{{ path('backend.grupo_etario.delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="boton_rojo">Eliminar</button>
-        </form>
-    </li>
-</ul>
+            <a class="separador" href="{{ path('backend.grupo_etario.edit', { 'id': entity.id }) }}">Editar</a>
 
-{% include '::includes/volver.html.twig' %}
+            <div class="invisible">
+                {{ form_widget(delete_form) }}
+            </div>
+
+            <button class ="separador boton_rojo" type="submit" >Eliminar</button>
+
+            <a class="separador" href="{{ path('backend.grupo_etario') }}">Volver a la lista</a>
+        </form>
+    </div>
+
+    {% include '::includes/volver.html.twig' %}
 
 {% endblock %}
