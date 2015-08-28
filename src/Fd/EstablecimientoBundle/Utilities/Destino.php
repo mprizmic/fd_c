@@ -18,8 +18,8 @@ class Destino {
 
     static public function guardarUrlDeRetorno($session, $request) {
         
-        $this->get('session')->set('ruta_completa', $request->get('_route'));
-        $this->get('session')->set('parametros', $request->get('_route_params'));
+        $session->set('ruta_completa', $request->get('_route'));
+        $session->set('parametros', $request->get('_route_params'));
     }
 
 }
