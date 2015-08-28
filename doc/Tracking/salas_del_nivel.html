@@ -1,49 +1,44 @@
 <html>
     <body>
         se agrega la info para saber que salas hay en cada jardin 
-        se agrega INFANTES_X que representa la oferta de jardin de infantes
+        se agrega INICIAL_X que representa la oferta de jardin de infantes
         se agrega SALA que contiene todas las salas que tenga cada Inicial de cada establecimiento como ofetra de j de infantes
         se agrega GRUPO_ETARIO
         =============================================================================
-        hacer fixture de grupo_etario               LISTO
+        cambiar salas_inicial.unidad_oferta por inicial.unidad_oferta       LISTO
         
-        hacer el ABM de grupo_etario                            LISTO
+        hacer el CRUD de grupo_etario                            LISTO
             new                                                 LISTO
             index                                               LISTO
             edit                                                LISTO
             show                                                LISTO
             controller                                          LISTO
+
+        hacer fixture de grupo_etario                                       LISTO
         
-        mostrar los grupos etarios en la ficha del establecimiento          LISTO
+        hacer el edit de inicial_x como el de secundario_x                  LISTO
+        
+        hacer el ABM de grupo_etario                                        LISTO
+        
+        mostrar los grupos etarios en la ficha del establecimiento          
         
         agregar la cantidad de salas de cada establecimiento                LISTO
             
-        mostrar todo en algún lado                                      LISTO
+        mostrar todo en un show                                                 LISTO
 
-        en la ficha del establecimiento Tira error por Inicial_x            LISTO
+        handler para la unidad educativa                                    en proceso ???
         
+        borrar todos los registros de sala, inicial_x y todos los datos de unidad_oferta.salas_inicial_c            LISTO
         
-        1.handler para la unidad educativa                                  LISTO
+        agregar todo los registros de inicial de los establecimientos que tienen inicial                        LISTO
         
-        2.agregar un event que genere, al dar de alta la unidad educativa, el registro de unidad_oferta, 
-        el de inicial_x y una sala dummy.                                   LISTO
+        en la ficha del establecimiento hacer acceso a la carga de turno del inicial (edit del backend de unidadoferta)     REVER
         
+        agregar pagina con collection para abm de las salas, suponiendo existente el registro                   LISTO
+        de unidad_oferta e inicial_x.                                                                   
         
-        agregar todo los registros de inicial de los establecimientos que tienen inicial        LISTO
+        ver donde va la baja de inicial_x. Tiene que arrastrar a la tabla sala y al campo unidad_oferta.salas_inicial_x         REVER
         
-        en la ficha del establecimiento puede no estar haber registro de salas de inicial o de turnos      LISTO
-        
-        4. la baja de unidad educativa tiene que ser similar al alta. Si existen, se den de baja los turnos.    LISTO
-        
-        agregar pagina con collection para abm de las salas, suponiendo existente el registro                   
-        de unidad_oferta e inicial_x.                                                                   LISTO
-        
-        pasar la baja de inicial_x que esta en unidadofertainicialhandler a inicialxhandler             LISTO
-        
-                
-        ===========================================================================    
-        Otra alternativa:
-        Hacer un OD con todo y tratalo como un ojeto entero.
-        ==================================================================
+        ver que hacer con inicialunidadofertahandler                                                REVER
     </body>
 </html>

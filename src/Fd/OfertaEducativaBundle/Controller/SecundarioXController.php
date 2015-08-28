@@ -16,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
+use Fd\EstablecimientoBundle\Utilities\Destino;
 use Fd\OfertaEducativaBundle\Entity\SecundarioX;
 use Fd\OfertaEducativaBundle\Model\SecundarioXHandler;
 use Fd\BackendBundle\Form\SecundarioXType;
@@ -85,15 +86,11 @@ class SecundarioXController extends Controller {
 
         if ($secundario_x) {
 
-            $ruta = $this->get('session')->get('ruta_completa');
-            $params = $this->get('session')->get('parametros');
-
-            $volver = $this->generateUrl($ruta, $params);
+            $volver = Destino::generateUrlDesdeSession($this->get('session'), $this->get('router'));
 
             return $this->render('OfertaEducativaBundle:SecundarioX:show.html.twig', array(
                         'unidad_oferta' => $unidad_oferta,
                         'secundario_x' => $secundario_x,
-//                        'establecimiento_id' => $establecimiento_id,
                         'volver' => $volver,
                     ))
             ;

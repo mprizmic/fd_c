@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Form\Type\UnidadOfertaType;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
+use Fd\EstablecimientoBundle\Utilities\Destino;
 
 /**
  * @Route("/unidadoferta")
@@ -74,11 +75,9 @@ class UnidadOfertaController extends Controller {
 
         $this->get('session')->getFlashBag()->add($tipo, $mensaje);
 
-        //recupero la ruta a la cual hay que volver
-        $ruta = $this->get('session')->get('ruta_completa');
-        $params = $this->get('session')->get('parametros');
-
-        return $this->redirect($this->generateUrl($ruta, $params));
+        //redirecciona a una pagina que es la ultima que se guardo en la sesion para redireccionar
+        //vuelve a una pagina predeterminada
+        return $this->redirect(Destino::generateUrlDesdeSession($this->get('session'), $this->get('router')));
     }
     /**
      * @Route("/tarjeta/{id}", name="establecimiento.unidad_oferta.tarjeta")

@@ -1,0 +1,36 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <br />
+    <div class="mediana">{% render 'EstablecimientoBundle:UnidadOferta:tarjeta' with {'id': unidad_oferta.id} %}</div>
+
+    <br />
+    Matrícula del nivel: {{ inicial_x.matricula }}<br />
+    <br />
+
+    {# salas #}
+    <fieldset>
+        <legend class="resaltado">Salas</legend>
+        {% for sala in inicial_x.salas %}
+            {{ sala.grupoEtario.descripcion }}
+            <span class="italico"> - Cantidad de salas: 
+            {{ sala.qSecciones }}
+            </span>
+            <br />
+        {% endfor %}    
+    </fieldset>
+    <br />
+
+    <div>
+        <a href="{{ path('backend.inicialx.edit', {'id':inicial_x.id} ) }}">Editar</a>
+
+        <a class="separador volver" href="{{ volver }}">Volver</a>
+    </div>
+    <br />
+    <br />
+    <span class="limpiar_float"></span>
+    <br/>
+    <br/>
+{% endblock %}

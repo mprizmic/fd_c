@@ -21,24 +21,9 @@ use Fd\TablaBundle\Model\NivelManager;
 class UnidadOfertaHandler {
 
     protected $em;
-    protected $strategy;
-    protected $strategy_instance;
-    protected $nivel;
 
     public function __construct(EntityManager $em) {
-
         $this->em = $em;
-
-//        if ($nivel instanceof Nivel) {
-//            
-//        }else{
-//            $nivel_manager = new NivelManager($this->em);
-//            $nivel = $nivel_manager->crearLleno('Ter');
-//        };
-//        $strategy = $nivel->getCrearUOClass();
-//        $strategy_instance = new $strategy($em);
-//        $this->strategy_instance = $strategy_instance;
-//        $this->nivel = $nivel;
     }
 
     protected function getEm() {
@@ -160,23 +145,31 @@ class UnidadOfertaHandler {
      * @return type
      */
     public function eliminarAll(Localizacion $localizacion, $flush = true) {
+        
         //recupero todas las carreras y las especializaciones
         $ofertas = $localizacion->getOfertas();
 
         try {
 
             foreach ($ofertas as $key => $value) {
-                $this->getEm()->remove($entity);
+                $respuesta = $this->eliminar($value, false);
+                
+                if ($respuesta->getCodigo() <> 1 ){ return $respuesta;}
             }
+
             if ($flush) {
                 $this->getEm()->flush();
             };
+            
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se eliminaron las ofertas para el edificio seleccionado.');
+            
         } catch (Exception $ex) {
+            
             $respuesta->setCodigo(2);
             $respuesta->setMensaje('No se pudieron eliminar las ofertas. Verifíquelo y reintente.');
         };
+        
         return $respuesta;
     }
 

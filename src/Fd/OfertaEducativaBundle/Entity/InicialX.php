@@ -24,7 +24,7 @@ class InicialX {
 
     /**
      * lado inverso bidireccional
-     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", mappedBy="salas_inicial", cascade={"persist", "remove"}))
+     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\UnidadOferta", mappedBy="inicial", cascade={"persist", "remove"} )
      */
     private $unidad_oferta;
 
@@ -41,6 +41,7 @@ class InicialX {
      * @Assert\Valid()
      */
     private $salas;
+
     /**
      * @ORM\Column(type="datetime")
      * 
@@ -50,18 +51,20 @@ class InicialX {
     /**
      * @ORM\Column(type="datetime")
      */
-    private $creado;    
+    private $creado;
+
     /**
      * @ORM\PrePersist  //en el persist cuando se da de alta uno nuevo
      * @ORM\PreUpdate //en el flush cuando se modifica uno existente
      */
-    public function ultimaModificacion()
-    {
+    public function ultimaModificacion() {
         $this->setActualizado(new \DateTime());
-    }  
+    }
+
     public function __toString() {
         return 'InicialX';
     }
+
     /**
      * Add salas
      * Tocado por mi luego de la generaciòn automática
@@ -69,11 +72,10 @@ class InicialX {
      * @param \Fd\OfertaEducativaBundle\Entity\Sala $salas
      * @return InicialX
      */
-    public function addSala(\Fd\OfertaEducativaBundle\Entity\Sala $salas)
-    {
+    public function addSala(\Fd\OfertaEducativaBundle\Entity\Sala $salas) {
         $salas->setInicialX($this);
         $this->salas[] = $salas;
-    
+
         return $this;
     }
 
@@ -83,7 +85,7 @@ class InicialX {
     public function __construct() {
         $this->salas = new ArrayCollection();
         $this->creado = new \DateTime();
-        $this->actualizado = new \DateTime();        
+        $this->actualizado = new \DateTime();
     }
 
 
@@ -106,7 +108,7 @@ class InicialX {
     public function setMatricula($matricula)
     {
         $this->matricula = $matricula;
-    
+
         return $this;
     }
 
@@ -121,50 +123,6 @@ class InicialX {
     }
 
     /**
-     * Set unidad_oferta
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\UnidadOferta $unidadOferta
-     * @return InicialX
-     */
-    public function setUnidadOferta(\Fd\EstablecimientoBundle\Entity\UnidadOferta $unidadOferta = null)
-    {
-        $this->unidad_oferta = $unidadOferta;
-    
-        return $this;
-    }
-
-    /**
-     * Get unidad_oferta
-     *
-     * @return \Fd\EstablecimientoBundle\Entity\UnidadOferta 
-     */
-    public function getUnidadOferta()
-    {
-        return $this->unidad_oferta;
-    }
-
-
-    /**
-     * Remove salas
-     *
-     * @param \Fd\OfertaEducativaBundle\Entity\Sala $salas
-     */
-    public function removeSala(\Fd\OfertaEducativaBundle\Entity\Sala $salas)
-    {
-        $this->salas->removeElement($salas);
-    }
-
-    /**
-     * Get salas
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getSalas()
-    {
-        return $this->salas;
-    }
-
-    /**
      * Set actualizado
      *
      * @param \DateTime $actualizado
@@ -173,7 +131,7 @@ class InicialX {
     public function setActualizado($actualizado)
     {
         $this->actualizado = $actualizado;
-    
+
         return $this;
     }
 
@@ -196,7 +154,7 @@ class InicialX {
     public function setCreado($creado)
     {
         $this->creado = $creado;
-    
+
         return $this;
     }
 
@@ -208,5 +166,48 @@ class InicialX {
     public function getCreado()
     {
         return $this->creado;
+    }
+
+    /**
+     * Set unidad_oferta
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\UnidadOferta $unidadOferta
+     * @return InicialX
+     */
+    public function setUnidadOferta(\Fd\EstablecimientoBundle\Entity\UnidadOferta $unidadOferta = null)
+    {
+        $this->unidad_oferta = $unidadOferta;
+
+        return $this;
+    }
+
+    /**
+     * Get unidad_oferta
+     *
+     * @return \Fd\EstablecimientoBundle\Entity\UnidadOferta 
+     */
+    public function getUnidadOferta()
+    {
+        return $this->unidad_oferta;
+    }
+
+    /**
+     * Remove salas
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\Sala $salas
+     */
+    public function removeSala(\Fd\OfertaEducativaBundle\Entity\Sala $salas)
+    {
+        $this->salas->removeElement($salas);
+    }
+
+    /**
+     * Get salas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSalas()
+    {
+        return $this->salas;
     }
 }

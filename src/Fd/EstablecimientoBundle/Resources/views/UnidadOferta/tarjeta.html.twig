@@ -1,9 +1,9 @@
 <div class="tarjeta1">
-<a href="#">
+<a href="{{ path( 'backend_unidadoferta_edit', {'id': unidad_oferta.id }) }}">
     {% set l = unidad_oferta.localizacion %}
     {% set ue = l.unidadEducativa %}
     {% set cue = l.establecimientoEdificio.cueAnexo %}
-    {{ ue.establecimiento ~ '/Nivel: ' ~ ue.nivel.nombre ~ ' -' }}
+    {{ ue.establecimiento ~ ' - Nivel ' ~ ue.nivel.nombre ~ ' -' }}
     {% if cue == '00' %}
         {{ 'Sede' }}
     {% else %}

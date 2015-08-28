@@ -3,64 +3,75 @@
 {% import ':Form:macro_twig.html.twig' as collection_macro %}
 
 {% block stylesheets %}
-{{ parent() }}
-<link href="{{ asset( 'bundles/establecimiento/css/macro_twig.css') }}" rel="stylesheet" type="text/css" />      
+    {{ parent() }}
+    <link href="{{ asset( 'bundles/establecimiento/css/macro_twig.css') }}" rel="stylesheet" type="text/css" />      
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
-<script type="text/javascript" src="{{ asset('bundles/establecimiento/js/macro_twig.js') }}" charset="utf-8"></script>
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/establecimiento/js/macro_twig.js') }}" charset="utf-8"></script>
 {% endblock %}
-    
+
 {% block main_content %}
-{{ parent() }}
+    {{ parent() }}
 
-    <div class="titulo">Editar Salas de Nivel Inicial</div>
+    <div class="titulo">Editar salas de Nivel Inicial</div>
+
+    <div class="mediana">{% render 'EstablecimientoBundle:UnidadOferta:tarjeta' with {'id': entity.unidadOferta.id} %}</div>
+
     <br />
+    <div class="en_bloque">
+        <form action="{{ path('backend.inicialx.update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}> 
 
-    <div class="chica italico">Establecimiento</div>
-    <span class="chica">
-        {% render "EstablecimientoBundle:Establecimiento:tarjeta_establecimiento" with {'establecimiento_id': unidad_educativa.establecimiento.id} %}
-    </span>
-    <br />
+            <div class="ancho_10">
+                {#                {{ form_row(edit_form.unidad_oferta) }}#}
+                {{ form_row(edit_form.matricula) }}
+            </div> 
 
-    <form action="{{ path('backend_inicial_x_update', { 'inicial_x_id': entity.id, 'unidad_educativa_id': unidad_educativa.id }) }}" method="post" {{ form_enctype(form) }}> 
+            <br />
+            <fieldset>
+                <legend class="resaltado">
+                    Salas
+                </legend> 
 
-        <div class="ancho_10">
-            {{ form_row(form.matricula) }}
-        </div> 
 
-        <br />
-        <fieldset>
-            <legend class="resaltado">
-                Salas
-            </legend> 
-            <div id="salas" data-prototype="{{ collection_macro.widget_prototype(form.salas, 'Eliminar')|escape }}">
-                {% for widget in form.salas.children %}
-                    {% if loop.first %}
-                        <div class="linea resaltado">
-                            {% for campo in widget.children %}
-                                <div style="margin-right: {{ campo.vars.attr.ancho }}em;">{{ campo.vars.attr.descripcion }}</div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                <div id="salas" data-prototype="{{ collection_macro.widget_prototype(edit_form.salas, 'Eliminar')|escape }}">
+                    {% for widget in edit_form.salas.children %}
+                        {% if loop.first %}
+                            <div class="linea resaltado">
+                                {% for campo in widget.children %}
+                                    <div style="margin-right: {{ campo.vars.attr.ancho }}em;">{{ campo.vars.attr.descripcion }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
 
-                    {{ collection_macro.widget_prototype(widget, 'Eliminar') }}
-                {% endfor %}
+                        {{ collection_macro.widget_prototype(widget, 'Eliminar') }}
+                    {% endfor %}
+                </div>
+                <a class="btn-add" data-target="salas">Agregar</a>
+            </fieldset>
+            <div>
+                {{ form_rest(edit_form) }}
             </div>
-            <a class="btn-add" data-target="salas">Agregar</a>
-        </fieldset>
-        {{ form_rest(form) }}   
-        <br />
-        <div class="float_izquierda">
-                    <input type="submit" value="Guardar" />
-        </div>
-        <a class="separador" href="{{ path('backend_unidad_educativa_edit', {'id': unidad_educativa.id }) }}">
-                    Volver a la unidad educativa
-        </a>
+            <br />
+            <div class="float_izquierda separador">
+                <button type="submit">Guardar</button>
+            </div>
+        </form>
 
-    </form>
+
+        <form action="{{ path('backend.inicialx.delete', { 'id': entity.id }) }}" method="post">
+            <div class="invisible">
+                {{ form_widget(delete_form) }}
+            </div>
+            <input class="separador boton_rojo" type="submit" value="Eliminar" onsubmit="return confirm('Está seguro?')" />
+            <a class="separador" href="{{ path(app.session.get('ruta_completa'), app.session.get('parametros')) }}">Volver</a>
+        </form>
+
+    </div>
+    <span class="limpiar_float"></span>
+
     <br />
-    <br />    
+    <br />
 
 {% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+
+    <div class="titulo">Crear registro de nivel inicial</div>
+
+    <form action="{{ path('backend.inicialx.crear', {'unidad_oferta_id' : entity.id} ) }}" method="post" {{ form_enctype(form) }}>
+        <div class="ancho_10">
+            {{ form_widget(form) }}
+        </div>
+        <p>
+            <button type="submit">Crear</button>
+        </p>
+    </form>
+
+            <a href="#">
+                Volver
+            </a>
+
+{% endblock %}

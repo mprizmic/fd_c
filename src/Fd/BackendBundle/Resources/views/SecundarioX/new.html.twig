@@ -1,28 +1,24 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
-{% block title %}
-{{ parent() }} - Crear orientación de la NES
-{% endblock %}
- 
+
 {% block main_content %}
 
-<h1>Crear registro de orientación de la NES</h1>
+    <div class="titulo">Crear registro de orientación de la NES</div>
 
-<form action="{{ path('backend.mediaorientaciones.create') }}" method="post" {{ form_enctype(form) }}>
-    <div class="ancho_10">
-    {{ form_widget(form) }}
-    </div>
-    <p>
-        <button type="submit">Crear</button>
-    </p>
-</form>
+    <form action="{{ path('backend.mediaorientaciones.create') }}" method="post" {{ form_enctype(form) }}>
+        <div class="ancho_10">
+            {{ form_widget(form) }}
+        </div>
+        <p>
+            <button type="submit">Crear</button>
+        </p>
+    </form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend.mediaorientaciones.buscar') }}">
-            Volver
-        </a>
-    </li>
-</ul>
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('backend.mediaorientaciones.buscar') }}">
+                Volver
+            </a>
+        </li>
+    </ul>
 
 {% endblock %}
