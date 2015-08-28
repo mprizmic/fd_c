@@ -41,38 +41,27 @@ class UnidadOfertaType extends AbstractType {
                     return $er->createQueryBuilder('l');
                 });
 
-            if ($data->getId()) {
-                //si el registro ya está creado no se pueden cambiar ni la unidad educativa ni el establecimeinto
-                $optionsLocalizacion['disabled'] = true;
-            };
-
-            $form->add(
-                    $factory->createNamed('localizacion', 'entity', null, $optionsLocalizacion));
-        });
-
-        //combo de ofretas educativas
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($factory) {
-
-            $form = $event->getForm();
-            $data = $event->getData();
-
             $optionsOfertaEducativa = array(
                 'required' => true,
                 'class' => 'OfertaEducativaBundle:OfertaEducativa',
                 'label' => 'Oferta Educativa',
-//                'query_builder' => function(EntityRepository $er) {
-//                    return $er->createQueryBuilder('l');
-//                },
             );
 
             if ($data->getId()) {
+                //si el registro ya está creado no se pueden cambiar ni la unidad educativa ni el establecimeinto
+                $optionsLocalizacion['disabled'] = true;
+
                 //si el registro ya está creado no se pueden cambiar ni la unidad educativa ni el establecimeinto
                 $optionsOfertaEducativa['disabled'] = true;
             };
 
             $form->add(
+                    $factory->createNamed('localizacion', 'entity', null, $optionsLocalizacion));
+
+            $form->add(
                     $factory->createNamed('ofertas', 'entity', null, $optionsOfertaEducativa));
         });
+
         $builder
                 ->add('turnos', 'collection', array(
                     'type' => new UnidadOfertaTurnoType(),
