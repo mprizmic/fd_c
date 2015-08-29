@@ -18,22 +18,21 @@ use Fd\OfertaEducativaBundle\Repository\InicialXRepository;
 class InicialUnidadOfertaHandler extends UnidadOfertaHandler {
 
     /**
-     * Crea un registro de unidad_oferta para el nivel inicial
-     * 
-     * FALTA (Se llama al handler que crea el registro en Inicial_x)
+     * Crea un registro de unidad_oferta para el nivel inicial. También crea inicial_X
      * 
      * @param type $oferta
      * @param type $unidad
      */
-    public function crear($localizacion, $oferta_educativa, $tipo) {
-        return parent::crear($localizacion, $oferta_educativa, TipoUnidadOferta::TUO_INICIAL);
-//FALTA ver mas adelante
-//        $inicial_x_handler = new InicialXHandler($this->getEm());
-//        $inicial_x = $inicial_x_handler->crear($uo, 0);
-//
-//        $this->getEm()->flush();
-//
-//        return $uo;
+    public function crear($localizacion, $oferta_educativa, $tipo, $flush = true) {
+        $respuesta =  parent::crear($localizacion, $oferta_educativa, TipoUnidadOferta::TUO_INICIAL);
+        
+        $unidad_oferta = $respuesta->getObjNuevo();
+
+        $handler = new InicialXHandler($this->getEm());
+        
+        $handler->crear($unidad_oferta);
+        
+        return $unidad_oferta;
     }
 
     /**
