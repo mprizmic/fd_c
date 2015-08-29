@@ -142,6 +142,7 @@ class UnidadOfertaController extends Controller {
      * @Template("EstablecimientoBundle:UnidadOferta:new.html.twig")
      */
     public function createAction(Request $request) {
+
         $entity = new UnidadOferta();
         $form = $this->createForm(new UnidadOfertaType(), $entity);
         $form->bind($request);
@@ -155,7 +156,12 @@ class UnidadOfertaController extends Controller {
             $tipo = $oferta_educativa->esTipo();
             $localizacion = $unidad_oferta->getLocalizacion();
 
-            $handler = $this->getHandler();
+            // Esto es para corregir cuando estén todos los nivekes
+            if ($tipo == 'Inicial') {
+                $handler = UnidadOfertaFactory::createHandler($tipo, $this->getEm());
+            } else {
+                $handler = $this->getHandler();
+            }
 
             //de donde salen los parametros
             $respuesta = $handler->crear($localizacion, $oferta_educativa, $tipo, true);
