@@ -2,6 +2,7 @@
 select 
 concat(e.apodo, ' ',ee.nombre) as establecimiento
 ,uo.id as uo_id
+,uo.inicial_id
 , ix.id as ix_id
 , ix.matricula
 , sa.grupo_etario_id, sa.q_secciones
