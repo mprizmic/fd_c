@@ -20,7 +20,7 @@
     <div class="mediana">{% render 'EstablecimientoBundle:UnidadOferta:tarjeta' with {'id': entity.unidadOferta.id} %}</div>
 
     <br />
-    <div class="en_bloque">
+    <div class="en_bloque ancho">
         <form action="{{ path('backend.inicialx.update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}> 
 
             <div class="ancho_10">
