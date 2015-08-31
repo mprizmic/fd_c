@@ -12,11 +12,11 @@
         {# nombre del establecimiento #}
         <div class="titulo">
             {{ establecimiento.nombre }} <br />
-        <span class="chica">
-            D.E.: {{establecimiento.distritoEscolar}} 
-            - Comuna: {{ establecimiento.comuna }}
-            - CUE: {{ establecimiento.cue}}
-        </span>
+            <span class="chica">
+                D.E.: {{establecimiento.distritoEscolar}} 
+                - Comuna: {{ establecimiento.comuna }}
+                - CUE: {{ establecimiento.cue}}
+            </span>
         </div>
 
         <div>
@@ -59,23 +59,6 @@
             {% endfor %}
 
             <br />
-            <span>
-                Fecha de creación del establecimiento: {{ establecimiento.fechaCreacion|default('s/d') }}
-            </span><br />
-            <span>Fecha de las elecciones:
-                {% if establecimiento.fechaElecciones %}
-                    {{ establecimiento.fechaElecciones|date('d-m-Y') }}
-                {% else %}
-                    Sin datos
-                {% endif %}
-            </span><br />
-            <span>Fecha de finalización del mandato:
-                {% if establecimiento.finMandato %}
-                    {{ establecimiento.finMandato | date('d-m-Y') }}
-                {% else %}
-                    Sin datos
-                {% endif %}
-            </span>
 
             {# datos especificos de acada anexo #}
 
@@ -92,10 +75,9 @@
                             {% endif %}
 
                         <div>TE: {{ establecimiento_edificio['datos_grales']['te'] | default('Sin datos') }}</div>
-                        <div>Barrio: {{ establecimiento_edificio['datos_grales']['barrio'] }}</div>
-                        <div>Código postal: {{ establecimiento_edificio['datos_grales']['cp'] }} </div>
                         <div>Email: <a href="{{ establecimiento_edificio['datos_grales']['email'] }}">{{ establecimiento_edificio['datos_grales']['email'] | default('sin datos') }}</a></div>
-                            {#                    <div><a href="{{ path('edificio_de_un_cue', {'establecimiento_id': establecimiento.id } ) }}">Edificio(s) (con quien se comparte)</a></div> #}
+                        <div>Código postal: {{ establecimiento_edificio['datos_grales']['cp'] }} </div>
+                        <div>Barrio: {{ establecimiento_edificio['datos_grales']['barrio'] }}</div>
                         <div><a href="{{ path('edificio_de_un_cue', {'establecimiento_id': establecimiento.id } ) }}">Edificio(s) (con quien se comparte)</a></div>
                         <div>{{ 'Inspector/a de infraestructura: ' ~ establecimiento_edificio['datos_grales']['inspector']  }}</div>
 
@@ -143,7 +125,7 @@
                                 </div>
                             {% endfor %}  
                         </fieldset>
-                        
+
                         <fieldset class="float_izquierda">
                             <span class="resaltado">Matrícula en el edificio:</span><br/>
 
@@ -220,6 +202,23 @@
             {# Otros datos #}
             <fieldset>
                 <span class="resaltado">Otros datos</span><br/>
+                <span>
+                    Fecha de creación del establecimiento: {{ establecimiento.fechaCreacion|default('s/d') }}
+                </span><br />
+                <span>Fecha de las elecciones:
+                    {% if establecimiento.fechaElecciones %}
+                        {{ establecimiento.fechaElecciones|date('d-m-Y') }}
+                    {% else %}
+                        Sin datos
+                    {% endif %}
+                </span><br />
+                <span>Fecha de finalización del mandato:
+                    {% if establecimiento.finMandato %}
+                        {{ establecimiento.finMandato | date('d-m-Y') }}
+                    {% else %}
+                        Sin datos
+                    {% endif %}
+                </span>
                 <div>Tiene cooperadora: {{ establecimiento.tieneCooperadora |default('Sin datos') }}</div>
                 <div>Laboratorios/Centros:</div>
                 {% for recurso in establecimiento.recursos %}
