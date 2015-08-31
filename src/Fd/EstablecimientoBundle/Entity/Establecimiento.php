@@ -365,6 +365,20 @@ class Establecimiento {
             }
         }
     }
+    public function getRector(){
+        $resultado = null;
+        
+        $todos = $this->getAutoridadesRectorado();
+        
+        foreach ($todos as $autoridad) {
+            if ( $autoridad->getCargoAutoridad()->getAbreviatura() == 'REC'){
+                $resultado = $autoridad;
+                break;
+            }
+        }
+        return $resultado;
+        
+    }
 
     /**
      * @ORM\PrePersist  //en el persist cuando se da de alta uno nuevo

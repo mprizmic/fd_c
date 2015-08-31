@@ -15,9 +15,11 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
         $encabezado[] = 'Barrio';
         $encabezado[] = 'DE';
         $encabezado[] = 'Comuna';
-        $encabezado[] = 'Email';
+        $encabezado[] = 'Email.Inst.';
         $encabezado[] = 'URL';
         $encabezado[] = 'TE';
+        $encabezado[] = 'Rector';
+        $encabezado[] = 'Email rector';
 
         $posicion = $this->phpExcelObject->getActiveSheet(0);
 
@@ -36,6 +38,7 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
             $ed = $ee->getEdificios();
             $d = $ed->getDomicilioPrincipal()->__toString();
             $anexo = $ee->getCueAnexo() <> '00' ? ' - ' . $ee->getNombre() : '';
+            $rector = $e->getRector();
             
             $columna = 'A';
             $posicion->setCellValue($columna . $fila, $fila - $this->fila_inicio_datos );
@@ -63,6 +66,11 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
             $posicion->setCellValue($columna . $fila, $e->getUrl());
             ++$columna;
             $posicion->setCellValue($columna . $fila, $ee->getTe1());
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $rector->__toString());
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $rector->getEmail());
+            
             $fila += 1;
         };
     }
