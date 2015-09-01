@@ -80,7 +80,7 @@ class UnidadOfertaHandler {
      * @param type $oferta
      * @param type $unidad
      */
-    public function crear(Localizacion $localizacion, OfertaEducativa $oferta_educativa, $tipo, $flush = false) {
+    public function crear($localizacion, $oferta_educativa, $tipo, $flush = false) {
 
         $respuesta = new Respuesta();
 
