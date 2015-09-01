@@ -42,32 +42,32 @@ class InicialUnidadOfertaHandler extends UnidadOfertaHandler {
      * @return type
      */
     public function eliminarAll(Localizacion $localizacion, $flush = false) {
-        $respuesta = new Respuesta();
-        try {
-            /*
-             * primero se elimina las salas de inicial_x. Luego se elimina inicial_x y luego unidad_oferta
-             */
-            $unidad_oferta = $unidad_educativa->getOfertas()[0];
-
-            //se busca inicial_x. No hay relacion de unidad_oferta a inicial_x
-            $inicial_x = $this->getEm()->getRepository("OfertaEducativaBundle:InicialX")->findSalas($unidad_oferta);
-
-            //creo el handler
-            $inicial_x_handler = new InicialXHandler($this->getEm());
-            $respuesta = $inicial_x_handler->eliminar($inicial_x);
-
-            //si en el handler no hubo problemas sigo adelante
-            if ($respuesta->getCodigo() == 1) {
-                $this->getEm()->remove($unidad_oferta);
-
-                $this->getEm()->flush();
-            };
-        } catch (Exception $e) {
-            $respuesta->setCodigo(2);
-            $respuesta->setMensaje('Problemas al eliminar. Verifique y reintente.');
-        }
-
-        return $respuesta;
+//        $respuesta = new Respuesta();
+//        try {
+//            /*
+//             * primero se elimina las salas de inicial_x. Luego se elimina inicial_x y luego unidad_oferta
+//             */
+//            $unidad_oferta = $unidad_educativa->getOfertas()[0];
+//
+//            //se busca inicial_x. No hay relacion de unidad_oferta a inicial_x
+//            $inicial_x = $this->getEm()->getRepository("OfertaEducativaBundle:InicialX")->findSalas($unidad_oferta);
+//
+//            //creo el handler
+//            $inicial_x_handler = new InicialXHandler($this->getEm());
+//            $respuesta = $inicial_x_handler->eliminar($inicial_x);
+//
+//            //si en el handler no hubo problemas sigo adelante
+//            if ($respuesta->getCodigo() == 1) {
+//                $this->getEm()->remove($unidad_oferta);
+//
+//                $this->getEm()->flush();
+//            };
+//        } catch (Exception $e) {
+//            $respuesta->setCodigo(2);
+//            $respuesta->setMensaje('Problemas al eliminar. Verifique y reintente.');
+//        }
+//
+//        return $respuesta;
     }
     /**
      * Elimina un registro de unidad_oferta para inicial.
