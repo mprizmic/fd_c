@@ -30,9 +30,8 @@ class Sala {
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @var type 
      * Es la cantidad de secciones de un determinado grupo etario que tiene el nivel inicial de un establecimiento
-     * @Assert\Range(min=1, minMessage="Dato inválido")
+     * Antes era requerido con un valor mínimo de 1 .Assert\Range(min=1, minMessage="Dato inválido")
      */
     private $q_secciones;
     /**

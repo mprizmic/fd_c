@@ -29,6 +29,7 @@ class SalaType extends AbstractType {
                 ))
                 ->add('q_secciones', 'integer', array(
                     'label' => ' ',
+                    'required' => false,
                     'attr' => array(
                         'class' => 'input_talle_05',
                         'descripcion' => 'Cant.secciones',
