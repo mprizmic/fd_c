@@ -30,9 +30,10 @@ class InicialUnidadOfertaHandler extends UnidadOfertaHandler {
 
         $handler = new InicialXHandler($this->getEm());
         
-        $handler->crear($unidad_oferta);
+        $unidad_oferta = $handler->crear($unidad_oferta);
         
-        return $unidad_oferta;
+//        $respuesta->setObjNuevo($unidad_oferta);
+        return $respuesta;
     }
 
     /**

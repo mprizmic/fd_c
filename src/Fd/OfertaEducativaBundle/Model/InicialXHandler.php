@@ -25,6 +25,8 @@ class InicialXHandler {
 
     public function crear(UnidadOferta $unidad_oferta) {
         
+        $respuesta = new Respuesta();
+        
         $inicial_x = $this->crearObjeto();
         
         try{
@@ -36,11 +38,16 @@ class InicialXHandler {
             
             $inicial_x->setUnidadOferta($unidad_oferta);
             $this->em->flush();
+            
+            $respuesta->setCodigo(1);
+            $respuesta->setMensaje('Se generó correctamente.');
+            $respuesta->setClaveNueva($inicial_x->getId());
+            $respuesta->setObjNuevo($inicial_x);
         } catch (Exception $ex) {
             throwException($e);
         };
         
-        return $inicial_x;
+        return $respuesta;
 
     }
 
