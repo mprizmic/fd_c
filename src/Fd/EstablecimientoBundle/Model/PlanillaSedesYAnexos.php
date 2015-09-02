@@ -9,7 +9,7 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
     protected function cargaDatos($datos) {
 
         $encabezado[] = '#';
-        $encabezado[] = 'Nombre';
+        $encabezado[] = 'Establecimiento';
         $encabezado[] = 'CUE';
         $encabezado[] = 'Domicilio';
         $encabezado[] = 'Barrio';
