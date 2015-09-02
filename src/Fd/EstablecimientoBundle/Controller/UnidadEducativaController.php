@@ -31,7 +31,9 @@ class UnidadEducativaController extends Controller
             $elemento['text'] = $localizacion->getUnidadEducativa()->getNivel()->getNombre();
             $resultado[] = $elemento;
         }
-
+        
+        usort($resultado, function($a, $b){ return $a['text'] > $b['text']; });
+        
         $response = new Response();
         $response->setContent(json_encode($resultado));
 
