@@ -17,6 +17,12 @@ class UsuarioType extends AbstractType {
                 ->add('nombre')
                 ->add('apellido')
                 ->add('email')
+                ->add('te_oficina', null, array(
+                    'required'=>FALSE,
+                ))
+                ->add('interno', null, array(
+                    'required'=>FALSE,
+                ))
                 ->add('rol')
                 ->add('fecha_nacimiento', 'birthday', array(
                     'label' => 'Fecha de nacimiento (puede poner cualquier año)',

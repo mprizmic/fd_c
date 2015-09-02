@@ -1,61 +1,67 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
 {% block main_content %}
-{{ parent() }}
+    {{ parent() }}
 
-<div class="titulo float_izquierda">
-    {{titulo}} usuario
-</div>
-
-
-{% if accion == 'actualizar' %}
-    <a class="float_derecha boton_verde" href="{{ path('usuario_nuevo') }}">Nuevo usuario</a>
-{% endif %}
-<div class="limpiar_float"></div>
-<br />
-
-<form action="{{ path( 'usuario_' ~ accion  , { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
-    <div class="ancho_10">
-      {{ form_errors(form) }}
-      {{ form_widget(form) }}
-      {{ form_rest(form) }}
-    </div>
-      <!-- botones de acciones -->
-      <br />
-    <div class="float_izquierda separador">
-        <input type="submit" value="{{ accion | capitalize }}" />
+    <div class="titulo float_izquierda">
+        {{titulo}} usuario
     </div>
 
-</form>
 
-<!--     <div style="display : block"> -->
-{% if accion == 'actualizar' %}
-    <form action="{{ path('usuario_eliminar', { 'id': entity.id }) }}" method="post" onsubmit="return confirm('Está seguro?')">
-        {{ form_widget(delete_form) }}
-        <span class="float_izquierda separador">
-            <input type="submit" class="boton_rojo" value="Eliminar" />
-        </span>
-    </form>
-
-    <a  href="{{ path('usuario_index') }}">Cancelar</a>
-    <span class="separador"></span><a  href="{{ path('usuario_cambio_password', {'id': entity.id } ) }}">Cambio de password</a>
-{% endif %}
-
-{% if accion == 'crear' %}
-    <a  href="{{ path('usuario_index') }}">Volver a la lista</a>
-{% endif %}
-
-<!--</div>-->
-<br />
-<span class="limpiar_float"></span>
-
-<br />
-<br />
-<br />
-
-{% if accion == 'actualizar' %}
-    <div class="float_derecha limpiar_float volver"><a href="{{ app.request.headers.get('referer') }}">Volver</a></div>
+    {% if accion == 'actualizar' %}
+        <a class="float_derecha boton_verde" href="{{ path('usuario_nuevo') }}">Nuevo usuario</a>
+    {% endif %}
     <div class="limpiar_float"></div>
-{% endif %}
+
+    <div class="en_bloque ancho">
+
+        <form action="{{ path( 'usuario_' ~ accion  , { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+            <div class="ancho_10">
+                {{ form_errors(form) }}
+                {{ form_widget(form) }}
+                {{ form_rest(form) }}
+            </div>
+            <!-- botones de acciones -->
+            <br />
+
+            <div class="float_izquierda">
+                <input type="submit" value="{{ accion | capitalize }}" />
+            </div>
+
+        </form>
+
+        <!--     <div style="display : block"> -->
+        {% if accion == 'actualizar' %}
+            <form action="{{ path('usuario_eliminar', { 'id': entity.id }) }}" method="post" onsubmit="return confirm('Está seguro?')">
+
+                <div class="invisible">
+                    {{ form_widget(delete_form) }}
+                </div>
+
+                <input class="separador boton_rojo" type="submit" value="Eliminar" />
+
+                <a class="separador" href="{{ path('usuario_index') }}">Cancelar</a>
+
+                <a class="separador" href="{{ path('usuario_cambio_password', {'id': entity.id } ) }}">Cambio de password</a>
+            </form>
+
+        {% endif %}
+
+        {% if accion == 'crear' %}
+            <a  href="{{ path('usuario_index') }}">Volver a la lista</a>
+        {% endif %}
+
+    </div>
+
+    <br />
+    
+    <span class="limpiar_float"></span>
+
+    <br />
+
+    {% if accion == 'actualizar' %}
+        <div class="float_derecha limpiar_float volver"><a href="{{ app.request.headers.get('referer') }}">Volver</a></div>
+        <div class="limpiar_float"></div>
+    {% endif %}
 
 {% endblock %}

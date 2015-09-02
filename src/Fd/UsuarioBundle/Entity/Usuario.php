@@ -54,6 +54,14 @@ class Usuario implements UserInterface {
      * @Assert\Range(min="3")
      */
     private $password;
+    /**
+     * @ORM\Column(type="string", length=35)
+     */
+    private $te_oficina;
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    private $interno;
 
     /**
      * @ORM\Column(length=255)
@@ -487,5 +495,51 @@ class Usuario implements UserInterface {
     public function getCreado()
     {
         return $this->creado;
+    }
+
+    /**
+     * Set te_oficina
+     *
+     * @param string $teOficina
+     * @return Usuario
+     */
+    public function setTeOficina($teOficina)
+    {
+        $this->te_oficina = $teOficina;
+
+        return $this;
+    }
+
+    /**
+     * Get te_oficina
+     *
+     * @return string 
+     */
+    public function getTeOficina()
+    {
+        return $this->te_oficina;
+    }
+
+    /**
+     * Set interno
+     *
+     * @param string $interno
+     * @return Usuario
+     */
+    public function setInterno($interno)
+    {
+        $this->interno = $interno;
+
+        return $this;
+    }
+
+    /**
+     * Get interno
+     *
+     * @return string 
+     */
+    public function getInterno()
+    {
+        return $this->interno;
     }
 }
