@@ -18,7 +18,6 @@
                 <th>Cue</th>
                 <th>Nombre</th>
                 <th></th>
-                <th>Email</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -29,7 +28,6 @@
                     <td>{{ entity.cue }}</td>
                     <td><a href="{{ path('backend_establecimiento_edit', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
                     <td>{{ entity.apodo }}</td>
-                    <td>{{ entity.email }}</td>
                     <td>
                         <a href="{{ path('backend_establecimiento_edit', { 'id': entity.id }) }}">
                             Editar
