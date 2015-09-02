@@ -103,16 +103,6 @@ class Establecimiento {
     private $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\CargoAutoridad")
-     */
-    private $cargo_autoridad;
-
-    /**
-     * @ORM\Column(nullable=true)
-     */
-    private $nombre_autoridad;
-
-    /**
      *
      * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\DistritoEscolar")
      * @ORM\JoinColumns({
@@ -635,29 +625,6 @@ class Establecimiento {
     }
 
     /**
-     * Set nombre_autoridad
-     *
-     * @param string $nombreAutoridad
-     * @return Establecimiento
-     */
-    public function setNombreAutoridad($nombreAutoridad)
-    {
-        $this->nombre_autoridad = $nombreAutoridad;
-
-        return $this;
-    }
-
-    /**
-     * Get nombre_autoridad
-     *
-     * @return string 
-     */
-    public function getNombreAutoridad()
-    {
-        return $this->nombre_autoridad;
-    }
-
-    /**
      * Set campo_deportes
      *
      * @param string $campoDeportes
@@ -987,29 +954,6 @@ class Establecimiento {
     public function getTipoEstablecimiento()
     {
         return $this->tipo_establecimiento;
-    }
-
-    /**
-     * Set cargo_autoridad
-     *
-     * @param \Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad
-     * @return Establecimiento
-     */
-    public function setCargoAutoridad(\Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad = null)
-    {
-        $this->cargo_autoridad = $cargoAutoridad;
-
-        return $this;
-    }
-
-    /**
-     * Get cargo_autoridad
-     *
-     * @return \Fd\TablaBundle\Entity\CargoAutoridad 
-     */
-    public function getCargoAutoridad()
-    {
-        return $this->cargo_autoridad;
     }
 
     /**
