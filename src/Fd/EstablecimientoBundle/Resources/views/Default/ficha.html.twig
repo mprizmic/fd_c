@@ -179,16 +179,6 @@
                         {% endfor %}  
                         <br />                        
 
-                        {# especializaciones #}
-                        {#                    <fieldset>#}
-                        {#                    <span class="resaltado">Postítulos:</span><br/>#}
-                        {#            {% for especializacion in especializaciones %}
-                                        <div class="separador"><a href="{{ path('especializacion_ficha', {'especializacion_id': especializacion.id }) }}">{{ especializacion.nombre }}</a></div>
-                                    {% else %}  
-                                        <div class="separador">No hay datos disponibles</div>
-                        {#            {% endfor %}  #}
-                        {#                    </fieldset>#}
-
                         {% if not loop.first %}
                         </fieldset>
                     {% endif %}
@@ -201,10 +191,12 @@
 
             {# Otros datos #}
             <fieldset>
+
                 <span class="resaltado">Otros datos</span><br/>
-                <span>
-                    Fecha de creación del establecimiento: {{ establecimiento.fechaCreacion|default('s/d') }}
+
+                <span>Fecha de creación del establecimiento: {{ establecimiento.fechaCreacion|default('s/d') }}
                 </span><br />
+
                 <span>Fecha de las elecciones:
                     {% if establecimiento.fechaElecciones %}
                         {{ establecimiento.fechaElecciones|date('d-m-Y') }}
@@ -212,6 +204,7 @@
                         Sin datos
                     {% endif %}
                 </span><br />
+
                 <span>Fecha de finalización del mandato:
                     {% if establecimiento.finMandato %}
                         {{ establecimiento.finMandato | date('d-m-Y') }}
@@ -219,7 +212,9 @@
                         Sin datos
                     {% endif %}
                 </span>
+
                 <div>Tiene cooperadora: {{ establecimiento.tieneCooperadora |default('Sin datos') }}</div>
+
                 <div>Laboratorios/Centros:</div>
                 {% for recurso in establecimiento.recursos %}
                     <div class="identar_1">
@@ -230,8 +225,11 @@
                 {% else %}
                     <div class="identar_1">Sin datos</div>
                 {% endfor %}
+
                 <div>Campo de deportes: {{ establecimiento.campoDeportes |default('Sin datos') }}</div>
+
                 <div>Año de inicio de la Nueva Escuela Secundaria: {{ establecimiento.anioInicioNes | default( 'Sin datos' ) }}</div>
+
             </fieldset>
             <br />
 
@@ -240,6 +238,7 @@
                     {{ 'ROI' }}
                 </span>
                 <br />
+
                 {% if establecimiento.fechaPresentacionRoi or establecimiento.fechaAprobacionRoi %}
                     {% if establecimiento.fechaPresentacionRoi %}
                         {{ ' Fecha de presentación: ' ~ establecimiento.fechaPresentacionRoi|date('d-m-Y') }}
@@ -251,14 +250,14 @@
                     {{ 'Sin información del trámite' }}
                 {% endif %}
             </fieldset>
-
-
             <br />
+
             <fieldset>
                 <span class="mediana resaltado">
                     {{ 'RAI' }}
                 </span>
                 <br />
+
                 {% if establecimiento.fechaPresentacionRai or establecimiento.fechaAprobacionRai %}
                     {% if establecimiento.fechaPresentacionRai %}
                         {{ ' Fecha de presentación: ' ~ establecimiento.fechaPresentacionRai|date('d-m-Y') }}
@@ -270,13 +269,15 @@
                     {{ 'Sin información del trámite' }}
                 {% endif %}
             </fieldset>
-
             <br />
+
             <fieldset class='float_izquierda ancho'>
+
                 <span class="mediana resaltado">
                     {{ 'R. PRÁCTICAS' }}
                 </span>
                 <br />
+
                 {% if establecimiento.fechaPresentacionRp or establecimiento.fechaAprobacionRp %}
                     {% if establecimiento.fechaPresentacionRp %}
                         {{ ' Fecha de presentación: ' ~ establecimiento.fechaPresentacionRp|date('d-m-Y') }}
