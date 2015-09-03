@@ -157,6 +157,7 @@ class EstablecimientoController extends Controller {
         //repositorio de establecimiento
         $repo = $this->getDoctrine()->getRepository('EstablecimientoBundle:Establecimiento');
 
+        //esto es para el menu de la derecha
         $establecimientos = $repo->qyAllOrdenado('orden')->getResult();
 
         //son obj establecimiento_edificio
@@ -217,6 +218,8 @@ class EstablecimientoController extends Controller {
                 $unidad_educativas[$key2]['nivel'] = $nivel->getNombre();
                 $unidad_educativas[$key2]['nivel_id'] = $nivel->getId();
                 $unidad_educativas[$key2]['nivel_abreviatura'] = $nivel->getAbreviatura();
+                //se carga a los efectos del ordenamiento
+                $unidad_educativas[$key2]['nivel_orden'] = $nivel->getOrden();
                 $unidad_educativas[$key2]['cantidad_docentes'] = $localizacion->getCantidadDocentes();
                 $unidad_educativas[$key2]['localizacion_id'] = $localizacion->getId();
                 $unidad_educativas[$key2]['matricula'] = $localizacion->getMatricula();
@@ -246,6 +249,9 @@ class EstablecimientoController extends Controller {
                 $unidad_educativas[$key2]['turnos_nivel'] = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')->findTurnos($localizacion);
             }
 
+            //se ordenan los niveles
+            usort($unidad_educativas, function($a, $b){return $a['nivel_orden'] - $b['nivel_orden']; } );
+            
             $establecimiento_edificio_array[$key]['unidad_educativas'] = $unidad_educativas;
 
             /**
