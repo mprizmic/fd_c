@@ -205,8 +205,10 @@ class NormaController extends Controller {
         $formHandler = new NormaFormHandler(new NormaManager($this->getEm()));
 
         $respuesta = $formHandler->crear($form, $request);
+        
+        $aviso = ($respuesta->getCodigo()==1) ? 'exito':'error' ;
 
-        $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+        $this->get('session')->getFlashBag()->add($aviso, $respuesta->getMensaje());
 
         if ($respuesta->getCodigo() == 1) {
 
@@ -323,8 +325,10 @@ class NormaController extends Controller {
         $formHandler = new NormaFormHandler(new NormaManager($this->getEm()));
 
         $respuesta = $formHandler->eliminar($form, $request, $entity); //la entity la paso para no tener que ir a buscar de nuevo despues
+        
+        $aviso = ($respuesta->getCodigo()==1) ? 'exito':'error' ;
 
-        $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+        $this->get('session')->getFlashBag()->add($aviso, $respuesta->getMensaje());
 
         return $this->redirect($this->generateUrl('backend_norma_buscar'));
     }
