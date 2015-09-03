@@ -1,55 +1,58 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Domicilio
+    {{ parent() }} - Domicilio
 {% endblock %}
- 
+
 {% block main_content %}
+    {{ parent() }} 
 
-<h1>Domicilio</h1>
+    <div class="titulo">Domicilio</div>
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Calle</th>
-            <td>{{ entity.calle }}</td>
-        </tr>
-        <tr>
-            <th>Altura</th>
-            <td>{{ entity.altura }}</td>
-        </tr>
-        <tr>
-            <th>C. Postal</th>
-            <td>{{ entity.cPostal }}</td>
-        </tr>
-        <tr>
-            <th>Principal</th>
-            <td>{{ entity.principal }}</td>
-        </tr>
-    </tbody>
-</table>
+    <fieldset>
+        <table class="record_properties">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th>Calle</th>
+                    <td>{{ entity.calle }}</td>
+                </tr>
+                <tr>
+                    <th>Altura</th>
+                    <td>{{ entity.altura }}</td>
+                </tr>
+                <tr>
+                    <th>C. Postal</th>
+                    <td>{{ entity.cPostal }}</td>
+                </tr>
+                <tr>
+                    <th>Principal</th>
+                    <td>{{ entity.principal }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend_domicilio') }}">
-            Volver a la lista
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('backend_domicilio_edit', { 'id': entity.id }) }}">
-            Editar
-        </a>
-    </li>
-    <li>
+    <br />
+    <div>
+
         <form action="{{ path('backend_domicilio_delete', { 'id': entity.id }) }}" method="post">
+            
+            <a class="separador" href="{{ path('backend_domicilio_edit', { 'id': entity.id }) }}">Editar</a>
+            
+            <div class="invisible">
             {{ form_widget(delete_form) }}
-            <button type="submit" class="boton_rojo">Eliminar</button>
+            </div>
+            
+            <button type="submit" class="separador boton_rojo">Eliminar</button>
+            
+            <a class="separador" href="{{ path('backend_domicilio') }}">Volver a la lista</a>
         </form>
-    </li>
-</ul>
+    </div>
+
+    {% include '::includes/volver.html.twig' %}
 
 {% endblock %}

@@ -1,28 +1,23 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Crear Edificio
+    {{ parent() }} - Crear Edificio
 {% endblock %}
- 
+
 {% block main_content %}
 
-<h1>Crear registro de Edificio </h1>
+    <div class="titulo">Crear registro de Edificio </div>
 
-<form action="{{ path('backend_edificio_create') }}" method="post" {{ form_enctype(form) }}>
-    <div class="ancho_10">
-    {{ form_widget(form) }}
-    </div>
-    <p>
-        <button type="submit">Crear</button>
-    </p>
-</form>
+    <form action="{{ path('backend_edificio_create') }}" method="post" {{ form_enctype(form) }}>
+        <div class="ancho_10">
+            {{ form_widget(form) }}
+        </div>
+        <div>
+            <button type="submit">Crear</button>
+            <a class="separador" href="{{ path('backend_edificio') }}">Volver a la lista</a>
+        </div>
+    </form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend_edificio') }}">
-            Volver a la lista
-        </a>
-    </li>
-</ul>
+    <br />
 
 {% endblock %}

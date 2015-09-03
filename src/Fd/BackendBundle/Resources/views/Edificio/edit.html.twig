@@ -6,8 +6,8 @@
 
 {% block main_content %}
     {{ parent() }}
-    
-    <h1>Editar un edificio</h1>
+
+    <div class="titulo">Editar un edificio</div>
 
     <form action="{{ path('backend_edificio_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <div class="ancho_10">
@@ -30,30 +30,22 @@
         <br />
         <br />
 
-        <div class="separador">
+        <p class="separador">
             <button type="submit">Guardar</button>
-        </div>
+        </p>
     </form>
 
-    <div>
-
-        <form action="{{ path('backend_edificio_delete', { 'id': entity.id }) }}" method="post">
+    <form action="{{ path('backend_edificio_delete', { 'id': entity.id }) }}" method="post">
+        <div class="invisible">
             {{ form_widget(delete_form) }}
+        </div>
 
+        <button type="submit" class="separador boton_rojo">Eliminar</button>
+        <a class="separador" href="{{ path('edificio_ficha', {'id': entity.id} ) }}">Volver al establecimiento</a>
+        <a class="separador" href="{{ path('backend_edificio') }}">Volver a la lista de edificios</a>
+        <a class="separador" href="{{ path('backend_edificio_new') }}">Crear nuevo edificio</a>
+    </form>
 
-            <span class="separador">
-                <button type="submit" class="boton_rojo">Eliminar</button>
-            </span>
-            <a class="separador" href="{{ path('edificio_ficha', {'id': entity.id} ) }}">Volver al establecimiento</a>
-            <a class="separador" href="{{ path('backend_edificio') }}">Volver a la lista de edificios</a>
-        </form>
-
-
-    </div>
-
-
-    <div class="limpiar_float"></div>
-    <br />
     <br />
 
 {% endblock %}

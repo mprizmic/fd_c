@@ -1,47 +1,51 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - Edificio
+    {{ parent() }} - Edificio
 {% endblock %}
- 
+
 {% block main_content %}
 
-<h1>Edificio</h1>
+    <div class="titulo">Edificio</div>
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Cui</th>
-            <td>{{ entity.cui }}</td>
-        </tr>
-        <tr>
-            <th>Superficie</th>
-            <td>{{ entity.superficie }}</td>
-        </tr>
-    </tbody>
-</table>
+    <fieldset>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend_edificio') }}">
-            Volver a la lista
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('backend_edificio_edit', { 'id': entity.id }) }}">
-            Editar
-        </a>
-    </li>
-    <li>
+        <table class="record_properties">
+            <tbody>
+                <tr>
+                    <th>Id:</th>
+                    <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th>Cui:</th>
+                    <td>{{ entity.cui }}</td>
+                </tr>
+                <tr>
+                    <th>Superficie:</th>
+                    <td>{{ entity.superficie }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <br />            
+    
+    <div>
+
         <form action="{{ path('backend_edificio_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="boton_rojo">Eliminar</button>
+
+            <a href="{{ path('backend_edificio_edit', { 'id': entity.id }) }}">Editar</a>
+
+            <div class="invisible">
+                {{ form_widget(delete_form) }}
+            </div>
+
+            <button type="submit" class="separador boton_rojo">Eliminar</button>
+        
+            <a class="separador" href="{{ path('backend_edificio') }}">Volver a la lista</a>
         </form>
-    </li>
-</ul>
+    </div>
+        
+    {% include '::includes/volver.html.twig' %}        
 
 {% endblock %}

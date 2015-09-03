@@ -5,18 +5,21 @@
 {% endblock %}
 
 {% block main_content %}
+    {{ parent() }}
 
-    <h1>Crear nuevo domicilio</h1>
+    <div class="titulo">Crear nuevo domicilio</div>
 
     <form action="{{ path('backend_domicilio_create') }}" method="post" {{ form_enctype(form) }}>
         <div class="ancho_10">
             {{ form_widget(form) }}
         </div>
+
         <p class="separador">
             <button type="submit">Crear</button>
             <a class="separador" href="{{ path('backend_domicilio') }}">Volver a la lista</a>
         </p>
     </form>
+
     <br />
 
 {% endblock %}
