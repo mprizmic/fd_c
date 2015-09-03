@@ -12,11 +12,11 @@ use Fd\BackendBundle\Form\EdificioType;
 use Fd\EdificioBundle\Entity\Edificio;
 use Fd\EdificioBundle\Form\Handler\EdificioHandler;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
-
 use Fd\EdificioBundle\EventListener;
 use Fd\EdificioBundle\Event\EdificioEvents;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Fd\EdificioBundle\Event\EdificioNuevoEvent;
+
 /**
  * Edificio controller.
  *
@@ -26,9 +26,9 @@ class EdificioController extends Controller {
 
     private $handler;
     private $em;
-    
-    public function getEm(){
-        if (!$em){
+
+    public function getEm() {
+        if (!$em) {
             $this->em = $this->getDoctrine()->getEntityManager();
         };
         return $em;
@@ -52,7 +52,7 @@ class EdificioController extends Controller {
 
         return $this->render('BackendBundle:Edificio:index.html.twig', array(
                     'entities' => $entities,
-                ));
+        ));
     }
 
     /**
@@ -60,31 +60,30 @@ class EdificioController extends Controller {
      *
      * @Route("/{id}/show", name="backend_edificio_show")
      * @ParamConverter("edificio", class="EdificioBundle:Edificio")
-     * @Template()
      */
     public function showAction(Edificio $edificio) {
 
         $deleteForm = $this->createDeleteForm($edificio->getId());
 
-        return array(
-            'entity' => $edificio,
-            'delete_form' => $deleteForm->createView(),);
+        return $this->render('BackendBundle:Edificio:show.html.twig', array(
+                    'entity' => $edificio,
+                    'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
      * Displays a form to create a new Edificio entity.
      *
      * @Route("/new", name="backend_edificio_new")
-     * @Template()
      */
     public function newAction() {
         $entity = new Edificio();
         $form = $this->createForm(new EdificioType(), $entity);
 
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView()
-        );
+        return $this->render('BackendBundle:Edificio:new.html.twig', array(
+                    'entity' => $entity,
+                    'form' => $form->createView()
+        ));
     }
 
     /**
@@ -92,7 +91,6 @@ class EdificioController extends Controller {
      *
      * @Route("/create", name="backend_edificio_create")
      * @Method("post")
-     * @Template("EdificioBundle:Edificio:new.html.twig")
      */
     public function createAction(Request $request) {
 
@@ -103,17 +101,17 @@ class EdificioController extends Controller {
         $form->bind($request);
 
         if ($form->isValid()) {
-            
+
             $handler = $this->getHandler();
-            $handler->create( $form->getData() );
-            
+            $handler->create($form->getData());
+
             return $this->redirect($this->generateUrl('backend_edificio_show', array('id' => $entity->getId())));
         }
 
-        return array(
+        return $this->render('BackendBundle:Edificio:new.html.twig', array(
             'entity' => $entity,
             'form' => $form->createView()
-        );
+        ));
     }
 
     /**
@@ -121,18 +119,17 @@ class EdificioController extends Controller {
      *
      * @Route("/{id}/edit", name="backend_edificio_edit")
      * @ParamConverter("edificio", class="EdificioBundle:Edificio")
-     * @Template()
      */
     public function editAction(Edificio $edificio) {
 
         $editForm = $this->createForm(new EdificioType(), $edificio);
         $deleteForm = $this->createDeleteForm($edificio->getId());
 
-        return array(
+        return $this->render('BackendBundle:Edificio:edit.html.twig', array(
             'entity' => $edificio,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
@@ -151,17 +148,17 @@ class EdificioController extends Controller {
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
-            
+
             $handler = $this->getHandler();
             $respuesta = $handler->update($edificio);
-            
-            $this->get('session')->getFlashBag()->add('exito', $respuesta->getMensaje() );
+
+            $this->get('session')->getFlashBag()->add('exito', $respuesta->getMensaje());
 
             return $this->redirect($this->generateUrl('backend_edificio_edit', array('id' => $edificio->getId())));
         }
 
-        $this->get('session')->getFlashBag()->add('error', $respuesta->getMensaje() );
-        
+        $this->get('session')->getFlashBag()->add('error', $respuesta->getMensaje());
+
         return array(
             'entity' => $edificio,
             'edit_form' => $editForm->createView(),
@@ -187,10 +184,9 @@ class EdificioController extends Controller {
             $edificio_handler = $this->getHandler();
             $respuesta = $edificio_handler->delete($edificio);
 
-            $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje() );
-        }else{
+            $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
+        } else {
             $this->get('session')->getFlashBag()->add('notice', 'No se pudo eliminar el edificio y sus domicilios. Verifique y reintente.');
-            
         }
         return $this->redirect($this->generateUrl('backend_edificio'));
     }
