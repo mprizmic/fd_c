@@ -32,7 +32,7 @@ class UnidadEducativaController extends Controller
             $resultado[] = $elemento;
         }
         
-        usort($resultado, function($a, $b){ return $a['text'] > $b['text']; });
+        usort($resultado, function($a, $b){ return $a['value'] > $b['value']; });
         
         $response = new Response();
         $response->setContent(json_encode($resultado));
