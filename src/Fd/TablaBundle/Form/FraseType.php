@@ -17,7 +17,9 @@ class FraseType extends AbstractType {
                     ),
                     'trim' => true,
                 ))
-                ->add('fecha')
+                ->add('fecha', 'date', array(
+                    'years' => range(2000, 2037),
+                ))
                 ->add('autor')
         ;
     }
