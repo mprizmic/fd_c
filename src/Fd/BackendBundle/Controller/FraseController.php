@@ -81,6 +81,7 @@ class FraseController extends Controller {
         $form->bindRequest($request);
 
         if ($form->isValid()) {
+            
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
@@ -104,12 +105,6 @@ class FraseController extends Controller {
      */
     public function editAction(Frase $entity) {
         $em = $this->getDoctrine()->getEntityManager();
-
-//        $entity = $em->getRepository('TablaBundle:Frase')->find($id);
-//
-//        if (!$entity) {
-//            throw $this->createNotFoundException('Unable to find Frase entity.');
-//        }
 
         $editForm = $this->createForm(new FraseType(), $entity);
         $deleteForm = $this->createDeleteForm($entity->getId());
@@ -149,10 +144,11 @@ class FraseController extends Controller {
             $em->flush();
 
             $session = $this->get('session');
-            $session->setFlash('notice', 'Se guardó exitosamente');
+            $session->getFlashBag()->add('exito', 'Se guardó exitosamente');
 
             return $this->redirect($this->generateUrl('backend_frase'));
         }
+        $session->getFlashBag()->add('error', 'Problemas al guardar. Verifique y reintente.');
 
         return array(
             'entity' => $entity,
