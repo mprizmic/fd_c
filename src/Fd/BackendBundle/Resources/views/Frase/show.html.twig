@@ -3,7 +3,7 @@
 {% block main_content %}
     {{ parent() }}
 
-    <div class="titulo">Frase</div>
+    <div class="titulo">Frase célebre</div>
     <br />
 
     <fieldset>
@@ -35,6 +35,7 @@
         <button type="submit" class="boton_rojo">Eliminar</button>
         <a class="separador" href="{{ path('backend_frase_edit', { 'id': entity.id }) }}">Editar</a>
         <a class="separador" href="{{ path('backend_frase') }}">Volver a la lista</a>
+        <a class="separador" href="{{ path('backend_frase_new') }}">Nueva frase</a>
     </form>
     <br />
 {% endblock %}
