@@ -263,7 +263,7 @@ class AutoridadController extends Controller {
             return $this->redirect($this->generateUrl('backend_autoridad_edit', array('id' => $id)));
         }
 
-        $this->get('session')->getFlashBag()->add('notice', 'Problemas al cargar la autoridad. Verifique y reintente.');
+        $this->get('session')->getFlashBag()->add('error', 'Problemas al cargar la autoridad. Verifique y reintente.');
 
         return array(
             'entity' => $entity,

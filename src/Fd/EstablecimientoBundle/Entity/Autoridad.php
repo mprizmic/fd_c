@@ -64,6 +64,11 @@ class Autoridad
      */
     private $establecimiento;
     /**
+     * @ORM\Column(nullable=true, type="date")
+     * 
+     */
+    private $inicio_mandato;
+    /**
      * @ORM\Column(type="datetime")
      * 
      */
@@ -97,7 +102,6 @@ class Autoridad
         return $this->getApellido() . ', ' . $this->getNombre();
     }
 
-
     /**
      * Get id
      *
@@ -112,10 +116,13 @@ class Autoridad
      * Set nombre
      *
      * @param string $nombre
+     * @return Autoridad
      */
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
+
+        return $this;
     }
 
     /**
@@ -132,10 +139,13 @@ class Autoridad
      * Set apellido
      *
      * @param string $apellido
+     * @return Autoridad
      */
     public function setApellido($apellido)
     {
         $this->apellido = $apellido;
+
+        return $this;
     }
 
     /**
@@ -149,89 +159,26 @@ class Autoridad
     }
 
     /**
-     * Set cargo_autoridad
+     * Set te_particular
      *
-     * @param Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad
-     */
-    public function setCargoAutoridad(\Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad)
-    {
-        $this->cargo_autoridad = $cargoAutoridad;
-    }
-
-    /**
-     * Get cargo_autoridad
-     *
-     * @return Fd\TablaBundle\Entity\CargoAutoridad 
-     */
-    public function getCargoAutoridad()
-    {
-        return $this->cargo_autoridad;
-    }
-
-    /**
-     * Set establecimiento
-     *
-     * @param Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento
-     */
-    public function setEstablecimiento(\Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento)
-    {
-        $this->establecimiento = $establecimiento;
-    }
-
-    /**
-     * Get establecimiento
-     *
-     * @return Fd\EstablecimientoBundle\Entity\Establecimiento 
-     */
-    public function getEstablecimiento()
-    {
-        return $this->establecimiento;
-    }
-
-    /**
-     * Set actualizado
-     *
-     * @param \DateTime $actualizado
+     * @param string $teParticular
      * @return Autoridad
      */
-    public function setActualizado($actualizado)
+    public function setTeParticular($teParticular)
     {
-        $this->actualizado = $actualizado;
-    
+        $this->te_particular = $teParticular;
+
         return $this;
     }
 
     /**
-     * Get actualizado
+     * Get te_particular
      *
-     * @return \DateTime 
+     * @return string 
      */
-    public function getActualizado()
+    public function getTeParticular()
     {
-        return $this->actualizado;
-    }
-
-    /**
-     * Set creado
-     *
-     * @param \DateTime $creado
-     * @return Autoridad
-     */
-    public function setCreado($creado)
-    {
-        $this->creado = $creado;
-    
-        return $this;
-    }
-
-    /**
-     * Get creado
-     *
-     * @return \DateTime 
-     */
-    public function getCreado()
-    {
-        return $this->creado;
+        return $this->te_particular;
     }
 
     /**
@@ -243,7 +190,7 @@ class Autoridad
     public function setCelular($celular)
     {
         $this->celular = $celular;
-    
+
         return $this;
     }
 
@@ -266,7 +213,7 @@ class Autoridad
     public function setEmail($email)
     {
         $this->email = $email;
-    
+
         return $this;
     }
 
@@ -281,25 +228,117 @@ class Autoridad
     }
 
     /**
-     * Set te_particular
+     * Set inicio_mandato
      *
-     * @param string $teParticular
+     * @param \DateTime $inicioMandato
      * @return Autoridad
      */
-    public function setTeParticular($teParticular)
+    public function setInicioMandato($inicioMandato)
     {
-        $this->te_particular = $teParticular;
-    
+        $this->inicio_mandato = $inicioMandato;
+
         return $this;
     }
 
     /**
-     * Get te_particular
+     * Get inicio_mandato
      *
-     * @return string 
+     * @return \DateTime 
      */
-    public function getTeParticular()
+    public function getInicioMandato()
     {
-        return $this->te_particular;
+        return $this->inicio_mandato;
+    }
+
+    /**
+     * Set actualizado
+     *
+     * @param \DateTime $actualizado
+     * @return Autoridad
+     */
+    public function setActualizado($actualizado)
+    {
+        $this->actualizado = $actualizado;
+
+        return $this;
+    }
+
+    /**
+     * Get actualizado
+     *
+     * @return \DateTime 
+     */
+    public function getActualizado()
+    {
+        return $this->actualizado;
+    }
+
+    /**
+     * Set creado
+     *
+     * @param \DateTime $creado
+     * @return Autoridad
+     */
+    public function setCreado($creado)
+    {
+        $this->creado = $creado;
+
+        return $this;
+    }
+
+    /**
+     * Get creado
+     *
+     * @return \DateTime 
+     */
+    public function getCreado()
+    {
+        return $this->creado;
+    }
+
+    /**
+     * Set cargo_autoridad
+     *
+     * @param \Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad
+     * @return Autoridad
+     */
+    public function setCargoAutoridad(\Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad = null)
+    {
+        $this->cargo_autoridad = $cargoAutoridad;
+
+        return $this;
+    }
+
+    /**
+     * Get cargo_autoridad
+     *
+     * @return \Fd\TablaBundle\Entity\CargoAutoridad 
+     */
+    public function getCargoAutoridad()
+    {
+        return $this->cargo_autoridad;
+    }
+
+    /**
+     * Set establecimiento
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento
+     * @return Autoridad
+     */
+    public function setEstablecimiento(\Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento = null)
+    {
+        $this->establecimiento = $establecimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get establecimiento
+     *
+     * @return \Fd\EstablecimientoBundle\Entity\Establecimiento 
+     */
+    public function getEstablecimiento()
+    {
+        return $this->establecimiento;
     }
 }

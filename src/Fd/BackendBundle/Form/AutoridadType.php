@@ -18,6 +18,10 @@ class AutoridadType extends AbstractType {
                     'label' => 'Cargo',
                 ))
                 ->add('establecimiento')
+                ->add('inicio_mandato', 'date', array(
+                    'label' => 'Fecha de inicio del mandato',
+                    'required' => false,
+                ))
                 ->add('te_particular', 'text', array(
                     'required' => false,
                 ))
