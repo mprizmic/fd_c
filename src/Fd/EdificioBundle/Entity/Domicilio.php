@@ -24,7 +24,6 @@ class Domicilio
      /**
       * bidireccional lado propietario
       * @ORM\ManyToOne(targetEntity="Fd\EdificioBundle\Entity\Edificio", inversedBy="domicilios")
-      * @Assert\NotBlank(message="El edificio no puede quedar en blanco")
       */
      private $edificio;
     /**
