@@ -102,15 +102,19 @@ class EdificioController extends Controller {
 
         if ($form->isValid()) {
 
-            $handler = $this->getHandler();
-            $handler->create($form->getData());
+            $respuesta = $this->getHandler()
+                    ->create($form->getData());
 
-            return $this->redirect($this->generateUrl('backend_edificio_show', array('id' => $entity->getId())));
+            if ($respuesta->getCodigo() == 1) {
+                $this->get('session')->getFlashBag()->add('exito', 'Se creo el edificio exitosamente');
+
+                return $this->redirect($this->generateUrl('backend_domicilio_new', array('edificio_id' => $entity->getId())));
+            }
         }
 
         return $this->render('BackendBundle:Edificio:new.html.twig', array(
-            'entity' => $entity,
-            'form' => $form->createView()
+                    'entity' => $entity,
+                    'form' => $form->createView()
         ));
     }
 
@@ -126,9 +130,9 @@ class EdificioController extends Controller {
         $deleteForm = $this->createDeleteForm($edificio->getId());
 
         return $this->render('BackendBundle:Edificio:edit.html.twig', array(
-            'entity' => $edificio,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $edificio,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 

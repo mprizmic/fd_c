@@ -1,17 +1,40 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
-{% block title %}
-    {{ parent() }} - Crear Edificio
+{% import ':Form:macro_twig.html.twig' as collection_macro %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset( 'bundles/establecimiento/css/macro_twig.css') }}" rel="stylesheet" type="text/css" />      
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/establecimiento/js/macro_twig.js') }}" charset="utf-8"></script>
 {% endblock %}
 
 {% block main_content %}
 
-    <div class="titulo">Crear registro de Edificio </div>
+    <div class="titulo">Crear registro de Edificio</div>
 
     <form action="{{ path('backend_edificio_create') }}" method="post" {{ form_enctype(form) }}>
         <div class="ancho_10">
-            {{ form_widget(form) }}
+
+            {{ form_row(form.cui) }}
+            {{ form_row(form.referencia) }}
+            {{ form_row(form.superficie) }}
+            {{ form_row(form.comuna) }}
+            {{ form_row(form.cgp) }}
+            {{ form_row(form.barrio) }}
+            {{ form_row(form.distritoEscolar) }}
+            {{ form_row(form.inspector) }}
         </div>
+        <br />
+        
+        <!--- el token de formulario -->
+        <div>
+            {{ form_widget(form._token) }}
+        </div>        
+        <!-- botón para crear -->
         <div>
             <button type="submit">Crear</button>
             <a class="separador" href="{{ path('backend_edificio') }}">Volver a la lista</a>

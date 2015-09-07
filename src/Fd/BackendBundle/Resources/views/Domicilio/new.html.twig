@@ -1,15 +1,20 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
-{% block title %}
-    {{ parent() }} - Crear Domicilio
-{% endblock %}
-
 {% block main_content %}
     {{ parent() }}
 
     <div class="titulo">Crear nuevo domicilio</div>
 
-    <form action="{{ path('backend_domicilio_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="
+
+          {% if edificio_id is not defined %}
+
+              {{ path('backend_domicilio_create') }}
+          {% else %}
+              {{ path('backend_domicilio_create', {'edificio_id':edificio_id}) }}
+          {% endif %}
+
+          " method="post" {{ form_enctype(form) }}>
         <div class="ancho_10">
             {{ form_widget(form) }}
         </div>

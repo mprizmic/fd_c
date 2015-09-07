@@ -24,7 +24,7 @@ class EdificioHandler {
         $this->entity_manager = $em;
 
         $class = 'Fd\EdificioBundle\Entity\Edificio';
-                
+
         $metadata = $em->getClassMetadata($class);
         $this->class = $metadata->getName();
 
@@ -41,20 +41,37 @@ class EdificioHandler {
         return $this->repository->findAllOrdenado();
     }
 
+    /**
+     * si se crea un edificio redirecciona a crear un domicilio 
+     * 
+     * @param Edificio $edificio
+     */
     public function create(Edificio $edificio) {
+        $this->respuesta = new Respuesta();
 
-        $this->entity_manager->persist($edificio);
-        $this->entity_manager->flush();
+        try {
+            $this->entity_manager->persist($edificio);
+            $this->entity_manager->flush();
+            
+            // se registra el resultado
+            $this->respuesta->setCodigo(1);
+            $this->respuesta->setMensaje('Edificio creado correstamente');
+            $this->respuesta->setObjNuevo($edificio);
+            
+        } catch (Exception $ex) {
+            $this->respuesta->setCodigo(2);
+            $this->respuesta->setMensaje('Problemas. No se pudo crear el nuevo edificio');
+        }
 
-        //creo el evento
-        //este evento crea un domicilio correspondiente a este edificio
+        /* creo y despacho el evento
+         * se despacha el evento que por ahora no hace nada.
+         * No servia que creara una domicilio dummy
+         */
         $event = new EdificioNuevoEvent($edificio);
 
-        //$listener = new EdificioNuevoListener();
-        //despacho lo que el subscriber dice
-        $this->dispatcher->addListener(EdificioEvents::EDIFICIO_NUEVO, array($this->listener, 'onEdificioNuevo'));
-
         $this->dispatcher->dispatch(EdificioEvents::EDIFICIO_NUEVO, $event);
+        
+        return $this->respuesta;
     }
 
     public function update(Edificio $edificio) {
@@ -62,7 +79,7 @@ class EdificioHandler {
 
             $this->entity_manager->persist($edificio);
             $this->entity_manager->flush();
-            
+
             $this->respuesta->setCodigo(1);
             $this->respuesta->setMensaje('Se actualizó exitosamente.');
         } catch (Exception $e) {

@@ -20,13 +20,6 @@ class DomicilioRepository extends EntityRepository {
     public function crear($entity) {
 
         //verifica otro posible domicilio del edificio
-        $otro_principal = $this->hasOtroDomicilioPrincipal($entity);
-        if (!$otro_principal) {
-            $entity->setPrincipal(TRUE);
-        } else {
-            $entity->setPrincipal(FALSE);
-        }
-
         $respuesta = new Respuesta();
         $em = $this->_em;
 
@@ -34,7 +27,11 @@ class DomicilioRepository extends EntityRepository {
             $em->persist($entity);
             $em->flush();
 
+            //DEPRECATED
             $respuesta->setClaveNueva($entity->getId());
+            
+            //nuevo
+            $respuesta->setObjNuevo($entity);
 
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se guardó el nuevo domicilio exitosamente');
@@ -45,7 +42,6 @@ class DomicilioRepository extends EntityRepository {
 
         return $respuesta;
     }
-
 
     public function getBuilder() {
         return $this->createQueryBuilder('d');
@@ -115,6 +111,8 @@ class DomicilioRepository extends EntityRepository {
     }
 
     /**
+     * FALTA NO ANDA puede haber un domicilio sin edificioS
+     * 
      * Verifica si el domicilio que se está pasando de parámetro pertenece a un 
      * edificio que ya tiene domicilio principal, distinto del parametro que se está pasando
      * 
@@ -127,12 +125,12 @@ class DomicilioRepository extends EntityRepository {
         $builder = $this->getBuilder()
                 ->where('d.edificio = :edificio')
                 ->andWhere('d.principal = :principal');
-        
+
         if ($entity_nueva->getId()) {
             $builder->andWhere('d.id <> :clave');
             $builder->setParameter('clave', $entity_nueva->getId());
         }
-        
+
         $builder->setParameter('principal', TRUE);
         $builder->setParameter('edificio', $entity_nueva->getEdificio()->getId());
 
