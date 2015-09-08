@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fd\EdificioBundle\Entity\Domicilio;
+use Fd\EdificioBundle\Model\DomicilioManager;
 use Fd\BackendBundle\Form\DomicilioType;
 use Fd\EdificioBundle\Event\FilterEdificioEvent;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
@@ -18,7 +19,25 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("/domicilio")
  */
 class DomicilioController extends Controller {
-
+    
+    private $em;
+    private $manager;
+    
+    public function getEm() {
+        if (!$this->em) {
+            $this->em = $this->getDoctrine()->getEntityManager();
+        };
+        return $this->em;
+    }
+    private function getRepo() {
+        return $this->getEm()->getRepository('EdificioBundle:Domicilio');
+    }
+    public function getManager() {
+        if (!$this->manager) {
+            $this->manager = new DomicilioManager($this->getEm());
+        };
+        return $this->manager;
+    }    
     /**
      * Lists all Domicilio entities.
      *
@@ -26,9 +45,8 @@ class DomicilioController extends Controller {
      * @Template()
      */
     public function indexAction() {
-        $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('EdificioBundle:Domicilio')->findBy(array(), array('calle' => 'ASC'));
+        $entities = $this->getEm()->getRepo()->findBy(array(), array('calle' => 'ASC'));
 
         return array('entities' => $entities);
     }
@@ -40,9 +58,8 @@ class DomicilioController extends Controller {
      * @Template()
      */
     public function showAction($id) {
-        $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('EdificioBundle:Domicilio')->find($id);
+        $entity = $this->getRepo()->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Domicilio entity.');
@@ -78,8 +95,6 @@ class DomicilioController extends Controller {
     }
 
     /**
-     * FALTA manejar el tema del parametro opcional con un paramconverter customizado o adentro del controller
-     * 
      * Creates a new Domicilio entity.
      * No esta controlando el domicilio principal unico.
      * pasar esto al repo
@@ -92,8 +107,7 @@ class DomicilioController extends Controller {
         $respuesta = new Respuesta();
 
         $entity = new Domicilio();
-        
-        
+
         $request = $this->getRequest();
         $form = $this->createForm(new DomicilioType(), $entity);
 
@@ -101,11 +115,17 @@ class DomicilioController extends Controller {
 
         if ($form->isValid()) {
 
-            $entity->setEdificio($edificio);
-            
-            $respuesta = $this->getDoctrine()
-                    ->getRepository('EdificioBundle:Domicilio')
-                    ->crear($entity);
+            if ($edificio_id) {
+                
+                $edificio = $this->getDoctrine()
+                        ->getRepository('EdificioBundle:Edificio')
+                        ->find($edificio_id);
+            } else {
+                
+                $edificio = null;
+            }
+
+            $respuesta = $this->getManager()->crear($entity, $edificio);
 
             if ($respuesta->getCodigo() == 1) {
 
@@ -132,9 +152,8 @@ class DomicilioController extends Controller {
      * @Template()
      */
     public function editAction($id) {
-        $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('EdificioBundle:Domicilio')->find($id);
+        $entity = $this->getRepo()->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Domicilio entity.');
@@ -160,10 +179,7 @@ class DomicilioController extends Controller {
     public function updateAction($id, Request $request) {
         $respuesta = new Respuesta();
 
-        $em = $this->getDoctrine()->getEntityManager();
-        $repository = $em->getRepository('EdificioBundle:Domicilio');
-
-        $entity = $repository->find($id);
+        $entity = $this->getRepo()->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Domicilio entity.');
@@ -187,11 +203,6 @@ class DomicilioController extends Controller {
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
         ));
-//        return array(
-//            'entity' => $entity,
-//            'edit_form' => $editForm->createView(),
-//            'delete_form' => $deleteForm->createView(),
-//        );
     }
 
     /**
@@ -207,15 +218,15 @@ class DomicilioController extends Controller {
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('EdificioBundle:Domicilio')->find($id);
+            
+            $entity = $this->getRepo()->find($id);
 
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Domicilio entity.');
             }
 
-            $em->remove($entity);
-            $em->flush();
+            $this->getEm()->remove($entity);
+            $this->getEm()->flush();
         }
 
         return $this->redirect($this->generateUrl('backend_domicilio'));

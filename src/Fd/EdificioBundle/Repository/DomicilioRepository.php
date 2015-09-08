@@ -10,39 +10,6 @@ use Fd\EstablecimientoBundle\Entity\Respuesta;
 
 class DomicilioRepository extends EntityRepository {
 
-    /**
-     * crea un nuevo registro DOMICILIO
-     * Si es un domicilio de un edificio que no tiene domicilio principal establecido, se establece este
-     * 
-     * @param type $entity
-     * @return \Fd\EstablecimientoBundle\Entity\Respuesta
-     */
-    public function crear($entity) {
-
-        //verifica otro posible domicilio del edificio
-        $respuesta = new Respuesta();
-        $em = $this->_em;
-
-        try {
-            $em->persist($entity);
-            $em->flush();
-
-            //DEPRECATED
-            $respuesta->setClaveNueva($entity->getId());
-            
-            //nuevo
-            $respuesta->setObjNuevo($entity);
-
-            $respuesta->setCodigo(1);
-            $respuesta->setMensaje('Se guardó el nuevo domicilio exitosamente');
-        } catch (Exception $e) {
-            $respuesta->setCodigo(2);
-            $respuesta->setMensaje('No se pudo guardar el nuevo domicilio. Verifique los datos y reintente');
-        }
-
-        return $respuesta;
-    }
-
     public function getBuilder() {
         return $this->createQueryBuilder('d');
     }

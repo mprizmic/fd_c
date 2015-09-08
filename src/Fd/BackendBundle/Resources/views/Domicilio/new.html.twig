@@ -7,6 +7,7 @@
 
     <form action="
 
+          {# si la clave de edificio esta informada hay que crear el domicilio con el edificio seteado #}
           {% if edificio_id is not defined %}
 
               {{ path('backend_domicilio_create') }}
