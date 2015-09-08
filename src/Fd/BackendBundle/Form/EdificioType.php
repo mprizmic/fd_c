@@ -28,11 +28,11 @@ class EdificioType extends AbstractType {
                     'empty_value' => 'Seleccione...',
                 ))
                 ->add('inspector')
-                ->add('domicilios', 'collection', array(
-                    'type' => new UnDomicilioType(),
-                    'by_reference' => FALSE,
-                    'allow_delete' => TRUE,
-                    'allow_add' => TRUE,))
+//                ->add('domicilios', 'collection', array(
+//                    'type' => new UnDomicilioType(),
+//                    'by_reference' => FALSE,
+//                    'allow_delete' => TRUE,
+//                    'allow_add' => TRUE,))
         ;
     }
 

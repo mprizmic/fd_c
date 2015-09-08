@@ -19,25 +19,28 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("/domicilio")
  */
 class DomicilioController extends Controller {
-    
+
     private $em;
     private $manager;
-    
+
     public function getEm() {
         if (!$this->em) {
             $this->em = $this->getDoctrine()->getEntityManager();
         };
         return $this->em;
     }
+
     private function getRepo() {
         return $this->getEm()->getRepository('EdificioBundle:Domicilio');
     }
+
     public function getManager() {
         if (!$this->manager) {
             $this->manager = new DomicilioManager($this->getEm());
         };
         return $this->manager;
-    }    
+    }
+
     /**
      * Lists all Domicilio entities.
      *
@@ -46,7 +49,7 @@ class DomicilioController extends Controller {
      */
     public function indexAction() {
 
-        $entities = $this->getEm()->getRepo()->findBy(array(), array('calle' => 'ASC'));
+        $entities = $this->getRepo()->findBy(array(), array('calle' => 'ASC'));
 
         return array('entities' => $entities);
     }
@@ -116,12 +119,12 @@ class DomicilioController extends Controller {
         if ($form->isValid()) {
 
             if ($edificio_id) {
-                
+
                 $edificio = $this->getDoctrine()
                         ->getRepository('EdificioBundle:Edificio')
                         ->find($edificio_id);
             } else {
-                
+
                 $edificio = null;
             }
 
@@ -131,9 +134,19 @@ class DomicilioController extends Controller {
 
                 $this->get('session')->getFlashBag()->add('exito', $respuesta->getMensaje());
 
-                return $this->redirect($this->generateUrl('backend_domicilio_edit', array(
-                                    'id' => $respuesta->getObjNuevo()->getId(),
-                )));
+                if ($edificio) {
+                    
+                    //si existe el edificio se vuelve a la pantalla de edición del edificio
+                    return $this->redirect($this->generateUrl('backend_edificio_edit', array(
+                                        'id' => $edificio->getId(),
+                    )));
+                } else {
+
+                    //si no existe el edificio es una domicilio nuevo independiente y se va a su edición
+                    return $this->redirect($this->generateUrl('backend_domicilio_edit', array(
+                                        'id' => $respuesta->getObjNuevo()->getId(),
+                    )));
+                }
             }
         }
 
@@ -218,7 +231,7 @@ class DomicilioController extends Controller {
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            
+
             $entity = $this->getRepo()->find($id);
 
             if (!$entity) {
