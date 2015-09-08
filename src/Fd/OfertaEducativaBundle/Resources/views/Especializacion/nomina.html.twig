@@ -4,14 +4,10 @@
 {% block main_content %}
 {{ parent() }}
 
-<div class="titulo float_izquierda">Nómina de especializaciones</div>
-
-<div class="limpiar_float"></div>
+<div class="titulo">Nómina de especializaciones</div>
 
 <div><a class="float_derecha boton_verde" href="{{ path('especializacion_nuevo') }}">Nueva especialización</a></div>
 <div class="limpiar_float"></div>
-
-<br />
 
 {{ simple_paginator_render('especializacion_nomina', null, {
     'container_class':'simple_paginator',

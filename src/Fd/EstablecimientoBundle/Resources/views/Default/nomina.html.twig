@@ -5,10 +5,7 @@
 {% block main_content %}
 {{ parent() }}
 
-<div class="titulo float_izquierda">Nómina de establecimientos</div>
-
-<div class="limpiar_float"></div>
-<br />
+<div class="titulo">Nómina de establecimientos</div>
 
 {{ simple_paginator_render('establecimiento_nomina', null, {
     'container_class':'simple_paginator',
