@@ -8,6 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
+use Fd\EstablecimientoBundle\Entity\Localizacion;
+use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
+use Fd\TablaBundle\Entity\Nivel;
 
 /**
  * @Route("/unidad_educativa")
