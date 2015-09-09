@@ -80,6 +80,7 @@ class EstablecimientoEdificioRepository extends EntityRepository {
 
         return $this->findear($qb);
     }
+
     /**
      * devuelve los registros de establecimiento_edificio que sean cue_anexo 00 ordenados por orden de establecimiento
      * @return type
@@ -189,6 +190,7 @@ class EstablecimientoEdificioRepository extends EntityRepository {
     public function filtrarSedeYAnexo($qb) {
         return $qb->andWhere("ee.cue_anexo <> '99'");
     }
+
     /**
      * Recibe un querybuilder y le agregar la condicion de filtrar las sedes
      * 
@@ -212,8 +214,8 @@ class EstablecimientoEdificioRepository extends EntityRepository {
      * @return arraycollection de Edificio
      */
     public function findEdificios($establecimiento) {
-        return $this->findear( 
-                $this->qbEdificios($establecimiento) );
+        return $this->findear(
+                        $this->qbEdificios($establecimiento));
     }
 
     public function qbEdificios($establecimiento) {
@@ -228,6 +230,19 @@ class EstablecimientoEdificioRepository extends EntityRepository {
                         )
                         ->getQuery()
                         ->getResult();
+    }
+
+    /**
+     * Devuelve un objeto establecimiento_edificio que es la sede del establecimeinto
+     * 
+     * @param type $establecimiento
+     * @return type
+     */
+    public function findSede($establecimiento) {
+        return $this->findear(
+                        $this->filtrarSede(
+                                $this->qbEdificios($establecimiento)
+        ));
     }
 
     /**
