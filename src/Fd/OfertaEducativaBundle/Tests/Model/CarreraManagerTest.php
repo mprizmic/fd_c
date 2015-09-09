@@ -9,6 +9,7 @@ use Fd\EstablecimientoBundle\Entity\Respuesta;
 class CarreraManagerTest extends WebTestCase {
 
     private $manager;
+    const CANTIDAD_TOTAL = 93;
 
     public function setUp() {
         static::$kernel = static::createKernel();
@@ -64,7 +65,7 @@ class CarreraManagerTest extends WebTestCase {
         //ya esta probado en el m{etodo asignarEstablecimientoAction de este test
     }
     /**
-     * Asigna una carrera a un establecimiento pero queda asignado
+     * Asigna una carrera a un establecimiento_edificio pero queda asignado
      */
 
     public function testAsignarEstablecimiento() {
@@ -75,9 +76,19 @@ class CarreraManagerTest extends WebTestCase {
 
         //se calcula sobre el ISPEE que se sabe que no tiene profesorado de primaria
         $establecimiento = $repository->findOneBy(array('apodo' => 'ISPEE'));
+        
+        $sede_del_ispee = $this->manager->getEm()->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
+                ->findSede($establecimiento);
+        
+        
+        /**
+         * hay que identificar la localizacion_id del terciario del ISPEE en la sede para poder seguir adelante con la modificación
+         */
 
+        
         //calcula cuantos establecimientos tienen asignada una carrera
-        $cantidad_anterior = count($repository->findCarreras($establecimiento));
+        $cantidad_anterior = count($this->manager->getEm()->getRepository('OfertaEducativaBundle:Carrera')
+                ->findCarrerasPorSedeAnexo($sede_del_ispee));
 
         //hace una asignacion
         $this->manager->asignarEstablecimiento($carrera_id, $establecimiento->getId(), 'Asignar');
@@ -210,7 +221,7 @@ class CarreraManagerTest extends WebTestCase {
 
     public function testGenerar_combo_json() {
         //cantidad de carreras en la BD
-        $cantidad_total = 56;
+        $cantidad_total = self::CANTIDAD_TOTAL;
 
         //se leen todas las carreras
         $carreras = $this->manager->getRepository()->findAll();
