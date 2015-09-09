@@ -95,6 +95,9 @@ class EstablecimientoRepository extends EntityRepository {
     }
 
     /**
+     * DEPRECATED 
+     * No existe mas findCarrerasPorEstablecimiento en el repository de Carrera
+     * 
      * devuelve las carreras del establecimiento
      */
     public function findCarreras($establecimiento) {
