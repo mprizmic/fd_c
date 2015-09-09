@@ -11,6 +11,18 @@ phpunit -c app src/Fd/BackendBundle/Tests/Controller/LocalizacionControllerTest.
 phpunit -c app src/Fd/BackendBundle/Tests/Controller/OfertaEducativaControllerTest.php
 phpunit -c app src/Fd/BackendBundle/Tests/Controller/PortadaControllerTest.php
 phpunit -c app src/Fd/BackendBundle/Tests/Controller/VecinoControllerTest.php
+#
+phpunit -c app src/Fd/OfertaEducativaBundle/Tests/Controller/CarreraControllerTest.php
+phpunit -c app src/Fd/OfertaEducativaBundle/Tests/Controller/NormaControllerTest.php
+#
+phpunit -c app src/Fd/OfertaEducativaBundle/Tests/Form/Handler/CarreraFormHandlerTest.php
+phpunit -c app src/Fd/OfertaEducativaBundle/Tests/Model/CarreraManagerTest.php
+#
+phpunit -c app src/Fd/EstablecimientoBundle/Tests/Repository/EstablecimientoRepositoryTest.php
+phpunit -c app src/Fd/EstablecimientoBundle/Tests/Repository/LocalizacionRepositoryTest.php
+phpunit -c app src/Fd/EstablecimientoBundle/Tests/Repository/UnidadOfertaRepositoryTest.php
+#
+phpunit -c app src/Fd/OfertaEducativaBundle/Tests/Repository/CarreraRepositoryTest.php
 
 
 
