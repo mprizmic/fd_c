@@ -22,8 +22,8 @@ class CarreraUnidadOfertaHandler extends UnidadOfertaHandler {
      * @param type $oferta
      * @param type $unidad
      */
-    public function crear(Localizacion $localizacion, OfertaEducativa $oferta_educativa, $tipo, $flush = false ) {
-        return parent::crear($localizacion, $oferta_educativa, TipoUnidadOferta::TUO_CARRERA);
+    public function crear( $localizacion,  $oferta_educativa, $tipo, $flush = false ) {
+        return parent::crear($localizacion, $oferta_educativa, TipoUnidadOferta::TUO_CARRERA, $flush );
     }
 
     /**
