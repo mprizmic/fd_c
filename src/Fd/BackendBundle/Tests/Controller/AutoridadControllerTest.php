@@ -33,7 +33,7 @@ class AutoridadControllerTest extends LoginWebTestCase {
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
 
         //verifica que fue a la página de edición
-        $this->assertgreaterThan(0, $crawler->filter('h1:contains("Editar Autoridad")')->count());
+        $this->assertGreaterThan(0, $crawler->filter('div:contains("Editar una")')->count());
     }
 
     /** @dataProvider provideUrls */

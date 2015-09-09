@@ -28,7 +28,7 @@ class EstablecimientoControllerTest extends LoginWebTestCase {
          * Creación de nuevo establecimiento 
          */
         // Hace click en el link a la página de nuevo establecimiento
-        $crawler = $client->click($crawler->selectLink('Crear nuevo registro')->link());
+        $crawler = $client->click($crawler->selectLink('Crear nuevo establecimiento')->link());
 
         // Verifica que se visualizò la pagina de edicion
         $this->assertGreaterThan(0, 

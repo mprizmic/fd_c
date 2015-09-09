@@ -85,7 +85,7 @@ class EstablecimientoControllerTest extends WebTestCase {
         //un dato de autoridades
         $this->assertGreaterThan(
                 0, $crawler
-                        ->filter('html:contains("Regente Terciario")')
+                        ->filter('html:contains("Rector/a")')
                         ->count()
         );
         //un dato de carrera
@@ -122,7 +122,7 @@ class EstablecimientoControllerTest extends WebTestCase {
         //un dato de turnos por nivel 
         $this->assertGreaterThan(
                 0, $crawler
-                        ->filter('html:contains("Nivel Primario")')
+                        ->filter('html:contains("Primario")')
                         ->count()
         );
         //un dato de docentes

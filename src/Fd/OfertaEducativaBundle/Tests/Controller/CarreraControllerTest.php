@@ -12,6 +12,7 @@ use Fd\OfertaEducativaBundle\Controller\CarreraController;
 class CarreraControllerTest extends LoginWebTestCase {
 
     const ACTIVA = 1;
+    const INACTIVA = 2;
     const PROF_PRIMARIA = 1;
 
     public $manager;
@@ -51,8 +52,8 @@ class CarreraControllerTest extends LoginWebTestCase {
         $this->assertTrue($client->getResponse()->isSuccessful());
 
         //verifico que la cantidad de tr sea igual a la cantidad de activas
-        //son 2 activas y un titulo
-        $this->assertEquals(3, $crawler->filter('tr')->count()
+        //es una pagina entera así que son 15 más un título
+        $this->assertEquals(16, $crawler->filter('tr')->count()
         );
 
         $this->assertEquals($crawler->filter('td:contains("Activa")')->count(), $crawler->filter('tr')->count() - 1);
@@ -125,15 +126,23 @@ class CarreraControllerTest extends LoginWebTestCase {
                     'carrera_type[nombre]' => 'TEST',
                     'carrera_type[duracion]' => 4,
                     'carrera_type[formacion]' => 1,
-                    'carrera_type[estado]' => 1,
+                    'carrera_type[estado]' => self::ACTIVA,
                     'carrera_type[anio_inicio]' => 2015,
                 )
             )
         );
     }
-
+    public function filtro_nombre() {
+        return array(
+            array(
+                array(
+                    'carrera_filter[nombre]' => 'TEST',
+                )
+            )
+        );
+    }
     /**
-     * @dataProvider filtros
+     * @dataProvider filtro_nombre
      */
     public function testEliminarAction($filtro) {
         $client = $this->client;
@@ -143,8 +152,9 @@ class CarreraControllerTest extends LoginWebTestCase {
 
         $formulario = $crawler->selectButton('Buscar')->form($filtro);
 
-        //realiza una busqueda con estado ACTIVA
+        //realiza una busqueda con nombre TEST
         $crawler = $client->submit($formulario);
+        $this->assertTrue($client->getResponse()->isSuccessful());
 
         //busca la fila de la carrera TEST y luego el link a la edición
         $link = $crawler->filter('td')->last()->children()->link();
