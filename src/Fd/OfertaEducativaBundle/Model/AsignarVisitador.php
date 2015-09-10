@@ -60,7 +60,7 @@ class AsignarVisitador implements AsignarVisitadorInterface {
             if ($this->data['accion'] == 'Asignar') {
                 
                 //no existe la asignacion y hay que crearla
-                $respuesta = $handler->crear($localizacion, $carrera->getOferta(), 'Carrera');
+                $respuesta = $handler->crear($localizacion, $carrera->getOferta(), 'Carrera', true);
             }
         };
 
