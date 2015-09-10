@@ -96,12 +96,15 @@ class EstablecimientoRepository extends EntityRepository {
 
     /**
      * DEPRECATED 
-     * No existe mas findCarrerasPorEstablecimiento en el repository de Carrera
+     * No existe más findCarrerasPorEstablecimiento en el repository de Carrera
      * 
-     * devuelve las carreras del establecimiento
      */
-    public function findCarreras($establecimiento) {
-        return $this->_em->getRepository('OfertaEducativaBundle:Carrera')->findCarrerasPorEstablecimiento($establecimiento);
+    
+    /**
+     * devuelve las carreras de una sede o anexo
+     */
+    public function findCarreras($establecimiento_edificio) {
+        return $this->_em->getRepository('OfertaEducativaBundle:Carrera')->findCarrerasPorSedeAnexo($establecimiento_edificio);
     }
 
     /**
