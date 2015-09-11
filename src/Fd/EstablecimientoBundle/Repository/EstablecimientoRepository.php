@@ -37,7 +37,7 @@ class EstablecimientoRepository extends EntityRepository {
 //    }
 
     /**
-     * DEPRECATED para a establecimientoedificiorepository
+     * DEPRECATED pasa a establecimientoedificiorepository
      * devuelve todos los edificios de un establecimiento
      */
 //    public function findDeUnCui($edificio_id) {
