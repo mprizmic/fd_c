@@ -125,29 +125,31 @@ class EstablecimientoEdificioRepository extends EntityRepository {
     }
 
     /**
+     * DEPRECATED
+     * 
      * Devuelve las salas de incicial que tiene el establecimiento en una determinada localizacion
      * null si no tiene ninguna
      * 
      * @param type $establecimiento_edificio
      */
-    public function findSalasInicial(EstablecimientoEdificio $establecimiento_edificio) {
-        $inicial_x = new ArrCol();
-
-        //obj unidad_educativa
-        $unidad_educativa_nivel_inicial = $establecimiento_edificio->getUnidadEducativaLocalizada('Ini');
-
-        $unidad_oferta_nivel_inicial = $establecimiento_edificio->findUnidadOfertaDelNivel('Ini');
-
-        if ($inicial) {
-            $ofertas = $inicial->existeOferta();
-            if ($ofertas) {
-                $repo = $this->_em
-                        ->getRepository('OfertaEducativaBundle:InicialX');
-                $inicial_x = $repo->findSalas($ofertas[0]);
-            };
-        };
-        return $inicial_x;
-    }
+//    public function findSalasInicial(EstablecimientoEdificio $establecimiento_edificio) {
+//        $inicial_x = new ArrCol();
+//
+//        //obj unidad_educativa
+//        $unidad_educativa_nivel_inicial = $establecimiento_edificio->getUnidadEducativaLocalizada('Ini');
+//
+//        $unidad_oferta_nivel_inicial = $establecimiento_edificio->findUnidadOfertaDelNivel('Ini');
+//
+//        if ($inicial) {
+//            $ofertas = $inicial->existeOferta();
+//            if ($ofertas) {
+//                $repo = $this->_em
+//                        ->getRepository('OfertaEducativaBundle:InicialX');
+//                $inicial_x = $repo->findSalas($ofertas[0]);
+//            };
+//        };
+//        return $inicial_x;
+//    }
 
     /**
      * devuelve un arraycollection de obj unidad_oferta de un nivel determinado
