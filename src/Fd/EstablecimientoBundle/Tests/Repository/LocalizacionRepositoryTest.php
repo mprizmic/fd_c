@@ -25,59 +25,73 @@ class LocalizacionRepositoryTest extends WebTestCase {
         ;
     }
 
-//    //devuelve la lista de establecimientos ordenada por el campo orden
-//    public function testFindAllOrdenado($orden = 'orden') {
-//        $establecimientos = $this->repo
-//                ->findAllOrdenado($orden);
-//
-//        $ens1 = $establecimientos[0];
-//        $this->assertTrue($ens1->getApodo() === 'ENS 1');
-//    }
-
     /**
      * Devuelve las carreras de una localizacion
      * Se testea con ENS 3 VL = 88
      */
     public function testFindCarreras($id = 96) {
         $localizacion = $this->repo->find($id);
-        
+
         $unidad_ofertas = $this->repo
                 ->findCarreras($localizacion, true);
 
         $this->assertTrue(count($unidad_ofertas) == 43);
     }
 
+    /**
+     * verifica si una carrera se imparte en una sede/anexo de un establecimiento
+     * Si el último parametro es false se devuelve un obj tipo unidad_oferta, si es tru se devuelve un valor booleano
+     */
+    public function testFindSeImparte() {
+    }
 
     /**
-     * FALTA cambia a partir del cambio de localizacion de la oferta
-     * 
-     * devuelve un array con los establecimientos que tienen cargadas cohortes
+     * Devuelve el querybuilder de las localizaciones de los terciarios.
+     * Debe ser completado con el select que se desee
      */
-//    public function testFindTienenCohortes() {
-//        $establecimientos = $this->repo
-//                ->findTienenCohortes();
-//
-//        $this->assertGreaterThan(0, $establecimientos);
-//    }
+    public function testQbTerciarios() {
+    }
 
     /**
-     * FALTA cambia a partir del cambio de localizacion de la oferta
+     * Devuelve una collection de objetos Localizacion con todas las sedes y anexos de los terciarios
      * 
-     * Devuelve un array con los ingresantes, matriculados y egresador de un año en particular de carreras del terciario
-     * 
-     * Se usa la ENS 1, el profesorado de inicial y el año 2013
-     * 
-     * @param type $anio
-     * @param type $carrera
-     * @param type $establecimiento
+     * @return type
      */
-//    public function testFindMatriculaCarrera($anio = 2013, $carrera_id = 8, $establecimiento = null) {
-//        $establecimiento = $this->repo->findOneBy(array('apodo' => 'ENS 1'));
-//
-//        $datos = $this->repo->findMatriculaCarrera($anio, $carrera_id, $establecimiento->getId());
-//
-//        $this->assertTrue($datos[0]['matricula'] == 911);
-//    }
+    public function testQbTerciariosCompleto() {
+    }
+
+    /**
+     * devuelve un array de localizaciones de las sedes y anexos en los que se imparten terciarios
+     * ordenados por establecimiento y cue_anexo
+     * 
+     * resultado[][localizacion]
+     * resultado[][establecimiento_nombre]
+     * resultado[][localizacion_id]
+     * resultado[][establecimiento_edificio_nombre]
+     */
+    public function testFindTerciarios() {
+    }
+
+    /**
+     * dada una localizacion devuelve todos los turnos que tienen todas las ofertas que en dicha unidad educativa se impartan
+     */
+    public function testFindTurnos() {
+    }
+
+    /**
+     * dada una carrera devuelve todas sus localizaciones
+     */
+    public function testFindDeCarrera() {
+    }
+
+    /**
+     * dado un establecimiento devuelve todas sus localizaciones
+     * 
+     * @param type $establecimiento_id
+     * @return type
+     */
+    public function testFindDelEstablecimiento() {
+    }
 
     protected function tearDown() {
         parent::tearDown();

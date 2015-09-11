@@ -34,30 +34,6 @@ class EstablecimientoRepositoryTest extends WebTestCase {
     }
 
     /**
-     * establecimientos que funcionan en un edificio. Para el caso del edificio de Urquiza 277
-     * 
-     * @param type $edificio_id
-     */
-    public function testQueryDeUnCui($edificio_id = 22) {
-        $establecimientos = $this->repo
-                ->findDeUnCui($edificio_id);
-        $this->assertCount(2, $establecimientos);
-    }
-
-    /**
-     * testea si el query del edificio del Mariano Acosta devuelve 2 establecimientos
-     * Depende del id del edificio
-     * 
-     * @param type $edificio_id 
-     */
-    public function testFindDeUnCui($edificio_id = 22) {
-        $establecimientos = $this->repo
-                ->findDeUnCui($edificio_id)
-        ;
-        $this->assertCount(2, $establecimientos);
-    }
-
-    /**
      * devuelve los 14 establecimientos que tienen nivel primario 
      * 
      * @param type $nivel
@@ -151,18 +127,6 @@ class EstablecimientoRepositoryTest extends WebTestCase {
 //        $this->assertCount(0, $establecimientos);
 //    }
 
-    /**
-     * $grupos_etarios es un objeto que tienen todas las salas 
-     */
-    public function testFindSalasInicial() {
-        $establecimiento = $this->repo->findOneBy(
-                array('apodo' => 'ENS 1')
-        );
-        $inicial_x = $this->repo
-                ->findSalasInicial($establecimiento)
-        ;
-        $this->assertTrue($inicial_x ? true : false );
-    }
 
     /**
      * FALTA hacer en el repositorio

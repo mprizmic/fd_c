@@ -9,6 +9,7 @@ use Fd\EstablecimientoBundle\Entity\Respuesta;
 class CarreraManagerTest extends WebTestCase {
 
     private $manager;
+
     const CANTIDAD_TOTAL = 93;
 
     public function setUp() {
@@ -29,7 +30,7 @@ class CarreraManagerTest extends WebTestCase {
     public function testActualizar() {
 
         $parametro_no_usado = $this->manager->crearNuevo();
-        
+
         //se prueba con profesorado de primario
         $carrera_original = $this->manager
                 ->getRepository()
@@ -47,27 +48,24 @@ class CarreraManagerTest extends WebTestCase {
         $actualizado = $this->manager
                 ->getRepository()
                 ->find(1);
-        
+
         //se verifica el cambio
         $this->assertTrue($actualizado->getNombre() <> $nombre_original);
-        
+
         //se vuelve al estado inicial
         $carrera_original->setNombre($nombre_original);
-        
+
         //se cambia el nombre
         $this->manager->actualizar($carrera_original, $parametro_no_usado, array(), array());
-        
-        
-        
     }
 
     public function accept(AsignarVisitadorInterface $visitador) {
         //ya esta probado en el m{etodo asignarEstablecimientoAction de este test
     }
+
     /**
      * Asigna una carrera a un establecimiento_edificio pero queda asignado
      */
-
     public function testAsignarEstablecimiento() {
 
         //se prueba con profesorado de primaria
@@ -76,39 +74,40 @@ class CarreraManagerTest extends WebTestCase {
 
         //se calcula sobre el ISPEE que se sabe que no tiene profesorado de primaria
         $establecimiento = $repository->findOneBy(array('apodo' => 'ISPEE'));
-        
-        $sede_del_ispee = $this->manager->getEm()->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
-                ->findSede($establecimiento);
-        
-        
-        /**
-         * hay que identificar la localizacion_id del terciario del ISPEE en la sede para poder seguir adelante con la modificación
-         */
 
-        
-        //calcula cuantos establecimientos tienen asignada una carrera
+        $sede_del_ispee = $establecimiento->getEdificioPrincipal();
+
+        $terciario_del_ispee = $establecimiento->getTerciario();
+
+        //calcula cuantas carreras se imparten en la sede del establecimiento
         $cantidad_anterior = count($this->manager->getEm()->getRepository('OfertaEducativaBundle:Carrera')
-                ->findCarrerasPorSedeAnexo($sede_del_ispee));
+                        ->findCarrerasPorSedeAnexo($sede_del_ispee));
+
+        //recupera el registro de la localizacion del terciario del ISPEE en la sede
+        $localizacion = $this->manager->getEm()
+                ->getRepository('EstablecimientoBundle:Localizacion')
+                ->findOneBy(array(
+            'establecimiento_edificio' => $sede_del_ispee->getId(),
+            'unidad_educativa' => $terciario_del_ispee->getId(),
+        ));
 
         //hace una asignacion
-        $this->manager->asignarEstablecimiento($carrera_id, $establecimiento->getId(), 'Asignar');
+        $this->manager->asignarEstablecimiento($carrera_id, $localizacion->getId(), 'Asignar');
 
         //recalcula cuantos establecimientos tienen asignada la carrera
-        $carreras = $repository->findCarreras($establecimiento);
+        $carreras = $repository->findCarreras($sede_del_ispee);
 
         //compara los resultados
         $this->assertTrue($cantidad_anterior <> count($carreras));
-        
+
         //se elimina la asignacion
-        $this->manager->asignarEstablecimiento($carrera_id, $establecimiento->getId(), 'Desasignar');
-        
+        $this->manager->asignarEstablecimiento($carrera_id, $localizacion->getId(), 'Desasignar');
+
         //recalcula cuantos establecimientos tienen asignada la carrera
-        $carreras = $repository->findCarreras($establecimiento);
+        $carreras = $repository->findCarreras($sede_del_ispee);
 
         //compara los resultados
         $this->assertTrue($cantidad_anterior == count($carreras));
-        
-        
     }
 
     public function testCrear() {
@@ -159,30 +158,30 @@ class CarreraManagerTest extends WebTestCase {
      * tiene que ir antes que la desvinculación por que la desvinculacion usa lo vinculado en este test
      */
     public function testVincular_norma() {
-        
+
         //se elije una norma cualquiera
         $norma = $this->manager->getEm()->find('OfertaEducativaBundle:Norma', 139);
-        
+
         //se usa el profesorado de primaria
         $carrera = $this->manager->getEm()->find('OfertaEducativaBundle:Carrera', 1);
-        
+
         //normas originales
         $normas_originales = $carrera->getOferta()->getNormas();
-        
+
         //se vincular
         $this->manager->vincular_norma($carrera, $norma);
-        
+
         //nuevas normas
         $normas = $carrera->getOferta()->getNormas();
-        
-        
-        if ($this->manager->getRespuesta()->getCodigo() == 1){
-            $this->assertTrue( count($normas_originales) == count($normas) - 1);
-        }else{
-            $this->assertTrue( count($normas_originales) == count($normas));
+
+
+        if ($this->manager->getRespuesta()->getCodigo() == 1) {
+            $this->assertTrue(count($normas_originales) == count($normas) - 1);
+        } else {
+            $this->assertTrue(count($normas_originales) == count($normas));
         };
-            
     }
+
     /**
      * desvincula lo vinculado en el test antesior
      * @param type $carrera
@@ -192,28 +191,26 @@ class CarreraManagerTest extends WebTestCase {
         $carrera = new Carrera();
         //se elije una norma cualquiera
         $norma = $this->manager->getEm()->find('OfertaEducativaBundle:Norma', 139);
-        
+
         //se usa el profesorado de primaria
         $carrera = $this->manager->getEm()->find('OfertaEducativaBundle:Carrera', 1);
-        
+
         //normas originales
         $normas_originales = $carrera->getOferta()->getNormas();
-        
+
         //se desvincula
         $this->manager->desvincular_norma($carrera, $norma);
-        
+
         //nuevas normas
         $normas = $carrera->getOferta()->getNormas();
-        
-        
-        if ($this->manager->getRespuesta()->getCodigo() == 1){
-            $this->assertTrue( count($normas_originales) == count($normas) + 1);
-        }else{
-            $this->assertTrue( count($normas_originales) == count($normas));
-        };
-        
-    }
 
+
+        if ($this->manager->getRespuesta()->getCodigo() == 1) {
+            $this->assertTrue(count($normas_originales) == count($normas) + 1);
+        } else {
+            $this->assertTrue(count($normas_originales) == count($normas));
+        };
+    }
 
     public function eliminar(Carrera $carrera, $flush = false) {
         //está testeado en el método crearAction de este test
@@ -233,18 +230,18 @@ class CarreraManagerTest extends WebTestCase {
         //luego del testo hay la misma cantidad de elementos
         $this->assertCount($cantidad_total, $en_array);
     }
-    
+
     public function testGetComboEstados() {
 
         $manager = $this->manager;
-        
+
         $combo = $manager->getComboEstados();
-        
+
         //lee todos los estados de la tabla
         $estados = $this->manager->getEm()->getRepository('TablaBundle:EstadoCarrera')->findAll();
-        
+
         //ambos tienen que tener igual cantidad
-        $this->assertTrue( count( $estados ) == count($combo));
-        
+        $this->assertTrue(count($estados) == count($combo));
     }
+
 }
