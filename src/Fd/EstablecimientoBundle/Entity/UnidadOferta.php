@@ -130,7 +130,7 @@ class UnidadOferta {
         $this->cohortes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->turnos = new ArrayCollection();
         $this->creado = new \DateTime();
-        $this->actualizado = new \DateTime();
+        $this->actualizado = new \DateTime('now');
     }
 
     public function combo() {
