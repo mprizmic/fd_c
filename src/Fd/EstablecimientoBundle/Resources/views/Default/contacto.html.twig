@@ -5,11 +5,15 @@
 
 <br />
 
-<p class="titulo">{{ fd.dependencia }}</p>
-<p class="mediana">Email: <a href="{{ 'mailto:' ~ fd.email }}">{{ fd.email }}</a></p>
-<p class="mediana">Sitio web: <a href="{{ fd.sitio_web }}">{{ fd.sitio_web }}</a></p>
-<p class="mediana">{{ fd.telefonos[0].oficina ~ ': ' ~ fd.telefonos[0].te }}</p>
-<p class="mediana">{{ fd.telefonos[1].oficina ~ ': ' ~ fd.telefonos[1].te }}</p>
+<p class="titulo">{{ const.DEPENDENCIA }}</p>
+<p class="mediana">Email: <a href="{{ 'mailto:' ~ const.EMAIL }}">{{ const.EMAIL }}</a></p>
+<p class="mediana">Sitio web: <a href="{{ const.SITIO_WEB }}">{{ const.SITIO_WEB }}</a></p>
+
+{% for telefono in const.TELEFONOS %}
+
+    <p class="mediana">{{ telefono['oficina'] ~ ': ' ~ telefono['te'] }}</p>
+
+{% endfor %}
 
 {% include '::includes/volver.html.twig' %}
     

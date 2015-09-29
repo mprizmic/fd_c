@@ -8,9 +8,6 @@ imports:
 
 # mepk
 parameters:
-    fd.nombre: 'Sistema de Información de la Dirección de Formación Docente'
-    fd.version_logica: %l_version_logica%
-    fd.nombre_corto: 'DFD'
     fd.grilla_corto: 6
     fd.grilla_mediano: 15
     fd.grilla_largo: 24
@@ -40,22 +37,7 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
-        fd:
-            nombre:           %fd.nombre%
-            nombre_corto:     %fd.nombre_corto%
-            version_logica:   %fd.version_logica%  
-            creditos:         'Créditos: Marcelo Prizmic'
-            version_symfony:  'Symfony 2.1.13'
-            version_doctrine: 'Doctrine >=2.2.3,<2.5-dev'
-            version_mysql:    ''
-            version_apache:   ''
-            version_firefox:  ''
-            dependencia:      'Dirección de Formación Docente'
-            telefonos:
-                - { oficina: 'Secretaría Privada', te: '4339-1892 / 1889 / 1887' }
-                - { oficina: 'Conmutador Esmeralda', te: '4339-1700' }
-            email:            'dgesup@buenosaires.gob.ar'
-            sitio_web:            'http://www.buenosaires.edu.ar/areas/educacion/docentes/superior/index.php?menu_id=20596'
+        const: "@fd.constantes"
         views:
             mensajes:
                 confirmar: Eliminar el elemento?

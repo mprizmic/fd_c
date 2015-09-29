@@ -18,6 +18,10 @@ services:
         tags:
             - { name: doctrine.event_listener, event: preUpdate }
             - { name: doctrine.event_listener, event: postFlush }
+            
+    #constantes de todo el sistema
+    fd.constantes:
+        class: Fd\EstablecimientoBundle\Model\Constantes
 
     #Esto esta en el EstablecimientoBundle
     #Es para el custom type si_no_sd
