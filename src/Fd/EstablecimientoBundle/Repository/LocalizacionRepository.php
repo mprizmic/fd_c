@@ -12,12 +12,13 @@ use Fd\OfertaEducativaBundle\Entity\Carrera;
 class LocalizacionRepository extends EntityRepository {
 
     /**
-     * dada una localizacion de un terciario, devuelve loca obj unidad_oferta de todas las carreras que se imparten en esa localizacion
+     * dada una localizacion de un terciario, devuelve obj unidad_oferta de todas las carreras que se imparten en esa localizacion
+     * descarta las especializaciones y otro tipo de oferta
      */
     public function findCarreras(Localizacion $localizacion, $cohortes = false) {
 
         $resultado = $this->_em->getRepository('EstablecimientoBundle:UnidadOferta')
-                ->findCarreras($localizacion, $cohortes);
+                ->findCarreras($localizacion, null, $cohortes);
 
         return $resultado;
     }
@@ -93,7 +94,7 @@ class LocalizacionRepository extends EntityRepository {
     /**
      * dada una localizacion devuelve todos los turnos que tienen todas las ofertas que en dicha unidad educativa se impartan
      */
-    public function findTurnos(\Fd\EstablecimientoBundle\Entity\Localizacion $localizacion) {
+    public function findTurnos(Localizacion $localizacion) {
 
         $todos = array();
 

@@ -857,7 +857,7 @@ class CarreraController extends Controller {
 
         $repositorio_unidad_oferta = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta');
 
-        $unidades_ofertas = $repositorio_unidad_oferta->findUnidadOferta(null, $carrera, true);
+        $unidades_ofertas = $repositorio_unidad_oferta->findCarreras(null, $carrera, true);
 
         //se prepara un array para el formato del cuadro de salida
         //se filtran los últimos 4 años

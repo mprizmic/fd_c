@@ -39,7 +39,7 @@ class CohorteController extends Controller {
      */
     public function listarAction($localizacion, $carrera) {
 
-        $unidad_oferta = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')->findUnidadOferta($localizacion, $carrera);
+        $unidad_oferta = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')->findCarreras($localizacion, $carrera);
 
         $entities = $this->getEm()->getRepository("OfertaEducativaBundle:Cohorte")
                 ->findCohortes($unidad_oferta[0]);
