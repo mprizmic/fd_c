@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
+use Fd\EstablecimientoBundle\Model\ConstantesTests;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 
 class LocalizacionRepositoryTest extends WebTestCase {
@@ -13,13 +14,6 @@ class LocalizacionRepositoryTest extends WebTestCase {
     private $em;
     private $repo;
     
-    const CARRERA_PROFESORADO_DE_INICIAL = 71;
-    const CARRERA_PROFESORADO_CIENCIA_POLITICA = 84;
-    const LOCALIZACION_JOAQUIN = 96;
-    const LOCALIZACION_ENS3_ST = 97;
-    const LOCALIZACION_ENS3_VL = 88;
-    const CANTIDAD_TERCIARIOS = 25;
-
     public function setUp() {
         static::$kernel = static::createKernel();
         static::$kernel->boot();
@@ -36,13 +30,13 @@ class LocalizacionRepositoryTest extends WebTestCase {
      * Devuelve las carreras de una localizacion
      * Se testea con ENS 3 VL = 88
      */
-    public function testFindCarreras($id = self::LOCALIZACION_JOAQUIN) {
+    public function testFindCarreras($id = ConstantesTests::LOCALIZACION_JOAQUIN) {
         $localizacion = $this->repo->find($id);
 
         $unidad_ofertas = $this->repo
                 ->findCarreras($localizacion, false);
 
-        $this->assertTrue(count($unidad_ofertas) == 21);
+        $this->assertTrue(count($unidad_ofertas) == ConstantesTests::CARRERAS_JOAQUIN);
     }
 
     /**
@@ -51,17 +45,17 @@ class LocalizacionRepositoryTest extends WebTestCase {
      */
     public function testFindSeImparte() {
         
-        $localizacion = $this->repo->find(self::LOCALIZACION_JOAQUIN);
+        $localizacion = $this->repo->find(ConstantesTests::LOCALIZACION_JOAQUIN);
         
         $carrera = $this->em->getRepository('OfertaEducativaBundle:Carrera')
-                ->find(self::CARRERA_PROFESORADO_DE_INICIAL);
+                ->find(ConstantesTests::CARRERA_PROFESORADO_DE_INICIAL);
         
         //no se discta la carrera en el joaquin
         $this->assertTrue( !($this->repo->findSeImparte($localizacion, $carrera, true)) );
 
         //otro cas0
         $carrera = $this->em->getRepository('OfertaEducativaBundle:Carrera')
-                ->find(self::CARRERA_PROFESORADO_CIENCIA_POLITICA);
+                ->find(ConstantesTests::CARRERA_PROFESORADO_CIENCIA_POLITICA);
 
         //se discta la carrera en el joaquin
         $this->assertTrue( $this->repo->findSeImparte($localizacion, $carrera, true) );
@@ -83,7 +77,7 @@ class LocalizacionRepositoryTest extends WebTestCase {
     public function testQbTerciariosCompleto() {
         $terciarios = $this->repo->qbTerciariosCompleto()->getQuery()->getResult();
         
-        $this->assertTrue(count($terciarios) == self::CANTIDAD_TERCIARIOS);
+        $this->assertTrue(count($terciarios) == ConstantesTests::CANTIDAD_TERCIARIOS);
     }
 
     /**
@@ -111,11 +105,11 @@ class LocalizacionRepositoryTest extends WebTestCase {
      */
     public function testFindTurnos() {
         
-        $localizacion = $this->repo->find(self::LOCALIZACION_ENS3_ST);
+        $localizacion = $this->repo->find(ConstantesTests::LOCALIZACION_ENS3_ST);
         
         $this->assertTrue( count($this->repo->findTurnos($localizacion)) == 1);
         
-        $localizacion = $this->repo->find(self::LOCALIZACION_ENS3_VL);
+        $localizacion = $this->repo->find(ConstantesTests::LOCALIZACION_ENS3_VL);
         
         $this->assertTrue( count($this->repo->findTurnos($localizacion)) == 3);
     }
@@ -124,6 +118,11 @@ class LocalizacionRepositoryTest extends WebTestCase {
      * dada una carrera devuelve todas sus localizaciones
      */
     public function testFindDeCarrera() {
+        
+        $carrera = $this->em->getRepository('OfertaEducativaBundle:Carrera')->find(ConstantesTests::CARRERA_PROFESORADO_DE_INICIAL);
+        $localizaciones = $this->repo->findDeCarrera( $carrera);
+        
+        $this->assertTrue( count($localizaciones) == 13);
     }
 
     /**
@@ -133,6 +132,11 @@ class LocalizacionRepositoryTest extends WebTestCase {
      * @return type
      */
     public function testFindDelEstablecimiento() {
+        $localizaciones = $this->repo->findDelEstablecimiento( ConstantesTests::ENS3);
+        
+        //tiene 4 niveles en ST y uno en VL
+        $this->assertTrue( count($localizaciones) == 5 );
+        
     }
 
     protected function tearDown() {

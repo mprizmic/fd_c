@@ -20,8 +20,8 @@
 #
 #phpunit -c app src/Fd/EstablecimientoBundle/Tests/Repository/EstablecimientoRepositoryTest.php
 #phpunit -c app src/Fd/EstablecimientoBundle/Tests/Repository/EstablecimientoEdificioRepositoryTest.php
-phpunit -c app src/Fd/EstablecimientoBundle/Tests/Repository/LocalizacionRepositoryTest.php
-phpunit -c app src/Fd/EstablecimientoBundle/Tests/Repository/UnidadOfertaRepositoryTest.php
+#phpunit -c app src/Fd/EstablecimientoBundle/Tests/Repository/LocalizacionRepositoryTest.php
+#phpunit -c app src/Fd/EstablecimientoBundle/Tests/Repository/UnidadOfertaRepositoryTest.php
 #
 phpunit -c app src/Fd/OfertaEducativaBundle/Tests/Repository/CarreraRepositoryTest.php
 
