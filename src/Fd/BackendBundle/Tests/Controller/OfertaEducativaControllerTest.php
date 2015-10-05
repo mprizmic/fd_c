@@ -4,8 +4,8 @@ namespace Fd\BackendBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Fd\BackendBundle\Form\OfertaEducativaType;
+use Fd\EstablecimientoBundle\Model\ConstantesTests;
 use Fd\OfertaEducativaBundle\Entity\OfertaEducativa;
-
 /**
  * testea el crud de oferta educativa del backend
  * 
@@ -41,9 +41,9 @@ class OfertaEducativaControllerTest extends WebTestCase {
     public function provideUrls() {
         return array(
             array('/backend/ofertaeducativa/'),
-            array('/backend/ofertaeducativa/10/show'),
+            array('/backend/ofertaeducativa/' . ConstantesTests::OFERTA_CIENCIA_JURIDICA . '/show'),
             array('/backend/ofertaeducativa/new'),
-            array('/backend/ofertaeducativa/10/edit'),
+            array('/backend/ofertaeducativa/' . ConstantesTests::OFERTA_CIENCIA_JURIDICA . '/edit'),
 // ...
         );
     }

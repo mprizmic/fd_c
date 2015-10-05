@@ -3,6 +3,7 @@
 namespace Fd\OfertaEducativaBundle\Tests\Controller;
 
 use Fd\EstablecimientoBundle\Tests\Controller\LoginWebTestCase;
+use Fd\EstablecimientoBundle\Model\ConstantesTests;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\OfertaEducativaBundle\Controller\CarreraController;
 
@@ -10,10 +11,6 @@ use Fd\OfertaEducativaBundle\Controller\CarreraController;
  * testea el crud de establecimiento del backend
  */
 class CarreraControllerTest extends LoginWebTestCase {
-
-    const ACTIVA = 1;
-    const INACTIVA = 2;
-    const PROF_PRIMARIA = 1;
 
     public $manager;
     public $controlador;
@@ -63,7 +60,7 @@ class CarreraControllerTest extends LoginWebTestCase {
         return array(
             array(
                 array(
-                    'carrera_filter[estado]' => self::ACTIVA,
+                    'carrera_filter[estado]' => ConstantesTests::ACTIVA,
                 )
             )
         );
@@ -126,7 +123,7 @@ class CarreraControllerTest extends LoginWebTestCase {
                     'carrera_type[nombre]' => 'TEST',
                     'carrera_type[duracion]' => 4,
                     'carrera_type[formacion]' => 1,
-                    'carrera_type[estado]' => self::ACTIVA,
+                    'carrera_type[estado]' => ConstantesTests::ACTIVA,
                     'carrera_type[anio_inicio]' => 2015,
                 )
             )
@@ -174,7 +171,7 @@ class CarreraControllerTest extends LoginWebTestCase {
     public function testEditarAction() {
         $client = $this->client;
 
-        $crawler = $client->request('GET', '/oferta/carrera/editar/1');
+        $crawler = $client->request('GET', '/oferta/carrera/editar/' . ConstantesTests::CARRERA_PROFESORADO_DE_PRIMARIA);
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
     }
 
@@ -245,7 +242,7 @@ class CarreraControllerTest extends LoginWebTestCase {
     public function testFichaAction() {
         $client = $this->client;
 
-        $crawler = $client->request('GET', '/oferta/carrera/ficha/1');
+        $crawler = $client->request('GET', '/oferta/carrera/ficha/'. ConstantesTests::CARRERA_PROFESORADO_DE_PRIMARIA);
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
 
         $this->assertTrue($crawler->filter('html:contains("Estado")')->count() > 0);
@@ -266,7 +263,7 @@ class CarreraControllerTest extends LoginWebTestCase {
                 ->getRepository('OfertaEducativaBundle:Carrera')
                 ->findOneBy(
                 array(
-                    'id' => self::PROF_PRIMARIA,
+                    'id' => ConstantesTests::CARRERA_PROFESORADO_DE_PRIMARIA,
         ));
 
         $client = $this->client;
@@ -378,13 +375,17 @@ class CarreraControllerTest extends LoginWebTestCase {
      * @param type $carrera_id
      * @param type $norma_id
      */
-    public function testVincularNormaAction($carrera_id = 1, $norma_id = 10) {
+    public function testVincularNormaAction($norma_id = 10) {
                 
         $client = $this->client;
-        $crawler= $client->request('GET', '/oferta/carrera/norma_vincular_carrera/'. $carrera_id . '/' . $norma_id);
+        $crawler= $client->request('GET', '/oferta/carrera/norma_vincular_carrera/'. 
+                ConstantesTests::CARRERA_PROFESORADO_DE_PRIMARIA . 
+                '/' . 
+                ConstantesTests::NORMA_PROFESORADO_DE_PRIMARIA);
+        
         $this->assertTrue($client->getResponse()->isSuccessful());
         
-        $this->assertTrue($crawler->filter('td:contains("609")')->count() > 0);
+        $this->assertTrue($crawler->filter('td:contains("2514")')->count() > 0);
     }
     /**
      * Desvincula la vinculada en el test anterior
@@ -392,10 +393,14 @@ class CarreraControllerTest extends LoginWebTestCase {
      * @param type $carrera_id
      * @param type $norma_id
      */
-    public function testDesvincularNormaAction($carrera_id=1, $norma_id= 10) {
+    public function testDesvincularNormaAction($norma_id= 10) {
         $client = $this->client;
                 
-        $crawler= $client->request('GET', '/oferta/carrera/desvincular_norma/'. $carrera_id . '/' . $norma_id);
+        $crawler= $client->request('GET', 
+                '/oferta/carrera/desvincular_norma/'. 
+                ConstantesTests::CARRERA_PROFESORADO_DE_PRIMARIA . 
+                '/' . 
+                ConstantesTests::NORMA_PROFESORADO_DE_PRIMARIA);
         $this->assertTrue($client->getResponse()->isSuccessful());
         
         $this->assertTrue($crawler->filter('td:contains("609")')->count() == 0);

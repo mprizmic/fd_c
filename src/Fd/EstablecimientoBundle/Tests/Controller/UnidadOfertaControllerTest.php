@@ -2,6 +2,8 @@
 
 namespace Fd\EstablecimientoBundle\Tests\Controller;
 
+use Fd\EstablecimientoBundle\Entity\UnidadOferta;
+use Fd\EstablecimientoBundle\Model\ConstantesTests;
 use Fd\EstablecimientoBundle\Tests\Controller\LoginWebTestCase;
 
 class UnidadOfertaControllerTest extends LoginWebTestCase {
@@ -10,7 +12,7 @@ class UnidadOfertaControllerTest extends LoginWebTestCase {
         $client = $this->client;
 
         // Llama a la página del index
-        $crawler = $client->request('GET', '/establecimiento/unidadoferta/asignar_turno/10');
+        $crawler = $client->request('GET', '/establecimiento/unidadoferta/asignar_turno/' .  ConstantesTests::UNIDAD_OFERTA_ENS_7);
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
 
         // Verifica un turno del establecimiento
@@ -31,7 +33,7 @@ class UnidadOfertaControllerTest extends LoginWebTestCase {
         $client = $this->client;
 
         // Llama a la página del index
-        $crawler = $client->request('GET', '/establecimiento/unidadoferta/asignar_turno/10');
+        $crawler = $client->request('GET', '/establecimiento/unidadoferta/asignar_turno/' . ConstantesTests::UNIDAD_OFERTA_ENS_7);
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton('Guardar')->form();

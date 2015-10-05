@@ -5,6 +5,8 @@ namespace Fd\EstablecimientoBundle\Model;
 class ConstantesTests {
 
     const CARRERA_PROFESORADO_DE_INICIAL = 71;
+    const CARRERA_PROFESORADO_DE_PRIMARIA = 72;
+    const NORMA_PROFESORADO_DE_PRIMARIA = 157;
     const CARRERA_PROFESORADO_CIENCIA_POLITICA = 84;
     const LOCALIZACION_JOAQUIN = 96;
     const CARRERAS_JOAQUIN = 21;
@@ -13,6 +15,15 @@ class ConstantesTests {
     const CANTIDAD_TERCIARIOS = 25;
     const ENS3 = 18;
     const ENS3_ST_PEI = 262;
+    const UNIDAD_OFERTA_ENS_7 = 288;
+    const OFERTA_CIENCIA_JURIDICA = 93;
+    
+    
+    const ACTIVA = 1;
+    const INACTIVA = 2;
+
+    const CANTIDAD_TOTAL_CARRERAS = 57;
+    const CANTIDAD_TOTAL_CARRERAS_ACTIVAS = 52;
     
     private $constants;
     private $constantKeys;

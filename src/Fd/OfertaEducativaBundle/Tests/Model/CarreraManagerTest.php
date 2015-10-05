@@ -5,12 +5,11 @@ namespace Fd\OfertaEducativaBundle\Tests\Model;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Model\ConstantesTests;
 
 class CarreraManagerTest extends WebTestCase {
 
     private $manager;
-
-    const CANTIDAD_TOTAL = 93;
 
     public function setUp() {
         static::$kernel = static::createKernel();
@@ -34,7 +33,7 @@ class CarreraManagerTest extends WebTestCase {
         //se prueba con profesorado de primario
         $carrera_original = $this->manager
                 ->getRepository()
-                ->find(1);
+                ->find(ConstantesTests::CARRERA_PROFESORADO_CIENCIA_POLITICA);
 
         //se guarda el nombre original para contrastar con el nuevo
         $nombre_original = $carrera_original->getNombre();
@@ -47,7 +46,7 @@ class CarreraManagerTest extends WebTestCase {
 
         $actualizado = $this->manager
                 ->getRepository()
-                ->find(1);
+                ->find(ConstantesTests::CARRERA_PROFESORADO_CIENCIA_POLITICA);
 
         //se verifica el cambio
         $this->assertTrue($actualizado->getNombre() <> $nombre_original);
@@ -69,7 +68,7 @@ class CarreraManagerTest extends WebTestCase {
     public function testAsignarEstablecimiento() {
 
         //se prueba con profesorado de primaria
-        $carrera_id = 1;
+        $carrera_id = ConstantesTests::CARRERA_PROFESORADO_DE_INICIAL;
         $repository = $this->manager->getEm()->getRepository('EstablecimientoBundle:Establecimiento');
 
         //se calcula sobre el ISPEE que se sabe que no tiene profesorado de primaria
@@ -163,7 +162,7 @@ class CarreraManagerTest extends WebTestCase {
         $norma = $this->manager->getEm()->find('OfertaEducativaBundle:Norma', 139);
 
         //se usa el profesorado de primaria
-        $carrera = $this->manager->getEm()->find('OfertaEducativaBundle:Carrera', 1);
+        $carrera = $this->manager->getEm()->find('OfertaEducativaBundle:Carrera', ConstantesTests::CARRERA_PROFESORADO_DE_INICIAL);
 
         //normas originales
         $normas_originales = $carrera->getOferta()->getNormas();
@@ -193,7 +192,7 @@ class CarreraManagerTest extends WebTestCase {
         $norma = $this->manager->getEm()->find('OfertaEducativaBundle:Norma', 139);
 
         //se usa el profesorado de primaria
-        $carrera = $this->manager->getEm()->find('OfertaEducativaBundle:Carrera', 1);
+        $carrera = $this->manager->getEm()->find('OfertaEducativaBundle:Carrera', ConstantesTests::CARRERA_PROFESORADO_DE_INICIAL);
 
         //normas originales
         $normas_originales = $carrera->getOferta()->getNormas();
@@ -218,7 +217,7 @@ class CarreraManagerTest extends WebTestCase {
 
     public function testGenerar_combo_json() {
         //cantidad de carreras en la BD
-        $cantidad_total = self::CANTIDAD_TOTAL;
+        $cantidad_total = ConstantesTests::CANTIDAD_TOTAL_CARRERAS;
 
         //se leen todas las carreras
         $carreras = $this->manager->getRepository()->findAll();

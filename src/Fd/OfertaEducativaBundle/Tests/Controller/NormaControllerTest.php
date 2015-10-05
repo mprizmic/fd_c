@@ -2,6 +2,7 @@
 
 namespace Fd\OfertaEducativaBundle\Tests\Controller;
 
+use Fd\EstablecimientoBundle\Model\ConstantesTests;
 use Fd\EstablecimientoBundle\Tests\Controller\LoginWebTestCase;
 
 /**
@@ -20,7 +21,7 @@ class NormaControllerTest extends LoginWebTestCase {
 
     public function testBuscarAsignarCarrera() {
         $client = $this->client;
-        $client->request('GET', $this->x.'/norma_buscar_asignar_carrera/1');
+        $client->request('GET', $this->x.'/norma_buscar_asignar_carrera/' . ConstantesTests::CARRERA_PROFESORADO_DE_PRIMARIA);
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
 

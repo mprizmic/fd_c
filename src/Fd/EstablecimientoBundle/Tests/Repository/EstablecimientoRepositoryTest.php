@@ -178,18 +178,19 @@ class EstablecimientoRepositoryTest extends WebTestCase {
     /**
      * testea que se devuelvan los obj establecimiento_edificio de un establecimiento determinado, ordenados por anexo
      */
-    public function testFindEdificios($apodo = 'ENS 3', $sede = '00', $anexo = '01') {
+    public function testFindEdificios($apodo = 'ENS 3', $sede = '00', $anexo = '01', $polideportivo = '99') {
         
         $establecimiento = $this->repo->findOneBy(array('apodo' => $apodo));
         
         $datos = $this->repo->findEdificios($establecimiento);
         
-        $this->assertCount(2, $datos);
+        $this->assertCount(3, $datos);
         
         $this->assertTrue( $datos[0] instanceof EstablecimientoEdificio );
         
         $this->assertTrue($datos[0]->getCueAnexo() == $sede);
         $this->assertTrue($datos[1]->getCueAnexo() == $anexo);
+        $this->assertTrue($datos[2]->getCueAnexo() == $polideportivo);
     }
 
     protected function tearDown() {
