@@ -32,21 +32,8 @@
             {{ form_row(edit_form.nivel) }}
             {{ form_row(edit_form.establecimiento) }}
             {{ form_row(edit_form.descripcion) }}
-            {# por ahora no se usan       #}
-            {#        {{ form_row(edit_form.nombre_autoridad) }}#}
-            {#        {{ form_row(edit_form.cargo_autoridad) }}#}
         </div> 
 
-        {# FALTA por ahora se anula hasta la revision #}
-        {#    {% if entity.isInicial %}
-                <div class="float_derecha">
-                    <span>
-                        <a href="{{ path('backend.inicialx.edit', {'id': inicial_x.id} ) }}">
-                            Editar las salas de la unidad educativa
-                        </a>
-                    </span>
-                </div>
-            {% endif %}#}
         <br />
 
         {{ form_rest(edit_form) }}    
