@@ -102,4 +102,244 @@ class Autoridad
         return $this->getApellido() . ', ' . $this->getNombre();
     }
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return Autoridad
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set apellido
+     *
+     * @param string $apellido
+     * @return Autoridad
+     */
+    public function setApellido($apellido)
+    {
+        $this->apellido = $apellido;
+
+        return $this;
+    }
+
+    /**
+     * Get apellido
+     *
+     * @return string 
+     */
+    public function getApellido()
+    {
+        return $this->apellido;
+    }
+
+    /**
+     * Set te_particular
+     *
+     * @param string $teParticular
+     * @return Autoridad
+     */
+    public function setTeParticular($teParticular)
+    {
+        $this->te_particular = $teParticular;
+
+        return $this;
+    }
+
+    /**
+     * Get te_particular
+     *
+     * @return string 
+     */
+    public function getTeParticular()
+    {
+        return $this->te_particular;
+    }
+
+    /**
+     * Set celular
+     *
+     * @param string $celular
+     * @return Autoridad
+     */
+    public function setCelular($celular)
+    {
+        $this->celular = $celular;
+
+        return $this;
+    }
+
+    /**
+     * Get celular
+     *
+     * @return string 
+     */
+    public function getCelular()
+    {
+        return $this->celular;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Autoridad
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set inicio_mandato
+     *
+     * @param \DateTime $inicioMandato
+     * @return Autoridad
+     */
+    public function setInicioMandato($inicioMandato)
+    {
+        $this->inicio_mandato = $inicioMandato;
+
+        return $this;
+    }
+
+    /**
+     * Get inicio_mandato
+     *
+     * @return \DateTime 
+     */
+    public function getInicioMandato()
+    {
+        return $this->inicio_mandato;
+    }
+
+    /**
+     * Set actualizado
+     *
+     * @param \DateTime $actualizado
+     * @return Autoridad
+     */
+    public function setActualizado($actualizado)
+    {
+        $this->actualizado = $actualizado;
+
+        return $this;
+    }
+
+    /**
+     * Get actualizado
+     *
+     * @return \DateTime 
+     */
+    public function getActualizado()
+    {
+        return $this->actualizado;
+    }
+
+    /**
+     * Set creado
+     *
+     * @param \DateTime $creado
+     * @return Autoridad
+     */
+    public function setCreado($creado)
+    {
+        $this->creado = $creado;
+
+        return $this;
+    }
+
+    /**
+     * Get creado
+     *
+     * @return \DateTime 
+     */
+    public function getCreado()
+    {
+        return $this->creado;
+    }
+
+    /**
+     * Set cargo
+     *
+     * @param \Fd\TablaBundle\Entity\Cargo $cargo
+     * @return Autoridad
+     */
+    public function setCargo(\Fd\TablaBundle\Entity\Cargo $cargo = null)
+    {
+        $this->cargo = $cargo;
+
+        return $this;
+    }
+
+    /**
+     * Get cargo
+     *
+     * @return \Fd\TablaBundle\Entity\Cargo 
+     */
+    public function getCargo()
+    {
+        return $this->cargo;
+    }
+
+    /**
+     * Set establecimiento
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento
+     * @return Autoridad
+     */
+    public function setEstablecimiento(\Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento = null)
+    {
+        $this->establecimiento = $establecimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get establecimiento
+     *
+     * @return \Fd\EstablecimientoBundle\Entity\Establecimiento 
+     */
+    public function getEstablecimiento()
+    {
+        return $this->establecimiento;
+    }
 }

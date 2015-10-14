@@ -155,4 +155,162 @@ class UnidadEducativa {
         $this->actualizado = new \DateTime();
     }
 
- }
+ 
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return UnidadEducativa
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set actualizado
+     *
+     * @param \DateTime $actualizado
+     * @return UnidadEducativa
+     */
+    public function setActualizado($actualizado)
+    {
+        $this->actualizado = $actualizado;
+
+        return $this;
+    }
+
+    /**
+     * Get actualizado
+     *
+     * @return \DateTime 
+     */
+    public function getActualizado()
+    {
+        return $this->actualizado;
+    }
+
+    /**
+     * Set creado
+     *
+     * @param \DateTime $creado
+     * @return UnidadEducativa
+     */
+    public function setCreado($creado)
+    {
+        $this->creado = $creado;
+
+        return $this;
+    }
+
+    /**
+     * Get creado
+     *
+     * @return \DateTime 
+     */
+    public function getCreado()
+    {
+        return $this->creado;
+    }
+
+    /**
+     * Set establecimiento
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento
+     * @return UnidadEducativa
+     */
+    public function setEstablecimiento(\Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento = null)
+    {
+        $this->establecimiento = $establecimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get establecimiento
+     *
+     * @return \Fd\EstablecimientoBundle\Entity\Establecimiento 
+     */
+    public function getEstablecimiento()
+    {
+        return $this->establecimiento;
+    }
+
+    /**
+     * Add localizaciones
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\Localizacion $localizaciones
+     * @return UnidadEducativa
+     */
+    public function addLocalizacione(\Fd\EstablecimientoBundle\Entity\Localizacion $localizaciones)
+    {
+        $this->localizaciones[] = $localizaciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove localizaciones
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\Localizacion $localizaciones
+     */
+    public function removeLocalizacione(\Fd\EstablecimientoBundle\Entity\Localizacion $localizaciones)
+    {
+        $this->localizaciones->removeElement($localizaciones);
+    }
+
+    /**
+     * Get localizaciones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLocalizaciones()
+    {
+        return $this->localizaciones;
+    }
+
+    /**
+     * Set nivel
+     *
+     * @param \Fd\TablaBundle\Entity\Nivel $nivel
+     * @return UnidadEducativa
+     */
+    public function setNivel(\Fd\TablaBundle\Entity\Nivel $nivel = null)
+    {
+        $this->nivel = $nivel;
+
+        return $this;
+    }
+
+    /**
+     * Get nivel
+     *
+     * @return \Fd\TablaBundle\Entity\Nivel 
+     */
+    public function getNivel()
+    {
+        return $this->nivel;
+    }
+}

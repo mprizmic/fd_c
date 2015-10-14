@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Cargo
  *
- * @ORM\Table(name="cargo")
+ * @ORM\Table(name="cargo_ap")
  * @ORM\Entity
  */
-class Cargo
+class CargoAP
 {
     /**
      * @var integer
@@ -38,6 +38,7 @@ class Cargo
 
 
 
+
     /**
      * Get id
      *
@@ -52,12 +53,12 @@ class Cargo
      * Set descripcion
      *
      * @param string $descripcion
-     * @return Cargo
+     * @return CargoAP
      */
     public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
-    
+
         return $this;
     }
 
@@ -74,20 +75,20 @@ class Cargo
     /**
      * Set cantidadHoras
      *
-     * @param float $cantidadHoras
-     * @return Cargo
+     * @param \DateTime $cantidadHoras
+     * @return CargoAP
      */
     public function setCantidadHoras($cantidadHoras)
     {
         $this->cantidadHoras = $cantidadHoras;
-    
+
         return $this;
     }
 
     /**
      * Get cantidadHoras
      *
-     * @return float 
+     * @return \DateTime 
      */
     public function getCantidadHoras()
     {
