@@ -18,7 +18,6 @@ class UnidadEducativas extends AbstractFixture implements FixtureInterface, Orde
         $entity->setEstablecimiento($manager->merge($this->getReference('ENS 1')));
         $entity->setNivel($manager->merge($this->getReference('Ini')));
         $entity->setModalidad($manager->merge($this->getReference('Cmn')));
-        $entity->setNombreAutoridad('La señorita Cunegunda');
 
         $this->setReference('ENS 1 Ini' , $entity);
         $manager->persist($entity);
@@ -30,8 +29,6 @@ class UnidadEducativas extends AbstractFixture implements FixtureInterface, Orde
         $entity->setEstablecimiento($manager->merge($this->getReference('ENS 1')));
         $entity->setNivel($manager->merge($this->getReference('Pri')));
         $entity->setModalidad($manager->merge($this->getReference('Cmn')));
-        $entity->setCargoAutoridad($manager->merge($this->getReference('DirP')));
-        $entity->setNombreAutoridad('La señorita Cunegunda directora de primaria');
 
         $this->setReference('ENS 1 Pri', $entity);
         $manager->persist($entity);
@@ -54,8 +51,6 @@ class UnidadEducativas extends AbstractFixture implements FixtureInterface, Orde
         $entity->setEstablecimiento($manager->merge($this->getReference('ENS 1')));
         $entity->setNivel($manager->merge($this->getReference('Ter')));
         $entity->setModalidad($manager->merge($this->getReference('Cmn')));
-        $entity->setCargoAutoridad($manager->merge($this->getReference('Reg')));
-        $entity->setNombreAutoridad('La señorita cunegunda 1');
 
         $this->setReference('ENS 1 Ter', $entity);
         $manager->persist($entity);
@@ -92,7 +87,6 @@ class UnidadEducativas extends AbstractFixture implements FixtureInterface, Orde
         $entity->setEstablecimiento($manager->merge($this->getReference('ENS 8')));
         $entity->setNivel($manager->merge($this->getReference('Ter')));
         $entity->setModalidad($manager->merge($this->getReference('Cmn')));
-        $entity->setNombreAutoridad('La señorita cunegunda 8');
 
         $this->setReference('ENS 8 Ter', $entity);
         $manager->persist($entity);

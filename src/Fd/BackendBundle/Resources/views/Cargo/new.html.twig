@@ -1,12 +1,12 @@
 {% extends 'BackendBundle::layout.html.twig' %}
  
 {% block title %}
-{{ parent() }} - Crear CargoAutoridad
+{{ parent() }} - Crear Cargo
 {% endblock %}
  
 {% block main_content %}
 
-<h1>Crear registro de CargoAutoridad </h1>
+<h1>Crear registro de Cargo </h1>
 
 <form action="{{ path('backend_cargo_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}

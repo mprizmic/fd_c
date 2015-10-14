@@ -5,7 +5,7 @@ namespace Fd\BackendBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class CargoAutoridadType extends AbstractType
+class CargoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -17,6 +17,6 @@ class CargoAutoridadType extends AbstractType
 
     public function getName()
     {
-        return 'fd_tablabundle_cargoautoridadtype';
+        return 'fd_tablabundle_cargotype';
     }
 }

@@ -6,45 +6,45 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Fd\TablaBundle\Entity\CargoAutoridad;
-use Fd\BackendBundle\Form\CargoAutoridadType;
+use Fd\TablaBundle\Entity\Cargo;
+use Fd\BackendBundle\Form\CargoType;
 
 /**
- * CargoAutoridad controller.
+ * Cargo controller.
  *
- * @Route("/cargo_autoridad")
+ * @Route("/cargo")
  */
-class CargoAutoridadController extends Controller
+class CargoController extends Controller
 {
     /**
-     * Lists all CargoAutoridad entities.
+     * Lists all Cargo entities.
      *
-     * @Route("/", name="backend_cargo_autoridad")
+     * @Route("/", name="backend_cargo")
      * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('TablaBundle:CargoAutoridad')->findAllOrdenado('nombre');
+        $entities = $em->getRepository('TablaBundle:Cargo')->findAllOrdenado('nombre');
 
         return array('entities' => $entities);
     }
 
     /**
-     * Finds and displays a CargoAutoridad entity.
+     * Finds and displays a Cargo entity.
      *
-     * @Route("/{id}/show", name="backend_cargo_autoridad_show")
+     * @Route("/{id}/show", name="backend_cargo_show")
      * @Template()
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('TablaBundle:CargoAutoridad')->find($id);
+        $entity = $em->getRepository('TablaBundle:Cargo')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find CargoAutoridad entity.');
+            throw $this->createNotFoundException('Unable to find Cargo entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -55,15 +55,15 @@ class CargoAutoridadController extends Controller
     }
 
     /**
-     * Displays a form to create a new CargoAutoridad entity.
+     * Displays a form to create a new Cargo entity.
      *
-     * @Route("/new", name="backend_cargo_autoridad_new")
+     * @Route("/new", name="backend_cargo_new")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new CargoAutoridad();
-        $form   = $this->createForm(new CargoAutoridadType(), $entity);
+        $entity = new Cargo();
+        $form   = $this->createForm(new CargoType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -72,17 +72,17 @@ class CargoAutoridadController extends Controller
     }
 
     /**
-     * Creates a new CargoAutoridad entity.
+     * Creates a new Cargo entity.
      *
-     * @Route("/create", name="backend_cargo_autoridad_create")
+     * @Route("/create", name="backend_cargo_create")
      * @Method("post")
-     * @Template("TablaBundle:CargoAutoridad:new.html.twig")
+     * @Template("TablaBundle:Cargo:new.html.twig")
      */
     public function createAction()
     {
-        $entity  = new CargoAutoridad();
+        $entity  = new Cargo();
         $request = $this->getRequest();
-        $form    = $this->createForm(new CargoAutoridadType(), $entity);
+        $form    = $this->createForm(new CargoType(), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
@@ -93,7 +93,7 @@ class CargoAutoridadController extends Controller
             $session = $this->get('session');
             $session->setFlash('notice', 'Se guardó exitosamente');            
 
-            return $this->redirect($this->generateUrl('backend_cargo_autoridad_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('backend_cargo_show', array('id' => $entity->getId())));
             
         }
 
@@ -104,22 +104,22 @@ class CargoAutoridadController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing CargoAutoridad entity.
+     * Displays a form to edit an existing Cargo entity.
      *
-     * @Route("/{id}/edit", name="backend_cargo_autoridad_edit")
+     * @Route("/{id}/edit", name="backend_cargo_edit")
      * @Template()
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('TablaBundle:CargoAutoridad')->find($id);
+        $entity = $em->getRepository('TablaBundle:Cargo')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find CargoAutoridad entity.');
+            throw $this->createNotFoundException('Unable to find Cargo entity.');
         }
 
-        $editForm = $this->createForm(new CargoAutoridadType(), $entity);
+        $editForm = $this->createForm(new CargoType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -130,23 +130,23 @@ class CargoAutoridadController extends Controller
     }
 
     /**
-     * Edits an existing CargoAutoridad entity.
+     * Edits an existing Cargo entity.
      *
-     * @Route("/{id}/update", name="backend_cargo_autoridad_update")
+     * @Route("/{id}/update", name="backend_cargo_update")
      * @Method("post")
-     * @Template("TablaBundle:CargoAutoridad:edit.html.twig")
+     * @Template("TablaBundle:Cargo:edit.html.twig")
      */
     public function updateAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('TablaBundle:CargoAutoridad')->find($id);
+        $entity = $em->getRepository('TablaBundle:Cargo')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find CargoAutoridad entity.');
+            throw $this->createNotFoundException('Unable to find Cargo entity.');
         }
 
-        $editForm   = $this->createForm(new CargoAutoridadType(), $entity);
+        $editForm   = $this->createForm(new CargoType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
@@ -160,7 +160,7 @@ class CargoAutoridadController extends Controller
             $session = $this->get('session');
             $session->setFlash('notice', 'Se guardó exitosamente');            
 
-            return $this->redirect($this->generateUrl('backend_cargo_autoridad_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('backend_cargo_edit', array('id' => $id)));
         }
 
         return array(
@@ -171,9 +171,9 @@ class CargoAutoridadController extends Controller
     }
 
     /**
-     * Deletes a CargoAutoridad entity.
+     * Deletes a Cargo entity.
      *
-     * @Route("/{id}/delete", name="backend_cargo_autoridad_delete")
+     * @Route("/{id}/delete", name="backend_cargo_delete")
      * @Method("post")
      */
     public function deleteAction($id)
@@ -185,10 +185,10 @@ class CargoAutoridadController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('TablaBundle:CargoAutoridad')->find($id);
+            $entity = $em->getRepository('TablaBundle:Cargo')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find CargoAutoridad entity.');
+                throw $this->createNotFoundException('Unable to find Cargo entity.');
             }
 
             $em->remove($entity);
@@ -198,7 +198,7 @@ class CargoAutoridadController extends Controller
             $session->setFlash('notice', 'Se guardó exitosamente');            
         }
 
-        return $this->redirect($this->generateUrl('backend_cargo_autoridad'));
+        return $this->redirect($this->generateUrl('backend_cargo'));
     }
 
     private function createDeleteForm($id)

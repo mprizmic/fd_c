@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * DEPRECATED
+ * Se hicieron cambios al generar la agenda.
+ */
 namespace Fd\EstablecimientoBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

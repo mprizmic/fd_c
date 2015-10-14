@@ -49,6 +49,11 @@
             <br />
             <br />
             <div>Sitio web: <a href="{{establecimiento.url}}">{{establecimiento.url}}</a></div>
+            
+            
+            
+            {# esto queda stan by hasta resolver el esquema de agenda y las autoridades dentro de la agenda
+            
             <div>Autoridades del rectorado:</div>
             {% for autoridad in establecimiento.autoridadesRectorado %}
                 <div class="identado_1">
@@ -57,7 +62,7 @@
             {% else %}
                 <div>Sin datos de las autoridades</div>
             {% endfor %}
-
+#}
             <br />
 
             {# datos especificos de acada anexo #}
