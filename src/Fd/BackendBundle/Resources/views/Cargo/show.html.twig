@@ -1,47 +1,46 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
-{% block title %}
-{{ parent() }} - Cargo
-{% endblock %}
- 
+
 {% block main_content %}
+    {{ parent() }} 
+    <div class="titulo">Cargo</div>
 
-<h1>Cargo</h1>
+    <fieldset>
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Nombre</th>
-            <td>{{ entity.nombre }}</td>
-        </tr>
-        <tr>
-            <th>Abreviatura</th>
-            <td>{{ entity.abreviatura }}</td>
-        </tr>
-    </tbody>
-</table>
+        <table class="record_properties">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ entity.nombre }}</td>
+                </tr>
+                <tr>
+                    <th>Código</th>
+                    <td>{{ entity.codigo }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend_cargo') }}">
-            Volver a la lista
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('backend_cargo_edit', { 'id': entity.id }) }}">
-            Editar
-        </a>
-    </li>
-    <li>
+    <br />
+    <div>
+
         <form action="{{ path('backend_cargo_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="boton_rojo">Eliminar</button>
-        </form>
-    </li>
-</ul>
 
+            <a class="separador" href="{{ path('backend_cargo_edit', { 'id': entity.id }) }}">Editar</a>
+
+            <div class="invisible">
+                {{ form_widget(delete_form) }}
+            </div>
+
+            <button type="submit" class="separador boton_rojo">Eliminar</button>
+
+            <a class="separador" href="{{ path('backend_cargo') }}">Volver a la lista</a>
+        </form>
+
+    </div>
+
+    {% include '::includes/volver.html.twig' %}
 {% endblock %}
