@@ -11,7 +11,7 @@ class CargoType extends AbstractType
     {
         $builder
             ->add('nombre')
-            ->add('abreviatura')
+            ->add('codigo')
         ;
     }
 
