@@ -4,7 +4,7 @@ namespace Fd\EstablecimientoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Fd\TablaBundle\Entity\CargoAutoridad;
+use Fd\TablaBundle\Entity\Cargo;
 use Fd\EstablecimientoBundle\Validator\Constraints as ApellidoAssert;
 /**
  * @ORM\Table(name="autoridad")
@@ -51,9 +51,9 @@ class Autoridad
     private $email;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\CargoAutoridad")
+     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\Cargo")
      */
-    private $cargo_autoridad;
+    private $cargo;
     /**
      * bidireccional lado propietario
      * @ORM\ManyToOne(targetEntity="Establecimiento", inversedBy="autoridades_rectorado")
@@ -101,6 +101,7 @@ class Autoridad
     public function __toString() {
         return $this->getApellido() . ', ' . $this->getNombre();
     }
+
 
     /**
      * Get id
@@ -297,26 +298,26 @@ class Autoridad
     }
 
     /**
-     * Set cargo_autoridad
+     * Set cargo
      *
-     * @param \Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad
+     * @param \Fd\TablaBundle\Entity\Cargo $cargo
      * @return Autoridad
      */
-    public function setCargoAutoridad(\Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad = null)
+    public function setCargo(\Fd\TablaBundle\Entity\Cargo $cargo = null)
     {
-        $this->cargo_autoridad = $cargoAutoridad;
+        $this->cargo = $cargo;
 
         return $this;
     }
 
     /**
-     * Get cargo_autoridad
+     * Get cargo
      *
-     * @return \Fd\TablaBundle\Entity\CargoAutoridad 
+     * @return \Fd\TablaBundle\Entity\Cargo 
      */
-    public function getCargoAutoridad()
+    public function getCargo()
     {
-        return $this->cargo_autoridad;
+        return $this->cargo;
     }
 
     /**

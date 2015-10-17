@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * DEPRECATED se hizo el cambio de la agenda
+ */
+
 namespace Fd\TablaBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;

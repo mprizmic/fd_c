@@ -4,7 +4,7 @@ namespace Fd\EstablecimientoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Fd\EstablecimientoBundle\Entity\Autoridad;
-use Fd\TablaBundle\Entity\CargoAutoridad;
+use Fd\TablaBundle\Entity\Cargo;
 
 class AutoridadRepository extends EntityRepository {
 
@@ -13,7 +13,7 @@ class AutoridadRepository extends EntityRepository {
         $q = $this->_em->createQueryBuilder()
                 ->select('a')
                 ->from('EstablecimientoBundle:Autoridad', 'a')
-                ->join('a.cargo_autoridad', 'ca')
+                ->join('a.cargo', 'ca')
                 ->where('ca.abreviatura = ?1' )
                 ->orderBy('a.apellido')
                 ->addOrderBy('a.nombre');

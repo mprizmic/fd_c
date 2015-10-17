@@ -14,7 +14,7 @@ class AutoridadType extends AbstractType {
                     'required' => false,
                 ))
                 ->add('apellido')
-                ->add('cargo_autoridad', null, array(
+                ->add('cargo', null, array(
                     'label' => 'Cargo',
                 ))
                 ->add('establecimiento')
