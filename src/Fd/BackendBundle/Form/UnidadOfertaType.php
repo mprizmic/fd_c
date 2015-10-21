@@ -69,6 +69,10 @@ class UnidadOfertaType extends AbstractType {
                     'allow_delete' => TRUE,
                     'allow_add' => TRUE,
                 ))
+                ->add('has_examen', 'checkbox', array(
+                    'label' => 'Examen de ingreso (sólo terciario)',
+                    'required' => false,
+                ))
         ;
     }
 

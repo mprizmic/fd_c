@@ -73,7 +73,10 @@ class UnidadOferta {
      * @ORM\JoinColumn(name="secundario_id", referencedColumnName="id")
      */
     private $secundario;
-    
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $has_examen;
     /**
      * @ORM\Column(type="datetime")
      */
@@ -184,6 +187,29 @@ class UnidadOferta {
     public function getTipo()
     {
         return $this->tipo;
+    }
+
+    /**
+     * Set has_examen
+     *
+     * @param boolean $hasExamen
+     * @return UnidadOferta
+     */
+    public function setHasExamen($hasExamen)
+    {
+        $this->has_examen = $hasExamen;
+
+        return $this;
+    }
+
+    /**
+     * Get has_examen
+     *
+     * @return boolean 
+     */
+    public function getHasExamen()
+    {
+        return $this->has_examen;
     }
 
     /**

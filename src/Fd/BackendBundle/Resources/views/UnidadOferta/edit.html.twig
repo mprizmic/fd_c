@@ -38,12 +38,15 @@
             <a class="btn-add" data-target="turnos">Agregar un turno</a>
         </fieldset>
         <br />
-
+        <div class="ancho_10">
+            {{ form_row(edit_form.has_examen) }}
+        </div>
 
         <div>
             {{ form_widget(edit_form._token) }}
         </div>
 
+        <hr />
         <br />
         <div class="separador">
             <button type="submit">Guardar</button>
