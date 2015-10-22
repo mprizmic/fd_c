@@ -84,7 +84,12 @@
                         <br />
 
                         {# carreras  #}
-
+                        {% set tiene = '' %}
+                        {% if not establecimiento.tiene_examen %}
+                            {% set tiene = 'no ' %}
+                        {% endif %}
+                        <div class="italico">{{ 'El establecimiento ' ~ tiene ~ 'tiene examen de ingreso a sus carreras' }}</div>
+                        
                         <fieldset>
                             <span class="resaltado">Carreras terciarias (en el edificio):</span><br/>
 
