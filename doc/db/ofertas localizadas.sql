@@ -19,8 +19,7 @@ inner join Fd.unidad_oferta uo on uo.localizacion_id=l.id
 inner join Fd.oferta_educativa oe on oe.id=uo.oferta_educativa_id
 left join Fd.unidadoferta_turno uot on uo.id=uot.unidad_oferta_id
 left join Fd.carrera car on car.oferta_educativa_id=oe.id
-left join Fd.secundario sec on sec.oferta_educativa_id=oe.id
 left join Fd.turno tur on tur.id=uot.turno_id
 where n.abreviatura ="Ter"
-and e.apodo = 'ENS 3'
-order by e.orden, ee.cue_anexo, oe.nivel_id
+and e.apodo = 'Joaquin' 
+order by e.orden, ee.cue_anexo, oe.nivel_id, car.nombre
