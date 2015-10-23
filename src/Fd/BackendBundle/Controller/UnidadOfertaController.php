@@ -212,6 +212,7 @@ class UnidadOfertaController extends Controller {
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'ruta' => $a_donde,
+            'tipo' => $unidad_oferta->getTipo(), //paso esto para saber si en el edit muestro o no el campo de examen de ingreso
         );
     }
 

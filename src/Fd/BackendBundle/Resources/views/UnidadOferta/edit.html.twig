@@ -15,6 +15,7 @@
 {% block main_content %}
     {{ parent() }}
 
+
     <div class="titulo">Editar una oferta educativa localizada</div>
     <br />
 
@@ -38,9 +39,13 @@
             <a class="btn-add" data-target="turnos">Agregar un turno</a>
         </fieldset>
         <br />
-        <div class="ancho_10">
-            {{ form_row(edit_form.has_examen) }}
-        </div>
+
+{#        solo se muestra el campo para el caso de las carreras#}
+        {% if tipo == const.TUO_CARRERA %}
+            <div class="ancho_10">
+                {{ form_row(edit_form.has_examen) }}
+            </div>
+        {% endif %}
 
         <div>
             {{ form_widget(edit_form._token) }}

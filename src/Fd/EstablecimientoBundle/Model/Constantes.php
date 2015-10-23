@@ -17,6 +17,15 @@ class Constantes {
     const EMAIL = 'dgesup@buenosaires.gob.ar';
     const SITIO_WEB = 'http://www.buenosaires.edu.ar/areas/educacion/docentes/superior/index.php?menu_id=20596';
 
+    //referidas al tipo de unidad oferta
+    const TUO_INICIAL = "Inicial";
+    const TUO_PRIMARIO = "Primario";
+    const TUO_BACHILLERATO = "Bachillerato";
+    const TUO_SECUNDARIO = "Secundario";
+    const TUO_CARRERA = "Carrera";
+    const TUO_ESPECIALIZACION = "Especializacion";
+    
+    
     public $TELEFONOS = array(
         array(
             'oficina' => 'Secretaría Privada',
