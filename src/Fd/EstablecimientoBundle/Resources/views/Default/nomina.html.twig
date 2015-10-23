@@ -22,6 +22,7 @@
         <th>D.E.</th>
         <th>Comuna</th>
         <th>CUE</th>
+        <th>Ingreso con examen</th>
         <th>Edificios</th>
 <!--        <th>Url</th> -->
     </tr>
@@ -32,6 +33,7 @@
         <td>{{ establecimiento.distritoEscolar }}</td>
         <td>{{ establecimiento.edificioPrincipal.edificios.comuna }}</td>
         <td>{{ establecimiento.cue }}</td>
+        <td>{{ establecimiento.tiene_examen ? 'Si':'No' }}</td>
         <td>
         {% set cuales = '' %}
         {% for un_edificio in establecimiento.edificio %}
