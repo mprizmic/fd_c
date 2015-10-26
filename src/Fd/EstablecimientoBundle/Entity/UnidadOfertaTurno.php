@@ -45,6 +45,13 @@ class UnidadOfertaTurno {
      */
     private $turno;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @return type
+     * @Assert\Range(min=0, max=9999, minMessage="Número muy chico", maxMessage="Número muy grande")
+     */
+    private $cupo;
+    
     public function __toString() {
         return $this->getUnidadOferta() . '/' . $this->getTurno()->getDescripcion();
     }
@@ -92,5 +99,28 @@ class UnidadOfertaTurno {
     public function getTurno()
     {
         return $this->turno;
+    }
+
+    /**
+     * Set cupo
+     *
+     * @param integer $cupo
+     * @return UnidadOfertaTurno
+     */
+    public function setCupo($cupo)
+    {
+        $this->cupo = $cupo;
+
+        return $this;
+    }
+
+    /**
+     * Get cupo
+     *
+     * @return integer 
+     */
+    public function getCupo()
+    {
+        return $this->cupo;
     }
 }

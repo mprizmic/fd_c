@@ -18,6 +18,7 @@ use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Form\Type\UnidadOfertaType;
 use Fd\EstablecimientoBundle\Model\UnidadOfertaHandler;
 use Fd\EstablecimientoBundle\Utilities\Destino;
+use Fd\EstablecimientoBundle\Entity\Respuesta;
 
 /**
  * @Route("/unidadoferta")
@@ -47,6 +48,8 @@ class UnidadOfertaController extends Controller {
      * @ParamConverter("unidad_oferta", class="EstablecimientoBundle:UnidadOferta")
      */
     public function actualizarTurnosAction(Request $request, $unidad_oferta) {
+        
+        $respuesta = new Respuesta();
 
         $editForm = $this->createForm(new UnidadOfertaType(), $unidad_oferta);
 

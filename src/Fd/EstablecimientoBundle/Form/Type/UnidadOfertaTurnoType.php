@@ -15,6 +15,13 @@ class UnidadOfertaTurnoType extends AbstractType {
                 ->add('turno', null, array(
                     'label'=>' ',
                 ))
+                ->add('cupo', null, array(
+                    'label' => 'Cupo',
+                    'required' => false,
+                    'attr'=>array(
+                        'class'=>'input_talle_05',
+                    )
+                ))                
         ;
     }
 
