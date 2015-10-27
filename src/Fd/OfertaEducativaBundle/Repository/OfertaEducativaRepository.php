@@ -4,6 +4,7 @@ namespace Fd\OfertaEducativaBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Model\Constantes;
 
 /**
  * OfertaEducativaRepository
@@ -30,6 +31,61 @@ class OfertaEducativaRepository extends EntityRepository {
                         ->setParameter('carrera', 'carrera')
                         ->getResult()
         ;
+    }
+
+    public function qbOfertaCarrerasCompleta() {
+        $qb = $this->_em->createQueryBuilder()
+                ->select('e.apodo as apodo')
+                ->addSelect('ee.cue_anexo as sedeanexo')
+                ->addSelect('d.calle as calle')
+                ->addSelect('d.altura as altura')
+                ->addSelect('car.nombre as carrera')
+                ->addSelect('t.cupo')
+                ->addSelect('tur.descripcion as turno')
+                ->addSelect('uo.has_examen as examen')
+                ->from('EstablecimientoBundle:Establecimiento', 'e')
+                ->innerJoin('e.edificio', 'ee')
+                ->innerJoin('ee.edificios', 'ed')
+                ->innerJoin('ed.domicilios', 'd')
+                ->innerJoin('ee.localizacion', 'l')
+                ->innerJoin('l.ofertas', 'uo')
+                ->innerJoin('uo.ofertas', 'oe')
+                ->innerJoin('oe.carrera', 'car')
+                ->innerJoin('car.estado', 'est')
+                ->innerJoin('uo.turnos', 't')
+                ->innerJoin('t.turno', 'tur')
+                ->where('d.principal = :principal')
+                ->andWhere('est.codigo = :estado')
+                ->andWhere('uo.tipo = :tipo')
+                ->orderBy('e.orden')
+                ->addOrderBy('ee.cue_anexo')
+                ->addOrderBy('car.nombre');
+
+//        "select e.apodo, ee.cue_anexo, d.calle, d.altura, car.nombre, tur.descripcion, t.cupo  
+//        from EstablecimientoBundle:Establecimiento e 
+//        join e.edificio ee 
+//        join ee.edificios ed 
+//        join ed.domicilios d 
+//        join ee.localizacion l 
+//        join l.ofertas uo 
+//        join uo.ofertas oe 
+//        join oe.carrera car 
+//        join uo.turnos t 
+//        join t.turno tur 
+//        where car.estado = 1 and 
+//        uo.tipo='Carrera' and  d.principal=true order by e.orden, ee.cue_anexo, car.nombre"
+
+        $qb->setParameter('principal', true);
+        $qb->setParameter('estado', Constantes::ESTADO_CARRERA_ACTIVA);
+        $qb->setParameter('tipo', Constantes::TUO_CARRERA);
+        
+        return $qb;
+    }
+
+    public function findCarrerasCompleta() {
+        return $this->qbOfertaCarrerasCompleta()
+                        ->getQuery()
+                        ->getArrayResult();
     }
 
 }

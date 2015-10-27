@@ -1,0 +1,41 @@
+{% extends '::layout.html.twig' %}
+
+
+{% block main_content %}
+    {{ parent() }}
+
+    <div class="titulo">Listado de oferta de carreras</div>
+    <div class="sub_titulo">Incluye las carreras, establecimientos, sede, turnos, cupos y si tiene o no examen de ingreso</div>
+
+
+    <table class="grilla" >
+            <thead>
+        <tr>
+            <th>Establecimiento</th>
+            <th>Carrera</th>
+            <th>Examen</th>
+            <th>Turno</th>
+            <th>Cupo</th>
+            <th>Domicilio</th>
+        </tr>
+    </thead>
+        <tbody>
+{% for carrera in carreras %}
+            <tr >
+                <td>{{ carrera['apodo'] ~ (carrera['sedeanexo'] == const.CUE_SEDE ? '' : ' - Anexo' )}}</td>
+                <td>{{ carrera['carrera'] }}</td>
+                <td>{{ carrera['examen'] ? 'Si' : 'No' }}</td>
+                <td>{{ carrera['turno'] }}</td>
+                <td>{{ carrera['cupo'] }}</td>
+                <td>{{ carrera['calle'] ~ carrera['altura'] }}</td>
+            </tr>
+{% endfor %}
+        </tbody>
+    </table>
+
+    <br />
+
+    <br />
+
+    {% include '::includes/volver.html.twig' %}
+{% endblock %}

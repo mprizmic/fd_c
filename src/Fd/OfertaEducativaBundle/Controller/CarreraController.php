@@ -213,7 +213,7 @@ class CarreraController extends Controller {
             'titulo' => 'Nueva',
             'entity' => $entity,
             'accion' => 'crear',
-            'buscar_titulo'=>'no',
+            'buscar_titulo' => 'no',
         ));
 
         return new Response($content);
@@ -232,8 +232,8 @@ class CarreraController extends Controller {
         $formHandler = new CarreraFormHandler(new CarreraManager($this->getEm()));
 
         $respuesta = $formHandler->crear($form, $request);
-        
-        $tipo = ($respuesta->getCodigo()==1) ? 'exito':'error' ;
+
+        $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
 
         $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
@@ -265,8 +265,8 @@ class CarreraController extends Controller {
         $formHandler = new CarreraFormHandler(new CarreraManager($this->getEm()));
 
         $respuesta = $formHandler->eliminar($form, $request, $carrera_anterior);
-        
-        $tipo = ($respuesta->getCodigo()==1)?'exito':'error';
+
+        $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
 
         $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
@@ -482,7 +482,7 @@ class CarreraController extends Controller {
 
             $respuesta = $manager->asignarEstablecimiento($form['carrera_id'], $form['localizacion_id'], $form['accion_del_form']);
 
-            $tipo = ($respuesta->getCodigo()==1) ? 'exito':'error' ;
+            $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
             //se trata el response segùn el resutado
             $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
@@ -972,6 +972,21 @@ class CarreraController extends Controller {
         $this->get('session')->getFlashBag()->add('notice', $respuesta->getMensaje());
 
         return $this->redirect($this->generateUrl('carrera_editar', array('id' => $carrera->getId())));
+    }
+
+    /**
+     * listado completo de carreras activas con sede, turno, cupos y examen
+     * @Route("listado_carreras", name="oferta_educativa.carrera.listado_carreras")
+     */
+    public function listadoCarrerasAction() {
+        $carreras = $this->getEm()
+                ->getRepository('OfertaEducativaBundle:OfertaEducativa')
+                ->findCarrerasCompleta();
+
+        return $this->render('OfertaEducativaBundle:Carrera:listado_oferta.html.twig', array(
+                    'carreras' => $carreras,
+        ));
+
     }
 
 }
