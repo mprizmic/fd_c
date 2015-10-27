@@ -25,6 +25,9 @@ class Constantes {
     const TUO_CARRERA = "Carrera";
     const TUO_ESPECIALIZACION = "Especializacion";
     
+    const ESTADO_CARRERA_ACTIVA = "ACT";
+
+    const CUE_SEDE = '00';
     
     public $TELEFONOS = array(
         array(
