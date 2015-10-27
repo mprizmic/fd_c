@@ -9,27 +9,27 @@
 
 
     <table class="grilla" >
-            <thead>
-        <tr>
-            <th>Establecimiento</th>
-            <th>Carrera</th>
-            <th>Examen</th>
-            <th>Turno</th>
-            <th>Cupo</th>
-            <th>Domicilio</th>
-        </tr>
-    </thead>
-        <tbody>
-{% for carrera in carreras %}
-            <tr >
-                <td>{{ carrera['apodo'] ~ (carrera['sedeanexo'] == const.CUE_SEDE ? '' : ' - Anexo' )}}</td>
-                <td>{{ carrera['carrera'] }}</td>
-                <td>{{ carrera['examen'] ? 'Si' : 'No' }}</td>
-                <td>{{ carrera['turno'] }}</td>
-                <td>{{ carrera['cupo'] }}</td>
-                <td>{{ carrera['calle'] ~ carrera['altura'] }}</td>
+        <thead>
+            <tr>
+                <th>Establecimiento</th>
+                <th>Carrera</th>
+                <th>Examen</th>
+                <th>Turno</th>
+                <th>Cupo</th>
+                <th>Domicilio</th>
             </tr>
-{% endfor %}
+        </thead>
+        <tbody>
+            {% for carrera in carreras %}
+                <tr >
+                    <td>{{ carrera['apodo'] ~ (carrera['sedeanexo'] == const.CUE_SEDE ? '' : ' - Anexo' )}}</td>
+                    <td>{{ carrera['carrera'] }}</td>
+                    <td>{{ carrera['examen'] ? 'Si' : 'No' }}</td>
+                    <td>{{ carrera['turno'] }}</td>
+                    <td>{{ carrera['cupo'] }}</td>
+                    <td>{{ carrera['calle'] ~ ' ' ~ carrera['altura'] }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
