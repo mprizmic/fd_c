@@ -86,6 +86,10 @@ class Dependencia{
 //    private $comentario;
 
     /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $orden;
+    /**
      * @ORM\Column(type="datetime")
      * 
      */
@@ -166,6 +170,29 @@ class Dependencia{
     public function getNombre()
     {
         return $this->nombre;
+    }
+
+    /**
+     * Set orden
+     *
+     * @param integer $orden
+     * @return Dependencia
+     */
+    public function setOrden($orden)
+    {
+        $this->orden = $orden;
+
+        return $this;
+    }
+
+    /**
+     * Get orden
+     *
+     * @return integer 
+     */
+    public function getOrden()
+    {
+        return $this->orden;
     }
 
     /**
