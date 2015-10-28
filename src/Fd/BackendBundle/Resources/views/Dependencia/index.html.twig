@@ -1,0 +1,42 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - Dependencias de la estructura de un establecimiento
+{% endblock %}
+
+{% block main_content %}
+
+    <div class="titulo">Dependencias de la estructura de un establecimiento</div>
+
+    <div class="boton_verde float_derecha">
+        <a href="{{ path('backend.dependencia.new') }}">Crear nueva dependencia</a>
+    </div>
+    <span class="limpiar_float"></span>
+
+    <br />
+    <br />
+    <table class="grilla">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Código</th>
+                <th>Orden</th>
+                <th>Id</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.nombre }}</td>
+                    <td>{{ entity.codigo }}</td>
+                    <td>{{ entity.orden }}</td>
+                    <td><a href="{{ path('backend.dependencia.show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td><a href="{{ path('backend.dependencia.edit', { 'id': entity.id }) }}">Editar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
