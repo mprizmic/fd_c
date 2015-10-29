@@ -42,49 +42,13 @@ class Dependencia{
      * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\Turno")
      */
     private $turno;
-//    /**
-//     * lado propietario
-//     * @ORM\OneToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\OfertaEducativa", inversedBy="carrera")
-//     * @ORM\JoinColumn(name="oferta_educativa_id", referencedColumnName="id")
-//     */
-//    private $oferta;
-//
-//
-//    /**
-//     * bidireccional lado inverso
-//     * @ORM\OneToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\TituloCarrera", mappedBy="carrera", cascade={"persist", "remove"} )
-//     * @Assert\Valid()
-//     */
-//    private $titulos;
-//
-//
-//    /**
-//     * @ORM\Column(type="string", nullable=true)
-//     */
-//    private $duracion;
-//
-//    /**
-//     * @ORM\Column(type="integer", nullable=true)
-//     * @Assert\Length(min=4, max=4)
-//     */
-//    private $anio_inicio;
-//
-//    /**
-//     * bidireccional lado inverso
-//     * @ORM\OneToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\Orientacion", mappedBy="carrera", cascade={"persist", "remove"} )
-//     * @Assert\Valid()
-//     */
-//    private $orientaciones;
-//
-//    /**
-//     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\EstadoCarrera")
-//     */
-//    private $estado;
-//    /**
-//     * @ORM\Column(type="string", length=250, nullable=true)
-//     */
-//    private $comentario;
 
+    /**
+     * bidireccional lado inverso
+     * @ORM\OneToMany(targetEntity="Fd\TablaBundle\Entity\EEDependencia", mappedBy="dependencia")
+     * @Assert\NotBlank(message="El dato no puede quedar en blanco")
+     */
+    private $establecimientos;
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
@@ -285,5 +249,38 @@ class Dependencia{
     public function getTurno()
     {
         return $this->turno;
+    }
+
+    /**
+     * Add establecimientos
+     *
+     * @param \Fd\TablaBundle\Entity\EEDependencia $establecimientos
+     * @return Dependencia
+     */
+    public function addEstablecimiento(\Fd\TablaBundle\Entity\EEDependencia $establecimientos)
+    {
+        $this->establecimientos[] = $establecimientos;
+
+        return $this;
+    }
+
+    /**
+     * Remove establecimientos
+     *
+     * @param \Fd\TablaBundle\Entity\EEDependencia $establecimientos
+     */
+    public function removeEstablecimiento(\Fd\TablaBundle\Entity\EEDependencia $establecimientos)
+    {
+        $this->establecimientos->removeElement($establecimientos);
+    }
+
+    /**
+     * Get establecimientos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEstablecimientos()
+    {
+        return $this->establecimientos;
     }
 }
