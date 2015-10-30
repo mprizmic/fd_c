@@ -69,33 +69,6 @@ class EstablecimientoEdificio {
     private $fecha_baja;
 
     /**
-     * @ORM\Column(nullable=true)
-     */
-    private $te1;
-
-    /**
-     * @ORM\Column(nullable=true)
-     */
-    private $te2;
-
-    /**
-     * @ORM\Column(nullable=true)
-     */
-    private $te3;
-
-    /**
-     * @ORM\Column(nullable=true)
-     * @Assert\Email()
-     */
-    private $email1;
-
-    /**
-     * @ORM\Column(nullable=true)
-     * @Assert\Email()
-     */
-    private $email2;
-
-    /**
      * bidireccional lado inverso
      * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\OrganizacionInterna", mappedBy="establecimiento")
      * @Assert\NotBlank(message="El dato no puede quedar en blanco")
