@@ -5,7 +5,7 @@
  * Representa la estructura de cada establecimientos. la estructura está definida por las dependencias y los niveles
  */
 
-namespace Fd\TablaBundle\Entity;
+namespace Fd\EstablecimientoBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
@@ -16,11 +16,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * @ORM\Table(name="ee_dependencia")
+ * @ORM\Table(name="organizacion_interna")
  * @ORM\Entity(repositoryClass="Fd\TablaBundle\Repository\EEDependenciaRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class EeDependencia {
+class OrganizacionInterna {
 
     /**
      * 
@@ -95,7 +95,7 @@ class EeDependencia {
      * Set te
      *
      * @param string $te
-     * @return EeDependencia
+     * @return OrganizacionInterna
      */
     public function setTe($te)
     {
@@ -118,7 +118,7 @@ class EeDependencia {
      * Set email
      *
      * @param string $email
-     * @return EeDependencia
+     * @return OrganizacionInterna
      */
     public function setEmail($email)
     {
@@ -141,7 +141,7 @@ class EeDependencia {
      * Set actualizado
      *
      * @param \DateTime $actualizado
-     * @return EeDependencia
+     * @return OrganizacionInterna
      */
     public function setActualizado($actualizado)
     {
@@ -164,7 +164,7 @@ class EeDependencia {
      * Set creado
      *
      * @param \DateTime $creado
-     * @return EeDependencia
+     * @return OrganizacionInterna
      */
     public function setCreado($creado)
     {
@@ -187,7 +187,7 @@ class EeDependencia {
      * Set dependencia
      *
      * @param \Fd\TablaBundle\Entity\Dependencia $dependencia
-     * @return EeDependencia
+     * @return OrganizacionInterna
      */
     public function setDependencia(\Fd\TablaBundle\Entity\Dependencia $dependencia = null)
     {
@@ -210,7 +210,7 @@ class EeDependencia {
      * Set establecimiento
      *
      * @param \Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $establecimiento
-     * @return EeDependencia
+     * @return OrganizacionInterna
      */
     public function setEstablecimiento(\Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $establecimiento = null)
     {

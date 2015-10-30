@@ -97,7 +97,7 @@ class EstablecimientoEdificio {
 
     /**
      * bidireccional lado inverso
-     * @ORM\OneToMany(targetEntity="Fd\TablaBundle\Entity\EEDependencia", mappedBy="establecimiento")
+     * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\OrganizacionInterna", mappedBy="establecimiento")
      * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
     private $dependencias;

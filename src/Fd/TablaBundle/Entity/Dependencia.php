@@ -45,7 +45,7 @@ class Dependencia{
 
     /**
      * bidireccional lado inverso
-     * @ORM\OneToMany(targetEntity="Fd\TablaBundle\Entity\EEDependencia", mappedBy="dependencia")
+     * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\OrganizacionInterna", mappedBy="dependencia")
      * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
     private $establecimientos;
@@ -254,10 +254,10 @@ class Dependencia{
     /**
      * Add establecimientos
      *
-     * @param \Fd\TablaBundle\Entity\EEDependencia $establecimientos
+     * @param \Fd\EstablecimientoBundle\Entity\OrganizacionInterna $establecimientos
      * @return Dependencia
      */
-    public function addEstablecimiento(\Fd\TablaBundle\Entity\EEDependencia $establecimientos)
+    public function addEstablecimiento(\Fd\EstablecimientoBundle\Entity\OrganizacionInterna $establecimientos)
     {
         $this->establecimientos[] = $establecimientos;
 
@@ -267,9 +267,9 @@ class Dependencia{
     /**
      * Remove establecimientos
      *
-     * @param \Fd\TablaBundle\Entity\EEDependencia $establecimientos
+     * @param \Fd\EstablecimientoBundle\Entity\OrganizacionInterna $establecimientos
      */
-    public function removeEstablecimiento(\Fd\TablaBundle\Entity\EEDependencia $establecimientos)
+    public function removeEstablecimiento(\Fd\EstablecimientoBundle\Entity\OrganizacionInterna $establecimientos)
     {
         $this->establecimientos->removeElement($establecimientos);
     }
