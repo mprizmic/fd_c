@@ -157,12 +157,13 @@ class CargoController extends Controller
             $em->persist($entity);
             $em->flush();
             
-            $session = $this->get('session');
-            $session->setFlash('notice', 'Se guardó exitosamente');            
+            $this->get('session')->getFlashBag()->add('exito', 'Se guardó exitosamente');
 
             return $this->redirect($this->generateUrl('backend_cargo_edit', array('id' => $id)));
         }
 
+        $this->get('session')->getFlashBag()->add('error', 'Problemas en el guardado. Verifique y reintente');
+        
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
