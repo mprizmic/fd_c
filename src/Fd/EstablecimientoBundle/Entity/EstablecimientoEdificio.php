@@ -69,31 +69,11 @@ class EstablecimientoEdificio {
     private $fecha_baja;
 
     /**
-     * @ORM\Column(nullable=true)
+     * bidireccional lado inverso
+     * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\OrganizacionInterna", mappedBy="establecimiento")
+     * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
-    private $te1;
-
-    /**
-     * @ORM\Column(nullable=true)
-     */
-    private $te2;
-
-    /**
-     * @ORM\Column(nullable=true)
-     */
-    private $te3;
-
-    /**
-     * @ORM\Column(nullable=true)
-     * @Assert\Email()
-     */
-    private $email1;
-
-    /**
-     * @ORM\Column(nullable=true)
-     * @Assert\Email()
-     */
-    private $email2;
+    private $dependencias;
 
     /**
      * devuelve el objeto localizacion de nivel terciario correspondiente $this
@@ -106,11 +86,12 @@ class EstablecimientoEdificio {
         };
         return null;
     }
+
     /**
      * Si el edificio es sede devuelve true. Si es anexo devuelve false.
      * @return type
      */
-    public function isSede(){
+    public function isSede() {
         return ($this->getCueAnexo() == '00');
     }
 
@@ -422,5 +403,38 @@ class EstablecimientoEdificio {
     public function getLocalizacion()
     {
         return $this->localizacion;
+    }
+
+    /**
+     * Add dependencias
+     *
+     * @param \Fd\TablaBundle\Entity\EEDependencia $dependencias
+     * @return EstablecimientoEdificio
+     */
+    public function addDependencia(\Fd\TablaBundle\Entity\EEDependencia $dependencias)
+    {
+        $this->dependencias[] = $dependencias;
+
+        return $this;
+    }
+
+    /**
+     * Remove dependencias
+     *
+     * @param \Fd\TablaBundle\Entity\EEDependencia $dependencias
+     */
+    public function removeDependencia(\Fd\TablaBundle\Entity\EEDependencia $dependencias)
+    {
+        $this->dependencias->removeElement($dependencias);
+    }
+
+    /**
+     * Get dependencias
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDependencias()
+    {
+        return $this->dependencias;
     }
 }

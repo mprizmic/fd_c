@@ -26,4 +26,12 @@ class NivelRepository extends EntityRepository
         }
         return $resultado;
     }
+    /**
+     * devuelve arraycollection de objetos nivel ordenador por campo orden
+     * @return type
+     */
+    public function qbOrdenado(){
+        return $this->createQueryBuilder('n')
+                ->orderBy('n.orden');
+    }
 }

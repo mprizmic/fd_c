@@ -42,49 +42,17 @@ class Dependencia{
      * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\Turno")
      */
     private $turno;
-//    /**
-//     * lado propietario
-//     * @ORM\OneToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\OfertaEducativa", inversedBy="carrera")
-//     * @ORM\JoinColumn(name="oferta_educativa_id", referencedColumnName="id")
-//     */
-//    private $oferta;
-//
-//
-//    /**
-//     * bidireccional lado inverso
-//     * @ORM\OneToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\TituloCarrera", mappedBy="carrera", cascade={"persist", "remove"} )
-//     * @Assert\Valid()
-//     */
-//    private $titulos;
-//
-//
-//    /**
-//     * @ORM\Column(type="string", nullable=true)
-//     */
-//    private $duracion;
-//
-//    /**
-//     * @ORM\Column(type="integer", nullable=true)
-//     * @Assert\Length(min=4, max=4)
-//     */
-//    private $anio_inicio;
-//
-//    /**
-//     * bidireccional lado inverso
-//     * @ORM\OneToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\Orientacion", mappedBy="carrera", cascade={"persist", "remove"} )
-//     * @Assert\Valid()
-//     */
-//    private $orientaciones;
-//
-//    /**
-//     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\EstadoCarrera")
-//     */
-//    private $estado;
-//    /**
-//     * @ORM\Column(type="string", length=250, nullable=true)
-//     */
-//    private $comentario;
 
+    /**
+     * bidireccional lado inverso
+     * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\OrganizacionInterna", mappedBy="dependencia")
+     * @Assert\NotBlank(message="El dato no puede quedar en blanco")
+     */
+    private $establecimientos;
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $orden;
     /**
      * @ORM\Column(type="datetime")
      * 
@@ -166,6 +134,29 @@ class Dependencia{
     public function getNombre()
     {
         return $this->nombre;
+    }
+
+    /**
+     * Set orden
+     *
+     * @param integer $orden
+     * @return Dependencia
+     */
+    public function setOrden($orden)
+    {
+        $this->orden = $orden;
+
+        return $this;
+    }
+
+    /**
+     * Get orden
+     *
+     * @return integer 
+     */
+    public function getOrden()
+    {
+        return $this->orden;
     }
 
     /**
@@ -258,5 +249,38 @@ class Dependencia{
     public function getTurno()
     {
         return $this->turno;
+    }
+
+    /**
+     * Add establecimientos
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\OrganizacionInterna $establecimientos
+     * @return Dependencia
+     */
+    public function addEstablecimiento(\Fd\EstablecimientoBundle\Entity\OrganizacionInterna $establecimientos)
+    {
+        $this->establecimientos[] = $establecimientos;
+
+        return $this;
+    }
+
+    /**
+     * Remove establecimientos
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\OrganizacionInterna $establecimientos
+     */
+    public function removeEstablecimiento(\Fd\EstablecimientoBundle\Entity\OrganizacionInterna $establecimientos)
+    {
+        $this->establecimientos->removeElement($establecimientos);
+    }
+
+    /**
+     * Get establecimientos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEstablecimientos()
+    {
+        return $this->establecimientos;
     }
 }

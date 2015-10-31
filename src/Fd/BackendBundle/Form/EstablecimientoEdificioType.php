@@ -47,21 +47,7 @@ class EstablecimientoEdificioType extends AbstractType {
                 ))
                 ->add('fecha_creacion')
                 ->add('fecha_baja')
-                ->add('te1', null, array(
-                    'label' => 'TE más usado',
-                ))
-                ->add('te2', null, array(
-                    'label' => 'otro TE',
-                ))
-                ->add('te3', null, array(
-                    'label' => 'otro TE',
-                ))
-                ->add('email1', null, array(
-                    'label' => 'Email principal',
-                ))
-                ->add('email2', null, array(
-                    'label' => 'otro email',
-                ))
+
                 ->add('edificios', 'entity', array(
                     'class' => 'EdificioBundle:Edificio',
                     'query_builder' => function (EdificioRepository $repository) {
