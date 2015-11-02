@@ -11,6 +11,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Fd\BackendBundle\Form\Filter\OrganizacionInternaFilterType;
 use Fd\BackendBundle\Form\OrganizacionInternaType;
 use Fd\EstablecimientoBundle\Entity\OrganizacionInterna;
+use Fd\EstablecimientoBundle\Entity\Localizacion;
+use Fd\EstablecimientoBundle\Model\OrganizacionInternaManager;
 
 /**
  * Organizacion Interna controller.
@@ -133,44 +135,23 @@ class AutoridadController extends Controller {
         return $form;
     }
 
-    /**
-     * HASTA ACA
-     * **************************************************************************************
-     * **************************************************************************************
-     * **************************************************************************************
-     * **************************************************************************************
-     */
-    /**
-     * pasar a un repo
-     * @return type
-     */
     public function getCmbEstablecimientos() {
-        $establecimientos = $this->getEm()
-                ->getRepository('EstablecimientoBundle:Establecimiento')
-                ->combo();
+        $terciarios = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')->findTerciarios();
 
-        foreach ($establecimientos as $key => $value) {
-            $resultado[$value->getId()] = $value->getApodo();
+        foreach ($terciarios as $key => $value) {
+            $resultado[$value['localizacion_id']] = $value['establecimiento_nombre'] . ' - ' . $value['establecimiento_edificio_nombre'] ;
         };
         return $resultado;
     }
 
     /**
-     * Finds and displays a Autoridad entity.
-     *
      * @Route("/{id}/show", name="backend.organizacioninterna.show")
      * @Template()
+     * @ParamConverter("entity", class="EstablecimientoBundle:OrganizacionInterna")
      */
-    public function showAction($id) {
-        $em = $this->getDoctrine()->getEntityManager();
+    public function showAction($entity) {
 
-        $entity = $em->getRepository('EstablecimientoBundle:Autoridad')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Autoridad entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         return array(
             'entity' => $entity,
