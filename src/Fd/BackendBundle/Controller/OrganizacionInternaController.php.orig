@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Fd\BackendBundle\Form\Filter\OrganizacionInternaFilterType;
+use Fd\BackenddBundle\Filter\OrganizacionInternaFilterType;
 use Fd\BackendBundle\Form\OrganizacionInternaType;
 use Fd\EstablecimientoBundle\Entity\OrganizacionInterna;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
@@ -115,7 +115,7 @@ class OrganicacionInternaController extends Controller {
                 ->getResult()
                 ->toArray();
 
-        return $organizaciones;
+        return $autoridades;
     }
 
     /**
@@ -137,21 +137,18 @@ class OrganicacionInternaController extends Controller {
     }
 
     public function getCmbEstablecimientos() {
-        $terciarios = $this->getEm()
-                ->getRepository('EstablecimientoBundle:Localizacion')
-                ->getTerciarios();
-        
+        $terciarios = $this->getEm()->getRepository('EstablecimientoBundle:Localizacion')->findTerciarios();
+
         foreach ($terciarios as $key => $value) {
-            $resultado[$value['localizacion_id']] = $value['establecimiento_nombre'] . ' - ' . $value['establecimiento_edificio_nombre'];
+            $resultado[$value['localizacion_id']] = $value['establecimiento_nombre'] . ' - ' . $value['establecimiento_edificio_nombre'] ;
         };
         return $resultado;
     }
 
     /**
-     *
      * @Route("/{id}/show", name="backend.organizacioninterna.show")
      * @Template('BackendBundle:OrganizacionInterna:show.html.twig')
-     * @ParamConverter("entity", class="EstablecimientoBundle:OrganizacionInterna")
+     * @ParamConverter(""entity", class="EstablecimientoBundle:OrganizacionInterna")
      */
     public function showAction($entity) {
 
@@ -194,18 +191,27 @@ class OrganicacionInternaController extends Controller {
         
         $form->bindRequest($request);
 
+        
+        /**
+         * *****************************************************************************+
+         * *****************************************************************************+
+         * *****************************************************************************+
+         * *****************************************************************************+
+         * *****************************************************************************+
+         * *****************************************************************************+
+         */
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($entity);
             $em->flush();
-
+            
             $this->get('session')->getFlashBag()->add('exito', 'La autoridad fue creada exitosamente');
 
             return $this->redirect($this->generateUrl('backend.organizacioninterna.edit', array('id' => $entity->getId())));
         }
 
         $this->get('session')->getFlashBag()->add('error', 'Problemas en el registro de la nueva autoridad. Verifique y reintente');
-
+        
         return array(
             'entity' => $entity,
             'form' => $form->createView()

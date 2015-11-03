@@ -1,0 +1,4 @@
+services:
+    fd.establecimiento.organizacioninterna.manager:
+        class: "Fd\EstablecimientoBundle\Model\OrganizacionInternaManager"
+        arguments: ["@doctrine.orm.entity_manager"]
