@@ -19,7 +19,7 @@ use Fd\EstablecimientoBundle\Model\OrganizacionInternaManager;
  *
  * @Route("/organizacioninterna")
  */
-class OrganicacionInternaController extends Controller {
+class OrganizacionInternaController extends Controller {
 
     private $em;
 
@@ -150,7 +150,7 @@ class OrganicacionInternaController extends Controller {
     /**
      *
      * @Route("/{id}/show", name="backend.organizacioninterna.show")
-     * @Template('BackendBundle:OrganizacionInterna:show.html.twig')
+     * @Template("BackendBundle:OrganizacionInterna:show.html.twig")
      * @ParamConverter("entity", class="EstablecimientoBundle:OrganizacionInterna")
      */
     public function showAction($entity) {
@@ -166,7 +166,7 @@ class OrganicacionInternaController extends Controller {
      * Displays a form to create a new Organizacion Interna entity.
      *
      * @Route("/new", name="backend.organizacioninterna.new")
-     * @Template('BackendBundle:OrganizacionInterna:new.html.twig')
+     * @Template("BackendBundle:OrganizacionInterna:new.html.twig")
      */
     public function newAction() {
         $entity = OrganizacionInternaManager::crearVacio();
