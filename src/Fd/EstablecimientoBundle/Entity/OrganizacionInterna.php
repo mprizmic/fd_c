@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @ORM\Table(name="organizacion_interna")
- * @ORM\Entity(repositoryClass="Fd\TablaBundle\Repository\EEDependenciaRepository")
+ * @ORM\Entity(repositoryClass="Fd\EstablecimientoBundle\Repository\OrganizacionInternaRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class OrganizacionInterna {

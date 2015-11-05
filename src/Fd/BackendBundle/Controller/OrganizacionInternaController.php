@@ -12,6 +12,7 @@ use Fd\BackendBundle\Form\Filter\OrganizacionInternaFilterType;
 use Fd\BackendBundle\Form\OrganizacionInternaType;
 use Fd\EstablecimientoBundle\Entity\OrganizacionInterna;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
+use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Model\OrganizacionInternaManager;
 
 /**
@@ -101,8 +102,7 @@ class OrganizacionInternaController extends Controller {
      */
     public function generarDatosBusquedaPaginada($form) {
         //se crear la consulta
-        $filterBuilder = $this->getRepository()->findAllOrdenado(); //FALTA aca debería salir ordenado por establecimientos y dependencia 
-
+        $filterBuilder = $this->getRepository()->qbAllOrdenado(); 
         // build the query from the given form object
         $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
 
@@ -112,8 +112,7 @@ class OrganizacionInternaController extends Controller {
 
         //hay por lo menos un campo con algo
         $organizaciones = $paginador->paginate($filterBuilder->getQuery())
-                ->getResult()
-                ->toArray();
+                ->getResult();
 
         return $organizaciones;
     }
@@ -130,19 +129,19 @@ class OrganizacionInternaController extends Controller {
 
         $form = $this->createForm(new OrganizacionInternaFilterType($this->getCmbEstablecimientos()));
 
-        if ($datos_sesion)
+        if (!is_null($datos_sesion))
             $form->setData($datos_sesion);
 
         return $form;
     }
 
     public function getCmbEstablecimientos() {
-        $terciarios = $this->getEm()
-                ->getRepository('EstablecimientoBundle:Localizacion')
-                ->getTerciarios();
-        
-        foreach ($terciarios as $key => $value) {
-            $resultado[$value['localizacion_id']] = $value['establecimiento_nombre'] . ' - ' . $value['establecimiento_edificio_nombre'];
+        $sedes_y_anexos = $this->getEm()
+                ->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
+                ->findSedesYAnexosOrdenados();
+
+        foreach ($sedes_y_anexos as $key => $value) {
+            $resultado[$value->getId()] = $value->getEstablecimientos()->getApodo() . ($value->getCueAnexo() <> "00" ? ' - ' . $value->getNombre():"");
         };
         return $resultado;
     }
@@ -170,7 +169,7 @@ class OrganizacionInternaController extends Controller {
      */
     public function newAction() {
         $entity = OrganizacionInternaManager::crearVacio();
-        
+
         $form = $this->createForm(new OrganizacionInternaType(), $entity);
 
         return array(
@@ -187,42 +186,50 @@ class OrganizacionInternaController extends Controller {
      * @Template("BackendBundle:OrganizacionInterna:new.html.twig")
      */
     public function createAction(Request $request) {
-        
-        $entity = OrganizacionInternaManager::crearVacio();
-        
+
+        $respuesta = new Respuesta();
+
+        $manager = $this->get('fd.establecimiento.organizacioninterna.manager');
+
+        $entity = $manager::crearVacio();
+
         $form = $this->createForm(new OrganizacionInternaType(), $entity);
-        
+
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
 
-            $this->get('session')->getFlashBag()->add('exito', 'La autoridad fue creada exitosamente');
+            $respuesta = $manager->crear($form->getData());
 
-            return $this->redirect($this->generateUrl('backend.organizacioninterna.edit', array('id' => $entity->getId())));
+            $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
+
+            $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
+
+            if ($respuesta->getCodigo() == 1) {
+
+                return $this->redirect($this->generateUrl('backend.organizacioninterna.edit', array('id' => $entity->getId())));
+            }
         }
 
-        $this->get('session')->getFlashBag()->add('error', 'Problemas en el registro de la nueva autoridad. Verifique y reintente');
-
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView()
-        );
+        return $this->render("BackendBundle:OrganizacionInterna:new.html.twig", array(
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+        ));
     }
 
     /**
      * Displays a form to edit an existing Organizacion Interna entity.
      *
      * @Route("/{id}/edit", name="backend.organizacioninterna.edit")
-     * @ParamConverter("entity", class="EstablecimientoBundle:Autoridad")
+     * @ParamConverter("entity", class="EstablecimientoBundle:OrganizacionInterna")
      */
     public function editAction($entity) {
-        $editForm = $this->createForm(new AutoridadType(), $entity);
+
+        $editForm = $this->createForm(new OrganizacionInternaType(), $entity);
+        
         $deleteForm = $this->createDeleteForm($entity->getId());
 
-        return $this->render('BackendBundle:Autoridad:edit.html.twig', array(
+        return $this->render('BackendBundle:OrganizacionInterna:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -234,68 +241,73 @@ class OrganizacionInternaController extends Controller {
      * Edits an existing Organizacion Interna entity.
      *
      * @Route("/{id}/update", name="backend.organizacioninterna.update")
+     * @ParamConverter("entity", class="EstablecimientoBundle:OrganizacionInterna")
      * @Method("post")
-     * @Template("BackendBundle:Autoridad:edit.html.twig")
      */
-    public function updateAction($id) {
-        $em = $this->getDoctrine()->getEntityManager();
+    public function updateAction($entity) {
 
-        $entity = $em->getRepository('EstablecimientoBundle:Autoridad')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Autoridad entity.');
-        }
-
-        $editForm = $this->createForm(new AutoridadType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $respuesta = new Respuesta();
+        
+        $editForm = $this->createForm(new OrganizacionInternaType(), $entity);
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         $request = $this->getRequest();
 
-        $editForm->bind($request);
+        $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
+            
+            $manager = $this->get('fd.establecimiento.organizacioninterna.manager');
+            
+            $respuesta = $manager->crear($editForm->getData());
+            
+            $tipo = $respuesta->getCodigo() == 1 ? 'exito' : 'error';
+            
+            $this->get('session')->getFlashBag()->add( $tipo, $respuesta->getMensaje() );
+            
+            if ($respuesta->getCodigo() == 1){
 
-            $this->get('session')->getFlashBag()->add('exito', 'La autoridad fue cargada exitosamente');
-
-            return $this->redirect($this->generateUrl('backend.organizacioninterna.edit', array('id' => $id)));
+                return $this->redirect($this->generateUrl('backend.organizacioninterna.edit', array('id' => $entity->getId())));
+            }
         }
-
-        $this->get('session')->getFlashBag()->add('error', 'Problemas al cargar la autoridad. Verifique y reintente.');
-
-        return array(
+        
+        return $this->render("BackendBundle:OrganizacionInterna:edit.html.twig", array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
      * Deletes a Organizacion Interna entity.
      *
      * @Route("/{id}/delete", name="backend.organizacioninterna.delete")
+     * @ParamConverter("entity", class="EstablecimientoBundle:OrganizacionInterna")
      * @Method("post")
      */
-    public function deleteAction($id) {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
+    public function deleteAction($entity, Request $request) {
+
+        $form = $this->createDeleteForm($entity->getId());
 
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('EstablecimientoBundle:Autoridad')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Autoridad entity.');
+            $manager = $this->get('fd.establecimiento.organizacioninterna.manager');
+            
+            $respuesta = $manager->eliminar($entity);
+            
+            $tipo = $respuesta->getCodigo() == 1 ? 'exito' : 'error';
+            
+            $this->get('session')->getFlashBag()->add( $tipo, $respuesta->getMensaje() );
+            
+            if ($respuesta->getCodigo() == 1){
+                
+                return $this->redirect($this->generateUrl('backend.organizacioninterna.buscar'));
             }
-
-            $em->remove($entity);
-            $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('backend.organizacioninterna.buscar'));
+        return $this->redirect($this->generateUrl('backend.organizacioninterna.edit', array("id" => $entity->getId())));
     }
 
     private function createDeleteForm($id) {

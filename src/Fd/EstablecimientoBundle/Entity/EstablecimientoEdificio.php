@@ -212,121 +212,6 @@ class EstablecimientoEdificio {
     }
 
     /**
-     * Set te1
-     *
-     * @param string $te1
-     * @return EstablecimientoEdificio
-     */
-    public function setTe1($te1)
-    {
-        $this->te1 = $te1;
-
-        return $this;
-    }
-
-    /**
-     * Get te1
-     *
-     * @return string 
-     */
-    public function getTe1()
-    {
-        return $this->te1;
-    }
-
-    /**
-     * Set te2
-     *
-     * @param string $te2
-     * @return EstablecimientoEdificio
-     */
-    public function setTe2($te2)
-    {
-        $this->te2 = $te2;
-
-        return $this;
-    }
-
-    /**
-     * Get te2
-     *
-     * @return string 
-     */
-    public function getTe2()
-    {
-        return $this->te2;
-    }
-
-    /**
-     * Set te3
-     *
-     * @param string $te3
-     * @return EstablecimientoEdificio
-     */
-    public function setTe3($te3)
-    {
-        $this->te3 = $te3;
-
-        return $this;
-    }
-
-    /**
-     * Get te3
-     *
-     * @return string 
-     */
-    public function getTe3()
-    {
-        return $this->te3;
-    }
-
-    /**
-     * Set email1
-     *
-     * @param string $email1
-     * @return EstablecimientoEdificio
-     */
-    public function setEmail1($email1)
-    {
-        $this->email1 = $email1;
-
-        return $this;
-    }
-
-    /**
-     * Get email1
-     *
-     * @return string 
-     */
-    public function getEmail1()
-    {
-        return $this->email1;
-    }
-
-    /**
-     * Set email2
-     *
-     * @param string $email2
-     * @return EstablecimientoEdificio
-     */
-    public function setEmail2($email2)
-    {
-        $this->email2 = $email2;
-
-        return $this;
-    }
-
-    /**
-     * Get email2
-     *
-     * @return string 
-     */
-    public function getEmail2()
-    {
-        return $this->email2;
-    }
-
-    /**
      * Set establecimientos
      *
      * @param \Fd\EstablecimientoBundle\Entity\Establecimiento $establecimientos
@@ -408,10 +293,10 @@ class EstablecimientoEdificio {
     /**
      * Add dependencias
      *
-     * @param \Fd\TablaBundle\Entity\EEDependencia $dependencias
+     * @param \Fd\EstablecimientoBundle\Entity\OrganizacionInterna $dependencias
      * @return EstablecimientoEdificio
      */
-    public function addDependencia(\Fd\TablaBundle\Entity\EEDependencia $dependencias)
+    public function addDependencia(\Fd\EstablecimientoBundle\Entity\OrganizacionInterna $dependencias)
     {
         $this->dependencias[] = $dependencias;
 
@@ -421,9 +306,9 @@ class EstablecimientoEdificio {
     /**
      * Remove dependencias
      *
-     * @param \Fd\TablaBundle\Entity\EEDependencia $dependencias
+     * @param \Fd\EstablecimientoBundle\Entity\OrganizacionInterna $dependencias
      */
-    public function removeDependencia(\Fd\TablaBundle\Entity\EEDependencia $dependencias)
+    public function removeDependencia(\Fd\EstablecimientoBundle\Entity\OrganizacionInterna $dependencias)
     {
         $this->dependencias->removeElement($dependencias);
     }

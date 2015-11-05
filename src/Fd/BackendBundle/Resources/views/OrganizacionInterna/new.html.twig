@@ -1,27 +1,20 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
-{% block title %}
-    {{ parent() }} - Crear Autoridad
-{% endblock %}
-
 {% block main_content %}
+    {{ parent() }}
+    
+    <div class="titulo">Crear nueva dependencia del establecimiento</div>
 
-    <h1>Crear registro de Autoridad </h1>
-
-    <form action="{{ path('backend_autoridad_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('backend.organizacioninterna.create') }}" method="post" {{ form_enctype(form) }}>
         <div class="ancho_10">
             {{ form_widget(form) }}
         </div>
-        <span class="separador">
+        <p class="separador">
             <button type="submit">Crear</button>
-        </span>
+            <a class="separador" href="{{ path('backend.organizacioninterna.buscar') }}">Volver a la lista</a>
+        </p>
     </form>
 
-    <div class="float_derecha">
-        <a href="{{ path('backend_autoridad_buscar') }}">
-            Volver
-        </a>
-    </div>
 
     <br />
     <br />
