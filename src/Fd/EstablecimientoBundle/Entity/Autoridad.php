@@ -55,15 +55,6 @@ class Autoridad
      */
     private $cargo;
     /**
-     * bidireccional lado propietario
-     * @ORM\ManyToOne(targetEntity="Establecimiento", inversedBy="autoridades_rectorado")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="establecimiento_id", referencedColumnName="id")
-     * })    
-     * 
-     */
-    private $establecimiento;
-    /**
      * @ORM\Column(nullable=true, type="date")
      * 
      */
