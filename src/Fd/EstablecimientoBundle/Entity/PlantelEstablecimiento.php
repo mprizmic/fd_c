@@ -1,8 +1,8 @@
 <?php
 
 /**
- * entity de la relación entre establecimeinto_edificio y dependencia
- * Representa la estructura de cada establecimientos. la estructura está definida por las dependencias y los niveles
+ * entity de la relación entre cargo, dependencia y autoridad
+ * Representa los cargos asociados a cada dependencia que tiene cada establecimientos
  */
 
 namespace Fd\EstablecimientoBundle\Entity;
@@ -16,11 +16,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * @ORM\Table(name="organizacion_interna")
- * @ORM\Entity(repositoryClass="Fd\EstablecimientoBundle\Repository\OrganizacionInternaRepository")
+ * @ORM\Table(name="plantel_establecimiento")
+ * @ORM\Entity(repositoryClass="Fd\EstablecimientoBundle\Repository\PlantelEstablecimientoRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class OrganizacionInterna {
+class PlantelEstablecimiento {
 
     /**
      * 
@@ -43,22 +43,16 @@ class OrganizacionInterna {
 
     /**
      * bidireccional lado propietario
-     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\Dependencia", inversedBy="establecimientos")
+     * @ORM\ManyToOne(targetEntity="Fd\EstablecimientoBundle\Entity\OrganizacionInterna", inversedBy="cargos")
      * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
-    private $dependencia;
+    private $organizacion;
     /**
      * bidireccional lado propietario
-     * @ORM\ManyToOne(targetEntity="Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio", inversedBy="dependencias")
+     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\Cargo", inversedBy="dependencias")
      * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
-    private $establecimiento;
-    /**
-     * bidireccional lado inverso
-     * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento", mappedBy="organizacion")
-     * @Assert\NotBlank(message="El dato no puede quedar en blanco")
-     */
-    private $cargos;
+    private $cargo;
     /**
      * @ORM\Column(type="datetime")
      * 
@@ -78,9 +72,9 @@ class OrganizacionInterna {
         $this->setActualizado(new \DateTime());
     }
 
-    public function __toString() {
+//    public function __toString() {
 //        return $this->nombre;
-    }
+//    }
 
     public function __construct() {
         $this->creado = new \DateTime();
@@ -101,7 +95,7 @@ class OrganizacionInterna {
      * Set te
      *
      * @param string $te
-     * @return OrganizacionInterna
+     * @return PlantelEstablecimiento
      */
     public function setTe($te)
     {
@@ -124,7 +118,7 @@ class OrganizacionInterna {
      * Set email
      *
      * @param string $email
-     * @return OrganizacionInterna
+     * @return PlantelEstablecimiento
      */
     public function setEmail($email)
     {
@@ -147,7 +141,7 @@ class OrganizacionInterna {
      * Set actualizado
      *
      * @param \DateTime $actualizado
-     * @return OrganizacionInterna
+     * @return PlantelEstablecimiento
      */
     public function setActualizado($actualizado)
     {
@@ -170,7 +164,7 @@ class OrganizacionInterna {
      * Set creado
      *
      * @param \DateTime $creado
-     * @return OrganizacionInterna
+     * @return PlantelEstablecimiento
      */
     public function setCreado($creado)
     {
@@ -190,81 +184,48 @@ class OrganizacionInterna {
     }
 
     /**
-     * Set dependencia
+     * Set organizacion
      *
-     * @param \Fd\TablaBundle\Entity\Dependencia $dependencia
-     * @return OrganizacionInterna
+     * @param \Fd\EstablecimientoBundle\Entity\OrganizacionInterna $organizacion
+     * @return PlantelEstablecimiento
      */
-    public function setDependencia(\Fd\TablaBundle\Entity\Dependencia $dependencia = null)
+    public function setOrganizacion(\Fd\EstablecimientoBundle\Entity\OrganizacionInterna $organizacion = null)
     {
-        $this->dependencia = $dependencia;
+        $this->organizacion = $organizacion;
 
         return $this;
     }
 
     /**
-     * Get dependencia
+     * Get organizacion
      *
-     * @return \Fd\TablaBundle\Entity\Dependencia 
+     * @return \Fd\EstablecimientoBundle\Entity\OrganizacionInterna 
      */
-    public function getDependencia()
+    public function getOrganizacion()
     {
-        return $this->dependencia;
+        return $this->organizacion;
     }
 
     /**
-     * Set establecimiento
+     * Set cargo
      *
-     * @param \Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $establecimiento
-     * @return OrganizacionInterna
+     * @param \Fd\TablaBundle\Entity\Cargo $cargo
+     * @return PlantelEstablecimiento
      */
-    public function setEstablecimiento(\Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio $establecimiento = null)
+    public function setCargo(\Fd\TablaBundle\Entity\Cargo $cargo = null)
     {
-        $this->establecimiento = $establecimiento;
+        $this->cargo = $cargo;
 
         return $this;
     }
 
     /**
-     * Get establecimiento
+     * Get cargo
      *
-     * @return \Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio 
+     * @return \Fd\TablaBundle\Entity\Cargo 
      */
-    public function getEstablecimiento()
+    public function getCargo()
     {
-        return $this->establecimiento;
-    }
-
-    /**
-     * Add cargos
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento $cargos
-     * @return OrganizacionInterna
-     */
-    public function addCargo(\Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento $cargos)
-    {
-        $this->cargos[] = $cargos;
-
-        return $this;
-    }
-
-    /**
-     * Remove cargos
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento $cargos
-     */
-    public function removeCargo(\Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento $cargos)
-    {
-        $this->cargos->removeElement($cargos);
-    }
-
-    /**
-     * Get cargos
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCargos()
-    {
-        return $this->cargos;
+        return $this->cargo;
     }
 }

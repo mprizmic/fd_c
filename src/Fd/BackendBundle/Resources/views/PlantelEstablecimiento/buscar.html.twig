@@ -1,0 +1,64 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <div class="titulo float_izquierda">Cargos de cada dependencia de la organización interna de los establecimientos</div>
+    <div class="limpiar_float"></div>
+
+    <div><a class="float_derecha boton_verde" href="{{ path('backend.plantelestablecimiento.new') }}">Nuevo cargo para una dependencia</a></div>
+    <div class="limpiar_float"></div>
+
+    <fieldset>
+        <legend class="resaltado">Filtros</legend>
+        <form method="post" action="{{ path('backend.plantelestablecimiento.buscar') }}">
+            <div class="ancho_10">
+                {{ form_rest(form) }}
+            </div>
+            <br />
+            <div style="display: block">
+
+                <input type="submit" name="submit-filter" value="Buscar" />
+                <span class="separador"></span>
+                <a href="{{ path( "backend.plantelestablecimiento.buscar" ) }}">Limpiar</a>
+
+            </div>
+        </form>
+    </fieldset>
+
+    {% if planteles %}
+        <br />
+
+        <table class="grilla">
+            <tr>
+                <th>Establecimiento</th>
+                <th>Dependencia</th>
+                <th>Cargo</th>
+                <th>Acciones</th>
+            </tr>
+
+            {% for un_plantel in planteles %}
+                <tr>
+                    <td>{{ un_plantel.dependencia.establecimiento }}</a></td>
+                    <td>{{ un_plantel.dependencia.dependencia }}</a></td>
+                    <td>{{ un_plantel.cargo }}</a></td>
+                    <td><a href="{{path('backend.plantelestablecimiento.edit', {'id': un_plantel.id})}}">Editar</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        {{ simple_paginator_render('backend.plantelestablecimiento.buscar', null, {
+        'container_class':'simple_paginator',
+        'previousPageText':'Anterior',
+        'nextPageText':'Siguiente',
+        'currentClass':'Actual',
+        'firstPageText':'Primero',
+        'lastPageText':'Último'
+    }) }}  
+
+    {% endif %}
+
+    <br />
+    <br />
+
+{% endblock %}

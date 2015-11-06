@@ -6,9 +6,11 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Collections\ArrayCollection as ArrCol;
 use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
+use Fd\EstablecimientoBundle\Model\DatosAChoiceVisitadoInterface;
+use Fd\EstablecimientoBundle\Model\DatosAChoiceVisitadorInterface;
 use Fd\OfertaEducativaBundle\Entity\InicialX;
 
-class EstablecimientoEdificioRepository extends EntityRepository {
+class EstablecimientoEdificioRepository extends EntityRepository implements DatosAChoiceVisitadoInterface {
 
     /**
      * Devuelve la lista de edificio_establecimiento con el inspector de infraestructura indicado
@@ -68,17 +70,19 @@ class EstablecimientoEdificioRepository extends EntityRepository {
         return $qb;
     }
 
+    public function qbSedesYAnexosOrdenados() {
+        return $this->filtrarSedeYAnexo(
+                        $this->qbAllOrdenado()
+        );
+    }
+
     /**
      * devuelve los registros de establecimiento_edificio que no sean cue 99 ordenados por orden de establecimiento y cue_anexo
      * @return type
      */
     public function findSedesYAnexosOrdenados() {
 
-        $qb = $this->filtrarSedeYAnexo(
-                $this->qbAllOrdenado()
-        );
-
-        return $this->findear($qb);
+        return $this->findear($this->qbSedesYAnexosOrdenados());
     }
 
     /**
@@ -267,6 +271,18 @@ class EstablecimientoEdificioRepository extends EntityRepository {
         $qb->setParameter('establecimiento_edificio', $establecimiento_edificio);
         $resultado = $qb->getQuery()->getArrayResult();
         return $resultado;
+    }
+
+    /**
+     * Es visitado para pasar los datos de una Collection a un array determinado
+     * el findSedesYAnexosOrdenados para a un array con un cierto formato
+     * 
+     * @param DatosAChoiceVisitadorInterface $visitador
+     * @return type
+     */
+    public function acceptDatosAChoice(DatosAChoiceVisitadorInterface $visitador) {
+        return $visitador->visitEstablecimientoEdificio( $this );
+        ;
     }
 
 }

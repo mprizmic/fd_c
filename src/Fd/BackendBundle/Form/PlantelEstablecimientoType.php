@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class OrganizacionInternaType extends AbstractType {
+class PlantelEstablecimientoType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $factory = $builder->getFormFactory();
@@ -26,7 +26,7 @@ class OrganizacionInternaType extends AbstractType {
                 'label' => 'Establecimiento',
                 'class' => 'EstablecimientoBundle:EstablecimientoEdificio',
                 'query_builder' => function(EntityRepository $er) {
-                    return $er->qbSedesYAnexosOrdenados();
+                    return $er->qbAllOrdenado();
                 });
 
             $optionsDependencia = array(
@@ -69,7 +69,7 @@ class OrganizacionInternaType extends AbstractType {
     
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Fd\EstablecimientoBundle\Entity\OrganizacionInterna',
+            'data_class' => 'Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento',
         ));
     }
 }

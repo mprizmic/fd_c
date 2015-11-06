@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Fd\TablaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,8 +15,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @ORM\Entity(repositoryClass="Fd\TablaBundle\Repository\CargoRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Cargo{
-    
+class Cargo {
+
     /**
      * 
      * @ORM\Column(name = "id", type = "integer", nullable = false)
@@ -30,60 +29,33 @@ class Cargo{
      * @ORM\Column(type="string", length=10)
      */
     private $codigo;
+
     /**
      * @ORM\Column(length=150, nullable=false)
      */
     private $nombre;
+
     /**
      * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\Nivel")
      */
     private $nivel;
+
     /**
      * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\Turno")
      */
     private $turno;
-//    /**
-//     * lado propietario
-//     * @ORM\OneToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\OfertaEducativa", inversedBy="carrera")
-//     * @ORM\JoinColumn(name="oferta_educativa_id", referencedColumnName="id")
-//     */
-//    private $oferta;
-//
-//
-//    /**
-//     * bidireccional lado inverso
-//     * @ORM\OneToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\TituloCarrera", mappedBy="carrera", cascade={"persist", "remove"} )
-//     * @Assert\Valid()
-//     */
-//    private $titulos;
-//
-//
-//    /**
-//     * @ORM\Column(type="string", nullable=true)
-//     */
-//    private $duracion;
-//
-//    /**
-//     * @ORM\Column(type="integer", nullable=true)
-//     * @Assert\Length(min=4, max=4)
-//     */
-//    private $anio_inicio;
-//
-//    /**
-//     * bidireccional lado inverso
-//     * @ORM\OneToMany(targetEntity="Fd\OfertaEducativaBundle\Entity\Orientacion", mappedBy="carrera", cascade={"persist", "remove"} )
-//     * @Assert\Valid()
-//     */
-//    private $orientaciones;
-//
-//    /**
-//     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\EstadoCarrera")
-//     */
-//    private $estado;
-//    /**
-//     * @ORM\Column(type="string", length=250, nullable=true)
-//     */
-//    private $comentario;
+
+    /**
+     * bidireccional lado inverso
+     * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento", mappedBy="cargo")
+     * @Assert\NotBlank(message="El dato no puede quedar en blanco")
+     */
+    private $dependencias;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $orden;
 
     /**
      * @ORM\Column(type="datetime")
@@ -107,10 +79,12 @@ class Cargo{
     public function __toString() {
         return $this->nombre;
     }
+
     public function __construct() {
         $this->creado = new \DateTime();
         $this->actualizado = new \DateTime('now');
     }
+
 
     /**
      * Get id
@@ -166,6 +140,29 @@ class Cargo{
     public function getNombre()
     {
         return $this->nombre;
+    }
+
+    /**
+     * Set orden
+     *
+     * @param integer $orden
+     * @return Cargo
+     */
+    public function setOrden($orden)
+    {
+        $this->orden = $orden;
+
+        return $this;
+    }
+
+    /**
+     * Get orden
+     *
+     * @return integer 
+     */
+    public function getOrden()
+    {
+        return $this->orden;
     }
 
     /**
@@ -258,5 +255,38 @@ class Cargo{
     public function getTurno()
     {
         return $this->turno;
+    }
+
+    /**
+     * Add dependencias
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento $dependencias
+     * @return Cargo
+     */
+    public function addDependencia(\Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento $dependencias)
+    {
+        $this->dependencias[] = $dependencias;
+
+        return $this;
+    }
+
+    /**
+     * Remove dependencias
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento $dependencias
+     */
+    public function removeDependencia(\Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento $dependencias)
+    {
+        $this->dependencias->removeElement($dependencias);
+    }
+
+    /**
+     * Get dependencias
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDependencias()
+    {
+        return $this->dependencias;
     }
 }
