@@ -56,7 +56,6 @@ class OrganizacionInterna {
     /**
      * bidireccional lado inverso
      * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento", mappedBy="organizacion")
-     * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
     private $cargos;
     /**
@@ -79,7 +78,7 @@ class OrganizacionInterna {
     }
 
     public function __toString() {
-//        return $this->nombre;
+        return $this->getEstablecimiento() . '/' . $this->getDependencia();
     }
 
     public function __construct() {
