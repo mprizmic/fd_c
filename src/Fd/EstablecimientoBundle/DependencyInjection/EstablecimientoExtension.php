@@ -26,5 +26,6 @@ class EstablecimientoExtension extends Extension
         $loader->load('services.yml');
         $loader->load('localizacion_manager.yml');
         $loader->load('organizacioninterna_manager.yml');
+        $loader->load('plantelestablecimiento_manager.yml');
     }
 }

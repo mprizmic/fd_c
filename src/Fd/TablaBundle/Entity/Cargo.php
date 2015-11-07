@@ -48,7 +48,6 @@ class Cargo {
     /**
      * bidireccional lado inverso
      * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento", mappedBy="cargo")
-     * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
     private $dependencias;
 

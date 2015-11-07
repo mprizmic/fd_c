@@ -1,0 +1,4 @@
+services:
+    fd.establecimiento.plantelestablecimiento.manager:
+        class: "Fd\EstablecimientoBundle\Model\PlantelEstablecimientoManager"
+        arguments: ["@doctrine.orm.entity_manager"]

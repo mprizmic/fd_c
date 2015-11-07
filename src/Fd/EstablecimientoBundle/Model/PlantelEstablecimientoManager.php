@@ -5,10 +5,10 @@ namespace Fd\EstablecimientoBundle\Model;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormInterface;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
-use Fd\EstablecimientoBundle\Entity\OrganizacionInterna;
-use Fd\EstablecimientoBundle\Repository\OrganizacionInternaRepository;
+use Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento;
+use Fd\EstablecimientoBundle\Repository\PlantelEstablecimientoRepository;
 
-class OrganizacionInternaManager {
+class PlantelEstablecimientoManager {
 
     private $em;
 
@@ -19,30 +19,30 @@ class OrganizacionInternaManager {
     /**
      * Crea un nuevo objeto vacío
      * 
-     * @return OrganizacionInterna
+     * @return PantelEstablecimiento
      */
     public static function crearVacio() {
-        return new OrganizacionInterna();
+        return new PlantelEstablecimiento();
     }
 
     /**
      * @return type
      */
-    public function crear($organizacion_interna, $flush = true) {
+    public function crear($plantel_establecimiento, $flush = true) {
 
-        $respuesta = new Respuesta(2, 'No se pudo generar la dependencia');
+        $respuesta = new Respuesta(2, 'No se pudo generar el cargo');
 
 
         // no se pone catch por que sólo genera un cartel que ya general por default Respuesta
         try {
-            $this->em->persist($organizacion_interna);
+            $this->em->persist($plantel_establecimiento);
 
             if ($flush) {
                 $this->em->flush();
             };
 
             $respuesta->setCodigo(1);
-            $respuesta->setMensaje('La dependencia se actualizó correctamente');
+            $respuesta->setMensaje('El cargo se actualizó correctamente');
             $respuesta->setObjNuevo($entity);
         } finally {
 

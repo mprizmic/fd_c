@@ -173,12 +173,12 @@ class PlantelEstablecimientoController extends Controller {
      * Displays a form to create a new Organizacion Interna entity.
      *
      * @Route("/new", name="backend.plantelestablecimiento.new")
-     * @Template("BackendBundle:OrganizacionInterna:new.html.twig")
+     * @Template("BackendBundle:PlantelEstablecimiento:new.html.twig")
      */
     public function newAction() {
-        $entity = OrganizacionInternaManager::crearVacio();
+        $entity = PlantelEstablecimientoManager::crearVacio();
 
-        $form = $this->createForm(new OrganizacionInternaType(), $entity);
+        $form = $this->createForm(new PlantelEstablecimientoType(), $entity);
 
         return array(
             'entity' => $entity,

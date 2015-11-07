@@ -13,7 +13,7 @@ class PlantelEstablecimientoRepository extends EntityRepository {
 
     public function qbAllOrdenado() {
         return $this->qbAll()
-                ->join('pe.dependencias', 'oi')
+                ->join('pe.organizacion', 'oi')
                 ->join('oi.establecimiento', 'ee')
                 ->join('ee.establecimientos', 'e')
                 ->join('oi.dependencia', 'd')
