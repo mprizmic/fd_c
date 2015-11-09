@@ -103,7 +103,16 @@ class PlantelEstablecimientoController extends Controller {
         //se crear la consulta
         $filterBuilder = $this->getRepository()->qbAllOrdenado();
         // build the query from the given form object
-        $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        $updater = $this->get('lexik_form_filter.query_builder_updater');
+        $updater->setParts(array(
+            '__root__' => 'pe',
+            'pe.organizacion' => 'oi',
+            'oi.establecimiento' => 'ee',
+            'ee.establecimientos' => 'e',
+            'oi.dependencia' => 'd',
+            'pe.cargo' => 'cg',
+        ));
+        $updater->addFilterConditions($form, $filterBuilder);
 
         //crea el paginador
         $paginador = $this->get('ideup.simple_paginator');
@@ -143,22 +152,24 @@ class PlantelEstablecimientoController extends Controller {
 
         return $resultado;
     }
-    public function getCmbDependencia(){
+
+    public function getCmbDependencia() {
         return $this->getEm()
-                ->getRepository('TablaBundle:Dependencia')
-                ->acceptDatosAChoice(new DatosAChoiceVisitador());
+                        ->getRepository('TablaBundle:Dependencia')
+                        ->acceptDatosAChoice(new DatosAChoiceVisitador());
     }
-    public function getCmbCargo(){
+
+    public function getCmbCargo() {
         return $this->getEm()
-                ->getRepository('TablaBundle:Cargo')
-                ->acceptDatosAChoice(new DatosAChoiceVisitador());
+                        ->getRepository('TablaBundle:Cargo')
+                        ->acceptDatosAChoice(new DatosAChoiceVisitador());
     }
 
     /**
      *
      * @Route("/{id}/show", name="backend.plantelestablecimiento.show")
-     * @Template("BackendBundle:OrganizacionInterna:show.html.twig")
-     * @ParamConverter("entity", class="EstablecimientoBundle:OrganizacionInterna")
+     * @Template("BackendBundle:PlantelEstablecimiento:show.html.twig")
+     * @ParamConverter("entity", class="EstablecimientoBundle:PlantelEstablecimiento")
      */
     public function showAction($entity) {
 
@@ -170,13 +181,15 @@ class PlantelEstablecimientoController extends Controller {
     }
 
     /**
-     * Displays a form to create a new Organizacion Interna entity.
+     * Displays a form to create a new plantel_establecimiento entity.
      *
      * @Route("/new", name="backend.plantelestablecimiento.new")
      * @Template("BackendBundle:PlantelEstablecimiento:new.html.twig")
      */
     public function newAction() {
-        $entity = PlantelEstablecimientoManager::crearVacio();
+        $manager = $this->get('fd.establecimiento.plantelestablecimiento.manager');
+        
+        $entity = $manager::crearVacio();
 
         $form = $this->createForm(new PlantelEstablecimientoType(), $entity);
 
@@ -187,11 +200,11 @@ class PlantelEstablecimientoController extends Controller {
     }
 
     /**
-     * Creates a new Organizacion Interna entity.
+     * Creates a new plantel_establecimiento entity.
      *
      * @Route("/create", name="backend.plantelestablecimiento.create")
      * @Method("post")
-     * @Template("BackendBundle:OrganizacionInterna:new.html.twig")
+     * @Template("BackendBundle:PlantelEstablecimiento:new.html.twig")
      */
     public function createAction(Request $request) {
 
@@ -201,7 +214,7 @@ class PlantelEstablecimientoController extends Controller {
 
         $entity = $manager::crearVacio();
 
-        $form = $this->createForm(new OrganizacionInternaType(), $entity);
+        $form = $this->createForm(new PlantelEstablecimientoType(), $entity);
 
         $form->bindRequest($request);
 
@@ -219,25 +232,25 @@ class PlantelEstablecimientoController extends Controller {
             }
         }
 
-        return $this->render("BackendBundle:OrganizacionInterna:new.html.twig", array(
+        return $this->render("BackendBundle:PlantelEstablecimiento:new.html.twig", array(
                     'entity' => $entity,
                     'form' => $form->createView(),
         ));
     }
 
     /**
-     * Displays a form to edit an existing Organizacion Interna entity.
+     * Displays a form to edit an existing plantel_establecimiento entity.
      *
      * @Route("/{id}/edit", name="backend.plantelestablecimiento.edit")
-     * @ParamConverter("entity", class="EstablecimientoBundle:OrganizacionInterna")
+     * @ParamConverter("entity", class="EstablecimientoBundle:PlantelEstablecimiento")
      */
     public function editAction($entity) {
 
-        $editForm = $this->createForm(new OrganizacionInternaType(), $entity);
+        $editForm = $this->createForm(new PlantelEstablecimientoType(), $entity);
 
         $deleteForm = $this->createDeleteForm($entity->getId());
 
-        return $this->render('BackendBundle:OrganizacionInterna:edit.html.twig', array(
+        return $this->render('BackendBundle:PlantelEstablecimiento:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -246,17 +259,17 @@ class PlantelEstablecimientoController extends Controller {
     }
 
     /**
-     * Edits an existing Organizacion Interna entity.
+     * Edits an existing plantel_establecimiento entity.
      *
      * @Route("/{id}/update", name="backend.plantelestablecimiento.update")
-     * @ParamConverter("entity", class="EstablecimientoBundle:OrganizacionInterna")
+     * @ParamConverter("entity", class="EstablecimientoBundle:PlantelEstablecimiento")
      * @Method("post")
      */
     public function updateAction($entity) {
 
         $respuesta = new Respuesta();
 
-        $editForm = $this->createForm(new OrganizacionInternaType(), $entity);
+        $editForm = $this->createForm(new PlantelEstablecimientoType(), $entity);
         $deleteForm = $this->createDeleteForm($entity->getId());
 
         $request = $this->getRequest();
@@ -279,7 +292,7 @@ class PlantelEstablecimientoController extends Controller {
             }
         }
 
-        return $this->render("BackendBundle:OrganizacionInterna:edit.html.twig", array(
+        return $this->render("BackendBundle:PlantelEstablecimiento:edit.html.twig", array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),
@@ -290,7 +303,7 @@ class PlantelEstablecimientoController extends Controller {
      * Deletes a Organizacion Interna entity.
      *
      * @Route("/{id}/delete", name="backend.plantelestablecimiento.delete")
-     * @ParamConverter("entity", class="EstablecimientoBundle:OrganizacionInterna")
+     * @ParamConverter("entity", class="EstablecimientoBundle:PlantelEstablecimiento")
      * @Method("post")
      */
     public function deleteAction($entity, Request $request) {

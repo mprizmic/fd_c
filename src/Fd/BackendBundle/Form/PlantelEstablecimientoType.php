@@ -9,6 +9,10 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Fd\EstablecimientoBundle\Entity\OrganizacionInterna;
+use Fd\EstablecimientoBundle\Repository\OrganizacionInternaRepository;
+use Fd\TablaBundle\Entity\Cargo;
+use Fd\TablaBundle\Repository\CargoRepository;
 
 class PlantelEstablecimientoType extends AbstractType {
 
@@ -21,33 +25,33 @@ class PlantelEstablecimientoType extends AbstractType {
             $form = $event->getForm();
             $data = $event->getData();
 
-            $optionsEstablecimiento = array(
+            $optionsOrganizacion = array(
                 'required' => true,
-                'label' => 'Establecimiento',
-                'class' => 'EstablecimientoBundle:EstablecimientoEdificio',
+                'label' => 'Dependencia del establecimiento',
+                'class' => 'EstablecimientoBundle:OrganizacionInterna',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->qbAllOrdenado();
                 });
 
-            $optionsDependencia = array(
+            $optionsCargo = array(
                 'required' => true,
-                'class' => 'TablaBundle:Dependencia',
-                'label' => 'Dependencia',
+                'class' => 'TablaBundle:Cargo',
+                'label' => 'Cargo',
             );
 
             if ($data->getId()) {
                 //si el registro ya está creado no se pueden cambiar ni la unidad educativa ni el establecimeinto
-                $optionsEstablecimiento['disabled'] = true;
+                $optionsOrganizacion['disabled'] = true;
 
                 //si el registro ya está creado no se pueden cambiar ni la unidad educativa ni el establecimeinto
-                $optionsDependencia['disabled'] = true;
+                $optionsCargo['disabled'] = true;
             };
 
             $form->add(
-                    $factory->createNamed('establecimiento', 'entity', null, $optionsEstablecimiento));
-
+                    $factory->createNamed('cargo', 'entity', null, $optionsCargo));
             $form->add(
-                    $factory->createNamed('dependencia', 'entity', null, $optionsDependencia));
+                    $factory->createNamed('organizacion', 'entity', null, $optionsOrganizacion));
+
         });
 
         $builder
@@ -64,7 +68,7 @@ class PlantelEstablecimientoType extends AbstractType {
     }
 
     public function getName() {
-        return 'backend_organizacioninterna_type';
+        return 'backend_plantelestablecimiento_type';
     }
     
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
