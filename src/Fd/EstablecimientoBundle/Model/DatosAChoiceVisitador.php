@@ -13,6 +13,7 @@ use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Model\DatosAChoiceVisitadoInterface;
 use Fd\EstablecimientoBundle\Model\DatosAChoiceVisitadorInterface;
 use Fd\EstablecimientoBundle\Repository\EstablecimientoEdificioRepository;
+use Fd\EstablecimientoBundle\Repository\OrganizacionInternaRepository;
 use Fd\TablaBundle\Repository\DependenciaRepository;
 use Fd\TablaBundle\Repository\CargoRepository;
 
@@ -72,7 +73,20 @@ class DatosAChoiceVisitador implements DatosAChoiceVisitadorInterface {
             $resultado[$value->getId()] = $value->getNombre();
         }        
         
-        return $cargos;
+        return $resultado;
     }
-
+    /**
+     * Visita a organizacioninterna para pasar la Collection que devuelve un query a un array con el formato predeterminado
+     * @param EstablecimientoBundle\Repository\OrganizacionInternaRepository $visitado Description
+     * @return type
+     */
+    public function visitOrganizacionInterna(DatosAChoiceVisitadoInterface $visitado) {
+        $organizaciones = $visitado->findAllOrdenado();
+        
+        foreach ($organizaciones as $key => $value){
+            $resultado[$value->getId()] = $value->__toString();
+        }
+        
+        return $resultado;
+    }
 }
