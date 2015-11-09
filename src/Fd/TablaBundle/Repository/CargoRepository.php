@@ -16,7 +16,7 @@ class CargoRepository extends EntityRepository implements DatosAChoiceVisitadoIn
 
     public function qyAllOrdenado() {
         return $this->createQueryBuilder('cg')
-                        ->orderBy('cg.orden');
+                        ->orderBy('cg.nombre');
     }
 
     public function findAllOrdenado() {
