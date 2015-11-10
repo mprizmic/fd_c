@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Fd\BackendBundle\Form\AutoridadType;
 use Fd\EstablecimientoBundle\Entity\Autoridad;
 use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
+use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Form\Filter\AutoridadFilterType;
 use Fd\EstablecimientoBundle\Model\DatosAChoiceVisitador;
 use Fd\TablaBundle\Entity\Cargo;
@@ -162,7 +163,7 @@ class AutoridadController extends Controller {
 
         $deleteForm = $this->createDeleteForm($entity->getId());
 
-        return $this->render('EstablecimientoBundle:Autoridad:show.html.twig', array(
+        return $this->render('BackendBundle:Autoridad:show.html.twig', array(
                     'entity' => $entity,
                     'delete_form' => $deleteForm->createView(),
         ));
@@ -177,53 +178,59 @@ class AutoridadController extends Controller {
         $entity = new Autoridad();
         $form = $this->createForm(new AutoridadType(), $entity);
 
-        return $this->render('EstablecimientoBundle:Autoridad:new.html.twig', array(
+        return $this->render('BackendBundle:Autoridad:new.html.twig', array(
                     'entity' => $entity,
                     'form' => $form->createView()
         ));
     }
-/**
- * HASTA ACA
- * *************************************************************
- * *************************************************************
- * *************************************************************
- * *************************************************************
- * *************************************************************
- * *************************************************************
- * *************************************************************
- * *************************************************************
- * *************************************************************
- * *************************************************************
- */
+
+    /**
+     * HASTA ACA
+     * *************************************************************
+     * *************************************************************
+     * *************************************************************
+     * *************************************************************
+     * *************************************************************
+     * *************************************************************
+     * *************************************************************
+     * *************************************************************
+     * *************************************************************
+     * *************************************************************
+     */
+
     /**
      * Creates a new Autoridad entity.
      *
      * @Route("/create", name="backend.autoridad.create")
      * @Method("post")
-     * @Template("EstablecimientoBundle:Autoridad:new.html.twig")
      */
-    public function createAction() {
-        $entity = new Autoridad();
-        $request = $this->getRequest();
+    public function createAction(Request $request) {
+
+        $manager = $this->get('fd.establecimiento.autoridad.manager');
+
+        $entity = $manager::crearVacio();
+
         $form = $this->createForm(new AutoridadType(), $entity);
+
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
-            $em->flush();
 
-            $this->get('session')->getFlashBag()->add('exito', 'La autoridad fue creada exitosamente');
+            $respuesta = $manager->crear($form->getData());
+
+            $tipo = $respuesta->getCodigo() == 1 ? 'exito' : 'error';
+
+            $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
             return $this->redirect($this->generateUrl('backend.autoridad.edit', array('id' => $entity->getId())));
         }
 
-        $this->get('session')->getFlashBag()->add('error', 'Problemas en el registro de la nueva autoridad. Verifique y reintente');
+        $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView()
-        );
+        return $this->render('BackendBundle:Autoridad:new.html.twig', array(
+                    'entity' => $entity,
+                    'form' => $form->createView()
+        ));
     }
 
     /**
@@ -250,64 +257,68 @@ class AutoridadController extends Controller {
      * @Route("/{id}/update", name="backend.autoridad.update")
      * @Method("post")
      * @Template("BackendBundle:Autoridad:edit.html.twig")
+     * @ParamConverter("entity", class="EstablecimientoBundle:Autoridad")
      */
-    public function updateAction($id) {
-        $em = $this->getDoctrine()->getEntityManager();
+    public function updateAction($entity, Request $request) {
 
-        $entity = $em->getRepository('EstablecimientoBundle:Autoridad')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Autoridad entity.');
-        }
+        $respuesta = new Respuesta();
 
         $editForm = $this->createForm(new AutoridadType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
+        $deleteForm = $this->createDeleteForm($entity->getId());
 
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
 
-            $this->get('session')->getFlashBag()->add('exito', 'La autoridad fue cargada exitosamente');
+            $manager = $this->get('fd.establecimiento.autoridad.manager');
 
-            return $this->redirect($this->generateUrl('backend.autoridad.edit', array('id' => $id)));
+            $respuesta = $manager->crear($form->getData());
+
+            $tipo = $respuesta->getCodigo() == 1 ? 'exito' : 'error';
+
+            $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
+
+            return $this->redirect($this->generateUrl('backend.autoridad.edit', array('id' => $entity->getId())));
         }
 
-        $this->get('session')->getFlashBag()->add('error', 'Problemas al cargar la autoridad. Verifique y reintente.');
+        $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        return $this->render('BackendBundle:Autoridad:edit.html.twig', array(
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+        ));
     }
 
     /**
      * Deletes a Autoridad entity.
      *
      * @Route("/{id}/delete", name="backend.autoridad.delete")
+     * @ParamConverter("entity", class="EstablecimientoBundle:Autoridad")
      * @Method("post")
      */
-    public function deleteAction($id) {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
+    public function deleteAction($entity, Request $request) {
+
+        $respuesta = new Respuesta();
+
+        $form = $this->createDeleteForm($entity->getId());
 
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('EstablecimientoBundle:Autoridad')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Autoridad entity.');
-            }
+            $manager = $this->get('fd.establecimiento.autoridad.manager');
+            
+            $respuesta = $manager->eliminar($form->getData());
 
-            $em->remove($entity);
-            $em->flush();
+            $tipo = $respuesta->getCodigo() ? 'exito' : 'error';
+
+            $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
+
+            return $this->redirect($this->generateUrl('backend.autoridad.edit', array('id' => $entity->getId())));
         }
+
+        $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
         return $this->redirect($this->generateUrl('backend.autoridad.buscar'));
     }
