@@ -56,8 +56,7 @@
         }) }}  
 
         {% else %}
-            <br />
-            <div class="descriptivo">No hay datos para los filtros especificados</div>
+            {% include 'EstablecimientoBundle:Default:includes/no_hay.html.twig' %}
         {% endif %}
 
     {% else %}
