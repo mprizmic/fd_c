@@ -14,6 +14,8 @@ use Lexik\Bundle\FormFilterBundle\Filter\Query\QueryInterface;
 class PlantelEstablecimientoFilterType extends AbstractType {
 
     private $establecimientos;
+    private $dependencias;
+    private $cargos;
 
     public function __construct($establecimientos = array(), $dependencias = array(), $cargos = array()) {
         $this->establecimientos = $establecimientos;
