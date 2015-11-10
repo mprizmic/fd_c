@@ -10,21 +10,32 @@ use Fd\EstablecimientoBundle\Entity\OrganizacionInterna;
 class OrganizacionInternaFilterType extends AbstractType {
 
     private $establecimientos;
+    private $dependencias;
 
-    public function __construct($establecimientos = array()) {
+    public function __construct($establecimientos = array(), $dependencias = array()) {
         $this->establecimientos = $establecimientos;
+        $this->dependencias = $dependencias;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
-        $builder->add('establecimiento', 'filter_choice', array(
-            'label' => 'Establecimiento',
-            'choices' => $this->establecimientos,
-            'empty_value' => 'Seleccione...',
-            'attr' => array(
-                'class' => 'input_talle_4',
-            ),
-        ))
+        $builder
+                ->add('establecimiento', 'filter_choice', array(
+                    'label' => 'Establecimiento',
+                    'choices' => $this->establecimientos,
+                    'empty_value' => 'Seleccione...',
+                    'attr' => array(
+                        'class' => 'input_talle_4',
+                    ),
+                ))
+                ->add('dependencia', 'filter_choice', array(
+                    'label' => 'Dependencia',
+                    'choices' => $this->dependencias,
+                    'empty_value' => 'Seleccione...',
+                    'attr' => array(
+                        'class' => 'input_talle_4',
+                    ),
+                ))
         ;
     }
 
@@ -37,7 +48,6 @@ class OrganizacionInternaFilterType extends AbstractType {
             'csrf_protection' => false,
             'validation_groups' => array('filtering') // avoid NotBlank() constraint-related message
         ));
-      
     }
 
 }

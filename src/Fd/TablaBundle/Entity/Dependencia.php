@@ -50,6 +50,11 @@ class Dependencia{
      */
     private $establecimientos;
     /**
+     * bidireccional lado inverso
+     * @ORM\OneToMany(targetEntity="Fd\TablaBundle\Entity\Cargo", mappedBy="dependencia_referenciante")
+     */
+    private $cargos;
+    /**
      * @ORM\Column(type="integer", nullable=false)
      */
     private $orden;
@@ -282,5 +287,38 @@ class Dependencia{
     public function getEstablecimientos()
     {
         return $this->establecimientos;
+    }
+
+    /**
+     * Add cargos
+     *
+     * @param \Fd\TablaBundle\Entity\Cargo $cargos
+     * @return Dependencia
+     */
+    public function addCargo(\Fd\TablaBundle\Entity\Cargo $cargos)
+    {
+        $this->cargos[] = $cargos;
+
+        return $this;
+    }
+
+    /**
+     * Remove cargos
+     *
+     * @param \Fd\TablaBundle\Entity\Cargo $cargos
+     */
+    public function removeCargo(\Fd\TablaBundle\Entity\Cargo $cargos)
+    {
+        $this->cargos->removeElement($cargos);
+    }
+
+    /**
+     * Get cargos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCargos()
+    {
+        return $this->cargos;
     }
 }

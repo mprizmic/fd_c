@@ -50,6 +50,11 @@ class Cargo {
      * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento", mappedBy="cargo")
      */
     private $dependencias;
+    /**
+     * bidireccional lado propietario
+     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\Dependencia", inversedBy="cargos")
+     */
+    private $dependencia_referenciante;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
@@ -287,5 +292,28 @@ class Cargo {
     public function getDependencias()
     {
         return $this->dependencias;
+    }
+
+    /**
+     * Set dependencia_referenciante
+     *
+     * @param \Fd\TablaBundle\Entity\Dependencia $dependenciaReferenciante
+     * @return Cargo
+     */
+    public function setDependenciaReferenciante(\Fd\TablaBundle\Entity\Dependencia $dependenciaReferenciante = null)
+    {
+        $this->dependencia_referenciante = $dependenciaReferenciante;
+
+        return $this;
+    }
+
+    /**
+     * Get dependencia_referenciante
+     *
+     * @return \Fd\TablaBundle\Entity\Dependencia 
+     */
+    public function getDependenciaReferenciante()
+    {
+        return $this->dependencia_referenciante;
     }
 }

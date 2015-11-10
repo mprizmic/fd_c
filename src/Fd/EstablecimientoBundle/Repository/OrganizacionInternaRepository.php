@@ -4,6 +4,8 @@ namespace Fd\EstablecimientoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Fd\EstablecimientoBundle\Entity\OrganizacionInterna;
+use Fd\EstablecimientoBundle\Model\DatosAChoiceVisitadorInterface;
+use Fd\EstablecimientoBundle\Model\DatosAChoiceVisitadoInterface;
 
 class OrganizacionInternaRepository extends EntityRepository {
 
@@ -30,6 +32,17 @@ class OrganizacionInternaRepository extends EntityRepository {
 
     public function findAllOrdenado() {
         return $this->qyAllOrdenado()->getResult();
+    }
+    /**
+     * Es visitado para pasar los datos de una Collection a un array determinado
+     * el findAllOrdenados pasa a un array con un cierto formato
+     * 
+     * @param DatosAChoiceVisitadorInterface $visitador
+     * @return type
+     */
+    public function acceptDatosAChoice(DatosAChoiceVisitadorInterface $visitador) {
+        return $visitador->visitOrganizacionInterna($this);
+        ;
     }
 
 }

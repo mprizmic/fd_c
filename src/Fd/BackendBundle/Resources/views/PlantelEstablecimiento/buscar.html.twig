@@ -34,6 +34,8 @@
                 <th>Establecimiento</th>
                 <th>Dependencia</th>
                 <th>Cargo</th>
+                <th>TE</th>
+                <th>Email</th>
                 <th>Acciones</th>
             </tr>
 
@@ -41,7 +43,9 @@
                 <tr>
                     <td>{{ un_plantel.organizacion.establecimiento }}</a></td>
                     <td>{{ un_plantel.organizacion.dependencia }}</a></td>
-                    <td>{{ un_plantel.cargo }}</a></td>
+                    <td>{{ un_plantel.cargo.nombre }}</a></td>
+                    <td>{{ un_plantel.te }}</a></td>
+                    <td>{{ un_plantel.email }}</a></td>
                     <td><a href="{{path('backend.plantelestablecimiento.edit', {'id': un_plantel.id})}}">Editar</a></td>
                 </tr>
             {% endfor %}

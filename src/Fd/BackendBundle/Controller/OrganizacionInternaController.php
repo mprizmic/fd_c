@@ -13,6 +13,7 @@ use Fd\BackendBundle\Form\OrganizacionInternaType;
 use Fd\EstablecimientoBundle\Entity\OrganizacionInterna;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Model\DatosAChoiceVisitador;
 use Fd\EstablecimientoBundle\Model\OrganizacionInternaManager;
 
 /**
@@ -102,7 +103,7 @@ class OrganizacionInternaController extends Controller {
      */
     public function generarDatosBusquedaPaginada($form) {
         //se crear la consulta
-        $filterBuilder = $this->getRepository()->qbAllOrdenado(); 
+        $filterBuilder = $this->getRepository()->qbAllOrdenado();
         // build the query from the given form object
         $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
 
@@ -127,7 +128,7 @@ class OrganizacionInternaController extends Controller {
      */
     public function crearFormBusqueda($datos_sesion = null) {
 
-        $form = $this->createForm(new OrganizacionInternaFilterType($this->getCmbEstablecimientos()));
+        $form = $this->createForm(new OrganizacionInternaFilterType($this->getCmbEstablecimientos(), $this->getCmbDependencia()));
 
         if (!is_null($datos_sesion))
             $form->setData($datos_sesion);
@@ -136,14 +137,17 @@ class OrganizacionInternaController extends Controller {
     }
 
     public function getCmbEstablecimientos() {
-        $sedes_y_anexos = $this->getEm()
+        $resultado = $this->getEm()
                 ->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
-                ->findSedesYAnexosOrdenados();
+                ->acceptDatosAChoice(new DatosAChoiceVisitador());
 
-        foreach ($sedes_y_anexos as $key => $value) {
-            $resultado[$value->getId()] = $value->getEstablecimientos()->getApodo() . ($value->getCueAnexo() <> "00" ? ' - ' . $value->getNombre():"");
-        };
         return $resultado;
+    }
+
+    public function getCmbDependencia() {
+        return $this->getEm()
+                        ->getRepository('TablaBundle:Dependencia')
+                        ->acceptDatosAChoice(new DatosAChoiceVisitador());
     }
 
     /**
@@ -226,7 +230,7 @@ class OrganizacionInternaController extends Controller {
     public function editAction($entity) {
 
         $editForm = $this->createForm(new OrganizacionInternaType(), $entity);
-        
+
         $deleteForm = $this->createDeleteForm($entity->getId());
 
         return $this->render('BackendBundle:OrganizacionInterna:edit.html.twig', array(
@@ -247,7 +251,7 @@ class OrganizacionInternaController extends Controller {
     public function updateAction($entity) {
 
         $respuesta = new Respuesta();
-        
+
         $editForm = $this->createForm(new OrganizacionInternaType(), $entity);
         $deleteForm = $this->createDeleteForm($entity->getId());
 
@@ -256,25 +260,25 @@ class OrganizacionInternaController extends Controller {
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
-            
+
             $manager = $this->get('fd.establecimiento.organizacioninterna.manager');
-            
+
             $respuesta = $manager->crear($editForm->getData());
-            
+
             $tipo = $respuesta->getCodigo() == 1 ? 'exito' : 'error';
-            
-            $this->get('session')->getFlashBag()->add( $tipo, $respuesta->getMensaje() );
-            
-            if ($respuesta->getCodigo() == 1){
+
+            $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
+
+            if ($respuesta->getCodigo() == 1) {
 
                 return $this->redirect($this->generateUrl('backend.organizacioninterna.edit', array('id' => $entity->getId())));
             }
         }
-        
+
         return $this->render("BackendBundle:OrganizacionInterna:edit.html.twig", array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -294,15 +298,15 @@ class OrganizacionInternaController extends Controller {
         if ($form->isValid()) {
 
             $manager = $this->get('fd.establecimiento.organizacioninterna.manager');
-            
+
             $respuesta = $manager->eliminar($entity);
-            
+
             $tipo = $respuesta->getCodigo() == 1 ? 'exito' : 'error';
-            
-            $this->get('session')->getFlashBag()->add( $tipo, $respuesta->getMensaje() );
-            
-            if ($respuesta->getCodigo() == 1){
-                
+
+            $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
+
+            if ($respuesta->getCodigo() == 1) {
+
                 return $this->redirect($this->generateUrl('backend.organizacioninterna.buscar'));
             }
         }

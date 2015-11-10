@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Fd\TablaBundle\Entity\Nivel;
 use Fd\TablaBundle\Entity\Turno;
+use Fd\TablaBundle\Repository\DependenciaRepository;
 use Fd\TablaBundle\Repository\NivelRepository;
 use Fd\TablaBundle\Repository\TurnoRepository;
 
@@ -32,6 +33,16 @@ class CargoType extends AbstractType {
                     'property' => 'nombre',
                     'query_builder' => function (NivelRepository $repository) {
                         return $repository->qbOrdenado();
+                    },
+                ))
+                ->add('dependencia_referenciante', 'entity', array(
+                    'help'=>'Este campo tiene fines meramente informativos',
+                    'class' => 'TablaBundle:Dependencia',
+                    'empty_value' => 'Seleccione un nivel ...',
+                    'required' => false,
+                    'property' => 'nombre',
+                    'query_builder' => function (DependenciaRepository $repository) {
+                        return $repository->qbAllOrdenado();
                     },
                 ))
         ;
