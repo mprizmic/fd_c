@@ -51,7 +51,9 @@ class Autoridad
     private $email;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\Cargo")
+     * bidireccional lado propietario
+     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento", inversedBy="autoridad")
+     * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
     private $cargo;
     /**
@@ -92,7 +94,6 @@ class Autoridad
     public function __toString() {
         return $this->getApellido() . ', ' . $this->getNombre();
     }
-
 
     /**
      * Get id
@@ -291,10 +292,10 @@ class Autoridad
     /**
      * Set cargo
      *
-     * @param \Fd\TablaBundle\Entity\Cargo $cargo
+     * @param \Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento $cargo
      * @return Autoridad
      */
-    public function setCargo(\Fd\TablaBundle\Entity\Cargo $cargo = null)
+    public function setCargo(\Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento $cargo = null)
     {
         $this->cargo = $cargo;
 
@@ -304,33 +305,10 @@ class Autoridad
     /**
      * Get cargo
      *
-     * @return \Fd\TablaBundle\Entity\Cargo 
+     * @return \Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento 
      */
     public function getCargo()
     {
         return $this->cargo;
-    }
-
-    /**
-     * Set establecimiento
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento
-     * @return Autoridad
-     */
-    public function setEstablecimiento(\Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento = null)
-    {
-        $this->establecimiento = $establecimiento;
-
-        return $this;
-    }
-
-    /**
-     * Get establecimiento
-     *
-     * @return \Fd\EstablecimientoBundle\Entity\Establecimiento 
-     */
-    public function getEstablecimiento()
-    {
-        return $this->establecimiento;
     }
 }

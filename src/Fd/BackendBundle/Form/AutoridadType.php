@@ -16,8 +16,9 @@ class AutoridadType extends AbstractType {
                 ->add('apellido')
                 ->add('cargo', null, array(
                     'label' => 'Cargo',
+                    'empty_value' => 'Seleccione...'
                 ))
-                ->add('establecimiento')
+//                ->add('establecimiento')
                 ->add('inicio_mandato', 'date', array(
                     'label' => 'Fecha de inicio del mandato',
                     'required' => false,

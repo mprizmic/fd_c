@@ -54,6 +54,12 @@ class PlantelEstablecimiento {
      */
     private $cargo;
     /**
+    /**
+     * bidireccional lado inverso
+     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\Autoridad", mappedBy="cargo")
+     */
+    private $autoridad;
+    /**
      * @ORM\Column(type="datetime")
      * 
      */
@@ -72,9 +78,9 @@ class PlantelEstablecimiento {
         $this->setActualizado(new \DateTime());
     }
 
-//    public function __toString() {
-//        return $this->nombre;
-//    }
+    public function __toString() {
+        return $this->getCargo()->getNombre() . ' - ' . $this->getOrganizacion()->getEstablecimiento()->getEstablecimientos()->getApodo();
+    }
 
     public function __construct() {
         $this->creado = new \DateTime();
@@ -227,5 +233,28 @@ class PlantelEstablecimiento {
     public function getCargo()
     {
         return $this->cargo;
+    }
+
+    /**
+     * Set autoridad
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\Autoridad $autoridad
+     * @return PlantelEstablecimiento
+     */
+    public function setAutoridad(\Fd\EstablecimientoBundle\Entity\Autoridad $autoridad = null)
+    {
+        $this->autoridad = $autoridad;
+
+        return $this;
+    }
+
+    /**
+     * Get autoridad
+     *
+     * @return \Fd\EstablecimientoBundle\Entity\Autoridad 
+     */
+    public function getAutoridad()
+    {
+        return $this->autoridad;
     }
 }

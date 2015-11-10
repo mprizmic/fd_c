@@ -2,6 +2,9 @@
 
 namespace Fd\EstablecimientoBundle\Form\Filter;
 
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Query\Expr;
+use Lexik\Bundle\FormFilterBundle\Filter\Query\QueryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -10,9 +13,12 @@ use Fd\EstablecimientoBundle\Entity\Autoridad;
 class AutoridadFilterType extends AbstractType {
 
     private $establecimientos;
+    private $cargos;
 
-    public function __construct($establecimientos = array()) {
+    public function __construct($establecimientos = array(), $cargos = array()) {
+
         $this->establecimientos = $establecimientos;
+        $this->cargos = $cargos;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -34,6 +40,16 @@ class AutoridadFilterType extends AbstractType {
             'attr' => array(
                 'class' => 'input_talle_4',
             ),
+            'apply_filter'=>function(){},
+        ));
+        $builder->add('cargo', 'filter_choice', array(
+            'label' => 'Cargos',
+            'choices' => $this->cargos,
+            'empty_value' => 'Seleccione...',
+            'attr' => array(
+                'class' => 'input_talle_4',
+            ),
+            'apply_filter'=>function(){},
         ))
         ;
     }
