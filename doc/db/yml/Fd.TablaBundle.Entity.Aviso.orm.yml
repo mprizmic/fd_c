@@ -1,0 +1,38 @@
+Fd\TablaBundle\Entity\Aviso:
+    type: entity
+    table: aviso
+    repositoryClass: Fd\TablaBundle\Repository\AvisoRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        descripcion:
+            type: string
+            scale: 0
+            length: 250
+            unique: false
+            nullable: false
+            precision: 0
+        fecha:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        activo:
+            type: boolean
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    lifecycleCallbacks: {  }

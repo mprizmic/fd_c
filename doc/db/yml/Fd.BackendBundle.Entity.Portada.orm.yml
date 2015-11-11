@@ -1,0 +1,63 @@
+Fd\BackendBundle\Entity\Portada:
+    type: entity
+    table: portada
+    repositoryClass: Fd\BackendBundle\Repository\PortadaRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        etiqueta:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: false
+            precision: 0
+        tabla:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: false
+            precision: 0
+        url:
+            type: string
+            scale: 0
+            length: 200
+            unique: false
+            nullable: false
+            precision: 0
+        descripcion:
+            type: string
+            scale: 0
+            length: 200
+            unique: false
+            nullable: true
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion

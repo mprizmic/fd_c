@@ -1,0 +1,99 @@
+Fd\EstablecimientoBundle\Entity\UnidadOferta:
+    type: entity
+    table: unidad_oferta
+    repositoryClass: Fd\EstablecimientoBundle\Repository\UnidadOfertaRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        tipo:
+            type: string
+            scale: 0
+            length: 20
+            unique: false
+            nullable: false
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    manyToOne:
+        localizacion:
+            targetEntity: Fd\EstablecimientoBundle\Entity\Localizacion
+            cascade: {  }
+            mappedBy: null
+            inversedBy: ofertas
+            joinColumns:
+                localizacion_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        ofertas:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\OfertaEducativa
+            cascade: {  }
+            mappedBy: null
+            inversedBy: unidades
+            joinColumns:
+                oferta_educativa_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        cohortes:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\Cohorte
+            cascade:
+                - remove
+                - persist
+            mappedBy: unidad_oferta
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+        turnos:
+            targetEntity: Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno
+            cascade:
+                - remove
+                - persist
+            mappedBy: unidad_oferta
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    oneToOne:
+        inicial:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\InicialX
+            cascade: {  }
+            mappedBy: null
+            inversedBy: unidad_oferta
+            joinColumns:
+                inicial_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        secundario:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\SecundarioX
+            cascade: {  }
+            mappedBy: null
+            inversedBy: unidad_oferta
+            joinColumns:
+                secundario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion

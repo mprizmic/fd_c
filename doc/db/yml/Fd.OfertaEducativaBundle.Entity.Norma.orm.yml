@@ -1,0 +1,124 @@
+Fd\OfertaEducativaBundle\Entity\Norma:
+    type: entity
+    table: norma
+    repositoryClass: Fd\OfertaEducativaBundle\Repository\NormaRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        numero:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        anio:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        descripcion:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    manyToOne:
+        tipo_norma:
+            targetEntity: Fd\TablaBundle\Entity\TipoNorma
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tipo_norma_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToMany:
+        ofertas:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\OfertaEducativa
+            cascade: {  }
+            mappedBy: normas
+            inversedBy: null
+            joinTable:
+                name: oferta_norma
+                schema: null
+                joinColumns:
+                    -
+                        name: norma_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: oferta_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+            orderBy: null
+        referencia_a:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\Norma
+            cascade: {  }
+            mappedBy: null
+            inversedBy: es_referenciada
+            joinTable:
+                name: norma_referencias
+                schema: null
+                joinColumns:
+                    -
+                        name: norma_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: referencia_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+            orderBy: null
+        es_referenciada:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\norma
+            cascade: {  }
+            mappedBy: referencia_a
+            inversedBy: null
+            joinTable: {  }
+            orderBy: null
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion

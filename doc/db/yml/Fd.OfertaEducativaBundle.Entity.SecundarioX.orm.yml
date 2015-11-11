@@ -1,0 +1,69 @@
+Fd\OfertaEducativaBundle\Entity\SecundarioX:
+    type: entity
+    table: secundario_x
+    repositoryClass: Fd\OfertaEducativaBundle\Repository\SecundarioXRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        matricula:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        anio_inicio:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    oneToOne:
+        unidad_oferta:
+            targetEntity: Fd\EstablecimientoBundle\Entity\UnidadOferta
+            cascade:
+                - remove
+                - persist
+            mappedBy: secundario
+            inversedBy: null
+            joinColumns: {  }
+            orphanRemoval: false
+    oneToMany:
+        orientaciones:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion
+            cascade:
+                - remove
+                - persist
+            mappedBy: secundariox
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion

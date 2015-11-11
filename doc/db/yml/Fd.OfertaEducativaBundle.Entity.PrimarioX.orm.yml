@@ -1,0 +1,52 @@
+Fd\OfertaEducativaBundle\Entity\PrimarioX:
+    type: entity
+    table: primario_x
+    repositoryClass: Fd\OfertaEducativaBundle\Repository\PrimarioXRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        matricula:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    oneToOne:
+        unidad_oferta:
+            targetEntity: Fd\EstablecimientoBundle\Entity\UnidadOferta
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                unidad_oferta_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion

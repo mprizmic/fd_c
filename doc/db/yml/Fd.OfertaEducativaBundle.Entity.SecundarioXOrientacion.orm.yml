@@ -1,0 +1,39 @@
+Fd\OfertaEducativaBundle\Entity\SecundarioXOrientacion:
+    type: entity
+    table: secundariox_orientacion
+    repositoryClass: Fd\OfertaEducativaBundle\Repository\SecundarioXOrientacionRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    manyToOne:
+        secundariox:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\SecundarioX
+            cascade:
+                - remove
+                - persist
+            mappedBy: null
+            inversedBy: orientaciones
+            joinColumns:
+                secundariox_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        orientacion:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\MediaOrientaciones
+            cascade:
+                - remove
+                - persist
+            mappedBy: null
+            inversedBy: secundarioxs
+            joinColumns:
+                orientacion_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

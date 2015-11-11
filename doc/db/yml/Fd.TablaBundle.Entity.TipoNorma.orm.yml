@@ -1,0 +1,31 @@
+Fd\TablaBundle\Entity\TipoNorma:
+    type: entity
+    table: tipo_norma
+    repositoryClass: Fd\TablaBundle\Repository\TipoNormaRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        codigo:
+            type: string
+            scale: 0
+            length: 15
+            unique: false
+            nullable: false
+            precision: 0
+        descripcion:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: false
+            precision: 0
+    lifecycleCallbacks: {  }

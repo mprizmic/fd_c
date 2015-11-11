@@ -1,0 +1,31 @@
+Fd\ActoPublicoBundle\Entity\LogActoPublico:
+    type: entity
+    table: log_acto_publico
+    repositoryClass: Fd\ActoPublicoBundle\Repository\LogActoPublicoRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        fecha:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        log:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    lifecycleCallbacks: {  }

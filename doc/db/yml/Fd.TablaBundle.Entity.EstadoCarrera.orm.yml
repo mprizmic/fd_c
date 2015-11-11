@@ -1,0 +1,45 @@
+Fd\TablaBundle\Entity\EstadoCarrera:
+    type: entity
+    table: estado_carrera
+    repositoryClass: Fd\TablaBundle\Repository\EstadoCarreraRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        codigo:
+            type: string
+            scale: 0
+            length: 5
+            unique: false
+            nullable: false
+            precision: 0
+        descripcion:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: false
+            precision: 0
+        comentario:
+            type: string
+            scale: 0
+            length: 250
+            unique: false
+            nullable: true
+            precision: 0
+        orden:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    lifecycleCallbacks: {  }

@@ -1,0 +1,76 @@
+Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento:
+    type: entity
+    table: plantel_establecimiento
+    repositoryClass: Fd\EstablecimientoBundle\Repository\PlantelEstablecimientoRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        te:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: true
+            precision: 0
+        email:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: true
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    manyToOne:
+        organizacion:
+            targetEntity: Fd\EstablecimientoBundle\Entity\OrganizacionInterna
+            cascade: {  }
+            mappedBy: null
+            inversedBy: cargos
+            joinColumns:
+                organizacion_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        cargo:
+            targetEntity: Fd\TablaBundle\Entity\Cargo
+            cascade: {  }
+            mappedBy: null
+            inversedBy: dependencias
+            joinColumns:
+                cargo_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToOne:
+        autoridad:
+            targetEntity: Fd\EstablecimientoBundle\Entity\Autoridad
+            cascade: {  }
+            mappedBy: cargo
+            inversedBy: null
+            joinColumns: {  }
+            orphanRemoval: false
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion

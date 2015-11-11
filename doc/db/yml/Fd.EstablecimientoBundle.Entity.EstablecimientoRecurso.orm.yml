@@ -1,0 +1,58 @@
+Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso:
+    type: entity
+    table: establecimiento_recurso
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        cantidad:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        comentario:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+    manyToOne:
+        establecimiento:
+            targetEntity: Fd\EstablecimientoBundle\Entity\Establecimiento
+            cascade: {  }
+            mappedBy: null
+            inversedBy: recursos
+            joinColumns:
+                establecimiento_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        recurso:
+            targetEntity: Fd\TablaBundle\Entity\Recurso
+            cascade: {  }
+            mappedBy: null
+            inversedBy: establecimiento
+            joinColumns:
+                recurso_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        origen_hora:
+            targetEntity: Fd\TablaBundle\Entity\OrigenHora
+            cascade: {  }
+            mappedBy: null
+            inversedBy: establecimiento_recursos
+            joinColumns:
+                origen_hora_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,83 @@
+Fd\EstablecimientoBundle\Entity\Localizacion:
+    type: entity
+    table: localizacion
+    repositoryClass: Fd\EstablecimientoBundle\Repository\LocalizacionRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        cantidad_docentes:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        matricula:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    manyToOne:
+        unidad_educativa:
+            targetEntity: Fd\EstablecimientoBundle\Entity\UnidadEducativa
+            cascade: {  }
+            mappedBy: null
+            inversedBy: localizaciones
+            joinColumns:
+                unidad_educativa_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        establecimiento_edificio:
+            targetEntity: Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio
+            cascade: {  }
+            mappedBy: null
+            inversedBy: localizacion
+            joinColumns:
+                establecimiento_edificio_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        domicilio:
+            targetEntity: Fd\EdificioBundle\Entity\DomicilioLocalizacion
+            cascade: {  }
+            mappedBy: localizacion
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+        ofertas:
+            targetEntity: Fd\EstablecimientoBundle\Entity\UnidadOferta
+            cascade: {  }
+            mappedBy: localizacion
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion

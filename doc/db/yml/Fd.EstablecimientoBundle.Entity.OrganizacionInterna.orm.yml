@@ -1,0 +1,76 @@
+Fd\EstablecimientoBundle\Entity\OrganizacionInterna:
+    type: entity
+    table: organizacion_interna
+    repositoryClass: Fd\EstablecimientoBundle\Repository\OrganizacionInternaRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        te:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: true
+            precision: 0
+        email:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: true
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    manyToOne:
+        dependencia:
+            targetEntity: Fd\TablaBundle\Entity\Dependencia
+            cascade: {  }
+            mappedBy: null
+            inversedBy: establecimientos
+            joinColumns:
+                dependencia_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        establecimiento:
+            targetEntity: Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio
+            cascade: {  }
+            mappedBy: null
+            inversedBy: dependencias
+            joinColumns:
+                establecimiento_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        cargos:
+            targetEntity: Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento
+            cascade: {  }
+            mappedBy: organizacion
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion
