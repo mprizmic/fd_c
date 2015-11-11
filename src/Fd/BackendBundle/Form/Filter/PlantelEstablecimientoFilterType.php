@@ -63,7 +63,7 @@ class PlantelEstablecimientoFilterType extends AbstractType {
                             //va a testear si ya hay alguna condicion where 
                             $where = $query->getDQLPart('where');
                             
-                            if ($where instanceof Expr\Comparison){
+                            if (!is_null($where)){
                                 
                                 //ya existe condicion where así que la une con esta condicion where
                                 array_unshift($args, $where);
