@@ -1,4 +1,4 @@
 services:
     fd.establecimiento.autoridad.manager:
         class: "Fd\EstablecimientoBundle\Model\AutoridadManager"
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager", "@fd.establecimiento.plantelestablecimiento.manager"]
