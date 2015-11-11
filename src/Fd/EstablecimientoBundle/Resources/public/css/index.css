@@ -301,9 +301,9 @@ grillas
     border-width: 0px;
 }
 .grilla {
-    background-color: #ffc;
+    background-color: #ececd0; /* #ffc; */
     border: 1px solid #000;
-    margin: 3px;
+    /*margin: 1px;*/
     width: 100%;
 }
 .grilla_fit {
@@ -320,18 +320,20 @@ grillas
     /*empty-cells: show;*/
 }
 .grilla td{
-    background-color: #ececd0;
-    padding-left: 8px;
-    padding-right: 8px;
+    background-color: #ffc; /* #ececd0; */
+    padding-left: 6px;
+    padding-right: 6px;
     font-weight: normal;
     
-    border: 1px solid #000;
-    border-spacing: 1px;
+    /*border: 1px solid #000;*/
+    /*border-spacing: 1px;*/
     /*border-width: 1px;*/
     /*border-style: #000;*/
     
     /*color: #00c*/
-    /*empty-cells: show;*/
+    empty-cells: show;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 .grilla_fit th{
     font-style: italic;
