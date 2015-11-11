@@ -4,15 +4,18 @@ namespace Fd\EstablecimientoBundle\Model;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\Autoridad;
+use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Model\PlantelEstablecimientoManager;
 
 class AutoridadManager {
 
     protected $em;
+    protected $plantel;
 
-    public function __construct(EntityManager $em) {
+    public function __construct(EntityManager $em, PlantelEstablecimientoManager $plantel) {
         $this->em = $em;
+        $this->plantel = $plantel;
     }
 
     /**
@@ -37,6 +40,7 @@ class AutoridadManager {
 
         try {
 
+
             $em->persist($entity);
 
             if ($flush) {
@@ -44,12 +48,13 @@ class AutoridadManager {
             }
 
             $respuesta->setObjNuevo($entity);
-
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se guardó la autoridad exitosamente');
-        } finally {
-            return $respuesta;
+        } catch (Exception $e) {
+             
+            $respuesta->setCodigo(2);
         };
+        return $respuesta;
     }
 
     public function eliminar($entity, $flush = true) {

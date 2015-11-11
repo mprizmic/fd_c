@@ -103,7 +103,7 @@ class AutoridadController extends Controller {
      */
     public function generarDatosBusquedaPaginada($form) {
         //se crear la consulta
-        $filterBuilder = $this->getRepository()->createQueryBuilder('a')->orderBy('a.apellido');
+        $filterBuilder = $this->getRepository()->qbAllOrdenado();
 
         // build the query from the given form object
         $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
@@ -205,6 +205,9 @@ class AutoridadController extends Controller {
      * @Method("post")
      */
     public function createAction(Request $request) {
+        
+        $tipo = 'error';
+        $respuesta = new Respuesta();
 
         $manager = $this->get('fd.establecimiento.autoridad.manager');
 
@@ -259,20 +262,23 @@ class AutoridadController extends Controller {
      * @Template("BackendBundle:Autoridad:edit.html.twig")
      * @ParamConverter("entity", class="EstablecimientoBundle:Autoridad")
      */
-    public function updateAction($entity, Request $request) {
+    public function updateAction($entity) {
 
         $respuesta = new Respuesta();
+        $tipo = 'error';
 
         $editForm = $this->createForm(new AutoridadType(), $entity);
         $deleteForm = $this->createDeleteForm($entity->getId());
 
-        $editForm->bind($request);
+        $request = $this->getRequest();
+        
+        $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
 
             $manager = $this->get('fd.establecimiento.autoridad.manager');
 
-            $respuesta = $manager->crear($form->getData());
+            $respuesta = $manager->crear($editForm->getData());
 
             $tipo = $respuesta->getCodigo() == 1 ? 'exito' : 'error';
 
@@ -281,7 +287,7 @@ class AutoridadController extends Controller {
             return $this->redirect($this->generateUrl('backend.autoridad.edit', array('id' => $entity->getId())));
         }
 
-        $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
+        $this->get('session')->getFlashBag()->add( $tipo, $respuesta->getMensaje());
 
         return $this->render('BackendBundle:Autoridad:edit.html.twig', array(
                     'entity' => $entity,

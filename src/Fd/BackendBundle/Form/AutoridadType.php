@@ -5,6 +5,7 @@ namespace Fd\BackendBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Fd\EstablecimientoBundle\Repository\PlantelEstablecimientoRepository;
 
 class AutoridadType extends AbstractType {
 
@@ -14,9 +15,14 @@ class AutoridadType extends AbstractType {
                     'required' => false,
                 ))
                 ->add('apellido')
-                ->add('cargo', null, array(
+                ->add('cargo', 'entity', array(
                     'label' => 'Cargo',
-                    'empty_value' => 'Seleccione...'
+                    'empty_value' => 'Seleccione...',
+                    'class' => 'EstablecimientoBundle:PlantelEstablecimiento',
+                    'query_builder' => function (PlantelEstablecimientoRepository $repository) {
+                        $qb = $repository->qbAllOrdenado();
+                        return $qb;
+                    },                    
                 ))
 //                ->add('establecimiento')
                 ->add('inicio_mandato', 'date', array(
