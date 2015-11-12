@@ -1,0 +1,40 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <div class="titulo">Carga de organización de una sede/anexo</div>
+
+    <br />
+
+    {% set filas = (sedes_anexos|length ) // 5 %}
+    <table class="grilla" >
+        {% for i in 0..filas %}
+            <tr>
+                {% for j in 0..4 %}
+                    {% set indice = i*5 + j %}
+                    {% if indice < (sedes_anexos|length) %}
+                        <td style="text-align: center; padding-top: 1em;padding-bottom: 1em;">
+                            
+                            {% set sede = sedes_anexos[indice] %}
+                            
+                            {% set nombre =  sede.establecimientos.apodo %}
+                            {% if sede.cueAnexo != '00' %}
+                                {% set nombre = nombre ~ ' - ' ~ sede.nombre %}
+                            {% endif %}
+                            
+                            <a href="#">{{ nombre }}</a>
+                        
+                        </td>
+
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    <br />
+
+{% endblock %}
