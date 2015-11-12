@@ -315,18 +315,18 @@ class AutoridadController extends Controller {
 
             $manager = $this->get('fd.establecimiento.autoridad.manager');
             
-            $respuesta = $manager->eliminar($form->getData());
+            $respuesta = $manager->eliminar($entity);
 
-            $tipo = $respuesta->getCodigo() ? 'exito' : 'error';
+            $tipo = $respuesta->getCodigo() == 1 ? 'exito' : 'error';
 
             $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
-            return $this->redirect($this->generateUrl('backend.autoridad.edit', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('backend.autoridad.buscar', array('id' => $entity->getId())));
         }
 
         $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
-        return $this->redirect($this->generateUrl('backend.autoridad.buscar'));
+        return $this->redirect($this->generateUrl('backend.autoridad.edit', array('id' => $entity->getId())));
     }
 
     private function createDeleteForm($id) {

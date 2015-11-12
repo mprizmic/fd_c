@@ -51,7 +51,7 @@ class AutoridadManager {
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se guardó la autoridad exitosamente');
         } catch (Exception $e) {
-             
+
             $respuesta->setCodigo(2);
         };
         return $respuesta;
@@ -64,6 +64,9 @@ class AutoridadManager {
         $em = $this->em;
 
         try {
+            //se anula la relación con la tabla plantel_establecimiento. Si no se anula trataría de dar de baja el registro de dicha tabla.
+            $entity->setCargo(null);
+
             $em->remove($entity);
 
             if ($flush) {
@@ -72,9 +75,10 @@ class AutoridadManager {
 
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se eliminó la dependencia exitosamente');
-        } finally {
-            return $respuesta;
+        } catch (Exception $e) {
+            $respuesta->setMensaje('No se pudo eliminar la dependencias');
         }
+        return $respuesta;
     }
 
 }
