@@ -1,0 +1,41 @@
+{% extends '::layout.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <div class="sub_titulo">Establecimiento: {{ sede_anexo.identificacion }}</div>
+    <div class="titulo">Asignar dependencia</div>
+
+    <div class="instrucciones">
+        <p>
+            Aca se pueden poner instrucciones
+        </p>
+    </div>
+
+    <br />
+    <br />
+    {% for form in dependencias_forms %}
+        <form action="{{ path( 'backend.cargaagenda.organizacion_asignar.do' ) }}" method="post" {{ form_enctype(form) }}>
+            <div>
+                <div class="float_izquierda">
+                    {{ form_widget( form ) }}
+                </div>
+                <input class="float_izquierda" type="submit" value="{{ form.vars.value.accion_del_form }}">
+            </div>
+        </form>
+        <p class="limpiar_float"></p>
+
+    {% endfor %}
+
+    <div class="limpiar_float"></div>
+
+    <hr>
+
+    <br />
+
+    <div class="float_derecha volver"><a href="{{ path('backend.cargaagenda.organizacion_damero') }}">Nueva selección</a></div>
+
+    <br />
+    <br />
+
+{% endblock %}

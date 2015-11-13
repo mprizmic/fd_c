@@ -23,7 +23,7 @@
                                 {% set nombre = nombre ~ ' - ' ~ sede.nombre %}
                             {% endif %}
                             
-                            <a href="#">{{ nombre }}</a>
+                            <a href="{{ path('backend.cargaagenda.organizacion_asignar', {"id":sede.id } ) }}">{{ nombre }}</a>
                         
                         </td>
 
