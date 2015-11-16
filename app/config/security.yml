@@ -85,6 +85,9 @@ security:
         - { path: ^/backend/tabla_portada/*, roles: [ROLE_SUPER_ADMIN] }
         - { path: ^/backend/cargo/*, roles: [ROLE_SUPER_ADMIN] }
         - { path: ^/backend/dependencia/*, roles: [ROLE_SUPER_ADMIN] }
+        - { path: ^/backend/organizacioninterna/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
+        - { path: ^/backend/plantelestablecimiento/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
+        - { path: ^/backend/cargaagenda/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
         - { path: ^/backend/aviso/*, roles: [ROLE_SUPER_ADMIN] }
         - { path: ^/backend/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
         - { path: ^/administracion/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
