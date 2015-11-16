@@ -95,7 +95,7 @@ class OrganizacionInternaManager {
      */
     public function oi_existente(EstablecimientoEdificio $establecimiento_edificio, Dependencia $dependencia){
         
-        return $this->repository()->findOneBy(array(
+        return $this->repository->findOneBy(array(
             'establecimiento' => $establecimiento_edificio,
             'dependencia' => $dependencia,
         ));

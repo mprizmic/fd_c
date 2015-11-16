@@ -260,27 +260,65 @@ class CargaAgendaController extends Controller {
     public function PlantelAsignarAction(Request $request) {
         
         
+        /**
+         * PONER ACA UN FORMHANDLER
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         * *********************************************
+         */
 
-        $search_form = $request->get('cargaagendaplantel_filter');
-        
-        $establecimiento_edificio = $search_form['establecimiento'];
+        //creo el form para obtener el nombre del mismo
+        $form = $this->createForm(
+                new CargaAgendaPlantelFilterType(
+                $this->getCmbEstablecimientos(), $this->getCmbDependencia()
+        ));
 
+        //recupero el form del request
+        $search_form = $request->get($form->getName());
+
+        //recupero los datos del request
+        $establecimiento_edificio_id = $search_form['establecimiento'];
+        $dependencia_id = $search_form['dependencia'];
+
+        //verifico si existe el plantel buscado
         $manager = $this->get('fd.backend.organizacion_interna.manager');
 
-        if ($manager->oi_existente($establecimiento_edificio, $dependencia)) {
-            
-        } else {
+        if (true) {
             //no existe la selección realizada. Se vuelve a la busqueda
             $this->redirect($this->generateUrl('backend.cargaagenda.plantel.buscar'));
-        }
-        //creo el array de formularios para seleccionar dependencias
+            
+        };
+
+        //creo el array de formularios para seleccionar cargos
 //        $dependencias_forms = $this->getDependenciasForms($establecimiento_edificio);
-        //muestra la pagina con todas las dependencias
-        return $this->render('BackendBundle:CargaOrganizacion:asignar_dependencia.html.twig', array(
-                    'dependencias_forms' => $dependencias_forms,
-                    'sede_anexo' => $establecimiento_edificio,
-                    'accion' => 'backend.cargaagenda.organizacion_do_asignar_dependencia',
-        ));
+        
+        //muestra la pagina con todas loca cargos
+//        return $this->render('BackendBundle:CargaOrganizacion:asignar_dependencia.html.twig', array(
+//                    'dependencias_forms' => $dependencias_forms,
+//                    'sede_anexo' => $establecimiento_edificio,
+//                    'accion' => 'backend.cargaagenda.organizacion_do_asignar_dependencia',
+//        ));
     }
 
 }
