@@ -1,0 +1,26 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <div class="titulo">Buscar dependencias de la organización interna de los establecimientos para asignarle cargos</div>
+
+    <fieldset>
+        <form method="post" action="{{ path('backend.cargaagenda.plantel.asignar') }}">
+            <div class="ancho_10">
+                {{ form_rest(search_form) }}
+            </div>
+            <br />
+            <div style="display: block">
+
+                <input type="submit" name="submit-filter" value="Buscar" />
+
+            </div>
+        </form>
+    </fieldset>
+
+
+    <br />
+    <br />
+
+{% endblock %}

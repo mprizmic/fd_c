@@ -4,9 +4,11 @@ namespace Fd\EstablecimientoBundle\Model;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormInterface;
+use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\Entity\OrganizacionInterna;
 use Fd\EstablecimientoBundle\Repository\OrganizacionInternaRepository;
+use Fd\TablaBundle\Entity\Dependencia;
 
 class OrganizacionInternaManager {
 
@@ -87,4 +89,16 @@ class OrganizacionInternaManager {
         }
     }
 
+    /**
+     * vertifica si existe la relacion establecimeinto - dependencia 
+     * si existe devuelve el objeto. Si no existe devuelve null
+     */
+    public function oi_existente(EstablecimientoEdificio $establecimiento_edificio, Dependencia $dependencia){
+        
+        return $this->repository()->findOneBy(array(
+            'establecimiento' => $establecimiento_edificio,
+            'dependencia' => $dependencia,
+        ));
+        
+    }
 }
