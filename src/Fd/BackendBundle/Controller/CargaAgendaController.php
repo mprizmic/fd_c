@@ -184,7 +184,7 @@ class CargaAgendaController extends Controller {
 
         //vertifica si en esa localizacion se está impartiendo la carrera
         $manager = $this->get('fd.establecimiento.organizacioninterna.manager');
-        $existe = $manager->oi_existente($establecimiento_edificio, $dependencia);
+        $existe = $manager->existe($establecimiento_edificio, $dependencia);
 
         $data = array(
             'dependencia_id' => $dependencia->getId(),
