@@ -2,7 +2,7 @@ imports:
     - { resource: config_dev.yml }
     
 parameters:
-    database_name: test_fd
+    database_name: agenda_fd
 
 framework:
     test: ~
