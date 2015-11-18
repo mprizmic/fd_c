@@ -14,58 +14,65 @@ class OrganizacionInternaManager {
 
     private $em;
     private $repository;
+    private $crear_strategy;
 
     public function __construct(EntityManager $em) {
         $this->em = $em;
         $this->repository = $this->em->getRepository('EstablecimientoBundle:OrganizacionInterna');
     }
 
-    /**
-     * Crea un nuevo objeto vacío
-     * 
-     * @return OrganizacionInterna
-     */
-    public static function crearVacio() {
-        return new OrganizacionInterna();
+    public function getEm() {
+        return $this->em;
     }
-    /**
-     * Se genera un objeto nuevo en memoria
-     * 
-     * @param type $establecimiento
-     * @param type $dependencia
-     * @return type
-     */
-    public function crearNuevo($establecimiento, $dependencia){
-        $oi = $this->crearVacio();
-        
-        $oi->setEstablecimiento($establecimiento);
-        $oi->setDependencia($dependencia);
-        
-        return $oi;
+
+    public function getRepository() {
+        return $this->repository;
     }
 
     /**
+     * Para cada caso de creación distinto, se crea al objeto estrategia y se le pasan los parametros que correspondan
+     * 
+     * @param OrganizacionInterna $options
      * @return type
      */
-    public function crear($organizacion_interna, $flush = true) {
+    public function crear($options = array()) {
 
-        $respuesta = new Respuesta(2, 'No se pudo guardar la informacion');
+        $respuesta = new Respuesta();
 
+        //se persiste un objeto ya sea nuevo lleno o existente
+        if (isset($options['objeto'])) {
 
-        // no se pone catch por que sólo genera un cartel que ya general por default Respuesta
-        try {
-            $this->em->persist($organizacion_interna);
+            $this->crear_strategy = new Strategies\CrearGuardarOrganizacionStrategy();
 
-            if ($flush) {
-                $this->em->flush();
-            };
+            $this->crear_strategy->setOrganizacion($options['objeto']);
 
-            $respuesta->setCodigo(1);
-            $respuesta->setMensaje('La dependencia se actualizó correctamente');
-            $respuesta->setObjNuevo($organizacion_interna);
-        } finally {
+            if (isset($options['flush'])) {
+                $this->crear_strategy->setFlush($options['flush']);
+            }
 
-            return $respuesta;
+            $this->crear_strategy->setEm($this->getEm());
+
+            return $this->crear_strategy->crear();
+        };
+
+        //se crea un objeto nuevo lleno
+        if (isset($options['establecimiento_edificio_id']) and isset($options['dependencia_id'])) {
+
+            $this->crear_strategy = new Strategies\CrearLlenoOrganizacionStrategy();
+
+            $this->crear_strategy->setEstablecimiento($options['establecimiento_edificio_id']);
+            $this->crear_strategy->setDependencia($options['dependencia_id']);
+            $this->crear_strategy->setEm($this->getEm());
+
+            return $this->crear_strategy->crear();
+        };
+
+        //se crea un objeto vacio
+        if (count($options) == 0) {
+
+            $this->crear_strategy = new Strategies\CrearVacioOrganizacionStrategy();
+
+            return $this->crear_strategy->crear();
         }
     }
 
@@ -93,12 +100,12 @@ class OrganizacionInternaManager {
      * vertifica si existe la relacion establecimeinto - dependencia 
      * si existe devuelve el objeto. Si no existe devuelve null
      */
-    public function oi_existente(EstablecimientoEdificio $establecimiento_edificio, Dependencia $dependencia){
-        
+    public function existe($establecimiento_edificio, $dependencia) {
+
         return $this->repository->findOneBy(array(
-            'establecimiento' => $establecimiento_edificio,
-            'dependencia' => $dependencia,
+                    'establecimiento' => $establecimiento_edificio,
+                    'dependencia' => $dependencia,
         ));
-        
     }
+
 }

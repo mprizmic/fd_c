@@ -203,7 +203,7 @@ class OrganizacionInternaController extends Controller {
 
         if ($form->isValid()) {
 
-            $respuesta = $manager->crear($form->getData());
+            $respuesta = $manager->crear(array('objeto' => $form->getData()));
 
             $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
 
@@ -263,7 +263,7 @@ class OrganizacionInternaController extends Controller {
 
             $manager = $this->get('fd.establecimiento.organizacioninterna.manager');
 
-            $respuesta = $manager->crear($editForm->getData());
+            $respuesta = $manager->crear(array('objeto' => $editForm->getData()));
 
             $tipo = $respuesta->getCodigo() == 1 ? 'exito' : 'error';
 
