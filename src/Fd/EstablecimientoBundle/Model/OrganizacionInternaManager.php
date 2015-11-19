@@ -31,6 +31,7 @@ class OrganizacionInternaManager {
 
     /**
      * Para cada caso de creación distinto, se crea al objeto estrategia y se le pasan los parametros que correspondan
+     * Siempre devuelve un objeto Respuesta
      * 
      * @param OrganizacionInterna $options
      * @return type

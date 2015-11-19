@@ -4,17 +4,18 @@
     {{ parent() }}
 
     <div class="sub_titulo">Establecimiento: {{ sede_anexo.identificacion }}</div>
-    <div class="titulo">Asignar dependencia</div>
+    <div class="sub_titulo">Dependencia: {{ dependencia.nombre }}</div>
+    <div class="titulo">Asignar cargos a la dependencia del establecimiento</div>
 
     <div class="instrucciones">
         <p>
-            Si la dependencia ya tiene asignados cargos no se va a poder desasignar. Primero hay que desasignarle los cargos.
+            Poner instrucciones
         </p>
     </div>
 
     <br />
     <br />
-    {% for un_item in dependencias_forms %}
+    {% for un_item in cargos_forms %}
         {% set form = un_item['form'] %}
         {% set nombre = un_item['nombre'] %}
 
@@ -39,7 +40,7 @@
 
     <br />
 
-    <div class="float_derecha volver"><a href="{{ path('backend.cargaagenda.organizacion_damero') }}">Nueva selección</a></div>
+    <div class="float_derecha volver"><a href="{{ path('backend.cargaagenda.plantel.buscar') }}">Nueva selección</a></div>
 
     <br />
     <br />

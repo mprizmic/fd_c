@@ -172,7 +172,11 @@ class OrganizacionInternaController extends Controller {
      * @Template("BackendBundle:OrganizacionInterna:new.html.twig")
      */
     public function newAction() {
-        $entity = OrganizacionInternaManager::crearVacio();
+        $manager = $this->get('fd.establecimiento.organizacioninterna.manager');
+        
+        $respuesta = $manager->crear();
+        
+        $entity = $respuesta->getObjNuevo();
 
         $form = $this->createForm(new OrganizacionInternaType(), $entity);
 
@@ -195,7 +199,9 @@ class OrganizacionInternaController extends Controller {
 
         $manager = $this->get('fd.establecimiento.organizacioninterna.manager');
 
-        $entity = $manager::crearVacio();
+        $respuesta = $manager->crear();
+        
+        $entity = $respuesta->getObjNuevo();
 
         $form = $this->createForm(new OrganizacionInternaType(), $entity);
 

@@ -2,10 +2,11 @@
 
 namespace Fd\EstablecimientoBundle\Repository;
 
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
 use Fd\EstablecimientoBundle\Entity\OrganizacionInterna;
-use Fd\EstablecimientoBundle\Model\DatosAChoiceVisitadorInterface;
-use Fd\EstablecimientoBundle\Model\DatosAChoiceVisitadoInterface;
+use Fd\EstablecimientoBundle\Model\ConstantesTests;
 
 class OrganizacionInternaRepository extends EntityRepository {
 
@@ -43,6 +44,13 @@ class OrganizacionInternaRepository extends EntityRepository {
     public function acceptDatosAChoice(DatosAChoiceVisitadorInterface $visitador) {
         return $visitador->visitOrganizacionInterna($this);
         ;
+    }
+    public function findUnaSede($establecimiento_edificio_id){
+        return $this->qbAllOrdenado()
+                ->where('oi.establecimiento = :sede_anexo')
+                ->setParameter('sede_anexo', $establecimiento_edificio_id)
+                ->getQuery()
+                ->getResult();
     }
 
 }
