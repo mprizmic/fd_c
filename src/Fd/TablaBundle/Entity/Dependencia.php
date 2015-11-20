@@ -27,7 +27,7 @@ class Dependencia{
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=10, unique=true)
      */
     private $codigo;
     /**
@@ -46,7 +46,6 @@ class Dependencia{
     /**
      * bidireccional lado inverso
      * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\OrganizacionInterna", mappedBy="dependencia")
-     * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
     private $establecimientos;
     /**
@@ -81,8 +80,10 @@ class Dependencia{
         return $this->nombre;
     }
     public function __construct() {
-        $this->creado = new \DateTime();
+        $this->creado = new \DateTime('now');
         $this->actualizado = new \DateTime('now');
+        $this->nivel = new ArrayCollection();
+        $this->turno = new ArrayCollection();
     }
 
     /**
