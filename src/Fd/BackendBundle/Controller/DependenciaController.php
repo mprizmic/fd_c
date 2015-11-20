@@ -101,7 +101,7 @@ class DependenciaController extends Controller {
         $request = $this->getRequest();
         $form = $this->createForm(new DependenciaType(), $entity);
 
-        $form->bind($request);
+        $form->bindRequest($request);
 
         if ($form->isValid()) {
 
