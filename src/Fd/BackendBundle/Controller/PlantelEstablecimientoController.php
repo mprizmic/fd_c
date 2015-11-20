@@ -220,7 +220,7 @@ class PlantelEstablecimientoController extends Controller {
 
         if ($form->isValid()) {
 
-            $respuesta = $manager->crear($form->getData());
+            $respuesta = $manager->persistir($form->getData());
 
             $tipo = ($respuesta->getCodigo() == 1) ? 'exito' : 'error';
 
@@ -280,7 +280,7 @@ class PlantelEstablecimientoController extends Controller {
 
             $manager = $this->get('fd.establecimiento.plantelestablecimiento.manager');
 
-            $respuesta = $manager->crear($editForm->getData());
+            $respuesta = $manager->persistir($editForm->getData());
 
             $tipo = $respuesta->getCodigo() == 1 ? 'exito' : 'error';
 
