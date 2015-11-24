@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fd\TablaBundle\Entity\Barrio;
 use Fd\BackendBundle\Form\BarrioType;
-use Fd\BackendBundle\Filter\BarrioFilterType;
+use Fd\BackendBundle\Form\Filter\BarrioFilterType;
 
 /**
  * Barrio controller.
