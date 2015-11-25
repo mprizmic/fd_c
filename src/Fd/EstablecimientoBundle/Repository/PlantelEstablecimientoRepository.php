@@ -42,4 +42,16 @@ class PlantelEstablecimientoRepository extends EntityRepository {
                         ->setParameter('establecimiento_edificio', $establecimiento_edificio);
     }
 
+    public function qbAllByOrganizacion($organizacion_id){
+        return $this->qbAllOrdenado()
+                ->where('pe.organizacion = :organizacion')
+                ->setParameter('organizacion', $organizacion_id);
+        
+    }
+    public function findear($qb){
+        return $qb->getQuery()->getResult();
+    }
+    public function findAllByOrganizacion($organizacion_id){
+        return $this->findear($this->qbAllByOrganizacion($organizacion_id));
+    }
 }

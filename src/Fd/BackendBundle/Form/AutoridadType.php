@@ -14,27 +14,15 @@ use Fd\BackendBundle\EventListener\AddPlantelFieldSubscriber;
 class AutoridadType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
+
+
+
         $builder
                 ->add('nombre', 'text', array(
                     'required' => false,
                 ))
                 ->add('apellido')
-        ;
-
-        $factory = $builder->getFormFactory();
-
-        $establecimientoSubscriber = new AddEstablecimientoFieldSubscriber($factory);
-        $builder->addEventSubscriber($establecimientoSubscriber);
-
-        $organizacionSubscriber = new AddOrganizacionFieldSubscriber($factory);
-        $builder->addEventSubscriber($organizacionSubscriber);
-
-        //declaración del suscriptor que agrega el campo cargo
-        $cargoSubscriber = new AddPlantelFieldSubscriber($factory);
-        $builder->addEventSubscriber($cargoSubscriber);
-
-
-        $builder->add('inicio_mandato', 'date', array(
+                ->add('inicio_mandato', 'date', array(
                     'label' => 'Fecha de inicio del mandato',
                     'required' => false,
                 ))
@@ -50,6 +38,17 @@ class AutoridadType extends AbstractType {
                     'help' => 'Un email válido',
                 ))
         ;
+        $factory = $builder->getFormFactory();
+
+        $establecimientoSubscriber = new AddEstablecimientoFieldSubscriber($factory);
+        $builder->addEventSubscriber($establecimientoSubscriber);
+
+        $organizacionSubscriber = new AddOrganizacionFieldSubscriber($factory);
+        $builder->addEventSubscriber($organizacionSubscriber);
+
+        //declaración del suscriptor que agrega el campo cargo
+        $cargoSubscriber = new AddPlantelFieldSubscriber($factory);
+        $builder->addEventSubscriber($cargoSubscriber);
     }
 
     public function getName() {

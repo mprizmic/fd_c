@@ -46,7 +46,7 @@
             {% for autoridad in autoridades %}
                 <tr>
                     {% set establecimiento = autoridad.cargo.organizacion.establecimiento.establecimientos %}
-                    <td>{{ autoridad.apellido ~ ', ' ~ autoridad.nombre }}</td>
+                    <td><a href="{{path('backend.autoridad.edit', {'id': autoridad.id})}}">{{ autoridad.apellido ~ ', ' ~ autoridad.nombre }}</a></td>
                     <td>{{ establecimiento }}</td>
                     <td>{{ autoridad.teParticular }}</td>
                     <td>{{ autoridad.celular }}</td>

@@ -166,6 +166,18 @@ class PlantelEstablecimientoController extends Controller {
     }
 
     /**
+     * @Route("/por_organizacion/{organizacion_id}", name="backend.plantel_establecimiento.por_organizacion", options={"expose"=true})
+     */
+    public function por_organizacionAction($organizacion_id) {
+        $cargos = $this->getRepository()
+                ->findAllByOrganizacion($organizacion_id);
+        
+        return $this->render('BackendBundle:PlantelEstablecimiento:combo.html.twig', array(
+                    'cargos' => $cargos,
+        ));
+    }
+
+    /**
      *
      * @Route("/{id}/show", name="backend.plantelestablecimiento.show")
      * @Template("BackendBundle:PlantelEstablecimiento:show.html.twig")
@@ -188,7 +200,7 @@ class PlantelEstablecimientoController extends Controller {
      */
     public function newAction() {
         $manager = $this->get('fd.establecimiento.plantelestablecimiento.manager');
-        
+
         $entity = $manager::crearVacio();
 
         $form = $this->createForm(new PlantelEstablecimientoType(), $entity);
