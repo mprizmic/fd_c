@@ -7,6 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Fd\EstablecimientoBundle\Repository\EstablecimientoEdificioRepository;
 use Fd\EstablecimientoBundle\Repository\PlantelEstablecimientoRepository;
+use Fd\BackendBundle\EventListener\AddEstablecimientoFieldSubscriber;
+use Fd\BackendBundle\EventListener\AddOrganizacionFieldSubscriber;
+use Fd\BackendBundle\EventListener\AddPlantelFieldSubscriber;
 
 class AutoridadType extends AbstractType {
 
@@ -16,46 +19,22 @@ class AutoridadType extends AbstractType {
                     'required' => false,
                 ))
                 ->add('apellido')
-                ;
-        
+        ;
+
         $factory = $builder->getFormFactory();
-        
-        //declaración del suscriptor que agrega el campo cargo
-        $cargoSubscriber = new AddCargoFieldSubscriber($factory);
-        
-        //se agrega la suscripción al evento
-        $builder->addEventSubscriber($cargoSubscriber);
-        
+
         $establecimientoSubscriber = new AddEstablecimientoFieldSubscriber($factory);
-        
         $builder->addEventSubscriber($establecimientoSubscriber);
-        
-        
-        
-                ->add('establecimiento', 'entity', array(
-                    'required' => true,
-                    'empty_value' => 'Seleccione...',
-                    'class' => 'EstablecimientoBundle:EstablecimientoEdificio',
-                    'mapped' => false,
-                    'query_builder' => function(EstablecimientoEdificioRepository $repository) {
-                        $qb = $repository->qbSedesYAnexosOrdenados();
-                        return $qb;
-                    }
-                ))
-                ->add('cargo', 'entity', array(
-                    'label' => 'Cargo',
-                    'empty_value' => 'Seleccione...',
-                    'class' => 'EstablecimientoBundle:PlantelEstablecimiento',
-                    'query_builder' => function (PlantelEstablecimientoRepository $repository) {
-                        $qb = $repository->qbAllOrdenado();
-                        return $qb;
-                    },
-                ))
-//                ->add('establecimiento')
-                            
-                            
-                            
-                $builder->add('inicio_mandato', 'date', array(
+
+        $organizacionSubscriber = new AddOrganizacionFieldSubscriber($factory);
+        $builder->addEventSubscriber($organizacionSubscriber);
+
+        //declaración del suscriptor que agrega el campo cargo
+        $cargoSubscriber = new AddPlantelFieldSubscriber($factory);
+        $builder->addEventSubscriber($cargoSubscriber);
+
+
+        $builder->add('inicio_mandato', 'date', array(
                     'label' => 'Fecha de inicio del mandato',
                     'required' => false,
                 ))
@@ -76,9 +55,11 @@ class AutoridadType extends AbstractType {
     public function getName() {
         return 'autoridad_type';
     }
+
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Fd\TablaBundle\Entity\Autoridad',
+            'data_class' => 'Fd\EstablecimientoBundle\Entity\Autoridad',
         ));
     }
+
 }

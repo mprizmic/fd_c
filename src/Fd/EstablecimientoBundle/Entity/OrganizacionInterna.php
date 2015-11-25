@@ -78,7 +78,7 @@ class OrganizacionInterna {
     }
 
     public function __toString() {
-        return $this->getEstablecimiento() . '/' . $this->getDependencia();
+        return $this->getDependencia() . '/' .  $this->getEstablecimiento();
     }
 
     public function __construct() {
