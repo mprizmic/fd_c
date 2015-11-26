@@ -17,6 +17,9 @@
             {{ form_row(edit_form.celular) }}
             {{ form_row(edit_form.email) }}
         </div>
+        <div>
+            {{ form_row(edit_form._token) }}
+        </div>
         <p class="separador">
             <button type="submit">Guardar</button>
         </p>
@@ -106,7 +109,8 @@
             });
 
             $('#divCargando').hide();
-        };
+        }
+        ;
 
     </script>
 
