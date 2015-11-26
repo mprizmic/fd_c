@@ -52,5 +52,4 @@ class OrganizacionInternaRepository extends EntityRepository {
                 ->getQuery()
                 ->getResult();
     }
-
 }

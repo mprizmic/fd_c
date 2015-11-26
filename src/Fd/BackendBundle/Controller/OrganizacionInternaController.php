@@ -4,12 +4,14 @@ namespace Fd\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Fd\BackendBundle\Form\Filter\OrganizacionInternaFilterType;
 use Fd\BackendBundle\Form\OrganizacionInternaType;
+use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\OrganizacionInterna;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
@@ -173,9 +175,9 @@ class OrganizacionInternaController extends Controller {
      */
     public function newAction() {
         $manager = $this->get('fd.establecimiento.organizacioninterna.manager');
-        
+
         $respuesta = $manager->crear();
-        
+
         $entity = $respuesta->getObjNuevo();
 
         $form = $this->createForm(new OrganizacionInternaType(), $entity);
@@ -200,7 +202,7 @@ class OrganizacionInternaController extends Controller {
         $manager = $this->get('fd.establecimiento.organizacioninterna.manager');
 
         $respuesta = $manager->crear();
-        
+
         $entity = $respuesta->getObjNuevo();
 
         $form = $this->createForm(new OrganizacionInternaType(), $entity);
@@ -325,6 +327,22 @@ class OrganizacionInternaController extends Controller {
                         ->add('id', 'hidden')
                         ->getForm()
         ;
+    }
+
+    /**
+     * devuelve un array de las organizaciones filtradas por establecimeinto_edificio
+     * 
+     * @Route("/por_establecimiento/{establecimiento_edificio_id}", name="backend.organizacion_interna.por_establecimiento", options={"expose"=true})
+     */
+    public function por_establecimientoAction($establecimiento_edificio_id) {
+
+        $organizaciones = $this->getEm()
+                ->getRepository('EstablecimientoBundle:OrganizacionInterna')
+                ->findUnaSede($establecimiento_edificio_id);
+
+        return $this->render('BackendBundle:OrganizacionInterna:combo.html.twig', array(
+                    'organizaciones' => $organizaciones,
+        ));
     }
 
 }

@@ -7,7 +7,18 @@
 
     <form action="{{ path('backend.autoridad.update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <div class="ancho_10">
-            {{ form_widget(edit_form) }}
+            {{ form_row(edit_form.apellido) }}
+            {{ form_row(edit_form.nombre) }}
+            {{ form_row(edit_form.establecimientos) }}
+            {{ form_row(edit_form.organizacion) }}
+            {{ form_row(edit_form.cargo) }}
+            {{ form_row(edit_form.inicio_mandato) }}
+            {{ form_row(edit_form.te_particular) }}
+            {{ form_row(edit_form.celular) }}
+            {{ form_row(edit_form.email) }}
+        </div>
+        <div>
+            {{ form_row(edit_form._token) }}
         </div>
         <p class="separador">
             <button type="submit">Guardar</button>
@@ -29,5 +40,78 @@
 
     <br />
     <br />
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            //cargas iniciales de datos
+//            cargar_organizaciones();
+//            cargar_cargos();
+
+            $('#autoridad_type_establecimientos').change(function () {
+                cargar_organizaciones();
+                cargar_cargos();
+            });
+            $('#autoridad_type_organizacion').change(function () {
+                cargar_cargos();
+            });
+
+        });
+
+        function cargar_organizaciones() {
+
+            $("#divCargando").show();
+            var establecimiento = $("#autoridad_type_establecimientos").val();
+
+            //esta forma es usando javascript puro
+            //var lista = document.getElementById("cmb_establecimientos");
+            //var clave = lista.options[lista.selectedIndex].value;
+
+            //usando FOSJsRouingBundle
+            $.ajax({
+                async: false,
+                dataType: 'html',
+                url: Routing.generate('backend.organizacion_interna.por_establecimiento', {establecimiento_edificio_id: establecimiento}),
+                type: 'GET',
+                success: function (data) {
+                    $("#autoridad_type_organizacion").html(data);
+                },
+            });
+
+            $('#divCargando').hide();
+
+        }
+        ;
+
+        function cargar_cargos() {
+            $("#divCargando").show();
+            var organizacion = $("#autoridad_type_organizacion").val();
+
+            //esta forma es usando javascript puro
+            //var lista = document.getElementById("cmb_establecimientos");
+            //var clave = lista.options[lista.selectedIndex].value;
+
+            //usando FOSJsRouingBundle
+            $.ajax({
+                async: false,
+                dataType: 'html',
+                url: Routing.generate('backend.plantel_establecimiento.por_organizacion', {organizacion_id: organizacion}),
+                type: 'GET',
+                success: function (data) {
+                    $("#autoridad_type_cargo").html(data);
+                },
+            });
+
+            $('#divCargando').hide();
+        }
+        ;
+
+    </script>
 
 {% endblock %}

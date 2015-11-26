@@ -1,6 +1,6 @@
 <?php
 
-namespace Fd\BackendBundle\Filter;
+namespace Fd\BackendBundle\Form\Filter;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,7 +15,7 @@ class BarrioFilterType extends AbstractType {
     }
 
     public function getName() {
-        return 'fd_tablabundle_barriofiltertype';
+        return 'fd_backendbundle_barriofiltertype';
     }
 
 }
