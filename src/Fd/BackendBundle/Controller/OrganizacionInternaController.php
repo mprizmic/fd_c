@@ -34,7 +34,7 @@ class OrganizacionInternaController extends Controller {
         return $this->em;
     }
 
-    private function getRepo() {
+    private function getRepository() {
         return $this->getEm()->getRepository('EstablecimientoBundle:OrganizacionInterna');
     }
 
