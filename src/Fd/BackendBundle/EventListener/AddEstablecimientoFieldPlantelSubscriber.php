@@ -14,12 +14,26 @@ use Fd\EstablecimientoBundle\Entity\OrganizacionInterna;
  * Agrega el campo establecimiento que es un combo para seleccionar la sede/anexo.
  * El dato no esta mapeado a ninguna entidad
  */
-class AddEstablecimientoFieldSubscriber implements EventSubscriberInterface {
+class AddEstablecimientoFieldPlantelSubscriber implements EventSubscriberInterface {
 
     private $factory;
+    private $options;
 
     public function __construct(FormFactoryInterface $factory) {
         $this->factory = $factory;
+
+        $this->options = array(
+            'required' => true,
+            'label' => 'Establecimiento',
+            'mapped' => false,
+            'class' => 'EstablecimientoBundle:EstablecimientoEdificio',
+            'empty_value' => 'Establecimiento ...',
+            'query_builder' => function (EntityRepository $repository) {
+                $qb = $repository->qbSedesYAnexosOrdenados();
+                return $qb;
+            },
+            'disabled' => false,
+        );
     }
 
     public static function getSubscribedEvents() {
@@ -30,16 +44,8 @@ class AddEstablecimientoFieldSubscriber implements EventSubscriberInterface {
     }
 
     private function addEstablecimientoForm($form, $establecimiento) {
-        $form->add($this->factory->createNamed('establecimientos', 'entity', $establecimiento, array(
-                    'label' => 'Establecimiento',
-                    'mapped' => false,
-                    'class' => 'EstablecimientoBundle:EstablecimientoEdificio',
-                    'empty_value' => 'Establecimiento ...',
-                    'query_builder' => function (EntityRepository $repository) {
-                        $qb = $repository->qbSedesYAnexosOrdenados();
-                        return $qb;
-                    }
-        )));
+
+        $form->add($this->factory->createNamed('establecimiento', 'entity', $establecimiento, $this->options));
     }
 
     public function preSetData(FormEvent $event) {
@@ -50,8 +56,13 @@ class AddEstablecimientoFieldSubscriber implements EventSubscriberInterface {
             return;
         }
 
-        $cargo = $data->getCargo();
-        $establecimiento = ($cargo) ? $cargo->getOrganizacion()->getEstablecimiento() : null;
+        //en la edición quiero que aparezca deshabilitado
+        if ($data->getId()) {
+            $this->options['disabled'] = true;
+        }
+        
+        $organizacion = $data->getOrganizacion();
+        $establecimiento = ($organizacion) ? $organizacion->getEstablecimiento() : null;
         $this->addEstablecimientoForm($form, $establecimiento);
     }
 
@@ -63,7 +74,7 @@ class AddEstablecimientoFieldSubscriber implements EventSubscriberInterface {
             return;
         }
 
-        $establecimiento = array_key_exists('establecimientos', $data) ? $data['establecimientos'] : null;
+        $establecimiento = array_key_exists('establecimiento', $data) ? $data['establecimiento'] : null;
         $this->addEstablecimientoForm($form, $establecimiento);
     }
 

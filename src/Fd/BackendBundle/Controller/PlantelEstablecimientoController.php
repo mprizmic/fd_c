@@ -166,6 +166,8 @@ class PlantelEstablecimientoController extends Controller {
     }
 
     /**
+     * Devuelve el html de un combo con los registos de plantel filtrados por organizacion
+     * 
      * @Route("/por_organizacion/{organizacion_id}", name="backend.plantel_establecimiento.por_organizacion", options={"expose"=true})
      */
     public function por_organizacionAction($organizacion_id) {
@@ -207,7 +209,7 @@ class PlantelEstablecimientoController extends Controller {
 
         return array(
             'entity' => $entity,
-            'form' => $form->createView()
+            'edit_form' => $form->createView()
         );
     }
 
