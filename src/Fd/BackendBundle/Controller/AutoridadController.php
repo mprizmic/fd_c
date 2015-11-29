@@ -81,8 +81,9 @@ class AutoridadController extends Controller {
                 //se entra a la página por primera vez
                 //o bien se clickeo en 'limpiar'
                 $form = $this->crearFormBusqueda();
-
-                $autoridades = array();
+                
+                //debe ser null porque chequeo que se hace en el template
+                $autoridades = null;
             }
         };
 
@@ -205,15 +206,17 @@ class AutoridadController extends Controller {
         if ($form->isValid()) {
 
             $respuesta = $manager->crear($form->getData());
-
-            $tipo = $respuesta->getCodigo() == 1 ? 'exito' : 'error';
-
-            $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
+            
+        }
+        
+        if ($respuesta->getCodigo() == 1){
+            
+            $this->get('session')->getFlashBag()->add('exito', $respuesta->getMensaje());
 
             return $this->redirect($this->generateUrl('backend.autoridad.edit', array('id' => $entity->getId())));
         }
 
-        $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
+        $this->get('session')->getFlashBag()->add('error', $respuesta->getMensaje());
 
         return $this->render('BackendBundle:Autoridad:new.html.twig', array(
                     'entity' => $entity,

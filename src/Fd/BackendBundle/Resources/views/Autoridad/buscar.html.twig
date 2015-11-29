@@ -30,33 +30,35 @@
         </form>
     </fieldset>
 
-    {% if autoridades %}
-        <br />
+    {% if autoridades is not null %}
+        {% if autoridades|length > 0 %}
 
-        <table class="grilla">
-            <tr>
-                <th>Nombre</th>
-                <th>Establecimiento</th>
-                <th>TE particular</th>
-                <th>Celular</th>
-                <th>Email</th>
-                <th>Acciones</th>
-            </tr>
+            <br />
 
-            {% for autoridad in autoridades %}
+            <table class="grilla">
                 <tr>
-                    {% set establecimiento = autoridad.cargo.organizacion.establecimiento.establecimientos %}
-                    <td><a href="{{path('backend.autoridad.edit', {'id': autoridad.id})}}">{{ autoridad.apellido ~ ', ' ~ autoridad.nombre }}</a></td>
-                    <td>{{ establecimiento }}</td>
-                    <td>{{ autoridad.teParticular }}</td>
-                    <td>{{ autoridad.celular }}</td>
-                    <td>{{ autoridad.email }}</td>
-                    <td><a href="{{path('backend.autoridad.edit', {'id': autoridad.id})}}">Editar</a></td>
+                    <th>Nombre</th>
+                    <th>Establecimiento</th>
+                    <th>TE particular</th>
+                    <th>Celular</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
                 </tr>
-            {% endfor %}
-        </table>
 
-        {{ simple_paginator_render('backend.autoridad.buscar', null, {
+                {% for autoridad in autoridades %}
+                    <tr>
+                        {% set establecimiento = autoridad.cargo.organizacion.establecimiento.establecimientos %}
+                        <td><a href="{{path('backend.autoridad.edit', {'id': autoridad.id})}}">{{ autoridad.apellido ~ ', ' ~ autoridad.nombre }}</a></td>
+                        <td>{{ establecimiento }}</td>
+                        <td>{{ autoridad.teParticular }}</td>
+                        <td>{{ autoridad.celular }}</td>
+                        <td>{{ autoridad.email }}</td>
+                        <td><a href="{{path('backend.autoridad.edit', {'id': autoridad.id})}}">Editar</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            {{ simple_paginator_render('backend.autoridad.buscar', null, {
         'container_class':'simple_paginator',
         'previousPageText':'Anterior',
         'nextPageText':'Siguiente',
@@ -65,8 +67,9 @@
         'lastPageText':'Último'
     }) }}  
 
-    {% else %}
-        {% include 'EstablecimientoBundle:Default:includes/no_hay.html.twig' %}
+        {% else %}
+            {% include 'EstablecimientoBundle:Default:includes/no_hay.html.twig' %}
+        {% endif %}
     {% endif %}
 
     <br />
