@@ -47,37 +47,22 @@ class DependenciaManager {
 
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se guardó la dependencia exitosamente');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
+            
             $respuesta->setCodigo(2);
             $respuesta->setMensaje('No se pudo guardar la dependencia. Verifique los datos y reintente');
+            
+            if ($e->getPrevious()->getCode() == 23000){
+                $respuesta->setMensaje('El código ya está siendo usado. Intente con otro');
+            };
         }
 
         return $respuesta;
     }
 
     public function actualizar($entity, $flush = true) {
-
-        $respuesta = new Respuesta();
-
-        try {
-
-            $this->em->persist($entity);
-
-            if ($flush) {
-                $this->em->flush();
-            }
-
-            $respuesta->setObjNuevo($entity);
-
-            $respuesta->setCodigo(1);
-            $respuesta->setMensaje('Se guardó la dependencia exitosamente');
-        } catch (Exception $e) {
-
-            $respuesta->setCodigo(2);
-            $respuesta->setMensaje('No se pudo guardar la nueva dependencia. Verifique los datos y reintente');
-        }
-
-        return $respuesta;
+        
+        return $this->crear($entity, $flush);
     }
 
     public function eliminar($entity, $flush = true) {
