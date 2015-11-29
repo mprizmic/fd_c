@@ -44,8 +44,11 @@ class PlantelEstablecimientoRepository extends EntityRepository {
 
     public function qbAllByOrganizacion($organizacion_id){
         return $this->qbAllOrdenado()
+                ->leftJoin('pe.autoridad', 'au')
                 ->where('pe.organizacion = :organizacion')
-                ->setParameter('organizacion', $organizacion_id);
+                ->setParameter('organizacion', $organizacion_id)
+                ->andWhere('au.id is null')
+            ;
         
     }
     public function findear($qb){
