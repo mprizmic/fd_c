@@ -36,11 +36,11 @@ class AutoridadRepository extends EntityRepository {
         $q = $this->_em->createQueryBuilder()
                 ->select('a')
                 ->from('EstablecimientoBundle:Autoridad', 'a')
-                ->join('a.cargo', 'pe')
-                ->join('pe.cargo', 'cg')
-                ->join('pe.organizacion', 'oi')
-                ->join('oi.establecimiento', 'ee')
-                ->join('ee.establecimientos', 'e')
+                ->leftJoin('a.cargo', 'pe')
+                ->leftJoin('pe.cargo', 'cg')
+                ->leftJoin('pe.organizacion', 'oi')
+                ->leftJoin('oi.establecimiento', 'ee')
+                ->leftJoin('ee.establecimientos', 'e')
                 ->orderBy('a.apellido', 'ASC')
                 ->addOrderBy('a.nombre', 'ASC');
 
