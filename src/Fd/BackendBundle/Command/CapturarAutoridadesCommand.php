@@ -1,6 +1,6 @@
 <?php
 
-namespace Fd\OfertaEducativaBundle\Command;
+namespace Fd\BackendBundle\Command;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -17,7 +17,7 @@ use Fd\TablaBundle\Model\EstadoCarreraManager;
 use Fd\TablaBundle\Model\TipoFormacionManager;
 use Fd\TablaBundle\Model\TurnoManager;
 
-class UploadOfertaTerciarioCommand extends ContainerAwareCommand {
+class CapturarAutoridadesCommand extends ContainerAwareCommand {
 
     public $planilla;
 
