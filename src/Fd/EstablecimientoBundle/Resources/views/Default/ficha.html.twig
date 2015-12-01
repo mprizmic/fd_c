@@ -4,10 +4,11 @@
 {% extends '::layout2col.html.twig' %}
 
 {% block menu_derecha %}
-    {% include '::includes/lista_establecimientos.html.twig' %}
+    {% include '::includes/lista_establecimientos.html.twig' width {'establecimientos': establecimientos } %}
 {% endblock menu_derecha %}
 
 {% block contenido %}
+
     <div id="contenido">
         {# nombre del establecimiento #}
         <div class="titulo">
@@ -49,9 +50,7 @@
             <br />
             <br />
             <div>Sitio web: <a href="{{establecimiento.url}}">{{establecimiento.url}}</a></div>
-            
-            
-            
+
             {# esto queda stan by hasta resolver el esquema de agenda y las autoridades dentro de la agenda
             
             <div>Autoridades del rectorado:</div>
