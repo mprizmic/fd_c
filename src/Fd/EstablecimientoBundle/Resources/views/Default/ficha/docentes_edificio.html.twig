@@ -1,0 +1,16 @@
+{# se usa en ficha del establecimiento
+requiere unidad_educativas y establecimiento_edificio
+#}
+
+
+<fieldset class="float_izquierda">
+    <span class="resaltado">Docentes en el edificio:</span><br/>
+    {% for ue in unidad_educativas %}
+        <div name="mostrable">
+            {{ ue['nivel'] ~ ': ' }}
+            <span class="reforzado">{{ ue['cantidad_docentes'] }}</span>
+            <br />
+        {% endfor %}  
+
+        <a class="float_derecha chica" href="{{ path('backend_establecimiento_edificio_docentes_nivel_editar', {'establecimiento_edificio_id': establecimiento_edificio.id} ) }}">Editar</a>
+</fieldset>

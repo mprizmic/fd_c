@@ -24,20 +24,20 @@ body {
 }
 #mainContent {
     width: 99%;
-    padding: 5px;
     font-size: 14px;
+    padding: 5px;
 }
 #menu_derecha{
-    width: 18%;
+    /*width: 18%;*/
     float:right;
-    padding: 5px;
+    padding: 0px;
     font-size: 14px;
 }
 .color_celeste{
     color: rgb(4,137, 183);
 }
 #contenido {
-    width:80%;
+    width:84%;
 }
 .ancho {
     width:100%;
@@ -131,7 +131,7 @@ div.descriptivo{
 .flash{
     padding: 5px;
     padding-left: 2em;
-/*    border: 1px solid #000;*/
+    /*    border: 1px solid #000;*/
     text-align: left;
 }
 .flash_error{
@@ -140,7 +140,7 @@ div.descriptivo{
 }
 .flash_aviso{
     background-color: #fcefa1;
-/*    color: #f2fcff;*/
+    /*    color: #f2fcff;*/
     color: #666666;
 }
 .flash_exito{
@@ -149,7 +149,7 @@ div.descriptivo{
 }
 .help-block{
     color: #080;
-/*    color: #fa0;*/
+    /*    color: #fa0;*/
 }
 /*
 */
@@ -294,6 +294,26 @@ botones
 /*
 grillas
 */
+.grilla_agenda{
+    border: 1px solid gray;
+    border-spacing: 0px;
+    display: table;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    /*border-collapse: collapse;*/
+}
+.grilla_agenda td{
+    display: table-cell;
+    text-align: left;
+    vertical-align: top;
+    padding: 2px;
+    border-spacing: 0px;
+    border-left: 1px solid gray;
+    border-right: 0px solid gray;
+    border-top: 0px solid gray;
+    border-bottom: 1px solid gray;
+}
 .como_grilla{
     background-color: #ececd0;
     font-weight: normal;
@@ -302,7 +322,6 @@ grillas
 }
 .grilla {
     background-color: #ececd0; /* #ffc; */
-    border: 1px solid #000;
     /*margin: 1px;*/
     width: 100%;
 }
@@ -324,12 +343,12 @@ grillas
     padding-left: 6px;
     padding-right: 6px;
     font-weight: normal;
-    
+
     /*border: 1px solid #000;*/
     /*border-spacing: 1px;*/
     /*border-width: 1px;*/
     /*border-style: #000;*/
-    
+
     /*color: #00c*/
     empty-cells: show;
     padding-top: 8px;
@@ -398,17 +417,17 @@ esto es para que las label salgan alineadas sin usar table
 .ancho_20 label{
     display: inline-block;
     width: 20em;
-    
+
 }
 .ancho_15 label{
     display: inline-block;
     width: 15em;
-    
+
 }
 .ancho_10 label{
     display: inline-block;
     width: 10em;
-    
+
 }
 .ancho_5 label{
     display: inline-block;

@@ -23,25 +23,25 @@
 {% block main_content %}
 
     <div>
-    {% block menu_derecha %}
-    {% endblock %}
+        {% block menu_derecha %}
+        {% endblock %}
     </div>
 
     <div>
-    <!-- tiene un flash y luego el contenido -->
-    {% for tipo in ['notice','error', 'aviso'] %}
-        {% for flash_message in app.session.flashbag.get( tipo ) %}
-            {% if loop.first %}
-                <div id="flash" class="{{ 'flash_' ~ tipo }}">
-            {% endif %}
-                {{ flash_message }}<br />
-                <script>$("#flash").fadeIn('slow').delay(1200).fadeOut('slow');</script>
-            {% if loop.last %}
-                </div>
-            {% endif %}
-            
+        <!-- tiene un flash y luego el contenido -->
+        {% for tipo in ['notice','error', 'aviso'] %}
+            {% for flash_message in app.session.flashbag.get( tipo ) %}
+                {% if loop.first %}
+                    <div id="flash" class="{{ 'flash_' ~ tipo }}">
+                {% endif %}
+                    {{ flash_message }}<br />
+                    <script>$("#flash").fadeIn('slow').delay(1200).fadeOut('slow');</script>
+                {% if loop.last %}
+                    </div>
+                {% endif %}
+
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
     </div>
     <div>
         {% block contenido %}

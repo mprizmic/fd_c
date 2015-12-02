@@ -1,0 +1,39 @@
+{# se usa en la ficha del establecimiento
+requiere el array agenda tal como está formateado por el controller
+#}
+<div class="italico verde reforzado">Agenda</div>
+<table class='grilla_agenda'>
+
+    {% for dependencia in agenda %}
+        {% set clase_fila = cycle(['even', 'odd'], loop.index) %}
+        {% for uncargo in dependencia['plantel'] %}
+            {% if loop.first %}
+                
+                <tr class="{{ clase_fila }}">
+                    {% set rs = ( dependencia['plantel']|length ) %}
+                    <td rowspan="{{ rs }}">{{ dependencia['nombre_dependencia'] }}</td>
+                    <td rowspan="{{ rs }}">{{ dependencia['te'] }}</td>
+
+                    <td>{{ uncargo['nombre_cargo'] }}</td>
+                    <td>{{ uncargo['autoridad']['nombre_autoridad'] }}</td>
+                    <td>{{ uncargo['autoridad']['te_particular'] }}</td>
+                    <td>{{ uncargo['autoridad']['celular'] }}</td>
+                    <td>{{ uncargo['autoridad']['email'] }}</td>
+
+                </tr>
+
+
+            {% else %}
+                <tr class={{ clase_fila }}>
+                    <td>{{ uncargo['nombre_cargo'] }}</td>
+                    <td>{{ uncargo['autoridad']['nombre_autoridad'] }}</td>
+                    <td>{{ uncargo['autoridad']['te_particular'] }}</td>
+                    <td>{{ uncargo['autoridad']['celular'] }}</td>
+                    <td>{{ uncargo['autoridad']['email'] }}</td>
+                </tr>    
+            {% endif %}
+        {% endfor %}
+
+    {% endfor %}
+</table>
+

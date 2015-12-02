@@ -1,0 +1,47 @@
+{# Otros datos 
+
+Es una parte de la ficha del establecimeinto
+Requiere la variable 'establecimiento'
+
+#}
+<fieldset>
+
+    <span class="resaltado">Otros datos</span><br/>
+
+    <span>Fecha de creación del establecimiento: {{ establecimiento.fechaCreacion|default('s/d') }}
+    </span><br />
+
+    <span>Fecha de las elecciones:
+        {% if establecimiento.fechaElecciones %}
+            {{ establecimiento.fechaElecciones|date('d-m-Y') }}
+        {% else %}
+            Sin datos
+        {% endif %}
+    </span><br />
+
+    <span>Fecha de finalización del mandato:
+        {% if establecimiento.finMandato %}
+            {{ establecimiento.finMandato | date('d-m-Y') }}
+        {% else %}
+            Sin datos
+        {% endif %}
+    </span>
+
+    <div>Tiene cooperadora: {{ establecimiento.tieneCooperadora |default('Sin datos') }}</div>
+
+    <div>Laboratorios/Centros:</div>
+    {% for recurso in establecimiento.recursos %}
+        <div class="identar_1">
+            {{ '-- ' ~ recurso.recurso.descripcion ~ ': ' ~ recurso.cantidad }}
+            {{ recurso.origenHora ? ' (' ~ recurso.origenHora.descripcion ~ ')' }}
+            {{ recurso.comentario ? ' (' ~ recurso.comentario ~ ')' }}
+        </div>
+    {% else %}
+        <div class="identar_1">Sin datos</div>
+    {% endfor %}
+
+    <div>Campo de deportes: {{ establecimiento.campoDeportes |default('Sin datos') }}</div>
+
+    <div>Año de inicio de la Nueva Escuela Secundaria: {{ establecimiento.anioInicioNes | default( 'Sin datos' ) }}</div>
+
+</fieldset>

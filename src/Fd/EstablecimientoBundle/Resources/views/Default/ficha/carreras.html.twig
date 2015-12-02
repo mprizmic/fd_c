@@ -1,0 +1,25 @@
+{# carreras terciarias 
+require unidad_educativas que es un array de unidades educativas
+#}
+
+
+<fieldset>
+    <span class="resaltado">Carreras terciarias (en el edificio):</span><br/>
+
+    {% for ue in unidad_educativas %}
+        {% if ue['nivel_abreviatura'] == 'Ter' %}
+            {% for oferta in ue['ofertas'] %}
+                {% if oferta['tipo'] == 'Carrera' %}
+
+                    <a href="{{ path('carrera_ficha', {'carrera_id': oferta['carrera_id'] }) }}">{{ oferta['carrera'] }}</a>
+
+                    {# se muestran los turnos de una carrera#}
+                    {% include 'EstablecimientoBundle:Default:includes/turnos_carreras.html.twig' with {'unidad_oferta':oferta }  %}
+                    <br />
+                {% endif %}
+            {% endfor %}  
+        {% endif %}
+    {% endfor %}  
+    <br />
+</fieldset>
+
