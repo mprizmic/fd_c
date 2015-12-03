@@ -295,16 +295,21 @@ botones
 grillas
 */
 .grilla_agenda{
-    border: 1px solid gray;
+    /*se dejan sin borde sólido un par de bordes que se dibujan desde la celda*/ 
+    border-top: 1px solid gray;
+    border-right: 1px solid gray;
+    border-left: 0px;
+    border-bottom: 0px;
+    
     border-spacing: 0px;
-    display: table;
+    display: table;  /* no se para que sirve */
     margin: 0px;
     padding: 0px;
     width: 100%;
-    /*border-collapse: collapse;*/
+    /*border-collapse: collapse;                pareciera no hacer nada */
 }
 .grilla_agenda td{
-    display: table-cell;
+    display: table-cell;  /* ?? */
     text-align: left;
     vertical-align: top;
     padding: 2px;
