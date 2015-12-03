@@ -5,6 +5,7 @@
 
 {% block stylesheets %}
     {% include '::includes/stylesheets.html.twig' %}
+    <link href="{{ asset( 'bundles/establecimiento/css/menu_derecha.css' ) }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
 {% block javascripts %}
@@ -22,8 +23,9 @@
 
 {% block main_content %}
 
-    <div>
+    <div id="menu_derecha">
         {% block menu_derecha %}
+            {% include 'EstablecimientoBundle:Default:includes/menu_derecha.html.twig' %}
         {% endblock %}
     </div>
 

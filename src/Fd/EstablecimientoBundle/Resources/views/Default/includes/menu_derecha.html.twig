@@ -1,22 +1,13 @@
-{% block menu_derecha %}
-    <div id="menu_derecha">
-        <fieldset>
-            <table>
-                <div>
-                    {% for un_establecimiento in establecimientos %}
-                        <tr>
-                            <td>
-                                <a href="{{path('establecimiento_ficha', {'establecimiento_id':un_establecimiento.id})}}">
-                                    {{ un_establecimiento.apodo }}</a>
-                            </td>
-                            <td>
-                                <a class="italico chica" href="{{path('backend_establecimiento_edit', {'id':un_establecimiento.id})}}">
-                                    (Editar)</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </div>
-            </table>
-        </fieldset>
-    </div>
-{% endblock menu_derecha %}
+<span>
+    <ul>
+        <li><a href="#">Establecimientos</a>
+            <ul>
+                {% for un_establecimiento in establecimientos %}
+                    <li>
+                        <a href="{{path('establecimiento_ficha', {'establecimiento_id':un_establecimiento.id})}}">{{ un_establecimiento.apodo }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</span>

@@ -27,17 +27,17 @@ body {
     font-size: 14px;
     padding: 5px;
 }
-#menu_derecha{
-    /*width: 18%;*/
+/*#menu_derecha{
+    width: 18%;
     float:right;
     padding: 0px;
     font-size: 14px;
-}
+}*/
 .color_celeste{
     color: rgb(4,137, 183);
 }
 #contenido {
-    width:84%;
+    width:100%;
 }
 .ancho {
     width:100%;
@@ -327,6 +327,7 @@ grillas
 }
 .grilla {
     background-color: #ececd0; /* #ffc; */
+    border: 1px solid #000;
     /*margin: 1px;*/
     width: 100%;
 }
