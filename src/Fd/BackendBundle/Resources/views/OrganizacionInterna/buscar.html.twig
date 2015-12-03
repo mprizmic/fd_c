@@ -26,39 +26,41 @@
         </form>
     </fieldset>
 
-    {% if organizaciones %}
-        <br />
+    {% if organizaciones is not null %}
+        {% if organizaciones|length > 0 %}
+            <br />
 
-        <table class="grilla">
-            <tr>
-                <th>Establecimiento</th>
-                <th>Dependencia</th>
-                <th>TE</th>
-                <th>Email</th>
-                <th>Acciones</th>
-            </tr>
-
-            {% for una_dependencia in organizaciones %}
+            <table class="grilla">
                 <tr>
-                    <td>{{ una_dependencia.establecimiento }}</a></td>
-                    <td>{{ una_dependencia.dependencia }}</a></td>
-                    <td>{{ una_dependencia.te }}</a></td>
-                    <td>{{ una_dependencia.email }}</a></td>
-                    <td><a href="{{path('backend.organizacioninterna.edit', {'id': una_dependencia.id})}}">Editar</a></td>
+                    <th>Establecimiento</th>
+                    <th>Dependencia</th>
+                    <th>TE</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
                 </tr>
-            {% endfor %}
-        </table>
 
-        {{ simple_paginator_render('backend.organizacioninterna.buscar', null, {
-        'container_class':'simple_paginator',
-        'previousPageText':'Anterior',
-        'nextPageText':'Siguiente',
-        'currentClass':'Actual',
-        'firstPageText':'Primero',
-        'lastPageText':'Último'
-    }) }}  
-    {% else %}
-        {% include 'EstablecimientoBundle:Default:includes/no_hay.html.twig' %}
+                {% for una_dependencia in organizaciones %}
+                    <tr>
+                        <td>{{ una_dependencia.establecimiento }}</a></td>
+                        <td>{{ una_dependencia.dependencia }}</a></td>
+                        <td>{{ una_dependencia.te }}</a></td>
+                        <td>{{ una_dependencia.email }}</a></td>
+                        <td><a href="{{path('backend.organizacioninterna.edit', {'id': una_dependencia.id})}}">Editar</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            {{ simple_paginator_render('backend.organizacioninterna.buscar', null, {
+                'container_class':'simple_paginator',
+                'previousPageText':'Anterior',
+                'nextPageText':'Siguiente',
+                'currentClass':'Actual',
+                'firstPageText':'Primero',
+                'lastPageText':'Último'
+                }) }}  
+        {% else %}
+            {% include 'EstablecimientoBundle:Default:includes/no_hay.html.twig' %}
+        {% endif %}
     {% endif %}
 
     <br />

@@ -84,7 +84,7 @@ class OrganizacionInternaController extends Controller {
                 //o bien se clickeo en 'limpiar'
                 $form = $this->crearFormBusqueda();
 
-                $organizaciones = array();
+                $organizaciones = NULL;
             }
         };
 
