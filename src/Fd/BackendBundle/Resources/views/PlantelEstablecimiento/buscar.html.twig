@@ -26,32 +26,33 @@
         </form>
     </fieldset>
 
-    {% if planteles %}
-        <br />
+    {% if planteles is not null %}
+        {% if planteles|length > 0 %}
+            <br />
 
-        <table class="grilla">
-            <tr>
-                <th>Establecimiento</th>
-                <th>Dependencia</th>
-                <th>Cargo</th>
-                <th>TE</th>
-                <th>Email</th>
-                <th>Acciones</th>
-            </tr>
-
-            {% for un_plantel in planteles %}
+            <table class="grilla">
                 <tr>
-                    <td>{{ un_plantel.organizacion.establecimiento }}</a></td>
-                    <td>{{ un_plantel.organizacion.dependencia }}</a></td>
-                    <td>{{ un_plantel.cargo.nombre }}</a></td>
-                    <td>{{ un_plantel.te }}</a></td>
-                    <td>{{ un_plantel.email }}</a></td>
-                    <td><a href="{{path('backend.plantelestablecimiento.edit', {'id': un_plantel.id})}}">Editar</a></td>
+                    <th>Establecimiento</th>
+                    <th>Dependencia</th>
+                    <th>Cargo</th>
+                    <th>TE</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
                 </tr>
-            {% endfor %}
-        </table>
 
-        {{ simple_paginator_render('backend.plantelestablecimiento.buscar', null, {
+                {% for un_plantel in planteles %}
+                    <tr>
+                        <td>{{ un_plantel.organizacion.establecimiento }}</a></td>
+                        <td>{{ un_plantel.organizacion.dependencia }}</a></td>
+                        <td>{{ un_plantel.cargo.nombre }}</a></td>
+                        <td>{{ un_plantel.te }}</a></td>
+                        <td>{{ un_plantel.email }}</a></td>
+                        <td><a href="{{path('backend.plantelestablecimiento.edit', {'id': un_plantel.id})}}">Editar</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            {{ simple_paginator_render('backend.plantelestablecimiento.buscar', null, {
         'container_class':'simple_paginator',
         'previousPageText':'Anterior',
         'nextPageText':'Siguiente',
@@ -60,8 +61,9 @@
         'lastPageText':'Último'
     }) }}  
 
-    {% else %}
-        {% include "EstablecimientoBundle:Default:includes/no_hay.html.twig" %}
+        {% else %}
+            {% include "EstablecimientoBundle:Default:includes/no_hay.html.twig" %}
+        {% endif %}
     {% endif %}
 
     <br />

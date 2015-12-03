@@ -80,7 +80,7 @@ class PlantelEstablecimientoController extends Controller {
                 //o bien se clickeo en 'limpiar'
                 $form = $this->crearFormBusqueda();
 
-                $planteles = array();
+                $planteles = null;
             }
         };
 
