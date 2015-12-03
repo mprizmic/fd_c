@@ -20,17 +20,15 @@
         {% set nombre = un_item['nombre'] %}
 
         <form action="{{ path( accion ) }}" method="post" {{ form_enctype(form) }}>
-            <div class="en_bloque">
-                <div class="float_izquierda">
+                <div class="float_izquierda ancho_20">
                     {{ nombre }}
                 </div>
                 <div class="invisible">
                     {{ form_widget( form ) }}
                 </div>
                 <input type="submit" value="{{ form.vars.value.accion_del_form }}">
-            </div>
         </form>
-        <p class="limpiar_float"></p>
+        <hr class="limpiar_float" />
 
     {% endfor %}
 
