@@ -12,7 +12,11 @@ requiere el array agenda tal como está formateado por el controller
                 <tr class="{{ clase_fila }}">
                     {% set rs = ( dependencia['plantel']|length ) %}
                     <td rowspan="{{ rs }}">{{ dependencia['nombre_dependencia'] }}</td>
-                    <td rowspan="{{ rs }}">{{ dependencia['te'] }}</td>
+                    <td rowspan="{{ rs }}">{{ dependencia['te'] }}
+                        <a href="{{ path('backend.organizacioninterna.edit', {'id':dependencia['id']} ) }}">
+                            <img src="{{ asset('bundles/establecimiento/img/pencil.png') }}">
+                        </a>
+                    </td>
 
                     <td>{{ uncargo['nombre_cargo'] }}</td>
                     <td>{{ uncargo['autoridad']['nombre_autoridad'] }}</td>
