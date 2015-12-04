@@ -420,14 +420,6 @@ paginador
 /*
 esto es para que las label salgan alineadas sin usar table
 */
-.ancho_20{
-    display: inline-block;
-    width: 20em;
-}
-.ancho_10{
-    display: inline-block;
-    width: 10em;
-}
 .ancho_20 label{
     display: inline-block;
     width: 20em;
@@ -446,6 +438,14 @@ esto es para que las label salgan alineadas sin usar table
 .ancho_5 label{
     display: inline-block;
     width: 5em;
+}
+.ancho_20_div{
+    display: inline-block;
+    width: 20em;
+}
+.ancho_10_div {
+    display: inline-block;
+    width: 10em;
 }
 .campo {
     width: 60%;
