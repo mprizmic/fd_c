@@ -1,7 +1,12 @@
 {# se usa en la ficha del establecimiento
 requiere el array agenda tal como está formateado por el controller
 #}
-<div class="italico verde reforzado">Agenda</div>
+<div class="italico verde reforzado">Agenda
+    {% if agenda|length == 0 %}
+        {{ ' (No hay datos disponibles)' }}
+    {% endif %}
+
+</div>
 <table class='grilla_agenda'>
 
     {% for dependencia in agenda %}
