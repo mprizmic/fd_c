@@ -20,7 +20,8 @@
             {{ form_widget(delete_form) }}
         </div>
         <input type="submit" class="separador boton_rojo" value="Eliminar" onsubmit="return confirm('Está seguro?')" />
-        <a class="separador" href="{{ path('backend.organizacioninterna.buscar') }}">Volver a la lista</a>
+        <a class="separador" href="{{ path('backend.organizacioninterna.buscar') }}">Nueva búsqueda</a>
+        <a class="separador" href="{{ path(app.session.get('ruta_completa'), app.session.get('parametros')) }}">Volver</a>
     </form>
 
 

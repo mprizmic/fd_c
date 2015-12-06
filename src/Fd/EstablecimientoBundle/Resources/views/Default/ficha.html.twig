@@ -1,7 +1,14 @@
-{# parametros : establecimiento, edificio_principal, carreras, especializaciones #}
-{# establecimientobundle:default #}
-
 {% extends '::layout2col.html.twig' %}
+
+{% block stylesheets %}
+    {{  parent() }}
+    <link href="{{ asset( 'bundles/establecimiento/css/menu_derecha.css' ) }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset( 'bundles/establecimiento/css/menu_autoridad.css' ) }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block menu_derecha %}
+    {% include 'EstablecimientoBundle:Default:includes/menu_derecha.html.twig' %}
+{% endblock %}
 
 {% block contenido %}
 
@@ -34,6 +41,7 @@
                         {{ domicilio_principal }}
                     </span>
                 {% endif %}
+                
                 {% include "EdificioBundle:Default:includes/ver_mapa.html.twig" with 
                         {'calle': establecimiento_edificio['domicilio']['calle'],
                          'altura': establecimiento_edificio['domicilio']['altura'] } 
