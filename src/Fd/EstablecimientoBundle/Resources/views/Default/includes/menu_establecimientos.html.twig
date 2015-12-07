@@ -1,0 +1,13 @@
+<span>
+    <ul>
+        <li><a href="#">Establecimientos</a>
+            <ul>
+                {% for un_establecimiento in establecimientos %}
+                    <li>
+                        <a href="{{path('establecimiento_ficha', {'establecimiento_id':un_establecimiento.id})}}">{{ un_establecimiento.apodo }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</span>

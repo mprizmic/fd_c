@@ -2,13 +2,12 @@
 
 {% block stylesheets %}
     {{  parent() }}
-    <link href="{{ asset( 'bundles/establecimiento/css/menu_derecha.css' ) }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset( 'bundles/establecimiento/css/menu_autoridad.css' ) }}" rel="stylesheet" type="text/css" />
 {% endblock %}
 
-{% block menu_derecha %}
+{#{% block menu_derecha %}
     {% include 'EstablecimientoBundle:Default:includes/menu_derecha.html.twig' %}
-{% endblock %}
+{% endblock %}#}
 
 {% block contenido %}
 

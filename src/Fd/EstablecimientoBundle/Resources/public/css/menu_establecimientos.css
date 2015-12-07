@@ -1,0 +1,99 @@
+#menu_establecimientos {
+    background: darkseagreen;
+    font-size-adjust: 0.5;
+    height: 35px;
+    color: #08C;
+    border: 1px solid #424242;
+    padding: 0;
+    float: right;
+    font-weight: normal;
+    /*bordes redondeaddos*/
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 1px solid #000000;
+}
+#menu_establecimientos li {
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}
+#menu_establecimientos {
+    margin: 0;
+    padding: 0;
+}
+#menu_establecimientos ul {
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#menu_establecimientos li a {
+    color: #FFFFFF;
+    display: block;
+    padding: 9px 15px 8px;
+    text-transform: none;
+    text-decoration: none;
+    /*margin: 4px;*/
+}
+#menu_establecimientos li span, #menu_establecimientos li a:link, #menu_establecimientos li a:visited {
+    color: #FFFFFF;
+    display: block;
+    font-weight: normal;
+    padding: 9px 15px 8px;
+    text-transform: none;
+    margin: 0;
+}
+#menu_establecimientos li a:active, #menu_establecimientos li a:hover {
+    color:  #FFF;
+    background: darkred;
+    text-decoration: none;
+}
+#menu_establecimientos li li a:link, #menu_establecimientos li li a, #menu_establecimientos li li a:visited {
+    color: #FFF;
+    font-weight: normal;
+    text-transform: none;
+    background:  #08C;
+    width: 110px;
+    float: none;
+    margin: 0;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-top: 1px solid gray;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+#menu_establecimientos li li a:hover, #menu_establecimientos li li a:active {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    /*padding: 7px 10px;*/
+    text-decoration: underline;
+}
+#menu_establecimientos li {
+    float: left;
+    padding: 0;
+}
+#menu_establecimientos li ul a {
+    width: 130px;
+    text-decoration: none;
+}
+#menu_establecimientos li ul {
+    position: absolute;
+    margin: 0 0 0 0;
+    z-index: 9999;
+    left: -999em;
+    width: 130px;
+    padding: 0;
+}
+#menu_establecimientos li:hover, #menu_establecimientos li.sfhover {
+    position: static;
+}
+#menu_establecimientos li ul ul {
+    margin: -33px 0px 0px 170px;
+}
+#menu_establecimientos li:hover ul ul, #menu_establecimientos li:hover ul ul ul, #menu_establecimientos li.sfhover ul ul, #menu_establecimientos li.sfhover ul ul ul {
+    left: -999em;
+}
+#menu_establecimientos li:hover ul, #menu_establecimientos li li:hover ul, #menu_establecimientos li li.sfhover ul,#menu_establecimientos li li li:hover ul, #menu_establecimientos li.sfhover ul, #menu_establecimientos li li li.sfhover ul {
+    left: auto;
+}
