@@ -33,9 +33,11 @@
 
         <input type="submit" class="separador boton_rojo" value="Eliminar" onsubmit="return confirm('Está seguro?')" />
 
-        <a class="separador" href="{{ path('backend.autoridad.buscar') }}">Volver</a>
+        <a class="separador" href="{{ path(app.session.get('ruta_completa'), app.session.get('parametros')) }}">Volver</a>
 
         <a class="separador" href="{{ path('backend.autoridad.new') }}">Crear nueva</a>
+        
+        <a class="separador" href="{{ path('backend.autoridad.buscar') }}">Nueva búsqueda</a>
     </form>
 
     <br />

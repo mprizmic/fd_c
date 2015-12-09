@@ -2,11 +2,17 @@
     <ul>
         <li><span><img src="{{ asset('bundles/establecimiento/img/menu.png') }}"></span>
             <ul>
-                <li><a href="#">Actualizar datos</a></li>
+                {% if autoridad['id'] != 0 %}
+                    <li><a href="{{ path('backend.autoridad.edit', {'id':autoridad['id'] } ) }}">Actualizar datos</a></li>
+                    {% endif %}
+
                 <li><a href="#">Desafectar del cargo</a></li>
                 <li><a href="#">Cambiar por otro</a></li>
-                <li><a href="#">Nueva autoridad</a></li>
-                <li><a href="#">Reubicar</a></li>
+                <li><a href="{{ path('backend.autoridad.new') }}">Nueva autoridad</a></li>
+
+                {% if autoridad['id'] != 0 %}
+                    <li><a href="{{ path('backend.autoridad.edit', {'id':autoridad['id'] } ) }}">Reubicar</a></li>
+                    {% endif %}
             </ul>
         </li>
     </ul>
