@@ -40,7 +40,7 @@
                         {{ domicilio_principal }}
                     </span>
                 {% endif %}
-                
+
                 {% include "EdificioBundle:Default:includes/ver_mapa.html.twig" with 
                         {'calle': establecimiento_edificio['domicilio']['calle'],
                          'altura': establecimiento_edificio['domicilio']['altura'] } 
@@ -77,9 +77,9 @@
 
                         {# agenda de la sede / anexo #}
                         {% include "EstablecimientoBundle:Default:ficha/agenda.html.twig" with { 'agenda':establecimiento_edificio['agenda'] } %}
-                        
+
                         <br />
-                        
+
                         {% set unidad_educativas = establecimiento_edificio['unidad_educativas'] %}
 
                         {# carreras terciarias #}
@@ -108,7 +108,7 @@
                         <div class="limpiar_float">
                             <BR />
                         </div>
-                        
+
                         {#  busco cual es la localizacion del nivel terciario #}
                         {% for ue in establecimiento_edificio['unidad_educativas'] %}
                             {% if ue['nivel_abreviatura'] == 'Ter' %}
@@ -145,6 +145,11 @@
     </div>
 
 {% endblock contenido %}
+
+{% block footer %}
+    {{ parent() }}
+    <span class="separador">{{ _self.getTemplateName }}</span>
+{% endblock %}
 
 {% block main_content %}
     {{ parent() }}
