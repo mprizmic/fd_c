@@ -46,7 +46,7 @@
 }
 #menu_establecimientos li a:active, #menu_establecimientos li a:hover {
     color:  #FFF;
-    background: darkred;
+    /*background: darkred;*/
     text-decoration: none;
 }
 #menu_establecimientos li li a:link, #menu_establecimientos li li a, #menu_establecimientos li li a:visited {
@@ -54,7 +54,7 @@
     font-weight: normal;
     text-transform: none;
     background:  #08C;
-    width: 110px;
+    width: 90px;
     float: none;
     margin: 0;
     padding-top: 2px;
@@ -74,7 +74,7 @@
     padding: 0;
 }
 #menu_establecimientos li ul a {
-    width: 130px;
+    width: 90px;
     text-decoration: none;
 }
 #menu_establecimientos li ul {
@@ -82,7 +82,7 @@
     margin: 0 0 0 0;
     z-index: 9999;
     left: -999em;
-    width: 130px;
+    width: 90px;
     padding: 0;
 }
 #menu_establecimientos li:hover, #menu_establecimientos li.sfhover {
