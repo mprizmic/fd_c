@@ -148,7 +148,7 @@ class EstablecimientoController extends Controller {
      * @ParamConverter("establecimiento", class="EstablecimientoBundle:Establecimiento", options={"id"="establecimiento_id"})
      */
     public function fichaAction($establecimiento, Request $request) {
-
+        
         // establezco la ruta para la pagina que tenga que volver aca
         $this->get('session')->set('ruta_completa', $request->get('_route'));
         $this->get('session')->set('parametros', $request->get('_route_params'));
@@ -245,11 +245,11 @@ class EstablecimientoController extends Controller {
                     //el cargo puede no estar asignado a una persona
                     $existe = ($autoridad) ? true : false;
 
-                    $cargos[$key_pe]['autoridad']['id'] = ($existe) ? $autoridad->getId() : 'sd';
-                    $cargos[$key_pe]['autoridad']['nombre_autoridad'] = ($existe) ? $autoridad->getApellido() . ', ' . $autoridad->getNombre() : 'sd';
-                    $cargos[$key_pe]['autoridad']['te_particular'] = ($existe) ? $autoridad->getTeParticular() : 'sd';
-                    $cargos[$key_pe]['autoridad']['celular'] = ($existe) ? $autoridad->getCelular() : 'sd';
-                    $cargos[$key_pe]['autoridad']['email'] = ($existe) ? $autoridad->getEmail() : 'sd';
+                    $cargos[$key_pe]['autoridad']['id'] = ($existe) ? $autoridad->getId() : $existe; //asigna un "0" por el valor false 
+                    $cargos[$key_pe]['autoridad']['nombre_autoridad'] = ($existe) ? $autoridad->getApellido() . ', ' . $autoridad->getNombre() : $existe;
+                    $cargos[$key_pe]['autoridad']['te_particular'] = ($existe) ? $autoridad->getTeParticular() : $existe;
+                    $cargos[$key_pe]['autoridad']['celular'] = ($existe) ? $autoridad->getCelular() : $existe;
+                    $cargos[$key_pe]['autoridad']['email'] = ($existe) ? $autoridad->getEmail() : $existe;
                 }
 
                 $agenda[$key_oi]['plantel'] = $cargos;
