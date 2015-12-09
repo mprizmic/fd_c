@@ -34,17 +34,18 @@ class PruebaCommand extends ContainerAwareCommand {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         //creo una carrera. La carrera crea la oferta aeducativa
-        $carrera_manager = new CarreraManager($em);
-        $carrera = $carrera_manager->crearNuevo();
-        $carrera = new Carrera();
-        $carrera->setNombre('AAABBB');
-        $carrera_manager->crear($carrera, true);
+//        $carrera_manager = new CarreraManager($em);
+//        $carrera = $carrera_manager->crearNuevo();
+//        $carrera = new Carrera();
+//        $carrera->setNombre('AAABBB');
+//        $carrera_manager->crear($carrera, true);
 
-        $output->write('Carrera: ' . $carrera->getId() . "\n");
+        $output->write('Carrera: '  .  "\n");
+//        $output->write('Carrera: ' . $carrera->getId() . "\n");
 
         //oferta
-        $oferta_educativa = $carrera->getOferta();
-        $output->write('Oferta: ' . $oferta_educativa->getId() . "\n");
+//        $oferta_educativa = $carrera->getOferta();
+//        $output->write('Oferta: ' . $oferta_educativa->getId() . "\n");
 
         //asigno normas
 //        $norma1 = $em->getRepository('OfertaEducativaBundle:Norma')->find(1);
@@ -56,27 +57,27 @@ class PruebaCommand extends ContainerAwareCommand {
 //        $em->flush();
 //        $oferta_educativa = $em->getRepository('OfertaEducativaBundle:OfertaEducativa')->find(141);
         
-        $output->write('a borrar' . "\n");
-        $carrera_id = $carrera->getId();
-        $oferta_id = $oferta_educativa->getId();
-        
-        $carrera = $em->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
+//        $output->write('a borrar' . "\n");
+//        $carrera_id = $carrera->getId();
+//        $oferta_id = $oferta_educativa->getId();
+//        
+//        $carrera = $em->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
         
 //        $oferta_educativa->setCarrera(null);
 //        $em->persist($oferta_educativa);
-        $em->remove($carrera);
-        $em->flush();
+//        $em->remove($carrera);
+//        $em->flush();
 
 
         //pruebo lo generado
-        $carrera = $em->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
-        if (!$carrera) {
-            $output->writeln('borrò la carrera ok');
-        };
-        $oferta_educativa = $em->getRepository('OfertaEducativaBundle:OfertaEducativa')->find($oferta_id);
-        if (!$oferta_educativa) {
-            $output->writeln('borrò la oferta ok');
-        }
+//        $carrera = $em->getRepository('OfertaEducativaBundle:Carrera')->find($carrera_id);
+//        if (!$carrera) {
+//            $output->writeln('borrò la carrera ok');
+//        };
+//        $oferta_educativa = $em->getRepository('OfertaEducativaBundle:OfertaEducativa')->find($oferta_id);
+//        if (!$oferta_educativa) {
+//            $output->writeln('borrò la oferta ok');
+//        }
 
         //salida de pantalla
         $output->writeln('proceso todo');
