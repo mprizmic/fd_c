@@ -20,12 +20,24 @@ class CapturaAgendaCommand extends ContainerAwareCommand {
         $this
                 ->setName('fd:agenda:captura')
                 ->setDescription('Captura planilla excell con la agenda de un establecimiento')
-//            ->addArgument('name', InputArgument::OPTIONAL, 'Who do you want to greet?')
-//            ->addOption('yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters')
+//                ->addArgument('grabar', InputArgument::OPTIONAL, 'aplicar cambios?')
+                ->addOption('force', null, InputOption::VALUE_NONE, 'si se pone se graba')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
+
+
+        if ($input->getOption('force')) {
+            $flush = true;
+            
+        } else {
+            $flush = false;
+        }
+        
+        $output->writeln($flush ? '***********************************graba':'********************************NO GRABA');
+
+
 
         //el container esta disponible con $this->getContainer()->get('servicio');
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
@@ -34,7 +46,10 @@ class CapturaAgendaCommand extends ContainerAwareCommand {
         $targetDir = $this->getContainer()->get('kernel')->getRootDir() . '/../';
 
         //  $archivo = archivo.xlsx
-        $archivo = 'ens 1.xls';
+        $dialog = $this->getHelperSet()->get('dialog');
+        
+        $archivo = $dialog->ask($output, 'Nombre del archivo a procesar (con extensión): ', 'nombre_default.xls');
+//        $archivo = 'ens 1.xls';
 
         $fileWithPath = $targetDir . $archivo;
 
@@ -169,7 +184,12 @@ class CapturaAgendaCommand extends ContainerAwareCommand {
         }
 
         $output->writeln('terminó y procesó');
-        $em->flush();
+        
+        if ($flush){
+            $em->flush();
+        }
+        
+        $output->writeln($flush ? '***********************************graba':'********************************NO GRABA');
 
         return;
     }
