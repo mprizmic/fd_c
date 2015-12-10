@@ -6,12 +6,23 @@
                     <li><a href="{{ path('backend.autoridad.edit', {'id':autoridad['id'] } ) }}">Actualizar datos</a></li>
                     {% endif %}
 
-                <li><a href="#">Desafectar del cargo</a></li>
-                <li><a href="#">Cambiar por otro</a></li>
+                {% if autoridad['id'] != 0 %}
+                <li><a href="{{ path('backend.autoridad.desasignar', {'id':autoridad['id'], 'establecimiento_id':establecimiento.id } ) }}">Desafectar del cargo</a></li>
+                    {% endif %}
+
+                {% if autoridad['id'] != 0 %}
+                    <li><a href="{{ path('backend.autoridad.cambiar', {'id':autoridad['id'] } ) }}">Cambiar por otro</a></li>
+                    {% endif %}
+                
+                
                 <li><a href="{{ path('backend.autoridad.new') }}">Nueva autoridad</a></li>
 
                 {% if autoridad['id'] != 0 %}
                     <li><a href="{{ path('backend.autoridad.edit', {'id':autoridad['id'] } ) }}">Reubicar</a></li>
+                    {% endif %}
+
+                {% if autoridad['id'] != 0 %}
+                    <li><a href="{{ path('backend.autoridad.eliminar', {'id':autoridad['id'], 'establecimiento_id':establecimiento.id } ) }}">Eliminar</a></li>
                     {% endif %}
             </ul>
         </li>

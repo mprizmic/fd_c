@@ -53,11 +53,10 @@ class AutoridadManager {
         } catch (\Exception $e) {
 
             $respuesta->setMensaje('No se pudo guardar la dependencia. Verifique los datos y reintente');
-            
-            if ($e->getPrevious()->getCode() == 23000){
+
+            if ($e->getPrevious()->getCode() == 23000) {
                 $respuesta->setMensaje('El cargo ya está en uso. Debería usar o crear otro.');
             };
-            
         };
         return $respuesta;
     }
@@ -83,6 +82,30 @@ class AutoridadManager {
         } catch (Exception $e) {
             $respuesta->setMensaje('No se pudo eliminar la dependencias');
         }
+        return $respuesta;
+    }
+
+    public function desasignar($entity, $flush = true) {
+        $respuesta = new Respuesta();
+
+        try {
+            $entity->setCargo(null);
+
+            $this->em->persist($entity);
+
+            if ($flush) {
+                $this->em->flush();
+            }
+
+            $respuesta->setObjNuevo($entity);
+            $respuesta->setCodigo(1);
+            $respuesta->setMensaje('Se guardó la autoridad exitosamente');
+            
+        } catch (Exception $ex) {
+            
+            $respuesta->setMensaje('No se pudo eliminar la dependencias');
+        };
+        
         return $respuesta;
     }
 
