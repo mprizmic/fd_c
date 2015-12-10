@@ -76,6 +76,15 @@ class EstablecimientoEdificio {
     private $dependencias;
 
     /**
+     * @ORM\Column(length=50, nullable=true)
+     */
+    private $te;
+    /**
+     * @ORM\Column(length=50, nullable=true)
+     * @Assert\Email(message="El email no es válido")
+     */
+    private $email;    
+    /**
      * devuelve el objeto localizacion de nivel terciario correspondiente $this
      */
     public function getTerciario() {
@@ -209,6 +218,52 @@ class EstablecimientoEdificio {
     public function getFechaBaja()
     {
         return $this->fecha_baja;
+    }
+
+    /**
+     * Set te
+     *
+     * @param string $te
+     * @return EstablecimientoEdificio
+     */
+    public function setTe($te)
+    {
+        $this->te = $te;
+
+        return $this;
+    }
+
+    /**
+     * Get te
+     *
+     * @return string 
+     */
+    public function getTe()
+    {
+        return $this->te;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return EstablecimientoEdificio
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     /**

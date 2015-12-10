@@ -61,15 +61,15 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
             ++$columna;
             $posicion->setCellValue($columna . $fila, $ed->getDistritoEscolar()->__toString());
             ++$columna;
-            $posicion->setCellValue($columna . $fila, $ee->getEmail1());
+//            $posicion->setCellValue($columna . $fila, $ee->getEmail1());
             ++$columna;
             $posicion->setCellValue($columna . $fila, $e->getUrl());
             ++$columna;
-            $posicion->setCellValue($columna . $fila, $ee->getTe1());
+//            $posicion->setCellValue($columna . $fila, $ee->getTe1());
             ++$columna;
-            $posicion->setCellValue($columna . $fila, $rector->__toString());
+//            $posicion->setCellValue($columna . $fila, $rector->__toString());
             ++$columna;
-            $posicion->setCellValue($columna . $fila, $rector->getEmail());
+//            $posicion->setCellValue($columna . $fila, $rector->getEmail());
             
             $fila += 1;
         };
