@@ -16,10 +16,20 @@ class AutoridadRepository extends EntityRepository {
     public function findRectores() {
 
         $q = $this->_em->createQueryBuilder()
-                ->select('a')
+                ->select('a.id')
+                ->addSelect('a.nombre as nombre')
+                ->addSelect('a.apellido as apellido')
+                ->addSelect('e.nombre as establecimiento')
+                ->addSelect('a.te_particular as te_particular')
+                ->addSelect('a.celular as celular')
+                ->addSelect('a.email as email')
                 ->from('EstablecimientoBundle:Autoridad', 'a')
-                ->join('a.cargo', 'ca')
-                ->where('ca.abreviatura = ?1')
+                ->join('a.cargo', 'pl')
+                ->join('pl.cargo', 'cg')
+                ->join('pl.organizacion', 'oi')
+                ->join('oi.establecimiento', 'ee')
+                ->join('ee.establecimientos', 'e')
+                ->where('cg.codigo = ?1')
                 ->orderBy('a.apellido')
                 ->addOrderBy('a.nombre');
 
