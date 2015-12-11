@@ -9,7 +9,7 @@
             {# muestra el nombre de cada establecimiento #}
             <a href="{{ path('establecimiento_ficha', {'establecimiento_id': establecimiento['establecimiento_id'] }) }}">
                 {{ establecimiento['establecimiento_nombre'] }}
-                {{ establecimiento['cue_anexo'] == '01' ? ' - ' ~ establecimiento['localizacion_nombre'] }}
+                {{ establecimiento['cue_anexo']['digito'] == '01' ? ' - ' ~ establecimiento['localizacion_nombre'] }}
             </a>
             
             {# muestra el turno de cada establecimento           #}

@@ -1,55 +1,66 @@
 {% extends 'BackendBundle::layout.html.twig' %}
- 
+
 {% block title %}
-{{ parent() }} - EstablecimientoEdificio
+    {{ parent() }} - EstablecimientoEdificio
 {% endblock %}
- 
+
 {% block main_content %}
 
-<h1>EstablecimientoEdificio</h1>
+    <div class="titulo">EstablecimientoEdificio</div>
 
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Cue_anexo</th>
-            <td>{{ entity.cueanexo }}</td>
-        </tr>
-        <tr>
-            <th>Nombre</th>
-            <td>{{ entity.nombre }}</td>
-        </tr>
-        <tr>
-            <th>Fecha_creacion</th>
-            <td>{{ entity.fechacreacion|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Fecha_baja</th>
-            <td>{{ entity.fechabaja|date('Y-m-d H:i:s') }}</td>
-        </tr>
-    </tbody>
-</table>
+    <fieldset>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('backend_establecimiento_edificio') }}">
-            Volver a la lista
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('backend_establecimiento_edificio_edit', { 'id': entity.id }) }}">
-            Editar
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('backend_establecimiento_edificio_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit" class="boton_rojo">Eliminar</button>
-        </form>
-    </li>
-</ul>
+        <table class="record_properties">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th>Cue_anexo</th>
+                    <td>{{ entity.cueanexo }}</td>
+                </tr>
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ entity.nombre }}</td>
+                </tr>
+                <tr>
+                    <th>TE</th>
+                    <td>{{ entity.te }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ entity.email }}</td>
+                </tr>
+                <tr>
+                    <th>Fecha_creacion</th>
+                    <td>{{ entity.fechacreacion|date('Y-m-d H:i:s') }}</td>
+                </tr>
+                <tr>
+                    <th>Fecha_baja</th>
+                    <td>{{ entity.fechabaja|date('Y-m-d H:i:s') }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </fieldset>
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('backend_establecimiento_edificio') }}">
+                Volver a la lista
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('backend_establecimiento_edificio_edit', { 'id': entity.id }) }}">
+                Editar
+            </a>
+        </li>
+        <li>
+            <form action="{{ path('backend_establecimiento_edificio_delete', { 'id': entity.id }) }}" method="post">
+                {{ form_widget(delete_form) }}
+                <button type="submit" class="boton_rojo">Eliminar</button>
+            </form>
+        </li>
+    </ul>
 
 {% endblock %}

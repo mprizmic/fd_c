@@ -45,9 +45,14 @@ class EstablecimientoEdificioType extends AbstractType {
                     'label' => 'Nombre descriptivo',
                     'required' => TRUE,
                 ))
+                ->add('te', null, array(
+                    'required' => false,
+                ))
+                ->add('email', null, array(
+                    'required' => false,
+                ))
                 ->add('fecha_creacion')
                 ->add('fecha_baja')
-
                 ->add('edificios', 'entity', array(
                     'class' => 'EdificioBundle:Edificio',
                     'query_builder' => function (EdificioRepository $repository) {

@@ -165,6 +165,8 @@ class EstablecimientoController extends Controller {
         /**
          * sede_anexo_array[][id]
          * sede_anexo_array[][cue_anexo]
+         * sede_anexo_array[][cue_anexo][te]
+         * sede_anexo_array[][cue_anexo][email]
          * sede_anexo_array[][domicilio][calle]
          * sede_anexo_array[][domicilio][altura]
          * sede_anexo_array[][domicilio][barrio]
@@ -207,7 +209,10 @@ class EstablecimientoController extends Controller {
             $domicilio = $sede_anexo->getEdificios()->getDomicilioPrincipal();
 
             $sede_anexo_array[$key]['id'] = $sede_anexo->getId();
-            $sede_anexo_array[$key]['cue_anexo'] = $sede_anexo->getCueAnexo();
+            $sede_anexo_array[$key]['cue_anexo']['digito'] = $sede_anexo->getCueAnexo();
+            $sede_anexo_array[$key]['cue_anexo']['te'] = "X";
+            $sede_anexo_array[$key]['cue_anexo']['email'] = "X";
+            
 
             $sede_anexo_array[$key]['domicilio']['calle'] = $domicilio->getCalle();
             $sede_anexo_array[$key]['domicilio']['altura'] = $domicilio->getAltura();

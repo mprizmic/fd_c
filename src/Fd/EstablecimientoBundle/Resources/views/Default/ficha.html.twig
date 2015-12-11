@@ -31,7 +31,7 @@
 
                 {% if not loop.first %}
                     <span class="resaltado">
-                        ( Anexo : <a href='#{{ establecimiento_edificio['cue_anexo'] }}'>
+                        ( Anexo : <a href='#{{ establecimiento_edificio['cue_anexo']['digito'] }}'>
                             {{ domicilio_principal }}
                         </a>)
                     </span>
@@ -64,64 +64,68 @@
 
                     {% if not loop.first %}
                         <fieldset style="background-color: #ffc;">
-                            <a class="mediana resaltado" name='{{ establecimiento_edificio['cue_anexo'] }}'>
-                                Anexo {{ domicilio_principal }}</a>
-                            {% endif %}
+                            <a class="mediana resaltado" name='{{ establecimiento_edificio['cue_anexo']['digito'] }}'>
+                                Anexo {{ domicilio_principal }}
+                            </a>
+                    {% endif %}
 
-                        <div>Código postal: {{ establecimiento_edificio['cp'] }} </div>
-                        <div>Barrio: {{ establecimiento_edificio['barrio'] }}</div>
-                        <div><a href="{{ path('edificio_de_un_cue', {'establecimiento_id': establecimiento.id } ) }}">Edificio(s) (con quien se comparte)</a></div>
-                        <div>{{ 'Inspector/a de infraestructura: ' ~ establecimiento_edificio['inspector']  }}</div>
+                    <div>TE: {{ establecimiento_edificio['cue_anexo']['te'] }}</div>
+                    <div>Email: {{ establecimiento_edificio['cue_anexo']['email'] }}</div>
+                    <div>Código postal: {{ establecimiento_edificio['cp'] }} </div>
+                    <div>Barrio: {{ establecimiento_edificio['barrio'] }}</div>
+                    <div><a href="{{ path('edificio_de_un_cue', {'establecimiento_id': establecimiento.id } ) }}">Edificio(s) (con quien se comparte)</a></div>
+                    <div>{{ 'Inspector/a de infraestructura: ' ~ establecimiento_edificio['inspector']  }}</div>
 
-                        <br />
+                    <br />
 
-                        {# agenda de la sede / anexo #}
-                        {% include "EstablecimientoBundle:Default:ficha/agenda.html.twig" with { 'agenda':establecimiento_edificio['agenda'] } %}
+                    {# agenda de la sede / anexo #}
+                    {% include "EstablecimientoBundle:Default:ficha/agenda.html.twig" with { 'agenda':establecimiento_edificio['agenda'] } %}
 
-                        <br />
+                    <br />
 
-                        {% set unidad_educativas = establecimiento_edificio['unidad_educativas'] %}
+                    {% set unidad_educativas = establecimiento_edificio['unidad_educativas'] %}
 
-                        {# carreras terciarias #}
-                        {% include "EstablecimientoBundle:Default:ficha/carreras.html.twig" with { 'unidad_educativas':unidad_educativas } %}
+                    {# carreras terciarias #}
+                    {% include "EstablecimientoBundle:Default:ficha/carreras.html.twig" with { 'unidad_educativas':unidad_educativas } %}
 
-                        <br />
+                    <br />
 
-                        {# niveles que funcionan en el establecimiento    #}
-                        {% include "EstablecimientoBundle:Default:ficha/niveles_edificio.html.twig" with { 'unidad_educativas':unidad_educativas } %}
+                    {# niveles que funcionan en el establecimiento    #}
+                    {% include "EstablecimientoBundle:Default:ficha/niveles_edificio.html.twig" with { 'unidad_educativas':unidad_educativas } %}
 
-                        {# matricula de los niveles que funcionan en el establecimiento    #}
-                        {% include "EstablecimientoBundle:Default:ficha/matricula_edificio.html.twig" with { 'unidad_educativas':unidad_educativas, 'establecimiento':establecimiento } %}
+                    {# matricula de los niveles que funcionan en el establecimiento    #}
+                    {% include "EstablecimientoBundle:Default:ficha/matricula_edificio.html.twig" with { 'unidad_educativas':unidad_educativas, 'establecimiento':establecimiento } %}
 
-                        {# turno localizados de los niveles. Se envía un array con los niveles de un edificio y los turnos de cada nivel #}
-                        {% include 'EstablecimientoBundle:Default:includes/turnos_niveles.html.twig' with 
-                            { 'unidad_educativas_array': establecimiento_edificio['unidad_educativas'] } %}
+                    {# turno localizados de los niveles. Se envía un array con los niveles de un edificio y los turnos de cada nivel #}
+                    {% include 'EstablecimientoBundle:Default:includes/turnos_niveles.html.twig' with 
+                        { 'unidad_educativas_array': establecimiento_edificio['unidad_educativas'] } %}
 
-                        {# cantidad de docentes en el edificio por nivel #}
-                        {% include "EstablecimientoBundle:Default:ficha/docentes_edificio.html.twig" with 
-                            { 'unidad_educativas':unidad_educativas, 'establecimiento_edificio':establecimiento_edificio } %}
+                    {# cantidad de docentes en el edificio por nivel #}
+                    {% include "EstablecimientoBundle:Default:ficha/docentes_edificio.html.twig" with 
+                        { 'unidad_educativas':unidad_educativas, 'establecimiento_edificio':establecimiento_edificio } %}
 
-                        <br />                        
+                    <br />                        
 
-                        {# cuadro de matricula #}
+                    {# cuadro de matricula #}
 
-                        <div class="limpiar_float">
-                            <BR />
-                        </div>
+                    <div class="limpiar_float">
+                        <BR />
+                    </div>
 
-                        {#  busco cual es la localizacion del nivel terciario #}
-                        {% for ue in establecimiento_edificio['unidad_educativas'] %}
-                            {% if ue['nivel_abreviatura'] == 'Ter' %}
-                                <fieldset >
-                                    <a class="resaltado" target="_blank" href="{{ path('sede_anexo_cuadro_matricula', {'localizacion_id': ue['localizacion_id'], 'tipo':'carrera' } ) }}">Cuadro de matrícula de carreras</a><br/>
-                                </fieldset>
-                            {% endif %}  
-                        {% endfor %}  
-                        <br />                        
+                    {#  busco cual es la localizacion del nivel terciario #}
+                    {% for ue in establecimiento_edificio['unidad_educativas'] %}
+                        {% if ue['nivel_abreviatura'] == 'Ter' %}
+                            <fieldset >
+                                <a class="resaltado" target="_blank" href="{{ path('sede_anexo_cuadro_matricula', {'localizacion_id': ue['localizacion_id'], 'tipo':'carrera' } ) }}">Cuadro de matrícula de carreras</a><br/>
+                            </fieldset>
+                        {% endif %}  
+                    {% endfor %}  
+                    <br />                        
 
-                        {% if not loop.first %}
+                    {% if not loop.first %}
                         </fieldset>
                     {% endif %}
+
                     <br />
                 </div>
 

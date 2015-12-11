@@ -47,6 +47,24 @@
         </tr>             
         <tr>
             <td>
+                {{ form_label(edit_form.te) }}
+            </td>
+            <td>
+                {{ form_errors(edit_form.te) }}
+                {{ form_widget(edit_form.te) }}
+            </td>    
+        </tr>
+        <tr>
+            <td>
+                {{ form_label(edit_form.email) }}
+            </td>
+            <td>
+                {{ form_errors(edit_form.email) }}
+                {{ form_widget(edit_form.email) }}
+            </td>    
+        </tr>
+        <tr>
+            <td>
                 Fecha de creación
             </td>
             <td>
