@@ -208,10 +208,14 @@ class EstablecimientoController extends Controller {
 
             $domicilio = $sede_anexo->getEdificios()->getDomicilioPrincipal();
 
+            $te = $this->getEm()
+                    ->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
+                    ->findTe($sede_anexo);
+            
             $sede_anexo_array[$key]['id'] = $sede_anexo->getId();
             $sede_anexo_array[$key]['cue_anexo']['digito'] = $sede_anexo->getCueAnexo();
-            $sede_anexo_array[$key]['cue_anexo']['te'] = "X";
-            $sede_anexo_array[$key]['cue_anexo']['email'] = "X";
+            $sede_anexo_array[$key]['cue_anexo']['te'] = $te;
+            $sede_anexo_array[$key]['cue_anexo']['email'] = $sede_anexo->getEmail();
             
 
             $sede_anexo_array[$key]['domicilio']['calle'] = $domicilio->getCalle();

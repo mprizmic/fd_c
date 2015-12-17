@@ -11,6 +11,8 @@ use Fd\EstablecimientoBundle\Model\DatosAChoiceVisitadorInterface;
 use Fd\OfertaEducativaBundle\Entity\InicialX;
 
 class EstablecimientoEdificioRepository extends EntityRepository implements DatosAChoiceVisitadoInterface {
+    
+    private $strategy_te;    
 
     /**
      * Devuelve la lista de edificio_establecimiento con el inspector de infraestructura indicado
@@ -284,5 +286,15 @@ class EstablecimientoEdificioRepository extends EntityRepository implements Dato
         return $visitador->visitEstablecimientoEdificio( $this );
         ;
     }
-
+    /**
+     * Devuelve el TE principal del edificio dependiendo de si es sede o anexo
+     * 
+     * el TE principal del establecimiento pasa a ser el de secretaría
+     * el te del anexo: es el de la tabla establecimiento_edificio
+     * 
+     * @param EstablecimientoEdificio $establecimiento_edificio
+     */
+    public function findTe(EstablecimientoEdificio $establecimiento_edificio){
+        return "1";
+    }
 }
