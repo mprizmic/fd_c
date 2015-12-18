@@ -67,4 +67,10 @@ class DependenciaRepository extends EntityRepository implements DatosAChoiceVisi
         ;
     }
 
+    public function findSecretaria() {
+        return $this->findOneBy(array(
+                    'codigo' => 'SCT',
+        ));
+    }
+
 }
