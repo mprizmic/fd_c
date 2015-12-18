@@ -8,11 +8,12 @@ use Fd\EstablecimientoBundle\Entity\UnidadEducativa;
 use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Model\DatosAChoiceVisitadoInterface;
 use Fd\EstablecimientoBundle\Model\DatosAChoiceVisitadorInterface;
+//use Fd\EstablecimientoBundle\Model\Strategies\TeSedeStrategy;
 use Fd\OfertaEducativaBundle\Entity\InicialX;
 
 class EstablecimientoEdificioRepository extends EntityRepository implements DatosAChoiceVisitadoInterface {
-    
-    private $strategy_te;    
+
+    private $strategy_te;
 
     /**
      * Devuelve la lista de edificio_establecimiento con el inspector de infraestructura indicado
@@ -283,9 +284,10 @@ class EstablecimientoEdificioRepository extends EntityRepository implements Dato
      * @return type
      */
     public function acceptDatosAChoice(DatosAChoiceVisitadorInterface $visitador) {
-        return $visitador->visitEstablecimientoEdificio( $this );
+        return $visitador->visitEstablecimientoEdificio($this);
         ;
     }
+
     /**
      * Devuelve el TE principal del edificio dependiendo de si es sede o anexo
      * 
@@ -294,7 +296,13 @@ class EstablecimientoEdificioRepository extends EntityRepository implements Dato
      * 
      * @param EstablecimientoEdificio $establecimiento_edificio
      */
-    public function findTe(EstablecimientoEdificio $establecimiento_edificio){
-        return "1";
+    public function findTe(EstablecimientoEdificio $establecimiento_edificio) {
+        
+        $nombre_clase = 'Fd\EstablecimientoBundle\Model\Strategies\Te' . $establecimiento_edificio->strSede() . 'Strategy';
+        
+        $this->strategy_te = new $nombre_clase($this->getEntityManager());
+        
+        return $this->strategy_te->getTe($establecimiento_edificio);
     }
+
 }
