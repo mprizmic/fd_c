@@ -103,6 +103,9 @@ class EstablecimientoEdificio {
     public function isSede() {
         return ($this->getCueAnexo() == '00');
     }
+    public function strSede(){
+        return $this->isSede()? 'Sede':'Anexo';
+    }
 
     public function __toString() {
         return $this->getEstablecimientos()->getApodo() . ($this->getCueAnexo() == '00' ? '' : ' - ' . $this->getNombre());
