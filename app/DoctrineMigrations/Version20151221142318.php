@@ -5,6 +5,8 @@
  * 
  * hace falta eliminar los datos existentes de autoridades 
  * 
+ * corre ok
+ * 
  */
 namespace Application\Migrations;
 

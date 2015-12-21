@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * corrio ok
+ */
 /**
  * esto es para sacar de la portada del backend las tablas que van a ir al menú superior agrupados como Datos personales de autoridades
  */

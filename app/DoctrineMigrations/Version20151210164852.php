@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * corrio ok
+ */
 namespace Application\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;

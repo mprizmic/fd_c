@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * debería dar error en producción porque el campo ya está
+ */
 namespace Application\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;

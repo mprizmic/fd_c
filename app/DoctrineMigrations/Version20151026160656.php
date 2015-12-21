@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * debería dar error porque ya está en producción
+ * 
+ */
 namespace Application\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
