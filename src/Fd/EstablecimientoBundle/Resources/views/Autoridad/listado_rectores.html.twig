@@ -7,7 +7,22 @@
 
 <br />
 
-<table CELLSPACING="5" border="0">
+<table class="grilla">
+    <th>
+        Nombre
+    </th>
+    <th>
+        Establecimiento
+    </th>
+    <th>
+        Te particular
+    </th>
+    <th>
+        Celular
+    </th>
+    <th>
+        Email
+    </th>
 {% for rector in rectores %}
     <tr>
         <td>
@@ -17,7 +32,7 @@
             <span>{{ rector.establecimiento }}</span>
         </td>
         <td>
-            <span>{{ rector.teParticular }}</span>
+            <span>{{ rector.te_particular }}</span>
         </td>
         <td>
             <span>{{ rector.celular }}</span>

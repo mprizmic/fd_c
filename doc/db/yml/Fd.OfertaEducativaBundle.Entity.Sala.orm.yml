@@ -1,0 +1,44 @@
+Fd\OfertaEducativaBundle\Entity\Sala:
+    type: entity
+    table: sala
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        q_secciones:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+    manyToOne:
+        inicial_x:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\InicialX
+            cascade:
+                - remove
+                - persist
+            mappedBy: null
+            inversedBy: salas
+            joinColumns:
+                inicial_x_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        grupo_etario:
+            targetEntity: Fd\TablaBundle\Entity\GrupoEtario
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                grupo_etario_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

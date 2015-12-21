@@ -1,0 +1,79 @@
+Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio:
+    type: entity
+    table: establecimiento_edificio
+    repositoryClass: Fd\EstablecimientoBundle\Repository\EstablecimientoEdificioRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        cue_anexo:
+            type: string
+            scale: 0
+            length: 2
+            unique: false
+            nullable: false
+            precision: 0
+        nombre:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: true
+            precision: 0
+        fecha_creacion:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        fecha_baja:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+    manyToOne:
+        establecimientos:
+            targetEntity: Fd\EstablecimientoBundle\Entity\Establecimiento
+            cascade: {  }
+            mappedBy: null
+            inversedBy: edificio
+            joinColumns:
+                establecimientos_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        edificios:
+            targetEntity: Fd\EdificioBundle\Entity\Edificio
+            cascade: {  }
+            mappedBy: null
+            inversedBy: establecimiento
+            joinColumns:
+                edificios_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        localizacion:
+            targetEntity: Fd\EstablecimientoBundle\Entity\Localizacion
+            cascade: {  }
+            mappedBy: establecimiento_edificio
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+        dependencias:
+            targetEntity: Fd\EstablecimientoBundle\Entity\OrganizacionInterna
+            cascade: {  }
+            mappedBy: establecimiento
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    lifecycleCallbacks: {  }

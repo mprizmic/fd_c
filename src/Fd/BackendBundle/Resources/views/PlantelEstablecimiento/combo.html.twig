@@ -1,0 +1,8 @@
+{% for key, valor in cargos %}
+    <option value="{{ valor.id }}">
+        
+        <!--debe llevar el mimo campo que el que se determina en el type--> 
+        {{ valor.cargo.nombre }}
+    </option>
+
+{% endfor %}

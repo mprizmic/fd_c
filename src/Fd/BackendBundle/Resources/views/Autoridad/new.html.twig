@@ -1,29 +1,96 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
-{% block title %}
-    {{ parent() }} - Crear Autoridad
-{% endblock %}
-
 {% block main_content %}
+    {{ parent() }}
 
-    <h1>Crear registro de Autoridad </h1>
+    <div class="titulo">Crear registro de Autoridad </div>
 
-    <form action="{{ path('backend_autoridad_create') }}" method="post" {{ form_enctype(form) }}>
+    <form action="{{ path('backend.autoridad.create') }}" method="post" {{ form_enctype(form) }}>
         <div class="ancho_10">
             {{ form_widget(form) }}
         </div>
-        <span class="separador">
+        <p class="separador">
             <button type="submit">Crear</button>
-        </span>
+            <a class="separador" href="{{ path('backend.autoridad.buscar') }}">Nueva selección</a>
+            <a class="separador" href="{{ path(app.session.get('ruta_completa'), app.session.get('parametros')) }}">Volver</a>
+            
+        </p>
     </form>
 
-    <div class="float_derecha">
-        <a href="{{ path('backend_autoridad_buscar') }}">
-            Volver
-        </a>
-    </div>
+    <br />
+    <br />
 
-    <br />
-    <br />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            //cargas iniciales de datos
+//            cargar_organizaciones();
+//            cargar_cargos();
+
+            $('#autoridad_type_establecimientos').change(function () {
+                cargar_organizaciones();
+                cargar_cargos();
+            });
+            $('#autoridad_type_organizacion').change(function () {
+                cargar_cargos();
+            });
+
+        });
+
+        function cargar_organizaciones() {
+
+            $("#divCargando").show();
+            var establecimiento = $("#autoridad_type_establecimientos").val();
+
+            //esta forma es usando javascript puro
+            //var lista = document.getElementById("cmb_establecimientos");
+            //var clave = lista.options[lista.selectedIndex].value;
+
+            //usando FOSJsRouingBundle
+            $.ajax({
+                async: false,
+                dataType: 'html',
+                url: Routing.generate('backend.organizacion_interna.por_establecimiento', {establecimiento_edificio_id: establecimiento}),
+                type: 'GET',
+                success: function (data) {
+                    $("#autoridad_type_organizacion").html(data);
+                },
+            });
+
+            $('#divCargando').hide();
+
+        }
+        ;
+
+        function cargar_cargos() {
+            $("#divCargando").show();
+            var organizacion = $("#autoridad_type_organizacion").val();
+
+            //esta forma es usando javascript puro
+            //var lista = document.getElementById("cmb_establecimientos");
+            //var clave = lista.options[lista.selectedIndex].value;
+
+            //usando FOSJsRouingBundle
+            $.ajax({
+                async: false,
+                dataType: 'html',
+                url: Routing.generate('backend.plantel_establecimiento.por_organizacion', {organizacion_id: organizacion}),
+                type: 'GET',
+                success: function (data) {
+                    $("#autoridad_type_cargo").html(data);
+                },
+            });
+
+            $('#divCargando').hide();
+        }
+        ;
+
+    </script>
 
 {% endblock %}

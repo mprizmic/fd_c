@@ -15,7 +15,10 @@ class EdificioType extends AbstractType {
                 ->add('referencia')
                 ->add('superficie')
                 ->add('comuna')
-                ->add('cgp')
+                ->add('cgp', null, array(
+                    'required' => true,
+                    'empty_value' => 'CGP...',
+                ))
                 ->add('barrio', 'entity', array(
                     'class' => 'TablaBundle:Barrio',
                     'empty_value' => 'Seleccione...',

@@ -1,0 +1,33 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <div class="titulo">Editar una dependencia de un establecimiento</div>
+
+    <form action="{{ path('backend.organizacioninterna.update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <div class="ancho_10">
+            {{ form_widget(edit_form) }}
+        </div>
+        <br />
+        <p class="separador">
+            <button type="submit">Guardar</button>
+        </p>
+    </form>
+
+    <form action="{{ path('backend.organizacioninterna.delete', { 'id': entity.id }) }}" method="post">
+        <div class="invisible">
+            {{ form_widget(delete_form) }}
+        </div>
+        <input type="submit" class="separador boton_rojo" value="Eliminar" onsubmit="return confirm('Está seguro?')" />
+        <a class="separador" href="{{ path('backend.organizacioninterna.buscar') }}">Nueva búsqueda</a>
+        <a class="separador" href="{{ path(app.session.get('ruta_completa'), app.session.get('parametros')) }}">Volver</a>
+    </form>
+
+
+    <span class="limpiar_float"></span>
+
+    <br />
+    <br />
+
+{% endblock %}

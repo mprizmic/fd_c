@@ -142,7 +142,7 @@ class DefaultController extends Controller {
             if ($elemento1["fecha"] == $elemento2["fecha"])
                 return 0;
             //Si elemento1 > 2 se devuelve 1 y por lo contrario -1
-            if ($elemento1["fecha"] < $elemento2["fecha"])
+            if ($elemento1["fecha"] > $elemento2["fecha"])
                 return 1;
             return -1;
         };

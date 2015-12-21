@@ -147,70 +147,130 @@ class EstablecimientoController extends Controller {
      * @Template("EstablecimientoBundle:Default:ficha.html.twig")
      * @ParamConverter("establecimiento", class="EstablecimientoBundle:Establecimiento", options={"id"="establecimiento_id"})
      */
-    public function fichaAction($establecimiento) {
-        $request = $this->getRequest();
-
+    public function fichaAction($establecimiento, Request $request) {
+        
         // establezco la ruta para la pagina que tenga que volver aca
         $this->get('session')->set('ruta_completa', $request->get('_route'));
         $this->get('session')->set('parametros', $request->get('_route_params'));
 
         //repositorio de establecimiento
-        $repo = $this->getDoctrine()->getRepository('EstablecimientoBundle:Establecimiento');
+        $repository = $this->getDoctrine()->getRepository('EstablecimientoBundle:Establecimiento');
 
         //esto es para el menu de la derecha
-        $establecimientos = $repo->qyAllOrdenado('orden')->getResult();
+        $establecimientos = $repository->qyAllOrdenado('orden')->getResult();
 
         //son obj establecimiento_edificio
-        $establecimiento_edificios = $repo->findSedeYAnexo($establecimiento);
+        $sede_anexos = $repository->findSedeYAnexo($establecimiento);
 
-        foreach ($establecimiento_edificios as $key => $establecimiento_edificio) {
+        /**
+         * sede_anexo_array[][id]
+         * sede_anexo_array[][cue_anexo]
+         * sede_anexo_array[][cue_anexo][te]
+         * sede_anexo_array[][cue_anexo][email]
+         * sede_anexo_array[][domicilio][calle]
+         * sede_anexo_array[][domicilio][altura]
+         * sede_anexo_array[][domicilio][barrio]
+         * sede_anexo_array[][domicilio][cp]
+         * sede_anexo_array[][domicilio][inspector]
+         * 
+         * sede_anexo_array[][agenda]
+         * sede_anexo_array[][agenda][oi][id]
+         * sede_anexo_array[][agenda][oi][nombre_dependencia]
+         * sede_anexo_array[][agenda][oi][te]
+         * sede_anexo_array[][agenda][oi][plantel][nombre_cargo]
+         * sede_anexo_array[][agenda][oi][plantel][autoridad][id]
+         * sede_anexo_array[][agenda][oi][plantel][autoridad][apellido]
+         * sede_anexo_array[][agenda][oi][plantel][autoridad][nombre]
+         * sede_anexo_array[][agenda][oi][plantel][autoridad][te_particular] | AD
+         * sede_anexo_array[][agenda][oi][plantel][autoridad][celular] | AD
+         * sede_anexo_array[][agenda][oi][plantel][autoridad][email] | AD
+         * 
+         * sede_anexo_array[][unidad_educativas][][nivel]
+         * sede_anexo_array[][unidad_educativas][][nivel_id]
+         * sede_anexo_array[][unidad_educativas][][nivel_abreviatura]
+         * sede_anexo_array[][unidad_educativas][][nivel_orden]
+         * sede_anexo_array[][unidad_educativas][][cantidad_docentes]
+         * sede_anexo_array[][unidad_educativas][][localizacion_id]
+         * sede_anexo_array[][unidad_educativas][][matricula]
+         * 
+         * sede_anexo_array[][unidad_educativas][][ofertas][][unidad_oferta_id][]
+         * sede_anexo_array[][unidad_educativas][][ofertas][][salas_inicial][]
+         * sede_anexo_array[][unidad_educativas][][ofertas][][turnos][]
+         * sede_anexo_array[][unidad_educativas][][ofertas][][tipo]
+         * sede_anexo_array[][unidad_educativas][][ofertas][][carrera]
+         * sede_anexo_array[][unidad_educativas][][ofertas][][carrera_id]
+         * 
+         * sede_anexo_array[][unidad_educativas][][turnos_nivel][]
+         * 
+         * sede_anexo_array[][unidad_educativas][][cantidad_docentes][]
+         */
+        foreach ($sede_anexos as $key => $sede_anexo) {
 
-            $domicilio = $establecimiento_edificio->getEdificios()->getDomicilioPrincipal();
+            $domicilio = $sede_anexo->getEdificios()->getDomicilioPrincipal();
 
-            $establecimiento_edificio_array[$key]['id'] = $establecimiento_edificio->getId();
-            $establecimiento_edificio_array[$key]['cue_anexo'] = $establecimiento_edificio->getCueAnexo();
+            $te = $this->getEm()
+                    ->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
+                    ->findTe($sede_anexo);
+            
+            $sede_anexo_array[$key]['id'] = $sede_anexo->getId();
+            $sede_anexo_array[$key]['cue_anexo']['digito'] = $sede_anexo->getCueAnexo();
+            $sede_anexo_array[$key]['cue_anexo']['te'] = $te;
+            $sede_anexo_array[$key]['cue_anexo']['email'] = $sede_anexo->getEmail();
+            
 
-            $establecimiento_edificio_array[$key]['domicilio']['calle'] = $domicilio->getCalle();
-            $establecimiento_edificio_array[$key]['domicilio']['altura'] = $domicilio->getAltura();
+            $sede_anexo_array[$key]['domicilio']['calle'] = $domicilio->getCalle();
+            $sede_anexo_array[$key]['domicilio']['altura'] = $domicilio->getAltura();
+            $sede_anexo_array[$key]['barrio'] = $sede_anexo->getEdificios()->getBarrio();
+            $sede_anexo_array[$key]['cp'] = $domicilio->getCPostal();
 
-            $datos_grales['te'] = $establecimiento_edificio->getTe1();
-            $datos_grales['barrio'] = $establecimiento_edificio->getEdificios()->getBarrio();
-            $datos_grales['cp'] = $domicilio->getCPostal();
-            $datos_grales['email'] = $establecimiento_edificio->getEmail1();
-
-            $inspector = $establecimiento_edificio->getEdificios()->getInspector();
+            $inspector = $sede_anexo->getEdificios()->getInspector();
 
             if ($inspector) {
-                $datos_grales['inspector'] = $inspector->datosCompletos();
+                $sede_anexo_array[$key]['inspector'] = $inspector->datosCompletos();
             } else {
-                $datos_grales['inspector'] = 'sin datos';
+                $sede_anexo_array[$key]['inspector'] = 'sin datos';
             }
 
-            $establecimiento_edificio_array[$key]['datos_grales'] = $datos_grales;
+            //agenda
+            $agenda = array();
 
-            /**
-             * establecimiento_edificio_array[][id]
-             * establecimiento_edificio_array[][cue_anexo]
-             * establecimiento_edificio_array[][domicilio][calle]
-             * establecimiento_edificio_array[][domicilio][altura]
-             * establecimiento_edificio_array[][datos_grales][te]
-             * establecimiento_edificio_array[][datos_grales][barrio]
-             * establecimiento_edificio_array[][datos_grales][cp]
-             * establecimiento_edificio_array[][datos_grales][email]
-             * establecimiento_edificio_array[][unidad_educativas][][nivel]
-             * establecimiento_edificio_array[][unidad_educativas][][nivel_id]
-             * establecimiento_edificio_array[][unidad_educativas][][nivel_abreviatura]
-             * establecimiento_edificio_array[][unidad_educativas][][ofertas][][unidad_oferta_id][]
-             * establecimiento_edificio_array[][unidad_educativas][][ofertas][][salas_inicial][]
-             * establecimiento_edificio_array[][unidad_educativas][][ofertas][][turnos][]
-             * establecimiento_edificio_array[][unidad_educativas][][ofertas][][tipo]
-             * establecimiento_edificio_array[][unidad_educativas][][ofertas][][carrera]
-             * establecimiento_edificio_array[][unidad_educativas][][ofertas][][carrera_id]
-             * establecimiento_edificio_array[][unidad_educativas][][turnos_nivel][]
-             * establecimiento_edificio_array[][unidad_educativas][][cantidad_docentes][]
-             */
+            $organizaciones = $this->getEm()
+                    ->getRepository('EstablecimientoBundle:OrganizacionInterna')
+                    ->findUnaSede($sede_anexo->getId());
+
+            foreach ($organizaciones as $key_oi => $organizacion) {
+                $agenda[$key_oi]['id'] = $organizacion->getId();
+                $agenda[$key_oi]['nombre_dependencia'] = $organizacion->getDependencia()->getNombre();
+                $agenda[$key_oi]['te'] = $organizacion->getTe();
+
+                $cargos = array();
+
+                $plantel = $organizacion->getCargos();
+
+                foreach ($plantel as $key_pe => $un_plantel) {
+                    $cargos[$key_pe]['nombre_cargo'] = $un_plantel->getCargo()->getNombre();
+
+                    $autoridad = $un_plantel->getAutoridad();
+                    //el cargo puede no estar asignado a una persona
+                    $existe = ($autoridad) ? true : false;
+
+                    $cargos[$key_pe]['autoridad']['id'] = ($existe) ? $autoridad->getId() : $existe; //asigna un "0" por el valor false 
+                    $cargos[$key_pe]['autoridad']['nombre_autoridad'] = ($existe) ? $autoridad->getApellido() . ', ' . $autoridad->getNombre() : $existe;
+                    $cargos[$key_pe]['autoridad']['te_particular'] = ($existe) ? $autoridad->getTeParticular() : $existe;
+                    $cargos[$key_pe]['autoridad']['celular'] = ($existe) ? $autoridad->getCelular() : $existe;
+                    $cargos[$key_pe]['autoridad']['email'] = ($existe) ? $autoridad->getEmail() : $existe;
+                }
+
+                $agenda[$key_oi]['plantel'] = $cargos;
+            }
+
+            $sede_anexo_array[$key]['agenda'] = $agenda;
+
+
+            // todas las unidades educativas
+
             $unidad_educativas = array();
-            foreach ($establecimiento_edificio->getLocalizacion() as $key2 => $localizacion) {
+            foreach ($sede_anexo->getLocalizacion() as $key2 => $localizacion) {
 
                 $nivel = $localizacion->getUnidadEducativa()->getNivel();
 
@@ -250,9 +310,11 @@ class EstablecimientoController extends Controller {
             }
 
             //se ordenan los niveles
-            usort($unidad_educativas, function($a, $b){return $a['nivel_orden'] - $b['nivel_orden']; } );
-            
-            $establecimiento_edificio_array[$key]['unidad_educativas'] = $unidad_educativas;
+            usort($unidad_educativas, function($a, $b) {
+                return $a['nivel_orden'] - $b['nivel_orden'];
+            });
+
+            $sede_anexo_array[$key]['unidad_educativas'] = $unidad_educativas;
 
             /**
              * turnos en que funciona la oferta de cada nivel de cada sede
@@ -264,12 +326,11 @@ class EstablecimientoController extends Controller {
 
         return array(
             //todos los datos separador por localizacion
-            'datos_localizados' => $establecimiento_edificio_array,
+            'datos_localizados' => $sede_anexo_array,
             //el establecimiento en tratamiento
             'establecimiento' => $establecimiento,
             //toda la lista de establecimientos para hacer el menu derecho
             'establecimientos' => $establecimientos,
-            'establecimiento_edificios' => $establecimiento_edificios, //deprecated
         );
     }
 
@@ -348,12 +409,12 @@ class EstablecimientoController extends Controller {
         $establecimientos_edificios = $this->getEm()
                 ->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
                 ->findSedesOrdenados();
-        
+
         //se crea el servicio para crear planillas
         $excelService = $this->get('phpexcel');
 
         // defino la planilla
-        $planilla = new PlanillaSedesYAnexos($excelService, 'Listado de establecimientos', $establecimientos_edificios);
+        $planilla = new PlanillaSedesYAnexos($excelService, 'Listado de establecimientos', $establecimientos_edificios, $this->getEm());
 
         //genero la planilla y devuelve un response
         $response = $planilla->generarPlanillaResponse();

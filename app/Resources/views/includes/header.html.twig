@@ -1,19 +1,32 @@
 <div class="float_izquierda grande">
     <a style="text-decoration: none;" href="{{ camino }}">{{ titulo }}</a>
 </div>
-<div class="float_derecha login">
 
-        {% if is_granted('IS_AUTHENTICATED_FULLY')  %}
-        <div class="chica">    
-            <span>Conectado como {{ app.user }}</span>
-            <br />
-            <span>Última conexión: {{ app.user.conexionAnterior | date('d-m-Y') }}</span> 
-            <br /> 
-            <a href="{{ path('usuario_cambio_password', {'id': app.user.id }) }}">Cambiar password</a>
-            <span class="separador"></span>
-            <a href="{{ path('usuario_logout') }}">Cerrar sesión</a>
-
+{% if is_granted('IS_AUTHENTICATED_FULLY')  %}
+    <div class="float_derecha">
+        
+        {# menu superior con lista de establecimientos       #}
+        {% if establecimientos is defined %}
+            <div class="float_izquierda">
+                <div id="menu_establecimientos">
+                    {% include 'EstablecimientoBundle:Default:includes/menu_establecimientos.html.twig' %}
+                </div>
+            </div>
+        {% endif %}
+        
+{#        informacion del login#}
+        <div class="en_bloque login separador">
+            <div class="chica">    
+                <span>Conectado como {{ app.user }}</span>
+                <br />
+                <span>Última conexión: {{ app.user.conexionAnterior | date('d-m-Y') }}</span> 
+                <br /> 
+                <a href="{{ path('usuario_cambio_password', {'id': app.user.id }) }}">Cambiar password</a>
+                <span class="separador"></span>
+                <a href="{{ path('usuario_logout') }}">Cerrar sesión</a>
+            </div>
         </div>
-        {% endif %}                             
     </div>
-    <div class="limpiar_float"></div>
+{% endif %}                             
+
+<div class="limpiar_float"></div>

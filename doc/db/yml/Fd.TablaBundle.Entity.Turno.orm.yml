@@ -1,0 +1,38 @@
+Fd\TablaBundle\Entity\Turno:
+    type: entity
+    table: turno
+    repositoryClass: Fd\TablaBundle\Repository\TurnoRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        codigo:
+            type: string
+            scale: 0
+            length: 2
+            unique: false
+            nullable: false
+            precision: 0
+        descripcion:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: false
+            precision: 0
+        orden:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    lifecycleCallbacks: {  }

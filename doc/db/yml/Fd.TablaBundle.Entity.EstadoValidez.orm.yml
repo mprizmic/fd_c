@@ -1,0 +1,38 @@
+Fd\TablaBundle\Entity\EstadoValidez:
+    type: entity
+    table: estado_validez
+    repositoryClass: Fd\TablaBundle\Repository\EstadoValidezRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        codigo:
+            type: string
+            scale: 0
+            length: 5
+            unique: false
+            nullable: true
+            precision: 0
+        descripcion:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: true
+            precision: 0
+        orden:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+    lifecycleCallbacks: {  }

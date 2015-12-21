@@ -1,0 +1,63 @@
+Fd\OfertaEducativaBundle\Entity\TituloCarrera:
+    type: entity
+    table: titulo_carrera
+    repositoryClass: Fd\OfertaEducativaBundle\Repository\TituloCarreraRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            scale: 0
+            length: 150
+            unique: true
+            nullable: false
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    manyToOne:
+        carrera:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\Carrera
+            cascade:
+                - remove
+                - persist
+            mappedBy: null
+            inversedBy: titulos
+            joinColumns:
+                carrera_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        estado:
+            targetEntity: Fd\TablaBundle\Entity\EstadoCarrera
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                estado_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion

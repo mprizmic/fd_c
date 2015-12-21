@@ -1,0 +1,62 @@
+{# se usa en la ficha del establecimiento
+requiere el array agenda tal como está formateado por el controller
+#}
+
+
+<div class="italico verde reforzado">Agenda
+    {% if agenda|length == 0 %}
+        {{ ' (No hay datos disponibles)' }}
+    {% endif %}
+
+</div>
+<table class='grilla_agenda'>
+
+    {% for dependencia in agenda %}
+        {% set clase_fila = cycle(['even', 'odd'], loop.index) %}
+        {% for uncargo in dependencia['plantel'] %}
+            
+            {% if loop.first %}
+
+                <tr class="{{ clase_fila }}">
+                    {% set rs = ( dependencia['plantel']|length ) %}
+                    <td rowspan="{{ rs }}">{{ dependencia['nombre_dependencia'] }}</td>
+                    <td rowspan="{{ rs }}">{{ dependencia['te'] }}
+                        
+{#                        derivacion a la pantalla de edición de la dependencia #}
+                        <a class="float_derecha" href="{{ path('backend.organizacioninterna.edit', {'id':dependencia['id']} ) }}">
+                            <img src="{{ asset('bundles/establecimiento/img/pencil.png') }}">
+                        </a>
+                    </td>
+
+                    <td>{{ uncargo['nombre_cargo'] }}</td>
+                    <td>{{ uncargo['autoridad']['nombre_autoridad'] | default('--') }}
+                        
+{#                        derivacion del menu de opciones de tratamiento de autoridades #}
+                        {% include 'EstablecimientoBundle:Default:ficha/menu_autoridad.html.twig' with {'autoridad': uncargo['autoridad'] } %}
+                    </td>
+                    <td>{{ uncargo['autoridad']['te_particular']| default('--') }}</td>
+                    <td>{{ uncargo['autoridad']['celular']| default('--') }}</td>
+                    <td>{{ uncargo['autoridad']['email']| default('--') }}</td>
+
+                </tr>
+
+
+            {% else %}
+                <tr class={{ clase_fila }}>
+                    <td>{{ uncargo['nombre_cargo'] }}</td>
+                    <td>{{ uncargo['autoridad']['nombre_autoridad'] }}
+                        
+                        
+{#                        derivacion del menu de opciones de tratamiento de autoridades#}
+                        {% include 'EstablecimientoBundle:Default:ficha/menu_autoridad.html.twig' with {'autoridad': uncargo['autoridad'] } %}
+                    </td>
+                    <td>{{ uncargo['autoridad']['te_particular'] }}</td>
+                    <td>{{ uncargo['autoridad']['celular'] }}</td>
+                    <td>{{ uncargo['autoridad']['email'] }}</td>
+                </tr>    
+            {% endif %}
+        {% endfor %}
+
+    {% endfor %}
+</table>
+

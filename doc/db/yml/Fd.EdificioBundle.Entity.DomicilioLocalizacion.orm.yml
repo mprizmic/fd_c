@@ -1,0 +1,61 @@
+Fd\EdificioBundle\Entity\DomicilioLocalizacion:
+    type: entity
+    table: domicilio_localizacion
+    repositoryClass: Fd\EdificioBundle\Repository\DomicilioLocalizacionRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        principal:
+            type: boolean
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    manyToOne:
+        domicilio:
+            targetEntity: Fd\EdificioBundle\Entity\Domicilio
+            cascade: {  }
+            mappedBy: null
+            inversedBy: localizacion
+            joinColumns:
+                domicilio_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        localizacion:
+            targetEntity: Fd\EstablecimientoBundle\Entity\Localizacion
+            cascade: {  }
+            mappedBy: null
+            inversedBy: domicilio
+            joinColumns:
+                localizacion_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion

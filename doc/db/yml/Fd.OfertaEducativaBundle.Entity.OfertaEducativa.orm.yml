@@ -1,0 +1,123 @@
+Fd\OfertaEducativaBundle\Entity\OfertaEducativa:
+    type: entity
+    table: oferta_educativa
+    repositoryClass: Fd\OfertaEducativaBundle\Repository\OfertaEducativaRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    oneToMany:
+        unidades:
+            targetEntity: Fd\EstablecimientoBundle\Entity\UnidadOferta
+            cascade: {  }
+            mappedBy: ofertas
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    manyToOne:
+        nivel:
+            targetEntity: Fd\TablaBundle\Entity\Nivel
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                nivel_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToOne:
+        carrera:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\Carrera
+            cascade:
+                - remove
+            mappedBy: oferta
+            inversedBy: null
+            joinColumns: {  }
+            orphanRemoval: false
+        primario:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\Primario
+            cascade: {  }
+            mappedBy: oferta
+            inversedBy: null
+            joinColumns: {  }
+            orphanRemoval: false
+        bachillerato:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\Bachillerato
+            cascade: {  }
+            mappedBy: oferta
+            inversedBy: null
+            joinColumns: {  }
+            orphanRemoval: false
+        secundario:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\Secundario
+            cascade: {  }
+            mappedBy: oferta
+            inversedBy: null
+            joinColumns: {  }
+            orphanRemoval: false
+        inicial:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\Inicial
+            cascade: {  }
+            mappedBy: oferta
+            inversedBy: null
+            joinColumns: {  }
+            orphanRemoval: false
+        especializacion:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\Especializacion
+            cascade: {  }
+            mappedBy: oferta
+            inversedBy: null
+            joinColumns: {  }
+            orphanRemoval: false
+    manyToMany:
+        normas:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\Norma
+            cascade: {  }
+            mappedBy: null
+            inversedBy: ofertas
+            joinTable:
+                name: oferta_norma
+                schema: null
+                joinColumns:
+                    -
+                        name: oferta_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    -
+                        name: norma_id
+                        unique: false
+                        nullable: true
+                        onDelete: null
+                        columnDefinition: null
+                        referencedColumnName: id
+            orderBy: null
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion

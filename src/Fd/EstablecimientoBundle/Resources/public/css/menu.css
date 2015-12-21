@@ -6,10 +6,7 @@
     border-top: 1px solid #424242;
     border-bottom: 1px solid #424242;
     padding: 0px auto 0;
-    /*font-weight: bold;*/
-    /*margin: 15px auto 0;*/
     margin:0;
-    /*font-family:'Trebuchet MS',Arial,Verdana,Sans-Serif;*/
 }
 #menu_superior li {
     margin: 0;
@@ -29,7 +26,6 @@
 #menu_superior li a {
     color: #FFFFFF;
     display: block;
-    /*font-weight: normal;*/
     padding: 9px 15px 8px;
     text-transform: none;
     text-decoration: none;
@@ -47,8 +43,6 @@
     color:  #FFF;
     background: darkred;
     text-decoration: none;
-/*    margin: 3px 3px -3px 3px;*/
-/*    padding: 9px 15px 8px;*/
 }
 #menu_superior li li a:link, #menu_superior li li a, #menu_superior li li a:visited {
     color: #FFF;
@@ -64,8 +58,6 @@
     border-right: 1px solid #FFF;
 }
 #menu_superior li li a:hover, #menu_superior li li a:active {
-/*    background: #e3e3e3;*/
-/*    color: #000000;*/
     padding: 7px 10px;
     text-decoration: underline;
 }
@@ -82,7 +74,6 @@
     margin: 0 0 0 0;
     z-index: 9999;
     left: -999em;
-    /*height: auto;*/
     width: 170px;
     padding: 0;
 }

@@ -1,8 +1,9 @@
 security:
     role_hierarchy:
-#        ROLE_ADMIN: [ROLE_USUARIO]
-        ROLE_ADMIN: [ROLE_USUARIO, ROLE_ALLOWED_TO_SWITCH]
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_USUARIO, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_USUSARIO: ROLE_USUARIO
+        ROLE_SUPER_USUSARIO: ROLE_SUPER_USUARIO
+        ROLE_ADMIN: [ROLE_SUPPER_USUARIO, ROLE_USUARIO, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_SUPER_USUARIO, ROLE_USUARIO, ROLE_ALLOWED_TO_SWITCH]
 
     encoders:
         Fd\UsuarioBundle\Entity\Usuario: { algorithm: sha512, iterations: 10 }
@@ -83,6 +84,11 @@ security:
         - { path: ^/medio/*, roles: ROLE_USUARIO }
         - { path: ^/usuario/*, roles: ROLE_SUPER_ADMIN }
         - { path: ^/backend/tabla_portada/*, roles: [ROLE_SUPER_ADMIN] }
+        - { path: ^/backend/cargo/*, roles: [ROLE_SUPER_ADMIN] }
+        - { path: ^/backend/dependencia/*, roles: [ROLE_SUPER_ADMIN] }
+        - { path: ^/backend/organizacioninterna/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
+        - { path: ^/backend/plantelestablecimiento/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
+        - { path: ^/backend/cargaagenda/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
         - { path: ^/backend/aviso/*, roles: [ROLE_SUPER_ADMIN] }
         - { path: ^/backend/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }
         - { path: ^/administracion/*, roles: [ROLE_ADMIN, ROLE_SUPER_ADMIN] }

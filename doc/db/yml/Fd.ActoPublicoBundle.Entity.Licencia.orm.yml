@@ -1,0 +1,31 @@
+Fd\ActoPublicoBundle\Entity\Licencia:
+    type: entity
+    table: licencia
+    repositoryClass: Fd\ActoPublicoBundle\Repository\LicenciaRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        codigo:
+            type: string
+            scale: 0
+            length: 10
+            unique: false
+            nullable: false
+            precision: 0
+        descripcion:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: false
+            precision: 0
+    lifecycleCallbacks: {  }

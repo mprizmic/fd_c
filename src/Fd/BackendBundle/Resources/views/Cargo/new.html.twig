@@ -1,0 +1,18 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <div class="titulo">Crear registro de Cargo </div>
+
+    <form action="{{ path('backend_cargo_create') }}" method="post" {{ form_enctype(form) }}>
+        <div class="ancho_10">
+            {{ form_widget(form) }}
+        </div>
+        <p class="separador">
+            <button type="submit">Crear</button>
+            <a class="separador" href="{{ path('backend_cargo') }}">Volver a la lista</a>
+        </p>
+    </form>
+    <br />
+{% endblock %}

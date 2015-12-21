@@ -1,0 +1,23 @@
+Fd\TablaBundle\Entity\Comuna:
+    type: entity
+    table: comuna
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        numero:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+    lifecycleCallbacks: {  }

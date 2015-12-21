@@ -1,0 +1,36 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+    
+    <div class="titulo">Crear nuevo cargo de una dependencia del establecimiento</div>
+
+    <form action="{{ path('backend.plantelestablecimiento.create') }}" method="post" {{ form_enctype(edit_form) }}>
+        <div class="ancho_10">
+            {{ form_row(edit_form.establecimiento) }}
+            {{ form_row(edit_form.organizacion) }}
+            {{ form_row(edit_form.cargo) }}
+            {{ form_row(edit_form.te) }}
+            {{ form_row(edit_form.email) }}
+        </div>
+        <div>
+            {{ form_row(edit_form._token) }}
+        </div>        
+        <p class="separador">
+            <button type="submit">Crear</button>
+            <a class="separador" href="{{ path('backend.plantelestablecimiento.buscar') }}">Volver a la lista</a>
+        </p>
+    </form>
+
+
+    <br />
+    <br />
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="{{ asset('bundles/backend/js/backend_plantel_crud.js') }}"></script>
+
+{% endblock %}

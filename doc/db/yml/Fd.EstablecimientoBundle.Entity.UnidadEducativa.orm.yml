@@ -1,0 +1,69 @@
+Fd\EstablecimientoBundle\Entity\UnidadEducativa:
+    type: entity
+    table: unidad_educativa
+    repositoryClass: Fd\EstablecimientoBundle\Repository\UnidadEducativaRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        descripcion:
+            type: string
+            scale: 0
+            length: 30
+            unique: false
+            nullable: true
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    manyToOne:
+        establecimiento:
+            targetEntity: Fd\EstablecimientoBundle\Entity\Establecimiento
+            cascade: {  }
+            mappedBy: null
+            inversedBy: unidades_educativas
+            joinColumns:
+                establecimiento_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        nivel:
+            targetEntity: Fd\TablaBundle\Entity\Nivel
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                nivel_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        localizaciones:
+            targetEntity: Fd\EstablecimientoBundle\Entity\Localizacion
+            cascade: {  }
+            mappedBy: unidad_educativa
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion

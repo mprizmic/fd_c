@@ -119,8 +119,7 @@ class UnidadOferta {
         $resultado .= '/Nivel: ';
         $resultado .= $ue->getNivel()->getNombre();
         $resultado .= '-';
-        $cue = $l->getEstablecimientoEdificio()->getCueAnexo();
-        $resultado .= $cue == '00' ? 'Sede' : 'Anexo';
+        $resultado .= $l->getEstablecimientoEdificio()->strSede();
         $resultado .= ' (';
         $resultado .= $l->getDomicilioPrincipal();
         $resultado .= ') ';

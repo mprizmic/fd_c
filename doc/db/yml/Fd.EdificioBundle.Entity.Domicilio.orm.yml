@@ -1,0 +1,102 @@
+Fd\EdificioBundle\Entity\Domicilio:
+    type: entity
+    table: domicilio
+    repositoryClass: Fd\EdificioBundle\Repository\DomicilioRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        calle:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: false
+            precision: 0
+        altura:
+            type: string
+            scale: 0
+            length: 5
+            unique: false
+            nullable: false
+            precision: 0
+        piso:
+            type: string
+            scale: 0
+            length: 3
+            unique: false
+            nullable: true
+            precision: 0
+        departamento:
+            type: string
+            scale: 0
+            length: 2
+            unique: false
+            nullable: true
+            precision: 0
+        referencia:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: true
+            precision: 0
+        principal:
+            type: boolean
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        c_postal:
+            type: string
+            scale: 0
+            length: 8
+            unique: false
+            nullable: true
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    manyToOne:
+        edificio:
+            targetEntity: Fd\EdificioBundle\Entity\Edificio
+            cascade: {  }
+            mappedBy: null
+            inversedBy: domicilios
+            joinColumns:
+                edificio_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        localizacion:
+            targetEntity: Fd\EdificioBundle\Entity\DomicilioLocalizacion
+            cascade: {  }
+            mappedBy: domicilio
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion

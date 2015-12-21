@@ -57,16 +57,7 @@ class UnidadEducativa {
      * })
      */
     private $nivel;
-    /**
-     *
-     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\CargoAutoridad")
-     */
-    private $cargo_autoridad;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private $nombre_autoridad;
     /**
      * @ORM\Column(type="datetime")
      * 
@@ -164,11 +155,7 @@ class UnidadEducativa {
         $this->actualizado = new \DateTime();
     }
 
-    public function getAutoridad() {
-        return $this->cargo_autoridad . ' ' . $this->nombre_autoridad;
-    }
-
-
+ 
     /**
      * Get id
      *
@@ -200,29 +187,6 @@ class UnidadEducativa {
     public function getDescripcion()
     {
         return $this->descripcion;
-    }
-
-    /**
-     * Set nombre_autoridad
-     *
-     * @param string $nombreAutoridad
-     * @return UnidadEducativa
-     */
-    public function setNombreAutoridad($nombreAutoridad)
-    {
-        $this->nombre_autoridad = $nombreAutoridad;
-
-        return $this;
-    }
-
-    /**
-     * Get nombre_autoridad
-     *
-     * @return string 
-     */
-    public function getNombreAutoridad()
-    {
-        return $this->nombre_autoridad;
     }
 
     /**
@@ -348,28 +312,5 @@ class UnidadEducativa {
     public function getNivel()
     {
         return $this->nivel;
-    }
-
-    /**
-     * Set cargo_autoridad
-     *
-     * @param \Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad
-     * @return UnidadEducativa
-     */
-    public function setCargoAutoridad(\Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad = null)
-    {
-        $this->cargo_autoridad = $cargoAutoridad;
-
-        return $this;
-    }
-
-    /**
-     * Get cargo_autoridad
-     *
-     * @return \Fd\TablaBundle\Entity\CargoAutoridad 
-     */
-    public function getCargoAutoridad()
-    {
-        return $this->cargo_autoridad;
     }
 }

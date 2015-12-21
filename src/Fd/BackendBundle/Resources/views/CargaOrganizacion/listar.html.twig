@@ -1,0 +1,8 @@
+{# 
+muestra una lista de dependencias de un establecimiento dado 
+cada dependencia tiene un link a una pagina para cargar los cargos
+#}
+<p>Dependencias definidas:</p>
+{% for entity in organizaciones %}
+    <p><a href="{{ path('backend.cargaagenda.plantel.asignar', {'organizacion_id':entity.id}) }}">{{ entity.dependencia.nombre }}</p>
+{% endfor %}

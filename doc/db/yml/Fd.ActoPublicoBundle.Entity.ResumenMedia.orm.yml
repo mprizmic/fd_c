@@ -1,0 +1,129 @@
+Fd\ActoPublicoBundle\Entity\ResumenMedia:
+    type: entity
+    table: resumen_media
+    repositoryClass: Fd\ActoPublicoBundle\Repository\ResumenMediaRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        numero:
+            type: string
+            scale: 0
+            length: 20
+            unique: false
+            nullable: true
+            precision: 0
+        fecha:
+            type: string
+            scale: 0
+            length: 30
+            unique: false
+            nullable: true
+            precision: 0
+        cargo:
+            type: string
+            scale: 0
+            length: 40
+            unique: false
+            nullable: true
+            precision: 0
+        slug_cargo:
+            type: string
+            scale: 0
+            length: 40
+            unique: false
+            nullable: true
+            precision: 0
+        establecimiento:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: true
+            precision: 0
+        cargo_vacante:
+            type: string
+            scale: 0
+            length: 150
+            unique: false
+            nullable: true
+            precision: 0
+        fecha_iniciacion:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        fecha_terminacion:
+            type: string
+            scale: 0
+            length: 80
+            unique: false
+            nullable: true
+            precision: 0
+        cantidad_horas:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        fila:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        cantidad_horas_string:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: true
+            precision: 0
+        horario_lunes:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: true
+            precision: 0
+        horario_martes:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: true
+            precision: 0
+        horario_miercoles:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: true
+            precision: 0
+        horario_jueves:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: true
+            precision: 0
+        horario_viernes:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: true
+            precision: 0
+    lifecycleCallbacks: {  }

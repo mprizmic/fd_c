@@ -33,6 +33,7 @@ class EstablecimientoControllerTest extends WebTestCase {
                         ->filter('html:contains("Dickens")')
                         ->count(), 'Se visualiza la página de creación de establecimiento');
     }
+
     /**
      * FALTA se cambia a partir del cambio de la localizacion de la oferta educativa
      */
@@ -106,7 +107,7 @@ class EstablecimientoControllerTest extends WebTestCase {
                         ->filter('html:contains("Turno/s:")')
                         ->count()
         );
-        
+
         //un dato de recursos
         $this->assertGreaterThan(
                 0, $crawler
@@ -137,7 +138,6 @@ class EstablecimientoControllerTest extends WebTestCase {
                         ->filter('html:contains("Joaquín")')
                         ->count()
         );
-        
     }
 
     public function testNomina() {
@@ -159,6 +159,18 @@ class EstablecimientoControllerTest extends WebTestCase {
                         ->filter('html:contains("CUE:")')
                         ->count()
         );
+    }
+
+    public function testTarjetaEstablecimientoEdificio() {
+        
+    }
+
+    public function testEstablecimientoSalidaPlanilla() {
+        $client = $this->client;
+
+        $client->request('GET', '/establecimiento/salida_planilla');
+
+        $this->assertTrue(200 === $client->getResponse()->getStatusCode());
     }
 
 }

@@ -1,0 +1,22 @@
+{# usado en le ficha de establecimiento
+require unidad_educativas array #}
+
+
+<fieldset class="float_izquierda">
+    <span class="resaltado">Matrícula en el edificio:</span><br/>
+
+    {% for ue in unidad_educativas %}
+        <div name="mostrable">
+            {{ ue['nivel'] ~ ': ' }}
+            <span class="italico">{{ ue['matricula'] }}</span>
+
+            {% if ue['nivel_abreviatura'] == 'Ini' %}
+            {% endif %}
+        </div>
+    {% endfor %}  
+    <a class="float_derecha chica" href="{{ path('backend.establecimiento_edificio.matricula_nivel.edit', 
+                                    {'establecimiento_edificio_id': establecimiento_edificio['id'] }) }}">
+        Editar
+    </a>
+</fieldset>
+

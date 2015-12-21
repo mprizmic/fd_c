@@ -1,0 +1,81 @@
+Fd\OfertaEducativaBundle\Entity\Especializacion:
+    type: entity
+    table: especializacion
+    repositoryClass: Fd\OfertaEducativaBundle\Repository\EspecializacionRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        carrera:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        titulo:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        nombre:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        duracion:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        ultima_cohorte_valida:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+    oneToOne:
+        oferta:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\OfertaEducativa
+            cascade: {  }
+            mappedBy: null
+            inversedBy: especializacion
+            joinColumns:
+                oferta_educativa_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToOne:
+        tipo_especializacion:
+            targetEntity: Fd\TablaBundle\Entity\TipoEspecializacion
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tipo_especializacion_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        estado:
+            targetEntity: Fd\TablaBundle\Entity\EstadoCarrera
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                estado_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

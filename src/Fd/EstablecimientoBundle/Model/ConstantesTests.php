@@ -14,10 +14,14 @@ class ConstantesTests {
     const LOCALIZACION_ENS3_VL = 88;
     const CANTIDAD_TERCIARIOS = 25;
     const ENS3 = 18;
+    const ENS_3_SEDE = 21;
+    const ENS_5_ANEXO = 25;
     const ENS3_ST_PEI = 262;
     const UNIDAD_OFERTA_ENS_7 = 288;
     const OFERTA_CIENCIA_JURIDICA = 93;
-    
+
+    const SECRETARIA_ID = 9;
+    const RECTORIA_ID = 8;
     
     const ACTIVA = 1;
     const INACTIVA = 2;

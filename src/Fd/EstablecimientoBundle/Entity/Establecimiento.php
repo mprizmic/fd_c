@@ -127,12 +127,6 @@ class Establecimiento {
     private $unidades_educativas;
 
     /**
-     * bidireccional lado inverso
-     * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\Autoridad", mappedBy="establecimiento")
-     */
-    private $autoridades_rectorado;
-
-    /**
      * domicilio del campo de deportes
      * @ORM\Column(nullable=true, length=25)
      */
@@ -280,10 +274,6 @@ class Establecimiento {
         return null;
     }
 
-    public function getAutoridad() {
-        return $this->cargo_autoridad . ': ' . $this->nombre_autoridad;
-    }
-
     /**
      * Devuelve el no de anexo más alto que esté registrado
      * @return type
@@ -374,21 +364,6 @@ class Establecimiento {
             }
         }
     }
-
-    public function getRector() {
-        $resultado = null;
-
-        $todos = $this->getAutoridadesRectorado();
-
-        foreach ($todos as $autoridad) {
-            if ($autoridad->getCargoAutoridad()->getAbreviatura() == 'REC') {
-                $resultado = $autoridad;
-                break;
-            }
-        }
-        return $resultado;
-    }
-
     /**
      * @ORM\PrePersist  //en el persist cuando se da de alta uno nuevo
      * @ORM\PreUpdate //en el flush cuando se modifica uno existente
@@ -995,36 +970,6 @@ class Establecimiento {
      */
     public function getUnidadesEducativas() {
         return $this->unidades_educativas;
-    }
-
-    /**
-     * Add autoridades_rectorado
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\Autoridad $autoridadesRectorado
-     * @return Establecimiento
-     */
-    public function addAutoridadesRectorado(\Fd\EstablecimientoBundle\Entity\Autoridad $autoridadesRectorado) {
-        $this->autoridades_rectorado[] = $autoridadesRectorado;
-
-        return $this;
-    }
-
-    /**
-     * Remove autoridades_rectorado
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\Autoridad $autoridadesRectorado
-     */
-    public function removeAutoridadesRectorado(\Fd\EstablecimientoBundle\Entity\Autoridad $autoridadesRectorado) {
-        $this->autoridades_rectorado->removeElement($autoridadesRectorado);
-    }
-
-    /**
-     * Get autoridades_rectorado
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getAutoridadesRectorado() {
-        return $this->autoridades_rectorado;
     }
 
     /**

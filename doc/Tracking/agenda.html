@@ -1,0 +1,98 @@
+<html>
+    <body>
+        cambiar "cargoautoridad" por cargo          LISTO
+        
+        ver si se puede cambiar autoridad por "agente"  NO
+        
+        crud de cargo       LISTO
+            index           LISTO
+            new             LISTO
+            edit            LISTO
+            show            LISTO
+            
+        crear menu con los datos de las autoridades y sacarlos de la portada        LISTO
+        
+        CRUD de dependencia
+            dependenciatype             LISTO
+            dependenciamanager          LISTO
+            dependenciacontroller       LISTO
+            edit, new, show, index      LISTO
+            dependenciarepository       LISTO
+            
+        sacar te y email de la sede     LISTO
+            
+        crear organizacion_interna          LISTO
+        crud de organizacion_interna        LISTO
+            type                            LISTO
+            filtertype                      LISTO
+        ampliar el crud de organizacion_interna con te y email      LISTO
+            agregar el la busqueda el campo dependencia             LISTO
+        
+        asociar plantel_establecimeinto en organizacion_interna     LISTO
+        pasar el plantelestablecimientomanager como servicio        LISTO
+        hacer el crud de plantel_establecimeinto                LISTO
+            buscar                                              LISTO
+            new                                                 LISTO
+            show                                                LISTO
+            edit                                                LISTO
+        
+        asociar cargo con dependencia
+            modificar tabla                                     LISTO
+            ver la carga del dato                               LISTO
+        
+        asociar plantel_establecimeinto con autoridad           LISTO       
+        hacer crud de las autoridades                           LISTO
+            controller                                          LISTO
+            buscar                          LISTO
+            show                            LISTO
+            edit                            LISTO
+            new                             LISTO
+                
+        
+        agregar eliminar a las acciones de la grilla de busqueda de autoridades. Hay que agregar un botón eliminar.             NO
+        
+        hacer paginas para cargar todas las organizaciones internas                     LISTO
+            hacer damero                                                                LISTO
+            hacer la pagina de asignacion similar a la de carreras                      LISTO
+            
+        hacer paginas para cargar todos los planteles               
+            hacer pagina busqueda                                           LISTO
+            hacer pagina asignacion                                         LISTO
+            hacer la carga de autoridad nueva                               LISTO
+                faltan los combos de new                                    LISTO
+        
+        en la creacion de un nuevo plantel, al elegir organizacion (dependencia) el combo no sirve. Mejorar con 2 combos.   LISTO
+            dar vuelta dependencia y cargo                                                      LISTO
+            edit                                                                                LISTO
+            new                                                                                 LISTO
+            
+        
+        el codigo de dependencia tiene clave unica y aborta cuando se lo trata de repetir. Manejar el error     LISTO
+
+        cuando se trata de dar de alta una autoridad en un cargo que está en uso aborta sin decir porque        LISTO
+        debería mostrar sólo los cargos disponibles.                                                            LISTO
+        Hay que cambiar la carga de autoridad y agregarle un combo de establecimeinto.                          LISTO
+            
+        que en la busqueda de autoridades salgan los que no tienen el cargo asignado                LISTO
+
+        hacer la ficha del establecimiento con toda la agenda                                       LISTO
+            pensar los accesos para la actualizacion de los datos                                   LISTO
+        
+        migración de datos de la agenda
+            borrar autoridades y plantel_establecimiento
+            por pedazo
+            trabajar con planilla offline
+            corregir escuela
+            corregir dependencia
+            corregir cargos
+            corregir las celdad no unidas
+            sepearar apellido y nombre
+            hacer corrida en falso
+            
+        cuando se carga el plantel, al volver desde los cargos a las dependencias, que quede seleccionado el establecimiento y 
+        que no se resetee el combo de establecimientos
+            replantear la carga raw
+
+        verificar test existente autoridad                                                          LISTO
+    </body>
+</html>

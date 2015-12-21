@@ -1,0 +1,120 @@
+Fd\EdificioBundle\Entity\Edificio:
+    type: entity
+    table: edificio
+    repositoryClass: Fd\EdificioBundle\Repository\EdificioRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        cui:
+            type: integer
+            scale: 0
+            length: null
+            unique: true
+            nullable: true
+            precision: 0
+        referencia:
+            type: string
+            scale: 0
+            length: 50
+            unique: true
+            nullable: true
+            precision: 0
+        superficie:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        updatedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        createdAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    oneToMany:
+        establecimiento:
+            targetEntity: Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio
+            cascade: {  }
+            mappedBy: edificios
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+        domicilios:
+            targetEntity: Fd\EdificioBundle\Entity\Domicilio
+            cascade: {  }
+            mappedBy: edificio
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+        vecinos:
+            targetEntity: Fd\EdificioBundle\Entity\Vecino
+            cascade: {  }
+            mappedBy: edificio
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    manyToOne:
+        comuna:
+            targetEntity: Fd\TablaBundle\Entity\Comuna
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                comuna_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        cgp:
+            targetEntity: Fd\TablaBundle\Entity\Cgp
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                cgp_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        barrio:
+            targetEntity: Fd\TablaBundle\Entity\Barrio
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                barrio_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        distritoEscolar:
+            targetEntity: Fd\TablaBundle\Entity\DistritoEscolar
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                distrito_escolar_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        inspector:
+            targetEntity: Fd\EdificioBundle\Entity\Inspector
+            cascade: {  }
+            mappedBy: null
+            inversedBy: edificios
+            joinColumns:
+                inspector_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

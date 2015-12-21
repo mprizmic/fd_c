@@ -1,0 +1,60 @@
+{# usado en la ficha de establecimiento #}
+{# requiere variable establecimiento #}
+
+<fieldset>
+    <span class="mediana resaltado">
+        {{ 'ROI' }}
+    </span>
+    <br />
+
+    {% if establecimiento.fechaPresentacionRoi or establecimiento.fechaAprobacionRoi %}
+        {% if establecimiento.fechaPresentacionRoi %}
+            {{ ' Fecha de presentación: ' ~ establecimiento.fechaPresentacionRoi|date('d-m-Y') }}
+        {% endif %}
+        {% if establecimiento.fechaAprobacionRoi %}
+            {{ ' - Fecha de aprobación: ' ~ establecimiento.fechaAprobacionRoi|date('d-m-Y') }}
+        {% endif %}
+    {% else %}
+        {{ 'Sin información del trámite' }}
+    {% endif %}
+</fieldset>
+<br />
+
+<fieldset>
+    <span class="mediana resaltado">
+        {{ 'RAI' }}
+    </span>
+    <br />
+
+    {% if establecimiento.fechaPresentacionRai or establecimiento.fechaAprobacionRai %}
+        {% if establecimiento.fechaPresentacionRai %}
+            {{ ' Fecha de presentación: ' ~ establecimiento.fechaPresentacionRai|date('d-m-Y') }}
+        {% endif %}
+        {% if establecimiento.fechaAprobacionRai %}
+            {{ ' - Fecha de aprobación: ' ~ establecimiento.fechaAprobacionRai|date('d-m-Y') }}
+        {% endif %}
+    {% else %}
+        {{ 'Sin información del trámite' }}
+    {% endif %}
+</fieldset>
+<br />
+
+<fieldset >
+
+    <span class="mediana resaltado">
+        {{ 'R. PRÁCTICAS' }}
+    </span>
+    <br />
+
+    {% if establecimiento.fechaPresentacionRp or establecimiento.fechaAprobacionRp %}
+        {% if establecimiento.fechaPresentacionRp %}
+            {{ ' Fecha de presentación: ' ~ establecimiento.fechaPresentacionRp|date('d-m-Y') }}
+        {% endif %}
+        {% if establecimiento.fechaAprobacionRp %}
+            {{ ' - Fecha de aprobación: ' ~ establecimiento.fechaAprobacionRp|date('d-m-Y') }}
+        {% endif %}
+    {% else %}
+        {{ 'Sin información del trámite' }}
+    {% endif %}
+
+</fieldset>

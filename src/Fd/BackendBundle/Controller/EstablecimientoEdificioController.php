@@ -39,6 +39,10 @@ class EstablecimientoEdificioController extends Controller {
         return $this->em;
     }
 
+    private function getRepository() {
+        return $this->getEm()->getRepository('EstablecimientoBundle:EstablecimientoEdificio');
+    }
+
     /**
      * @Route("/docentes_nivel/editar/{establecimiento_edificio_id}",  name="backend_establecimiento_edificio_docentes_nivel_editar")
      * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:EstablecimientoEdificio", options={"id"="establecimiento_edificio_id"})
@@ -230,9 +234,9 @@ class EstablecimientoEdificioController extends Controller {
 
             $em->persist($entity);
             $em->flush();
-            
+
             $this->get('session')->getFlashBag()->add('exito', 'La sede/anexo fue actualizado exitosamente');
-        }else{
+        } else {
             $this->get('session')->getFlashBag()->add('error', 'La sede/anexo no pudo ser actualizado. Verifique y reintente.');
         }
 
@@ -282,7 +286,7 @@ class EstablecimientoEdificioController extends Controller {
      * @ParamConverter("establecimiento_edificio", class="EstablecimientoBundle:EstablecimientoEdificio", options={"id":"establecimiento_edificio_id"})
      */
     public function matricula_nivel_editAction(Request $request, EstablecimientoEdificio $establecimiento_edificio) {
-        
+
         $niveles = $this->getEm()->getRepository('TablaBundle:Nivel')->descripciones_niveles();
 
         $matricula_nivel = new MatriculaNivelClass($establecimiento_edificio);
@@ -294,6 +298,7 @@ class EstablecimientoEdificioController extends Controller {
                     'edit_form' => $editForm->createView(),
         ));
     }
+
     /**
      * @Route("/matricula_nivel/actualizar/{establecimiento_edificio_id}",  name="backend.establecimiento_edificio.matricula_nivel.actualizar")
      * @Method("post")
@@ -315,8 +320,7 @@ class EstablecimientoEdificioController extends Controller {
 
         if ($respuesta->getCodigo() == 1) {
             $this->get('session')->getFlashBag()->add('exito', $respuesta->getMensaje());
-            return $this->redirect($this->generateUrl('backend.establecimiento_edificio.matricula_nivel.edit',
-                    array('establecimiento_edificio_id' => $establecimiento_edificio->getId())));
+            return $this->redirect($this->generateUrl('backend.establecimiento_edificio.matricula_nivel.edit', array('establecimiento_edificio_id' => $establecimiento_edificio->getId())));
         };
 
         $this->get('session')->getFlashBag()->add('aviso', $respuesta->getMensaje());

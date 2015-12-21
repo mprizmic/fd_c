@@ -1,0 +1,225 @@
+Fd\EstablecimientoBundle\Entity\Establecimiento:
+    type: entity
+    table: establecimiento
+    repositoryClass: Fd\EstablecimientoBundle\Repository\EstablecimientoRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        cue:
+            type: string
+            scale: 0
+            length: 7
+            unique: false
+            nullable: true
+            precision: 0
+        codigo_previo_transferencia:
+            type: string
+            scale: 0
+            length: 7
+            unique: false
+            nullable: true
+            precision: 0
+        nombre:
+            type: string
+            scale: 0
+            length: 80
+            unique: false
+            nullable: true
+            precision: 0
+        apodo:
+            type: string
+            scale: 0
+            length: 25
+            unique: false
+            nullable: true
+            precision: 0
+        numero:
+            type: integer
+            scale: 0
+            length: 2
+            unique: false
+            nullable: true
+            precision: 0
+        orden:
+            type: integer
+            scale: 0
+            length: 2
+            unique: false
+            nullable: true
+            precision: 0
+        descripcion:
+            type: string
+            scale: 0
+            length: 15
+            unique: false
+            nullable: true
+            precision: 0
+        fecha_creacion:
+            type: string
+            scale: 0
+            length: 10
+            unique: false
+            nullable: true
+            precision: 0
+        tiene_cooperadora:
+            type: string
+            scale: 0
+            length: 2
+            unique: false
+            nullable: true
+            precision: 0
+        url:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+        campo_deportes:
+            type: string
+            scale: 0
+            length: 25
+            unique: false
+            nullable: true
+            precision: 0
+        fecha_presentacion_roi:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        fecha_aprobacion_roi:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        fecha_presentacion_rai:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        fecha_aprobacion_rai:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        fecha_presentacion_rp:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        fecha_aprobacion_rp:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        fecha_elecciones:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        fin_mandato:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        anio_inicio_nes:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    oneToMany:
+        edificio:
+            targetEntity: Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio
+            cascade: {  }
+            mappedBy: establecimientos
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+        unidades_educativas:
+            targetEntity: Fd\EstablecimientoBundle\Entity\UnidadEducativa
+            cascade: {  }
+            mappedBy: establecimiento
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+        recursos:
+            targetEntity: Fd\EstablecimientoBundle\Entity\EstablecimientoRecurso
+            cascade: {  }
+            mappedBy: establecimiento
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    manyToOne:
+        tipo_establecimiento:
+            targetEntity: Fd\TablaBundle\Entity\TipoEstablecimiento
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                tipo_establecimiento_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        distrito_escolar:
+            targetEntity: Fd\TablaBundle\Entity\DistritoEscolar
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                distrito_escolar_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        sector:
+            targetEntity: Fd\TablaBundle\Entity\Sector
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                sector_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion

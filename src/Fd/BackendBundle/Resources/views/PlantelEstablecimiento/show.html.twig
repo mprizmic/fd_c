@@ -1,0 +1,45 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block main_content %}
+    {{ parent() }}
+
+    <div class="titulo">Cargo de una dependencia de un establecimiento</div>
+
+    <fieldset>
+        <table class="record_properties">
+            <tbody>
+                <tr>
+                    <th>Cargo</th>
+                    <td>{{ entity.cargo }}</td>
+                </tr>
+                <tr>
+                    <th>Dependencia</th>
+                    <td>{{ entity.organizacion.dependencia }}</td>
+                </tr>
+                <tr>
+                    <th>Establecimiento</th>
+                    <td>{{ entity.organizacion.establecimiento }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <br />
+    <div>
+        <form action="{{ path('backend.plantelestablecimiento.delete', { 'id': entity.id }) }}" method="post">
+
+            <a class="separador" href="{{ path('backend.plantelestablecimiento.edit', { 'id': entity.id }) }}">Editar</a>
+
+            <div class="invisible">
+                {{ form_widget(delete_form) }}
+            </div>
+
+            <button type="submit" class="separador boton_rojo">Eliminar</button>
+
+            <a class="separador" href="{{ path('backend.plantelestablecimiento.buscar') }}">Volver a la lista</a>
+        </form>
+    </div>
+
+    {% include '::includes/volver.html.twig' %}
+
+{% endblock %}

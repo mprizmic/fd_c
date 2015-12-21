@@ -1,0 +1,37 @@
+Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno:
+    type: entity
+    table: unidadoferta_turno
+    repositoryClass: Fd\EstablecimientoBundle\Repository\UnidadOfertaTurnoRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    manyToOne:
+        unidad_oferta:
+            targetEntity: Fd\EstablecimientoBundle\Entity\UnidadOferta
+            cascade:
+                - remove
+                - persist
+            mappedBy: null
+            inversedBy: turnos
+            joinColumns:
+                unidad_oferta_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        turno:
+            targetEntity: Fd\TablaBundle\Entity\Turno
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                turno_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

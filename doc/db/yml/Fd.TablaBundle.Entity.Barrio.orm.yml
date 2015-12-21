@@ -1,0 +1,45 @@
+Fd\TablaBundle\Entity\Barrio:
+    type: entity
+    table: barrio
+    repositoryClass: Fd\TablaBundle\Repository\BarrioRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: true
+            precision: 0
+        created:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        updated:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        abreviatura:
+            type: string
+            scale: 0
+            length: 5
+            unique: false
+            nullable: true
+            precision: 0
+    lifecycleCallbacks: {  }

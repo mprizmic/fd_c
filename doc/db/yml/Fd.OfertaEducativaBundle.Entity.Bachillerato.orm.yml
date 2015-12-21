@@ -1,0 +1,55 @@
+Fd\OfertaEducativaBundle\Entity\Bachillerato:
+    type: entity
+    table: bachillerato
+    repositoryClass: Fd\OfertaEducativaBundle\Repository\BachilleratoRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: true
+            precision: 0
+        titulo:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: true
+            precision: 0
+        ciclo_basico:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        duracion:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+    oneToOne:
+        oferta:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\OfertaEducativa
+            cascade: {  }
+            mappedBy: null
+            inversedBy: bachillerato
+            joinColumns:
+                oferta_educativa_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

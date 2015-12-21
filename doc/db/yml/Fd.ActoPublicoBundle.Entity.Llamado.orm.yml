@@ -1,0 +1,107 @@
+Fd\ActoPublicoBundle\Entity\Llamado:
+    type: entity
+    table: llamado
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        cargo:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: false
+            precision: 0
+        horario:
+            type: time
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        anio:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        division:
+            type: string
+            scale: 0
+            length: 10
+            unique: false
+            nullable: true
+            precision: 0
+        iniciacion:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        terminacion:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        continuidad_pedagogica:
+            type: string
+            scale: 0
+            length: 2
+            unique: false
+            nullable: true
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    manyToOne:
+        establecimiento:
+            targetEntity: Fd\EstablecimientoBundle\Entity\Establecimiento
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                establecimiento_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        caracter:
+            targetEntity: Fd\ActoPublicoBundle\Entity\Caracter
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                caracter_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        motivo:
+            targetEntity: Fd\ActoPublicoBundle\Entity\Licencia
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                motivo_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

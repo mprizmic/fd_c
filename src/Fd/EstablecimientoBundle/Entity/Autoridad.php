@@ -4,7 +4,7 @@ namespace Fd\EstablecimientoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Fd\TablaBundle\Entity\CargoAutoridad;
+use Fd\TablaBundle\Entity\Cargo;
 use Fd\EstablecimientoBundle\Validator\Constraints as ApellidoAssert;
 /**
  * @ORM\Table(name="autoridad")
@@ -51,18 +51,11 @@ class Autoridad
     private $email;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Fd\TablaBundle\Entity\CargoAutoridad")
-     */
-    private $cargo_autoridad;
-    /**
      * bidireccional lado propietario
-     * @ORM\ManyToOne(targetEntity="Establecimiento", inversedBy="autoridades_rectorado")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="establecimiento_id", referencedColumnName="id")
-     * })    
-     * 
+     * @ORM\OneToOne(targetEntity="Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento", inversedBy="autoridad")
+     * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
-    private $establecimiento;
+    private $cargo;
     /**
      * @ORM\Column(nullable=true, type="date")
      * 
@@ -297,48 +290,25 @@ class Autoridad
     }
 
     /**
-     * Set cargo_autoridad
+     * Set cargo
      *
-     * @param \Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad
+     * @param \Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento $cargo
      * @return Autoridad
      */
-    public function setCargoAutoridad(\Fd\TablaBundle\Entity\CargoAutoridad $cargoAutoridad = null)
+    public function setCargo(\Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento $cargo = null)
     {
-        $this->cargo_autoridad = $cargoAutoridad;
+        $this->cargo = $cargo;
 
         return $this;
     }
 
     /**
-     * Get cargo_autoridad
+     * Get cargo
      *
-     * @return \Fd\TablaBundle\Entity\CargoAutoridad 
+     * @return \Fd\EstablecimientoBundle\Entity\PlantelEstablecimiento 
      */
-    public function getCargoAutoridad()
+    public function getCargo()
     {
-        return $this->cargo_autoridad;
-    }
-
-    /**
-     * Set establecimiento
-     *
-     * @param \Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento
-     * @return Autoridad
-     */
-    public function setEstablecimiento(\Fd\EstablecimientoBundle\Entity\Establecimiento $establecimiento = null)
-    {
-        $this->establecimiento = $establecimiento;
-
-        return $this;
-    }
-
-    /**
-     * Get establecimiento
-     *
-     * @return \Fd\EstablecimientoBundle\Entity\Establecimiento 
-     */
-    public function getEstablecimiento()
-    {
-        return $this->establecimiento;
+        return $this->cargo;
     }
 }

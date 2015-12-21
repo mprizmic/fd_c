@@ -1,0 +1,45 @@
+{% extends 'BackendBundle::layout.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - Lista de Cargo
+{% endblock %}
+
+{% block main_content %}
+
+    <div class="titulo">Lista de cargos</div>
+
+    <div class="float_derecha boton_verde">  
+        <a href="{{ path('backend_cargo_new') }}">
+            Crear nuevo cargo
+        </a>
+    </div>
+    <span class="limpiar_float"></span>
+
+    <table class="grilla">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Código</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path('backend_cargo_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.nombre }}</td>
+                    <td>{{ entity.codigo }}</td>
+                    <td>
+                        <a href="{{ path('backend_cargo_edit', { 'id': entity.id }) }}">
+                            Editar
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br />
+    <br />
+
+{% endblock %}

@@ -69,32 +69,21 @@ class EstablecimientoEdificio {
     private $fecha_baja;
 
     /**
-     * @ORM\Column(nullable=true)
+     * bidireccional lado inverso
+     * @ORM\OneToMany(targetEntity="Fd\EstablecimientoBundle\Entity\OrganizacionInterna", mappedBy="establecimiento")
+     * @Assert\NotBlank(message="El dato no puede quedar en blanco")
      */
-    private $te1;
+    private $dependencias;
 
     /**
-     * @ORM\Column(nullable=true)
+     * @ORM\Column(length=50, nullable=true)
      */
-    private $te2;
-
+    private $te;
     /**
-     * @ORM\Column(nullable=true)
+     * @ORM\Column(length=50, nullable=true)
+     * @Assert\Email(message="El email no es válido")
      */
-    private $te3;
-
-    /**
-     * @ORM\Column(nullable=true)
-     * @Assert\Email()
-     */
-    private $email1;
-
-    /**
-     * @ORM\Column(nullable=true)
-     * @Assert\Email()
-     */
-    private $email2;
-
+    private $email;    
     /**
      * devuelve el objeto localizacion de nivel terciario correspondiente $this
      */
@@ -106,12 +95,16 @@ class EstablecimientoEdificio {
         };
         return null;
     }
+
     /**
      * Si el edificio es sede devuelve true. Si es anexo devuelve false.
      * @return type
      */
-    public function isSede(){
+    public function isSede() {
         return ($this->getCueAnexo() == '00');
+    }
+    public function strSede(){
+        return $this->isSede()? 'Sede':'Anexo';
     }
 
     public function __toString() {
@@ -231,118 +224,49 @@ class EstablecimientoEdificio {
     }
 
     /**
-     * Set te1
+     * Set te
      *
-     * @param string $te1
+     * @param string $te
      * @return EstablecimientoEdificio
      */
-    public function setTe1($te1)
+    public function setTe($te)
     {
-        $this->te1 = $te1;
+        $this->te = $te;
 
         return $this;
     }
 
     /**
-     * Get te1
+     * Get te
      *
      * @return string 
      */
-    public function getTe1()
+    public function getTe()
     {
-        return $this->te1;
+        return $this->te;
     }
 
     /**
-     * Set te2
+     * Set email
      *
-     * @param string $te2
+     * @param string $email
      * @return EstablecimientoEdificio
      */
-    public function setTe2($te2)
+    public function setEmail($email)
     {
-        $this->te2 = $te2;
+        $this->email = $email;
 
         return $this;
     }
 
     /**
-     * Get te2
+     * Get email
      *
      * @return string 
      */
-    public function getTe2()
+    public function getEmail()
     {
-        return $this->te2;
-    }
-
-    /**
-     * Set te3
-     *
-     * @param string $te3
-     * @return EstablecimientoEdificio
-     */
-    public function setTe3($te3)
-    {
-        $this->te3 = $te3;
-
-        return $this;
-    }
-
-    /**
-     * Get te3
-     *
-     * @return string 
-     */
-    public function getTe3()
-    {
-        return $this->te3;
-    }
-
-    /**
-     * Set email1
-     *
-     * @param string $email1
-     * @return EstablecimientoEdificio
-     */
-    public function setEmail1($email1)
-    {
-        $this->email1 = $email1;
-
-        return $this;
-    }
-
-    /**
-     * Get email1
-     *
-     * @return string 
-     */
-    public function getEmail1()
-    {
-        return $this->email1;
-    }
-
-    /**
-     * Set email2
-     *
-     * @param string $email2
-     * @return EstablecimientoEdificio
-     */
-    public function setEmail2($email2)
-    {
-        $this->email2 = $email2;
-
-        return $this;
-    }
-
-    /**
-     * Get email2
-     *
-     * @return string 
-     */
-    public function getEmail2()
-    {
-        return $this->email2;
+        return $this->email;
     }
 
     /**
@@ -422,5 +346,38 @@ class EstablecimientoEdificio {
     public function getLocalizacion()
     {
         return $this->localizacion;
+    }
+
+    /**
+     * Add dependencias
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\OrganizacionInterna $dependencias
+     * @return EstablecimientoEdificio
+     */
+    public function addDependencia(\Fd\EstablecimientoBundle\Entity\OrganizacionInterna $dependencias)
+    {
+        $this->dependencias[] = $dependencias;
+
+        return $this;
+    }
+
+    /**
+     * Remove dependencias
+     *
+     * @param \Fd\EstablecimientoBundle\Entity\OrganizacionInterna $dependencias
+     */
+    public function removeDependencia(\Fd\EstablecimientoBundle\Entity\OrganizacionInterna $dependencias)
+    {
+        $this->dependencias->removeElement($dependencias);
+    }
+
+    /**
+     * Get dependencias
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDependencias()
+    {
+        return $this->dependencias;
     }
 }

@@ -1,0 +1,38 @@
+Fd\TablaBundle\Entity\Frase:
+    type: entity
+    table: frase
+    repositoryClass: Fd\TablaBundle\Repository\FraseRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        frase:
+            type: string
+            scale: 0
+            length: 250
+            unique: false
+            nullable: false
+            precision: 0
+        fecha:
+            type: date
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        autor:
+            type: string
+            scale: 0
+            length: 100
+            unique: false
+            nullable: false
+            precision: 0
+    lifecycleCallbacks: {  }

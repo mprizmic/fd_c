@@ -1,0 +1,38 @@
+Fd\TablaBundle\Entity\GrupoEtario:
+    type: entity
+    table: grupo_etario
+    repositoryClass: Fd\TablaBundle\Repository\GrupoEtarioRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        codigo:
+            type: string
+            scale: 0
+            length: 1
+            unique: false
+            nullable: false
+            precision: 0
+        descripcion:
+            type: string
+            scale: 0
+            length: 35
+            unique: false
+            nullable: false
+            precision: 0
+        orden:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    lifecycleCallbacks: {  }

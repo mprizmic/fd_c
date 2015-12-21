@@ -1,0 +1,111 @@
+Fd\OfertaEducativaBundle\Entity\Carrera:
+    type: entity
+    table: carrera
+    repositoryClass: Fd\OfertaEducativaBundle\Repository\CarreraRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nombre:
+            type: string
+            scale: 0
+            length: 150
+            unique: false
+            nullable: false
+            precision: 0
+        duracion:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        anio_inicio:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        comentario:
+            type: string
+            scale: 0
+            length: 250
+            unique: false
+            nullable: true
+            precision: 0
+        actualizado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        creado:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    oneToOne:
+        oferta:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\OfertaEducativa
+            cascade: {  }
+            mappedBy: null
+            inversedBy: carrera
+            joinColumns:
+                oferta_educativa_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToOne:
+        formacion:
+            targetEntity: Fd\TablaBundle\Entity\TipoFormacion
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                formacion_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        estado:
+            targetEntity: Fd\TablaBundle\Entity\EstadoCarrera
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                estado_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        titulos:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\TituloCarrera
+            cascade:
+                - remove
+                - persist
+            mappedBy: carrera
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+        orientaciones:
+            targetEntity: Fd\OfertaEducativaBundle\Entity\Orientacion
+            cascade:
+                - remove
+                - persist
+            mappedBy: carrera
+            inversedBy: null
+            orphanRemoval: false
+            orderBy: null
+    lifecycleCallbacks:
+        prePersist:
+            - ultimaModificacion
+        preUpdate:
+            - ultimaModificacion
