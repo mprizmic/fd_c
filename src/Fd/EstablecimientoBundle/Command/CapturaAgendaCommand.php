@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * sf sf:a:cap --archivo=ens1.xls --force
+ * 
+ */
+
 namespace Fd\EstablecimientoBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -17,10 +22,12 @@ class CapturaAgendaCommand extends ContainerAwareCommand {
     public $dependencia_anterior;
 
     protected function configure() {
+        
         $this
                 ->setName('fd:agenda:captura')
                 ->setDescription('Captura planilla excell con la agenda de un establecimiento')
-//                ->addArgument('grabar', InputArgument::OPTIONAL, 'aplicar cambios?')
+//                ->addArgument('archivo', InputArgument::REQUIRED, 'archivo a procesar?')
+                ->addOption('archivo', null, InputOption::VALUE_REQUIRED, 'archivo a procesar sin extensión')
                 ->addOption('force', null, InputOption::VALUE_NONE, 'si se pone se graba')
         ;
     }
@@ -46,11 +53,13 @@ class CapturaAgendaCommand extends ContainerAwareCommand {
         $targetDir = $this->getContainer()->get('kernel')->getRootDir() . '/../';
 
         //  $archivo = archivo.xlsx
-        $dialog = $this->getHelperSet()->get('dialog');
+//        $dialog = $this->getHelperSet()->get('dialog');
         
-        $archivo = $dialog->ask($output, 'Nombre del archivo a procesar (con extensión): ', 'nombre_default.xls');
+//        $archivo = $dialog->ask($output, 'Nombre del archivo a procesar (con extensión): ', 'nombre_default.xls');
 //        $archivo = 'ens 1.xls';
 
+        $archivo = $input->getOption('archivo');
+        
         $fileWithPath = $targetDir . $archivo;
 
         //cargo la planilla

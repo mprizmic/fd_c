@@ -81,6 +81,12 @@
         migración de datos de la agenda
             borrar autoridades y plantel_establecimiento
             cargo_autoridad tiene los datos de cargo. hay que renombrarla como cargo_ap y generar cargo. chequear los nros de los index
+            copiar datos de cargo
+                mysqldump -u root -p Fd cargo > ffff.sql
+                scp ffff.sql marcelo@10.67.4.6:/home/marcelo 
+                mysql -u marcelo -p -h localhost Fd < ffff.sql 
+            copiar datos de dependencia
+            
             una vez creada la tabla dependencia hay que copiar los datos de agenda_fd
             trabajo con planillas
                 por pedazos
