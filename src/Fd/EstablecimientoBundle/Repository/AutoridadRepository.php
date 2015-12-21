@@ -4,6 +4,7 @@ namespace Fd\EstablecimientoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Fd\EstablecimientoBundle\Entity\Autoridad;
+use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\TablaBundle\Entity\Cargo;
 
 class AutoridadRepository extends EntityRepository {
@@ -13,7 +14,7 @@ class AutoridadRepository extends EntityRepository {
      * 
      * @return type
      */
-    public function findRectores() {
+    public function findRectores($establecimiento = null) {
 
         $q = $this->_em->createQueryBuilder()
                 ->select('a.id')
@@ -32,8 +33,13 @@ class AutoridadRepository extends EntityRepository {
                 ->where('cg.codigo = ?1')
                 ->orderBy('a.apellido')
                 ->addOrderBy('a.nombre');
-
+        
         $q->setParameter(1, "REC");
+        
+        if (!is_null($establecimiento)){
+            $q->andWhere('e.id = ?2');
+            $q->setParameter(2, $establecimiento->getId());
+        }
 
         return $q->getQuery()->getResult();
     }

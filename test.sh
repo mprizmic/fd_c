@@ -15,6 +15,7 @@ phpunit -c app src/Fd/EstablecimientoBundle/Tests/Controller/UnidadOfertaControl
 #
 phpunit -c app src/Fd/EstablecimientoBundle/Tests/Model/OrganizacionInternaManagerTest.php
 #
+phpunit -c app src/Fd/EstablecimientoBundle/Tests/Repository/AutoridadRepositoryTest.php
 phpunit -c app src/Fd/EstablecimientoBundle/Tests/Repository/EstablecimientoRepositoryTest.php
 phpunit -c app src/Fd/EstablecimientoBundle/Tests/Repository/EstablecimientoEdificioRepositoryTest.php
 phpunit -c app src/Fd/EstablecimientoBundle/Tests/Repository/LocalizacionRepositoryTest.php
