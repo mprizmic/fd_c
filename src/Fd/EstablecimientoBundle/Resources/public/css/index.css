@@ -42,6 +42,9 @@ body {
 .ancho {
     width:100%;
 }
+.ancho_la_mitad {
+    width:50%;
+}
 #footer {
     padding: 20px 10px;
     background: #666;
