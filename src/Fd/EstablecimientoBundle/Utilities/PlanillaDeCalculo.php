@@ -19,13 +19,15 @@ abstract class PlanillaDeCalculo{
     protected $response;
     protected $filename;
     protected $fila_inicio_datos;
+    protected $em;
     
-    public function __construct($php_excel, $titulo = null, $datos = null, $filename = null, $fila_inicio_datos = 5) {
+    public function __construct($php_excel, $titulo = null, $datos = null, $em = null, $filename = null, $fila_inicio_datos = 5) {
         $this->php_excel_service = $php_excel;
         $this->titulo = $titulo;
         $this->datos = $datos;
         $this->filename = $filename;
         $this->fila_inicio_datos = $fila_inicio_datos;
+        $this->em = $em;
     }
 
     /**
@@ -59,7 +61,7 @@ abstract class PlanillaDeCalculo{
         
         $this->fechar();
         
-        $this->cargaDatos($this->datos);
+        $this->cargaDatos($this->datos, $this->em);
         
         $this->generarRespuesta();
         
@@ -79,7 +81,7 @@ abstract class PlanillaDeCalculo{
     protected function fechar() {
         $this->phpExcelObject->getActiveSheet()->setCellValue('A3', date('d-m-Y'));
     }
-    abstract protected function cargaDatos($datos);
+    abstract protected function cargaDatos($datos, $em);
     
     protected function generarRespuesta(){
         //activo la primera hoja

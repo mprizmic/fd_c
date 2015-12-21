@@ -39,6 +39,9 @@ class AutoridadRepository extends EntityRepository {
         if (!is_null($establecimiento)){
             $q->andWhere('e.id = ?2');
             $q->setParameter(2, $establecimiento->getId());
+            
+            return $rectores = $q->getQuery()->getOneOrNullResult();
+            
         }
 
         return $q->getQuery()->getResult();

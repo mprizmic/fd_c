@@ -414,7 +414,7 @@ class EstablecimientoController extends Controller {
         $excelService = $this->get('phpexcel');
 
         // defino la planilla
-        $planilla = new PlanillaSedesYAnexos($excelService, 'Listado de establecimientos', $establecimientos_edificios);
+        $planilla = new PlanillaSedesYAnexos($excelService, 'Listado de establecimientos', $establecimientos_edificios, $this->getEm());
 
         //genero la planilla y devuelve un response
         $response = $planilla->generarPlanillaResponse();

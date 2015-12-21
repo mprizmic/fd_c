@@ -30,7 +30,7 @@ class TeSedeStrategy {
                 ));
         
         if (!$oi){
-            throw new Exception('No se encontró la secreatría');
+            return 'sin Secretaría';
         }
                 
         return $oi->getTe();

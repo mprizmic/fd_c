@@ -6,7 +6,7 @@ use Fd\EstablecimientoBundle\Utilities\PlanillaDeCalculo;
 
 class PlanillaSedesYAnexos extends PlanillaDeCalculo {
 
-    protected function cargaDatos($datos) {
+    protected function cargaDatos($datos, $em) {
 
         $encabezado[] = '#';
         $encabezado[] = 'Establecimiento';
@@ -37,8 +37,15 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
             $e = $ee->getEstablecimientos();
             $ed = $ee->getEdificios();
             $d = $ed->getDomicilioPrincipal()->__toString();
-            $anexo = $ee->getCueAnexo() <> '00' ? ' - ' . $ee->getNombre() : '';
-            $rector = $e->getRector();
+            $anexo = !$ee->isSede() ? ' - ' . $ee->getNombre() : '';
+            
+            $te = $this->em->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
+                    ->findTe($ee);
+            
+            //es un array o nulo
+            $rector = $this->em->getRepository('EstablecimientoBundle:Autoridad')
+                    ->findRectores($e);
+            
             
             $columna = 'A';
             $posicion->setCellValue($columna . $fila, $fila - $this->fila_inicio_datos );
@@ -60,16 +67,23 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
             
             ++$columna;
             $posicion->setCellValue($columna . $fila, $ed->getDistritoEscolar()->__toString());
+            
             ++$columna;
-//            $posicion->setCellValue($columna . $fila, $ee->getEmail1());
+            $posicion->setCellValue($columna . $fila, $ee->getEmail());
+            
             ++$columna;
             $posicion->setCellValue($columna . $fila, $e->getUrl());
+            
             ++$columna;
-//            $posicion->setCellValue($columna . $fila, $ee->getTe1());
+            $posicion->setCellValue($columna . $fila, $te);
+            
             ++$columna;
-//            $posicion->setCellValue($columna . $fila, $rector->__toString());
+            $autoridad = is_null($rector) ? 'sin rector' : $rector['apellido'] . ', ' . $rector['nombre'];
+            $posicion->setCellValue($columna . $fila, $autoridad);
+            
             ++$columna;
-//            $posicion->setCellValue($columna . $fila, $rector->getEmail());
+            $autoridad_email = is_null($rector) ? '---' : $rector['email'];
+            $posicion->setCellValue($columna . $fila, $autoridad_email);
             
             $fila += 1;
         };
