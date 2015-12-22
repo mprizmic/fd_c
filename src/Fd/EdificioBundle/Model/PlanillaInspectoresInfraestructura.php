@@ -6,7 +6,7 @@ use Fd\EstablecimientoBundle\Utilities\PlanillaDeCalculo;
 
 class PlanillaInspectoresInfraestructura extends PlanillaDeCalculo {
 
-    protected function cargaDatos($datos) {
+    protected function cargaDatos($datos, $em) {
 
         $encabezado['A'] = 'Establecimiento';
         $encabezado['B'] = 'Nombre';

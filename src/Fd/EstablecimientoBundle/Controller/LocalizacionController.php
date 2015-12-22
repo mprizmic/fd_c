@@ -123,7 +123,7 @@ class LocalizacionController extends Controller {
         $excelService = $this->get('phpexcel');
 
         // defino la planilla
-        $planilla = new PlanillaMatriculaDeLocalizacion($excelService, 'Listado de matrícula', $resultado);
+        $planilla = new PlanillaMatriculaDeLocalizacion($excelService, 'Listado de matrícula', $resultado, $this->getEm());
 
         //genero la planilla y devuelve un response
         $response = $planilla->generarPlanillaResponse();

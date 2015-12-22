@@ -50,7 +50,7 @@ class InspectorController extends Controller {
         $excelService = $this->get('phpexcel');
 
         // defino la planilla
-        $planilla = new PlanillaInspectoresInfraestructura($excelService, 'Listado de inspectores de infraestructura', $edificio_establecimientos );
+        $planilla = new PlanillaInspectoresInfraestructura($excelService, 'Listado de inspectores de infraestructura', $edificio_establecimientos, $this->getEm() );
         
 //        $planilla->setTitulo('Listado de supervisores de infraestructura');
 
