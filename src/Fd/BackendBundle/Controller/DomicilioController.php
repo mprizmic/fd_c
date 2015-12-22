@@ -204,7 +204,7 @@ class DomicilioController extends Controller {
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
-            $respuesta = $repository->actualizar($entity);
+            $respuesta = $this->getRepo()->actualizar($entity);
         } else {
             $respuesta->setMensaje('La información cargada es incorrecta. Verifique y reintente');
         }
