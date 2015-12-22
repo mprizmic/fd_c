@@ -199,6 +199,7 @@ class EstablecimientoController extends Controller {
          * sede_anexo_array[][unidad_educativas][][ofertas][][tipo]
          * sede_anexo_array[][unidad_educativas][][ofertas][][carrera]
          * sede_anexo_array[][unidad_educativas][][ofertas][][carrera_id]
+         * sede_anexo_array[][unidad_educativas][][ofertas][][examen]
          * 
          * sede_anexo_array[][unidad_educativas][][turnos_nivel][]
          * 
@@ -299,6 +300,7 @@ class EstablecimientoController extends Controller {
                         $carrera = $unidad_oferta->getOfertas()->getCarrera();
                         $unidad_ofertas[$key_uo]['carrera'] = $carrera->getIdentificacion();
                         $unidad_ofertas[$key_uo]['carrera_id'] = $carrera->getId();
+                        $unidad_ofertas[$key_uo]['examen'] = $unidad_oferta->getHasExamen() ? 'si':'no';
                     }
                 }
                 /**
