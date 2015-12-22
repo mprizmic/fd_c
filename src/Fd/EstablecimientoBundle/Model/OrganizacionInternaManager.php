@@ -91,10 +91,12 @@ class OrganizacionInternaManager {
 
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se eliminó la dependencia exitosamente.');
-        } finally {
-
-            return $respuesta;
-        }
+        } catch (Exception $e) {
+            $respuesta->setCodigo(2);
+            $respuesta->setMensaje('Problemas al eliminar.');
+            
+        };
+        return $respuesta;
     }
 
     /**
