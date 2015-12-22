@@ -88,10 +88,12 @@ class PlantelEstablecimientoManager {
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('El cargo se actualizó correctamente');
             $respuesta->setObjNuevo($entity);
-        } finally {
+        } catch (Exception $e) {
+            $respuesta->setCodigo(2);
+            $respuesta->setMensaje('Problemas al guardar');
 
-            return $respuesta;
-        }
+        };
+        return $respuesta;
     }
 
     public function eliminar($entity, $flush = true) {
@@ -108,10 +110,12 @@ class PlantelEstablecimientoManager {
 
             $respuesta->setCodigo(1);
             $respuesta->setMensaje('Se eliminó la relación exitosamente.');
-        } finally {
+        } catch (Exception $e){
+            $respuesta->setCodigo(2);
+            $respuesta->setMensaje('Problemas al eliminar.');
 
-            return $respuesta;
-        }
+        };
+        return $respuesta;
     }
     /**
      * vertifica si existe la relacion organizacion - cargo
