@@ -22,7 +22,7 @@ class CapturaAgendaCommand extends ContainerAwareCommand {
     public $dependencia_anterior;
 
     protected function configure() {
-        
+
         $this
                 ->setName('fd:agenda:captura')
                 ->setDescription('Captura planilla excell con la agenda de un establecimiento')
@@ -37,12 +37,11 @@ class CapturaAgendaCommand extends ContainerAwareCommand {
 
         if ($input->getOption('force')) {
             $flush = true;
-            
         } else {
             $flush = false;
         }
-        
-        $output->writeln($flush ? '***********************************graba':'********************************NO GRABA');
+
+        $output->writeln($flush ? '***********************************graba' : '********************************NO GRABA');
 
 
 
@@ -54,12 +53,11 @@ class CapturaAgendaCommand extends ContainerAwareCommand {
 
         //  $archivo = archivo.xlsx
 //        $dialog = $this->getHelperSet()->get('dialog');
-        
 //        $archivo = $dialog->ask($output, 'Nombre del archivo a procesar (con extensión): ', 'nombre_default.xls');
 //        $archivo = 'ens 1.xls';
 
         $archivo = $input->getOption('archivo');
-        
+
         $fileWithPath = $targetDir . $archivo;
 
         //cargo la planilla
@@ -189,16 +187,20 @@ class CapturaAgendaCommand extends ContainerAwareCommand {
                 //leo fila siguiente
                 $fila = $fila + 1;
                 $linea = $this->leer($fila);
+
+                if ($flush) {
+                    $em->flush();
+                }
             };
         }
 
         $output->writeln('terminó y procesó');
-        
-        if ($flush){
+
+        if ($flush) {
             $em->flush();
         }
-        
-        $output->writeln($flush ? '***********************************graba':'********************************NO GRABA');
+
+        $output->writeln($flush ? '***********************************graba' : '********************************NO GRABA');
 
         return;
     }
