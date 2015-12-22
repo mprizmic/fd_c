@@ -12,6 +12,7 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
         $encabezado[] = 'Establecimiento';
         $encabezado[] = 'CUE';
         $encabezado[] = 'Domicilio';
+        $encabezado[] = 'C.Postal';
         $encabezado[] = 'Barrio';
         $encabezado[] = 'DE';
         $encabezado[] = 'Comuna';
@@ -36,7 +37,8 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
             //variables intermedias
             $e = $ee->getEstablecimientos();
             $ed = $ee->getEdificios();
-            $d = $ed->getDomicilioPrincipal()->__toString();
+            $dp = $ed->getDomicilioPrincipal();
+            $d = $dp->__toString();
             $anexo = !$ee->isSede() ? ' - ' . $ee->getNombre() : '';
             
             $te = $this->em->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
@@ -58,6 +60,9 @@ class PlanillaSedesYAnexos extends PlanillaDeCalculo {
             
             ++$columna;
             $posicion->setCellValue($columna . $fila, $d);                                      //domicilio
+            
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $dp->getCPostal());                                      //codigo postal
             
             ++$columna;
             $posicion->setCellValue($columna . $fila, $ed->getBarrio()->__toString());   //barrio
