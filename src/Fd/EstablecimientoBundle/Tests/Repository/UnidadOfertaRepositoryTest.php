@@ -38,7 +38,7 @@ class UnidadOfertaRepositoryTest extends WebTestCase {
 
         $ee = $this->repo->findSedeAnexo($unidad_oferta);
 
-        $this->assertTrue($ee->getCueAnexo() == '00' && $ee->getEstablecimientos()->getCue() == '200536');
+        $this->assertTrue($ee->isSede() && $ee->getEstablecimientos()->getCue() == '200536');
     }
 
     /**

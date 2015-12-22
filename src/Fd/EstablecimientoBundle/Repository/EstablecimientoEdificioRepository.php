@@ -182,7 +182,7 @@ class EstablecimientoEdificioRepository extends EntityRepository implements Dato
      */
     public function findEdificioPrincipal($establecimiento) {
         foreach ($establecimiento->getEdificio() as $establecimiento_edificio) {
-            if ($establecimiento_edificio->getCueAnexo() == '00') {
+            if ($establecimiento_edificio->isSede()) {
                 $edificio = $establecimiento_edificio->getEdificios();
             };
             break;

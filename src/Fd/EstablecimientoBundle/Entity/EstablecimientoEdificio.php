@@ -5,6 +5,7 @@ namespace Fd\EstablecimientoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Fd\EstablecimientoBundle\Model\Constantes;
 
 /**
  * Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio
@@ -101,18 +102,18 @@ class EstablecimientoEdificio {
      * @return type
      */
     public function isSede() {
-        return ($this->getCueAnexo() == '00');
+        return ($this->getCueAnexo() == Constantes::CUE_SEDE);
     }
     public function strSede(){
         return $this->isSede()? 'Sede':'Anexo';
     }
 
     public function __toString() {
-        return $this->getEstablecimientos()->getApodo() . ($this->getCueAnexo() == '00' ? '' : ' - ' . $this->getNombre());
+        return $this->getEstablecimientos()->getApodo() . ($this->isSede() ? '' : ' - ' . $this->getNombre());
     }
 
     public function getIdentificacion() {
-        return $this->getEstablecimientos()->getNombre() . ($this->getCueAnexo() == '00' ? '' : ' - ' . $this->getNombre());
+        return $this->getEstablecimientos()->getNombre() . ($this->isSede() ? '' : ' - ' . $this->getNombre());
     }
 
     public function __construct() {

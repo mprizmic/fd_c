@@ -204,7 +204,7 @@ class Establecimiento {
     public function getEdificioPrincipal() {
         $el_principal = null;
         foreach ($this->getEdificio() as $un_edificio) {
-            if ($un_edificio->getCueAnexo() == '00') {
+            if ($un_edificio->isSede()) {
                 $el_principal = $un_edificio;
                 break;
             }

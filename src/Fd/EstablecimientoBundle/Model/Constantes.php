@@ -6,7 +6,7 @@ class Constantes {
 
     const NOMBRE = 'Sistema de Información de la Dirección de Formación Docente';
     const NOMBRE_CORTO = 'DFD';
-    const VERSION_LOGICA = 'Versión 4 - 29.9.2015';
+    const VERSION_LOGICA = 'Versión 5 - 22.12.2015';
     const CREDITOS = 'Créditos: Marcelo Prizmic';
     const VERSION_SYMFONY = 'Symfony 2.1.13';
     const VERSION_DOCTRINE = 'Doctrine >=2.2.3,<2.5-dev';
@@ -14,8 +14,8 @@ class Constantes {
     const VERSION_MYSQL = '';
     const VERSION_FIREFOX = '';
     const DEPENDENCIA = 'Dirección de Formación Docente';
-    const EMAIL = 'dgesup@buenosaires.gob.ar';
-    const SITIO_WEB = 'http://www.buenosaires.edu.ar/areas/educacion/docentes/superior/index.php?menu_id=20596';
+    const EMAIL = 'dfd@bue.edu.ar';
+    const SITIO_WEB = 'http://www.buenosaires.gob.ar/educacion/estudiantes/terciario/formacion-docente';
 
     //referidas al tipo de unidad oferta
     const TUO_INICIAL = "Inicial";
