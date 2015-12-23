@@ -45,6 +45,9 @@ body {
 .ancho_la_mitad {
     width:50%;
 }
+.ancho_un_cuarto {
+    width:25%;
+}
 #footer {
     padding: 20px 10px;
     background: #666;
