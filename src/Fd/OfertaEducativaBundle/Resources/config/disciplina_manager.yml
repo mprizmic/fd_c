@@ -1,0 +1,4 @@
+services:
+    fd.ofertaeducativa.disciplina.manager:
+        class: "Fd\OfertaEducativaBundle\Model\DisciplinaManager"
+        arguments: ["@doctrine.orm.entity_manager"]
