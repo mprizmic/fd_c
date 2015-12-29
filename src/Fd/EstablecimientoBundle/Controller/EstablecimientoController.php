@@ -164,7 +164,7 @@ class EstablecimientoController extends Controller {
 
         /**
          * sede_anexo_array[][id]
-         * sede_anexo_array[][cue_anexo]
+         * sede_anexo_array[][cue_anexo][digito]
          * sede_anexo_array[][cue_anexo][te]
          * sede_anexo_array[][cue_anexo][email]
          * sede_anexo_array[][domicilio][calle]
