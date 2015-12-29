@@ -22,7 +22,6 @@ use Fd\OfertaEducativaBundle\Entity\Disciplina;
 class DisciplinaController extends Controller {
 
     private $em;
-    private $manager;
 
     public function getEm() {
         if (!$this->em) {
@@ -34,14 +33,6 @@ class DisciplinaController extends Controller {
     private function getRepo() {
         return $this->getEm()->getRepository('OfertaEducativaBundle:Disciplina');
     }
-
-    public function getManager() {
-        if (!$this->manager) {
-            $this->manager = new DisciplinaManager($this->getEm());
-        };
-        return $this->manager;
-    }
-
     /**
      * @Route("/buscar", name="backend.disciplina.buscar")
      */
@@ -195,7 +186,9 @@ class DisciplinaController extends Controller {
 
         if ($form->isValid()) {
 
-            $respuesta = $this->getManager()->crear($entity);
+            $manager = $this->get('fd.ofertaeducativa.disciplina.manager');
+            
+            $respuesta = $manager->crear($entity);
 
             if ($respuesta->getCodigo() == 1) {
 
