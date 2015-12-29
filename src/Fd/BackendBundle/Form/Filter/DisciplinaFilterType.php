@@ -1,6 +1,6 @@
 <?php
 
-namespace Fd\OfertaEducativaBundle\Form;
+namespace Fd\BackendBundle\Form\Filter;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
