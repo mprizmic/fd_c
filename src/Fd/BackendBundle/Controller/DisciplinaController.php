@@ -48,6 +48,7 @@ class DisciplinaController extends Controller {
     public function buscarAction(Request $request) {
 
         $session = $this->get('session');
+        $disciplinas = null;
 
         if ($request->getMethod() == 'POST') {
 
