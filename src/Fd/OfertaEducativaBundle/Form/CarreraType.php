@@ -36,6 +36,9 @@ class CarreraType extends AbstractType {
                     'label' => 'Año de inicio del dictado',
                     'required' => false,
                 ))
+                ->add('disciplina', null, array(
+                    'required' => true,
+                ))
                 ->add('comentario', 'textarea', array(
                     'required' => false,
                     'attr' => array(

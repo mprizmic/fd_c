@@ -44,6 +44,11 @@ class Carrera {
      * @Assert\NotNull(message="El campo no puede quedar vacío.")
      */
     private $formacion;
+    /**
+     * @ORM\ManyToOne(targetEntity="Fd\OfertaEducativaBundle\Entity\Disciplina")
+     * @Assert\NotNull(message="La disciplina no puede estar vacía.")
+     */
+    private $disciplina;
 
     /**
      * bidireccional lado inverso
@@ -471,5 +476,28 @@ class Carrera {
     public function getEstado()
     {
         return $this->estado;
+    }
+
+    /**
+     * Set disciplina
+     *
+     * @param \Fd\OfertaEducativaBundle\Entity\Disciplina $disciplina
+     * @return Carrera
+     */
+    public function setDisciplina(\Fd\OfertaEducativaBundle\Entity\Disciplina $disciplina = null)
+    {
+        $this->disciplina = $disciplina;
+
+        return $this;
+    }
+
+    /**
+     * Get disciplina
+     *
+     * @return \Fd\OfertaEducativaBundle\Entity\Disciplina 
+     */
+    public function getDisciplina()
+    {
+        return $this->disciplina;
     }
 }

@@ -23,7 +23,7 @@ class Disciplina {
     /**
      * @var string $nombre
      *
-     * @ORM\Column(type="string", length=2, nullable=true)
+     * @ORM\Column(type="string", length=3, nullable=true)
      */
     private $codigo;
 
@@ -36,6 +36,7 @@ class Disciplina {
     public function __toString() {
         return $this->getDescripcion();
     }
+
     /**
      * Get id
      *
@@ -50,10 +51,13 @@ class Disciplina {
      * Set codigo
      *
      * @param string $codigo
+     * @return Disciplina
      */
     public function setCodigo($codigo)
     {
         $this->codigo = $codigo;
+
+        return $this;
     }
 
     /**
@@ -70,10 +74,13 @@ class Disciplina {
      * Set descripcion
      *
      * @param string $descripcion
+     * @return Disciplina
      */
     public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
+
+        return $this;
     }
 
     /**

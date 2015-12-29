@@ -15,7 +15,7 @@ class DisciplinaManager {
 
     public function __construct(EntityManager $em) {
         $this->em = $em;
-        $this->repository = $this->em->getRepository('OfertaEducativaBundle:Carrera');
+        $this->repository = $this->em->getRepository('OfertaEducativaBundle:Disciplina');
     }
 
     /**

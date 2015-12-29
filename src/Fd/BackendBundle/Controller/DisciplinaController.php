@@ -8,14 +8,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use Fd\BackendBundle\Form\DisciplinaType;
-use Fd\BackendBundle\Form\DisciplinaFilterType;
+use Fd\BackendBundle\Form\Filter\DisciplinaFilterType;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\OfertaEducativaBundle\Entity\Disciplina;
 
 /**
  * Disciplina controller.
  *
- * @Route("/domicilio")
+ * @Route("/disciplina")
  */
 class DisciplinaController extends Controller {
 
@@ -105,7 +107,7 @@ class DisciplinaController extends Controller {
      */
     public function generarDatosBusquedaPaginada($form) {
         //se crear la consulta
-        $filterBuilder = $this->getRepository()->qbAllOrdenado();
+        $filterBuilder = $this->getRepo()->qbAllOrdenado();
 
         // build the query from the given form object
         $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
@@ -115,14 +117,14 @@ class DisciplinaController extends Controller {
         $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_mediano'));
 
         //hay por lo menos un campo con algo
-        $autoridades = $paginador->paginate($filterBuilder->getQuery())
+        $disciplinas = $paginador->paginate($filterBuilder->getQuery())
                 ->getResult();
 
-        return $autoridades;
+        return $disciplinas;
     }
 
     /**
-     * Crea el formulario de busqueda de autoridades.
+     * Crea el formulario de busqueda de disciplinas.
      * Cuando se redespliega luego de avanzar una pàgina, se le recargan los datos originales que se guardaron 
      * previamente en la sesion.
      * 
@@ -131,9 +133,7 @@ class DisciplinaController extends Controller {
      */
     public function crearFormBusqueda($datos_sesion = null) {
 
-        $form = $this->createForm(new AutoridadFilterType(
-                $this->getCmbEstablecimientos(), $this->getCmbCargos()
-        ));
+        $form = $this->createForm(new DisciplinaFilterType());
 
         if ($datos_sesion)
             $form->setData($datos_sesion);
@@ -246,7 +246,7 @@ class DisciplinaController extends Controller {
         $respuesta = new Respuesta();
         $tipo = 'error';
 
-        $editForm = $this->createForm(new AutoridadType(), $entity);
+        $editForm = $this->createForm(new DisciplinaType(), $entity);
         $deleteForm = $this->createDeleteForm($entity->getId());
 
         $request = $this->getRequest();
@@ -255,7 +255,7 @@ class DisciplinaController extends Controller {
 
         if ($editForm->isValid()) {
 
-            $manager = $this->get('fd.establecimiento.autoridad.manager');
+            $manager = $this->get('fd.ofertaeducativa.disciplina.manager');
 
             $respuesta = $manager->crear($editForm->getData());
 
@@ -263,12 +263,12 @@ class DisciplinaController extends Controller {
 
             $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
-            return $this->redirect($this->generateUrl('backend.autoridad.edit', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('backend.disciplina.edit', array('id' => $entity->getId())));
         }
 
         $this->get('session')->getFlashBag()->add($tipo, $respuesta->getMensaje());
 
-        return $this->render('BackendBundle:Autoridad:edit.html.twig', array(
+        return $this->render('BackendBundle:Disciplina:edit.html.twig', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     'delete_form' => $deleteForm->createView(),

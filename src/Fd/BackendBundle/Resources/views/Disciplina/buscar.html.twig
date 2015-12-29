@@ -1,21 +1,20 @@
 {% extends 'BackendBundle::layout.html.twig' %}
 
 {% block title %}
-    {{ parent() }} - Búsqueda de autoridades
+    {{ parent() }} - Búsqueda de disciplinas
 {% endblock %}
 
 {% block main_content %}
     {{ parent() }}
 
-    <div class="titulo float_izquierda">Búsqueda de autoridades de establecimientos</div>
-    <div class="limpiar_float"></div>
+    <div class="titulo">Búsqueda de disciplinas</div>
 
-    <div><a class="float_derecha boton_verde" href="{{ path('backend.autoridad.new') }}">Nueva autoridad</a></div>
+    <div><a class="float_derecha boton_verde" href="{{ path('backend.disciplina.new') }}">Nueva disciplina</a></div>
     <div class="limpiar_float"></div>
 
     <fieldset>
         <legend class="resaltado">Filtros</legend>
-        <form method="post" action="{{ path('backend.autoridad.buscar') }}">
+        <form method="post" action="{{ path('backend.disciplina.buscar') }}">
             <div class="ancho_10">
                 {{ form_rest(form) }}
             </div>
@@ -24,46 +23,36 @@
 
                 <input type="submit" name="submit-filter" value="Buscar" />
                 <span class="separador"></span>
-                <a href="{{ path( "backend.autoridad.buscar" ) }}">Limpiar</a>
+                <a href="{{ path( "backend.disciplina.buscar" ) }}">Limpiar</a>
 
             </div>
         </form>
     </fieldset>
 
-    {% if autoridades is not null %}
-        {% if autoridades|length > 0 %}
+    {% if disciplinas is not null %}
+        {% if disciplinas|length > 0 %}
 
             <br />
 
             <table class="grilla">
                 <tr>
-                    <th>Nombre</th>
-                    <th>Establecimiento</th>
-                    <th>TE particular</th>
-                    <th>Celular</th>
-                    <th>Email</th>
+                    <th>Descripción</th>
+                    <th>Código</th>
                     <th>Acciones</th>
                 </tr>
 
-                {% for autoridad in autoridades %}
+                {% for disciplina in disciplinas %}
                     <tr>
-                        <td><a href="{{path('backend.autoridad.edit', {'id': autoridad.id})}}">{{ autoridad.apellido ~ ', ' ~ autoridad.nombre }}</a></td>
+                        <td><a href="{{path('backend.disciplina.edit', {'id': disciplina.id})}}">{{ disciplina.descripcion }}</a></td>
 
-                        {% if autoridad.cargo is not null %}
-                            {% set establecimiento = autoridad.cargo.organizacion.establecimiento.establecimientos %}
-                            <td>{{ establecimiento }}</td>
-                        {% else %}
-                            <td>{{ 'sin asignar' }}</td>
-                        {% endif %}
-                        <td>{{ autoridad.teParticular }}</td>
-                        <td>{{ autoridad.celular }}</td>
-                        <td>{{ autoridad.email }}</td>
-                        <td><a href="{{path('backend.autoridad.edit', {'id': autoridad.id})}}">Editar</a></td>
+                        <td>{{ disciplina.codigo }}</td>
+
+                        <td><a href="{{path('backend.disciplina.edit', {'id': disciplina.id})}}">Editar</a></td>
                     </tr>
                 {% endfor %}
             </table>
 
-            {{ simple_paginator_render('backend.autoridad.buscar', null, {
+            {{ simple_paginator_render('backend.disciplina.buscar', null, {
         'container_class':'simple_paginator',
         'previousPageText':'Anterior',
         'nextPageText':'Siguiente',
