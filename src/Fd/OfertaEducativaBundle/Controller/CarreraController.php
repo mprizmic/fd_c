@@ -441,8 +441,15 @@ class CarreraController extends Controller {
             $turnos = $this->getEm()->getRepository('EstablecimientoBundle:UnidadOferta')->findTurnosArray($unidad_oferta);
             $localizacion['turnos'] = $turnos;
 
+            //truchada para salir del paso con establecimientos_donde_se_dict.html.twig
+            $tmp = $localizacion['cue_anexo'];
+            unset($localizacion['cue_anexo']);
+            $localizacion['cue_anexo'] = array('digito' => $tmp);
+            
+            
             $localizaciones[] = $localizacion;
         }
+
 
         /**
          * estructura del array que se pasa a la plantilla
@@ -451,7 +458,7 @@ class CarreraController extends Controller {
          * localizaciones[][establecimiento_id]
          * localizaciones[][establecimiento_nombre]
          * localizaciones[][localizacion_nombre]
-         * localizaciones[][cue_anexo]
+         * localizaciones[][cue_anexo][digito]
          * localizaciones[][unidad_oferta_id]
          * localizaciones[][turnos]
          */
@@ -986,7 +993,6 @@ class CarreraController extends Controller {
         return $this->render('OfertaEducativaBundle:Carrera:listado_oferta.html.twig', array(
                     'carreras' => $carreras,
         ));
-
     }
 
 }
