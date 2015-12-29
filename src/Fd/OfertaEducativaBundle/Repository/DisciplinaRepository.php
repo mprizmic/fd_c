@@ -17,7 +17,7 @@ class DisciplinaRepository extends EntityRepository {
 
     public function findAll() {
 
-        return $this->findear($this->qbAll());
+        return $this->findear($this->qbAll()->orderBy('dsc.descripcion'));
     }
 
     public function qbAllOrdenado() {
