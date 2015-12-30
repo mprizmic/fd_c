@@ -10,12 +10,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method; //permite la annotation method
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 use Fd\BackendBundle\Form\Filter\TituloCarreraFilterType;
+use Fd\EstablecimientoBundle\Annotation\DownloadAs;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EstablecimientoBundle\Entity\UnidadOferta;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\EventListener\DownloadListener;
 use Fd\EstablecimientoBundle\Repository\UnidadOfertaRepository;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\OfertaEducativaBundle\Entity\Norma;
@@ -24,6 +27,7 @@ use Fd\OfertaEducativaBundle\Form\EstablecimientosType;
 use Fd\OfertaEducativaBundle\Form\Handler\CarreraFormHandler;
 use Fd\OfertaEducativaBundle\Form\Filter\CarreraFilterType;
 use Fd\OfertaEducativaBundle\Model\CarreraManager;
+use Fd\OfertaEducativaBundle\Model\PlanillaOfertaSIOL;
 use Fd\OfertaEducativaBundle\Model\TituloCarreraManager;
 use Fd\OfertaEducativaBundle\Repository\CarreraRepository;
 
@@ -993,6 +997,31 @@ class CarreraController extends Controller {
         return $this->render('OfertaEducativaBundle:Carrera:listado_oferta.html.twig', array(
                     'carreras' => $carreras,
         ));
+    }
+
+    /**
+     * listado completo de carreras activas que se publican en el SIOL 
+     * Son las carreras ACTIVAS que publican en el SIOL
+     * 
+     * @Route("listado_carreras_siol", name="oferta_educativa.carrera.listado_carreras_on_line")
+     * @DownloadAs(filename="Oferta_SIOL.xls")
+     */
+    public function listadoCarrerasSIOLAction() {
+        
+        $carreras = $this->getEm()
+                ->getRepository('OfertaEducativaBundle:OfertaEducativa')
+                ->findCarrerasSIOL();
+
+        //se crea el servicio para crear planillas
+        $excelService = $this->get('phpexcel');
+
+        // defino la planilla
+        $planilla = new PlanillaOfertaSIOL($excelService, 'Listado de oferta para el sistema de inscripción on line', $carreras, $this->getEm());
+
+        //genero la planilla y devuelve un response
+        $response = $planilla->generarPlanillaResponse();
+
+        return $response;
     }
 
 }

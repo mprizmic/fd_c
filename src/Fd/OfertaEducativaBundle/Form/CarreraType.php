@@ -32,6 +32,9 @@ class CarreraType extends AbstractType {
                     'label' => 'Formación',
                 ))
                 ->add('estado')
+                ->add('publica_en_siol', null, array(
+                    'required' => false,
+                ))
                 ->add('anio_inicio', 'integer', array(
                     'label' => 'Año de inicio del dictado',
                     'required' => false,

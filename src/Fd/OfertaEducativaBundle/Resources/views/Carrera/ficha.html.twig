@@ -30,6 +30,7 @@
     <div>Disciplina: {{ carrera.disciplina }}</div>
     <div>Año de inicio del dictado: {{ carrera.anioInicio | default('Sin datos') }}</div>
     <div class="rojo">Estado: {{ carrera.estado }}</div>
+    <div class="rojo">{{ "%s ofrece en el sistema de preinscripción on line" |replace({"%s": carrera.publicaEnSiol ? "Se" : "No se"}) }}</div>
     <div>Duración (hc): {{ carrera.duracion }}</div>
     <div>Comentarios: {{ carrera.comentario }}</div>
 </fieldset>

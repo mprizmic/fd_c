@@ -88,6 +88,10 @@ class Carrera {
      * @ORM\Column(type="string", length=250, nullable=true)
      */
     private $comentario;
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $publica_en_siol;
 
     /**
      * @ORM\Column(type="datetime")
@@ -499,5 +503,28 @@ class Carrera {
     public function getDisciplina()
     {
         return $this->disciplina;
+    }
+
+    /**
+     * Set publica_en_siol
+     *
+     * @param boolean $publicaEnSiol
+     * @return Carrera
+     */
+    public function setPublicaEnSiol($publicaEnSiol)
+    {
+        $this->publica_en_siol = $publicaEnSiol;
+
+        return $this;
+    }
+
+    /**
+     * Get publica_en_siol
+     *
+     * @return boolean 
+     */
+    public function getPublicaEnSiol()
+    {
+        return $this->publica_en_siol;
     }
 }

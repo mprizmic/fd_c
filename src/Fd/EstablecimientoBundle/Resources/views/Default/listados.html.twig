@@ -17,17 +17,25 @@
                 <td>
                     <a href="{{ path('establecimiento_salida_planilla') }}">Listado de de establecimientos</a>
                 </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="{{ path( 'oferta_educativa.carrera.listado_carreras') }}">Oferta de carreras</a>
-                </td>
-                <td class="instrucciones" >Incluye todos los establecimientos, sus carreras por sede/anexo, turnos, cupos y si tienen examen de ingreso</td>
+                <td class="instrucciones" >Incluye los 21 establecimientos de FD</td>
             </tr>
             <tr>
                 <td>
                     <a href="{{ path('establecimiento.establecimiento_edificio.sedes_anexos_salida_planilla') }}">Sedes y anexos</a>
                 </td>
+                <td class="instrucciones" >Incluye los 21 establecimientos y todos sus anexos</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{{ path( 'oferta_educativa.carrera.listado_carreras') }}">Oferta de carreras</a>
+                </td>
+                <td class="instrucciones" >Incluye todos los establecimientos, sus carreras activas por sede/anexo, turnos, cupos y si tienen examen de ingreso</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{{ path( 'oferta_educativa.carrera.listado_carreras_on_line') }}">Oferta para la preinscripción on line</a>
+                </td>
+                <td class="instrucciones" >Incluye todos los establecimientos, sus carreras activas por sede/anexo, turnos, cupos y si tienen examen de ingreso</td>
             </tr>
             <tr >
                 <td><a href="{{ path('establecimiento.autoridad.listado_rectores') }}">Listado de rectores</a></td>
