@@ -7,9 +7,13 @@ phpunit -c app src/Fd/BackendBundle/Tests/Controller/OfertaEducativaControllerTe
 phpunit -c app src/Fd/BackendBundle/Tests/Controller/PortadaControllerTest.php
 phpunit -c app src/Fd/BackendBundle/Tests/Controller/VecinoControllerTest.php
 #
+phpunit -c app src/Fd/EdificioBundle/Tests/Controller/InspectorControllerTest.php
+#
 phpunit -c app src/Fd/EstablecimientoBundle/Tests/Controller/AutoridadControllerTest.php
 phpunit -c app src/Fd/EstablecimientoBundle/Tests/Controller/DefaultControllerTest.php
 phpunit -c app src/Fd/EstablecimientoBundle/Tests/Controller/EstablecimientoControllerTest.php
+phpunit -c app src/Fd/EstablecimientoBundle/Tests/Controller/EstablecimientoEdificioControllerTest.php
+phpunit -c app src/Fd/EstablecimientoBundle/Tests/Controller/LocalizacionControllerTest.php
 phpunit -c app src/Fd/EstablecimientoBundle/Tests/Controller/UnidadEducativaControllerTest.php
 phpunit -c app src/Fd/EstablecimientoBundle/Tests/Controller/UnidadOfertaControllerTest.php
 #

@@ -306,36 +306,25 @@ class CarreraControllerTest extends LoginWebTestCase {
     }
 
     /**
-     * DEPRECATED
      * 
      * @dataProvider provideUrls 
      * 
-     * Vale por:
-     * nomina_resumida
-     * nomina_resumida_donde_se_dicta
-     * indicadores_cohorte
-     * indicadores_cohorte_estalecimiento/13
-     * indicadores_cohorte_unidad_oferta/10
      */
-//    public function testPageIsSuccessful($url) {
-//        $client = $this->client;
-//        $client->request('GET', $url);
-//        $this->assertTrue($client->getResponse()->isSuccessful());
-//        $this->assertTrue(200 == $client->getResponse()->getStatusCode());
-//    }
+    public function testPageIsSuccessful($url) {
+        $client = $this->client;
+        $client->request('GET', $url);
+        $this->assertTrue($client->getResponse()->isSuccessful());
+        $this->assertTrue(200 == $client->getResponse()->getStatusCode());
+    }
 
     /**
      * @return type
      */
     public function provideUrls() {
-        $x = '/oferta/carrera';
+        $x = '/oferta';
         return array(
-//            array($x . '/nomina_resumida'),                           //DEPRECATED
-//            array($x . '/nomina_resumida_donde_se_dicta/1'),            //Llama a una plantilla que fue modificada
-//            array($x . '/nomina_resumida_planilla_de_calculo'), NO ANDA. COPIAR de ACTO PUBLICO
-//            array($x . '/indicadores_cohorte'),
-//            array($x . '/indicadores_cohorte_estalecimiento/13'),
-//            array($x . '/indicadores_cohorte_unidad_oferta/10'),
+            array($x . '/carreralistado_carreras'),                           
+            array($x . '/carreralistado_carreras_siol'),                           
         );
     }
 
@@ -405,4 +394,16 @@ class CarreraControllerTest extends LoginWebTestCase {
         
         $this->assertTrue($crawler->filter('td:contains("609")')->count() == 0);
     }
+    /**
+     * se testea en testPageIsSuccessful
+     */
+    public function testListadoCarrerasAction() {
+    }
+
+    /**
+     * se testea en testPageIsSuccessful
+     */
+    public function testListadoCarrerasSIOLAction() {
+        
+    }    
 }

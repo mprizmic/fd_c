@@ -1,6 +1,6 @@
 <?php
 
-namespace Sga\BackendBundle\Tests\Controller;
+namespace Fd\BackendBundle\Tests\Controller;
 
 use Fd\EstablecimientoBundle\Tests\Controller\LoginWebTestCase;
 
@@ -12,6 +12,12 @@ use Fd\EstablecimientoBundle\Tests\Controller\LoginWebTestCase;
 
 class EstablecimientoEdificioControllerTest extends LoginWebTestCase {
 
+    
+    /**
+     * FALTA REVISAR
+     * 
+     * @return type
+     */
     public function testListar() {
         // Create a new client to browse the application
         $client = $this->client;

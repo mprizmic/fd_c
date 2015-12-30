@@ -29,9 +29,7 @@ class EstablecimientoControllerTest extends WebTestCase {
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
 
         // Verifica que se visualizò la pagina de edicion
-        $this->assertGreaterThan(0, $crawler
-                        ->filter('html:contains("Dickens")')
-                        ->count(), 'Se visualiza la página de creación de establecimiento');
+        $this->assertTrue($crawler->filter('html:contains("Versión")')->count() > 0);
     }
 
     /**
@@ -57,7 +55,7 @@ class EstablecimientoControllerTest extends WebTestCase {
         $crawler = $client->request('GET', '/establecimiento/damero');
         $this->assertTrue(200 === $client->getResponse()->getStatusCode());
 
-        $this->assertTrue($crawler->filter('html:contains("Bienvenido al Sistema de la Dirección de Formación Docente!")')->count() > 0);
+        $this->assertTrue($crawler->filter('html:contains("Versión")')->count() > 0);
     }
 
     public function testEstablecimientoDeUnCui() {
