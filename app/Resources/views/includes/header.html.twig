@@ -6,13 +6,11 @@
     <div class="float_derecha">
         
         {# menu superior con lista de establecimientos       #}
-        {% if establecimientos is defined %}
-            <div class="float_izquierda">
-                <div id="menu_establecimientos">
-                    {% include 'EstablecimientoBundle:Default:includes/menu_establecimientos.html.twig' %}
-                </div>
+        <div class="float_izquierda">
+            <div id="menu_establecimientos">
+                    {% render "EstablecimientoBundle:Establecimiento:menuEstablecimientos" %}
             </div>
-        {% endif %}
+        </div>
         
 {#        informacion del login#}
         <div class="en_bloque login separador">

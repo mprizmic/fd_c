@@ -116,10 +116,9 @@ class EstablecimientoController extends Controller {
      * @Route("/damero", name="establecimiento_damero")
      */
     public function dameroAction() {
-        $paginador = $this->get('ideup.simple_paginator');
 
 //        establecimientos paginados
-        $establecimientos = $this->getDoctrine()->getEntityManager()->getRepository('EstablecimientoBundle:Establecimiento')
+        $establecimientos = $this->getRepositorio()
                         ->qyAllOrdenado('orden')->getResult();
 
         return $this->render('EstablecimientoBundle:Default:damero.html.twig', array(
@@ -148,7 +147,7 @@ class EstablecimientoController extends Controller {
      * @ParamConverter("establecimiento", class="EstablecimientoBundle:Establecimiento", options={"id"="establecimiento_id"})
      */
     public function fichaAction($establecimiento, Request $request) {
-        
+
         // establezco la ruta para la pagina que tenga que volver aca
         $this->get('session')->set('ruta_completa', $request->get('_route'));
         $this->get('session')->set('parametros', $request->get('_route_params'));
@@ -212,12 +211,12 @@ class EstablecimientoController extends Controller {
             $te = $this->getEm()
                     ->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
                     ->findTe($sede_anexo);
-            
+
             $sede_anexo_array[$key]['id'] = $sede_anexo->getId();
             $sede_anexo_array[$key]['cue_anexo']['digito'] = $sede_anexo->getCueAnexo();
             $sede_anexo_array[$key]['cue_anexo']['te'] = $te;
             $sede_anexo_array[$key]['cue_anexo']['email'] = $sede_anexo->getEmail();
-            
+
 
             $sede_anexo_array[$key]['domicilio']['calle'] = $domicilio->getCalle();
             $sede_anexo_array[$key]['domicilio']['altura'] = $domicilio->getAltura();
@@ -300,7 +299,7 @@ class EstablecimientoController extends Controller {
                         $carrera = $unidad_oferta->getOfertas()->getCarrera();
                         $unidad_ofertas[$key_uo]['carrera'] = $carrera->getIdentificacion();
                         $unidad_ofertas[$key_uo]['carrera_id'] = $carrera->getId();
-                        $unidad_ofertas[$key_uo]['examen'] = $unidad_oferta->getHasExamen() ? 'si':'no';
+                        $unidad_ofertas[$key_uo]['examen'] = $unidad_oferta->getHasExamen() ? 'si' : 'no';
                     }
                 }
                 /**
@@ -422,6 +421,21 @@ class EstablecimientoController extends Controller {
         $response = $planilla->generarPlanillaResponse();
 
         return $response;
+    }
+
+    /**
+     * Despliega el menu de establecimientos que aparece en el header como un desplegable
+     * En el backend aparece también
+     * 
+     * @Route("/menu", name="establecimiento.establecimiento.menu")
+     */
+    public function menuEstablecimientosAction() {
+        $establecimientos = $this->getRepositorio()
+                        ->qyAllOrdenado('orden')->getResult();
+
+        return $this->render('EstablecimientoBundle:Default:includes/menu_establecimientos.html.twig', array(
+                    'establecimientos' => $establecimientos,
+        ));
     }
 
 }
