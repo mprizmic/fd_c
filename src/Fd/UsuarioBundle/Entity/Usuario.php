@@ -55,11 +55,11 @@ class Usuario implements UserInterface {
      */
     private $password;
     /**
-     * @ORM\Column(type="string", length=35)
+     * @ORM\Column(type="string", length=35, nullable=true)
      */
     private $te_oficina;
     /**
-     * @ORM\Column(type="string", length=5)
+     * @ORM\Column(type="string", length=5, nullable=true)
      */
     private $interno;
 
