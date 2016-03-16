@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method; //permite la annotation method
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Model\Constantes;
 use Fd\BackendBundle\Form\NormaBuscarType;
 use Fd\OfertaEducativaBundle\Entity\Norma;
 
@@ -102,7 +103,7 @@ class NormaController extends Controller {
 
     public function obtenerNormasPaginadas($datos) {
         $paginador = $this->get('ideup.simple_paginator');
-        $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_mediano'));
+        $paginador->setItemsPerPage(Constantes::GRILLA_MEDIANO);
 
         //hay por lo menos un campo con algo
         $normas = $paginador->paginate(

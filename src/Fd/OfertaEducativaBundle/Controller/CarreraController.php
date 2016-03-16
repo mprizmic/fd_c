@@ -19,6 +19,7 @@ use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\EventListener\DownloadListener;
+use Fd\EstablecimientoBundle\Model\Constantes;
 use Fd\EstablecimientoBundle\Repository\UnidadOfertaRepository;
 use Fd\OfertaEducativaBundle\Entity\Carrera;
 use Fd\OfertaEducativaBundle\Entity\Norma;
@@ -123,7 +124,8 @@ class CarreraController extends Controller {
 
         //crea el paginador
         $paginador = $this->get('ideup.simple_paginator');
-        $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_mediano'));
+        $paginador->setItemsPerPage(Constantes::GRILLA_MEDIANO);
+//        $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_corto'));
 
         //hay por lo menos un campo con algo
         $carreras = $paginador->paginate($filterBuilder->getQuery())
@@ -192,7 +194,7 @@ class CarreraController extends Controller {
      */
     public function obtenerCarrerasPaginadas($datos) {
         $paginador = $this->get('ideup.simple_paginator');
-        $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_mediano'));
+        $paginador->setItemsPerPage(Constantes::GRILLA_MEDIANO);
 
         //hay por lo menos un campo con algo
         $carreras = $paginador->paginate(

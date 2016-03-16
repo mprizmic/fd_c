@@ -15,6 +15,7 @@ use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\OrganizacionInterna;
 use Fd\EstablecimientoBundle\Entity\Localizacion;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Model\Constantes;
 use Fd\EstablecimientoBundle\Model\DatosAChoiceVisitador;
 use Fd\EstablecimientoBundle\Model\OrganizacionInternaManager;
 
@@ -111,7 +112,7 @@ class OrganizacionInternaController extends Controller {
 
         //crea el paginador
         $paginador = $this->get('ideup.simple_paginator');
-        $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_mediano'));
+        $paginador->setItemsPerPage(Constantes::GRILLA_MEDIANO);
 
         //hay por lo menos un campo con algo
         $organizaciones = $paginador->paginate($filterBuilder->getQuery())

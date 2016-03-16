@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fd\EdificioBundle\Entity\Edificio;
 use Fd\EstablecimientoBundle\Entity\Establecimiento;
+use Fd\EstablecimientoBundle\Model\Constantes;
 
 /**
  * @Route("/edificio")
@@ -32,7 +33,7 @@ class DefaultController extends Controller {
      */
     public function nominaAction() {
         $paginador = $this->get('ideup.simple_paginator');
-        $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_mediano'));
+        $paginador->setItemsPerPage(Constantes::GRILLA_MEDIANO);
 
         $edificios = $paginador->paginate(
                         $this->getDoctrine()->getEntityManager()->getRepository('EdificioBundle:Edificio')->qyAllOrdenado())

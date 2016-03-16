@@ -8,9 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Fd\OfertaEducativaBundle\Entity\MediaOrientaciones;
 use Fd\BackendBundle\Form\Filter\MediaOrientacionesFilterType;
 use Fd\BackendBundle\Form\MediaOrientacionesType;
+use Fd\EstablecimientoBundle\Model\Constantes;
+use Fd\OfertaEducativaBundle\Entity\MediaOrientaciones;
 
 /**
  * Autoridad controller.
@@ -104,7 +105,7 @@ class MediaOrientacionesController extends Controller {
 
         //crea el paginador
         $paginador = $this->get('ideup.simple_paginator');
-        $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_mediano'));
+        $paginador->setItemsPerPage(Constantes::GRILLA_MEDIANO);
 
         //hay por lo menos un campo con algo
         $orientaciones = $paginador->paginate($filterBuilder->getQuery())

@@ -13,6 +13,7 @@ use Fd\EstablecimientoBundle\Entity\Establecimiento;
 use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\UnidadOfertaTurno;
 use Fd\EstablecimientoBundle\EventListener\DownloadListener;
+use Fd\EstablecimientoBundle\Model\Constantes;
 use Fd\EstablecimientoBundle\Model\PlanillaSedesYAnexos;
 use Fd\EstablecimientoBundle\Repository\UnidadOfertaRepository;
 use Fd\EstablecimientoBundle\Utilities\PlanillaDeCalculo;
@@ -341,7 +342,7 @@ class EstablecimientoController extends Controller {
     public function nominaAction() {
         $paginador = $this->get('ideup.simple_paginator');
 
-        $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_mediano'));
+        $paginador->setItemsPerPage(Constantes::GRILLA_MEDIANO);
 
 //        establecimientos paginados
         $establecimientos = $paginador->paginate(

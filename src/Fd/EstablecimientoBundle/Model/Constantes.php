@@ -29,6 +29,8 @@ class Constantes {
 
     const CUE_SEDE = '00';
     
+    const GRILLA_MEDIANO = 15;
+    
     public $TELEFONOS = array(
         array(
             'oficina' => 'Secretaría Privada',

@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Fd\BackendBundle\Form\DisciplinaType;
 use Fd\BackendBundle\Form\Filter\DisciplinaFilterType;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
+use Fd\EstablecimientoBundle\Model\Constantes;
 use Fd\OfertaEducativaBundle\Entity\Disciplina;
 
 /**
@@ -106,7 +107,7 @@ class DisciplinaController extends Controller {
 
         //crea el paginador
         $paginador = $this->get('ideup.simple_paginator');
-        $paginador->setItemsPerPage($this->container->getParameter('fd.grilla_mediano'));
+        $paginador->setItemsPerPage(Constantes::GRILLA_MEDIANO);
 
         //hay por lo menos un campo con algo
         $disciplinas = $paginador->paginate($filterBuilder->getQuery())
