@@ -1,6 +1,3 @@
-ActoPublicoBundle:
-    resource: "@ActoPublicoBundle/Resources/config/routing.yml"
-
 BackendBundle:
     resource: "@BackendBundle/Resources/config/routing.yml"
 

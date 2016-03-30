@@ -3,8 +3,6 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: local.yml }
-# con este archivo introcuzco el nombre del archivo de actod spublicos de media
-#   - { resource: /home/marcelo/proyectos/fd2.composer/web/actos/acto_publico_archivo_media.yml }
 
 # mepk
 parameters:
