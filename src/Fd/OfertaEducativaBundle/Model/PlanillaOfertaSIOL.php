@@ -16,6 +16,7 @@ class PlanillaOfertaSIOL extends PlanillaDeCalculo {
         $encabezado[] = 'Disciplina';
         $encabezado[] = 'Turno';
         $encabezado[] = 'Cupo';
+        $encabezado[] = 'Ex Ing';
 
         $posicion = $this->phpExcelObject->getActiveSheet(0);
 
@@ -55,6 +56,9 @@ class PlanillaOfertaSIOL extends PlanillaDeCalculo {
             ++$columna;
             $posicion->setCellValue($columna . $fila, $uo['cupo']);
             
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, ($uo['examen'])?'Examen de ingreso':'');
+
             $fila += 1;
         };
     }
