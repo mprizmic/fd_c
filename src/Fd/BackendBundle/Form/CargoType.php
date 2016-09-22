@@ -10,7 +10,6 @@ use Fd\TablaBundle\Repository\DependenciaRepository;
 use Fd\TablaBundle\Repository\NivelRepository;
 use Fd\TablaBundle\Repository\TurnoRepository;
 
-
 class CargoType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
@@ -36,7 +35,7 @@ class CargoType extends AbstractType {
                     },
                 ))
                 ->add('dependencia_referenciante', 'entity', array(
-                    'help'=>'Este campo tiene fines meramente informativos',
+                    'help' => 'Este campo tiene fines meramente informativos',
                     'class' => 'TablaBundle:Dependencia',
                     'empty_value' => 'Seleccione un nivel ...',
                     'required' => false,
@@ -45,6 +44,7 @@ class CargoType extends AbstractType {
                         return $repository->qbAllOrdenado();
                     },
                 ))
+                ->add('orden')
         ;
     }
 
