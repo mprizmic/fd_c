@@ -5,6 +5,8 @@ namespace Fd\EstablecimientoBundle\Model;
 use Fd\EstablecimientoBundle\Utilities\PlanillaDeCalculo;
 
 class PlanillaSedesYAnexos extends PlanillaDeCalculo {
+    
+//    $datos es un array de objetos establecimiento_edificio que luego se transforma en datos de cada reglon de la pagina de salida
 
     protected function cargaDatos($datos, $em) {
 
