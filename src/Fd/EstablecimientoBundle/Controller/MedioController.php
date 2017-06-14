@@ -48,7 +48,7 @@ class MedioController extends Controller
         $excelService = $this->get('phpexcel');
 
         // defino la planilla
-        $planilla = new PlanillaNominaNivelMedio($excelService, 'Listado de establecimientos con Nivel Medio', $establecimientos );
+        $planilla = new PlanillaNominaNivelMedio($excelService, 'Listado de establecimientos que imparten Nivel Medio', $establecimientos );
         
         //genero la planilla y devuelve un response
         $response = $planilla->generarPlanillaResponse();
