@@ -34,11 +34,7 @@ class Constantes {
     public $TELEFONOS = array(
         array(
             'oficina' => 'Secretaría Privada',
-            'te' => '4339-1892 / 1889 / 1887',
-        ),
-        array(
-            'oficina' => 'Conmutador Esmeralda',
-            'te' => '4339-1700',
+            'te' => '4320-0400 interno 1160',
         ),
     );
     
