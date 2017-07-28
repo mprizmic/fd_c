@@ -42,42 +42,6 @@ class DefaultController extends Controller {
     }
 
     /**
-     * @Route("/agenda", name="agenda")
-     * @Template("EstablecimientoBundle:Default:agenda.html.twig")
-     */
-    public function agendaAction() {
-        return array();
-    }
-
-    /**
-     * FALTA test
-     * 
-     * @Route("/agenda_excel", name="agenda_excel")
-     */
-    public function agendaExcelAction() {
-
-        //Ruta hasta la capeta web
-        $targetDir = $this->get('kernel')->getRootDir() . '/../web/documentos/';
-
-        //  $archivo = archivo.xlsx
-        $completo = "/home/marcelo/proyectos/fd2/web/actos/Para_Publicar_4_otorgado.xls";
-        $filename = "Directorio de escuelas y autoridades DFD 2014.xls";
-
-        $completo = $targetDir . $filename;
-
-//        $path = $this->get('kernel')->getRootDir(). "/reports/" . $filename;
-        $content = file_get_contents($completo);
-
-        $response = new Response();
-
-        $response->headers->set('Content-Type', 'text/csv');
-        $response->headers->set('Content-Disposition', 'attachment;filename="' . $filename);
-
-        $response->setContent($content);
-        return $response;
-    }
-
-    /**
      * @Route("/acerca_de", name="acerca_de")
      * @Template("EstablecimientoBundle:Default:acerca_de.html.twig")
      */
