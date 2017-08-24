@@ -304,5 +304,30 @@ class EstablecimientoEdificioRepository extends EntityRepository implements Dato
         
         return $this->strategy_te->getTe($establecimiento_edificio);
     }
+    /**
+     * Devuelve el listado de referentes del SIU 
+     * 
+     */
+    public function findReferenteSiu() {
+        
+        $qb = $this->createQueryBuilder('ee')
+//                ->select(array(
+//                    'e.apodo', 'ee.nombre', 'ee.referente_siu',
+//                ))
+                ->innerJoin('ee.establecimientos', 'e')
+                ->innerJoin('ee.localizacion', 'l')
+                ->innerJoin('l.unidad_educativa', 'ue')
+                ->innerJoin('ue.nivel', 'n')
+                ->innerJoin('ee.edificios', 'ed')
+                ->innerJoin('ed.domicilios', 'domi')
+                ->where('domi.principal = TRUE')
+                ->andWhere("n.abreviatura='Ter'")
+                ->orderBy('e.orden')
+                ->addOrderBy('ee.cue_anexo')
+                ;
+
+        $resultado = $qb->getQuery()->getResult();
+        return $resultado;
+    }
 
 }

@@ -88,6 +88,13 @@ class EstablecimientoEdificio {
     /**
      * devuelve el objeto localizacion de nivel terciario correspondiente $this
      */
+    /**
+     * @ORM\Column(length=50, nullable=true)
+     */
+    private $referente_siu;    
+    /**
+     * devuelve el objeto localizacion de nivel terciario correspondiente $this
+     */
     public function getTerciario() {
         foreach ($this->getLocalizacion() as $localizacion) {
             if ($localizacion->esTerciario()) {
@@ -381,4 +388,24 @@ class EstablecimientoEdificio {
     {
         return $this->dependencias;
     }
+    /**
+     * @return EstablecimientoEdificio
+     */
+    public function setReferenteSiu($referente_siu)
+    {
+        $this->referente_siu = $referente_siu;
+
+        return $this;
+    }
+
+    /**
+     * Get te
+     *
+     * @return string 
+     */
+    public function getReferenteSiu()
+    {
+        return $this->referente_siu;
+    }
+    
 }

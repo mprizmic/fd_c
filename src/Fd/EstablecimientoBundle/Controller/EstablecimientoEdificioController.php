@@ -15,6 +15,7 @@ use Fd\EstablecimientoBundle\Entity\EstablecimientoEdificio;
 use Fd\EstablecimientoBundle\Entity\Respuesta;
 use Fd\EstablecimientoBundle\EventListener\DownloadListener;
 use Fd\EstablecimientoBundle\Model\PlanillaSedesYAnexos;
+use Fd\EstablecimientoBundle\Model\PlanillaReferenteSiu;
 use Fd\EstablecimientoBundle\Utilities\PlanillaDeCalculo;
 
 
@@ -51,6 +52,29 @@ class EstablecimientoEdificioController extends Controller {
 
         // defino la planilla
         $planilla = new PlanillaSedesYAnexos($excelService, 'Listado de sedes y anexos', $establecimiento_edificios, $this->getEm() );
+        
+        //genero la planilla y devuelve un response
+        $response = $planilla->generarPlanillaResponse();
+
+        return $response;        
+
+    }
+    /**
+     * 
+     * @Route("/referentes_siu", name="establecimiento.establecimiento_edificio.referentes_siu_salida_planilla")
+     * @DownloadAs(filename="referentes_siu.xls")
+     */
+    public function referentes_siu_salida_planillaAction() {
+
+        $establecimiento_edificios = $this->getEm()
+                ->getRepository('EstablecimientoBundle:EstablecimientoEdificio')
+                ->findReferenteSiu();
+        
+        //se crea el servicio para crear planillas
+        $excelService = $this->get('phpexcel');
+
+        // defino la planilla
+        $planilla = new PlanillaReferenteSiu($excelService, 'Listado de Referentes SIU por sede', $establecimiento_edificios, $this->getEm() );
         
         //genero la planilla y devuelve un response
         $response = $planilla->generarPlanillaResponse();
