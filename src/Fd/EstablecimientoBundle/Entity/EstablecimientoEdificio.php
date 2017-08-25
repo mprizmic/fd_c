@@ -89,7 +89,7 @@ class EstablecimientoEdificio {
      * devuelve el objeto localizacion de nivel terciario correspondiente $this
      */
     /**
-     * @ORM\Column(length=50, nullable=true)
+     * @ORM\Column(length=200, nullable=true)
      */
     private $referente_siu;    
     /**
