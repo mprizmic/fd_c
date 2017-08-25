@@ -12,7 +12,9 @@ class PlanillaReferenteSiu extends PlanillaDeCalculo {
 
         $encabezado[] = '#';
         $encabezado[] = 'Establecimiento';
-        $encabezado[] = 'Referente';
+        $encabezado[] = 'Referente Sga';
+        $encabezado[] = 'Referente SIU';
+        $encabezado[] = 'Informático';
 
         $posicion = $this->phpExcelObject->getActiveSheet(0);
 
@@ -37,7 +39,13 @@ class PlanillaReferenteSiu extends PlanillaDeCalculo {
             $posicion->setCellValue($columna . $fila, $e->getNombre() . $anexo );
             
             ++$columna;
-            $posicion->setCellValue($columna . $fila, $ee->getReferenteSiu());                                      
+            $posicion->setCellValue($columna . $fila, $ee->getReferenteSga());                                      
+                        
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $ee->getReferenteSiu());
+                        
+            ++$columna;
+            $posicion->setCellValue($columna . $fila, $ee->getInformatico());                                      
                         
             $fila += 1;
         };

@@ -61,6 +61,8 @@ class EstablecimientoEdificioType extends AbstractType {
                     },
                 ))
                 ->add('referente_siu')
+                ->add('referente_sga')
+                ->add('informatico')
         ;
         //se agrega establecimiento sólo si el registro ya existe.
         $factory = $builder->getFormFactory();

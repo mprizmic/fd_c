@@ -93,6 +93,14 @@ class EstablecimientoEdificio {
      */
     private $referente_siu;    
     /**
+     * @ORM\Column(length=200, nullable=true)
+     */
+    private $informatico;
+    /**
+     * @ORM\Column(length=200, nullable=true)
+     */
+    private $referente_sga;    
+    /**
      * devuelve el objeto localizacion de nivel terciario correspondiente $this
      */
     public function getTerciario() {
@@ -406,6 +414,44 @@ class EstablecimientoEdificio {
     public function getReferenteSiu()
     {
         return $this->referente_siu;
+    }
+    /**
+     * @return EstablecimientoEdificio
+     */
+    public function setReferenteSga($referente_sga)
+    {
+        $this->referente_sga = $referente_sga;
+
+        return $this;
+    }
+
+    /**
+     * Get te
+     *
+     * @return string 
+     */
+    public function getReferenteSga()
+    {
+        return $this->referente_sga;
+    }
+    /**
+     * @return EstablecimientoEdificio
+     */
+    public function setInformatico($informatico)
+    {
+        $this->informatico = $informatico;
+
+        return $this;
+    }
+
+    /**
+     * Get te
+     *
+     * @return string 
+     */
+    public function getInformatico()
+    {
+        return $this->informatico;
     }
     
 }
